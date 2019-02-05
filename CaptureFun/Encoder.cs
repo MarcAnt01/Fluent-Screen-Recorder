@@ -70,7 +70,22 @@ namespace CaptureFun
 
         public void Dispose()
         {
-            _isRecording = false;
+            if (_closed)
+            {
+                return;
+            }
+            _closed = true;
+
+            if (!_isRecording)
+            {
+                DisposeInternal();
+            }
+
+            _isRecording = false;            
+        }
+
+        private void DisposeInternal()
+        {
             _device.Dispose();
             _deviceContext.Dispose();
             _multiThread.Dispose();
@@ -111,34 +126,39 @@ namespace CaptureFun
 
         private void OnMediaStreamSourceSampleRequested(MediaStreamSource sender, MediaStreamSourceSampleRequestedEventArgs args)
         {
-            if (_isRecording)
+            if (_isRecording && !_closed)
             {
-                using (var frame = GetNextFrame())
-                using (var lockSession = _multiThread.Lock())
+                try
                 {
-                    if (frame == null)
+                    using (var frame = GetNextFrame())
+                    using (var lockSession = _multiThread.Lock())
                     {
-                        args.Request.Sample = null;
-                        return;
-                    }
+                        if (frame == null)
+                        {
+                            args.Request.Sample = null;
+                            DisposeInternal();
+                            return;
+                        }
 
-                    var timeStamp = frame.SystemRelativeTime;
+                        var timeStamp = frame.SystemRelativeTime;
 
-                    try
-                    {
                         var sample = MediaStreamSample.CreateFromDirect3D11Surface(frame.Surface, timeStamp);
-                        args.Request.Sample = sample;
+                        args.Request.Sample = sample;                       
                     }
-                    catch (Exception e)
-                    {
-                        System.Diagnostics.Debug.WriteLine(e);
-                        args.Request.Sample = null;
-                    }
+                }
+                catch (Exception e)
+                {
+                    System.Diagnostics.Debug.WriteLine(e.Message);
+                    System.Diagnostics.Debug.WriteLine(e.StackTrace);
+                    System.Diagnostics.Debug.WriteLine(e);
+                    args.Request.Sample = null;
+                    DisposeInternal();
                 }
             }
             else
             {
                 args.Request.Sample = null;
+                DisposeInternal();
             }
         }
 
@@ -169,6 +189,7 @@ namespace CaptureFun
         private MediaStreamSource _mediaStreamSource;
         private MediaTranscoder _transcoder;
         private bool _isRecording;
+        private bool _closed = false;
 
         // Constants
         private const int c_frameRateN = 60;

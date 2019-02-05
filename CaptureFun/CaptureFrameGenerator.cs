@@ -66,11 +66,16 @@ namespace CaptureFun
 
         private async Task<SurfaceWithInfo> GetNextFrameInternalAsync()
         {
+            if (_completed)
+            {
+                return null;
+            }
+
             _currentFrame?.Dispose();
             _currentFrame = await _frameTask.Task;
             if (_currentFrame == null)
             {
-                Dispose();
+                _completed = true;
                 return null;
             }
             _frameTask = new TaskCompletionSource<Direct3D11CaptureFrame>();
@@ -102,7 +107,10 @@ namespace CaptureFun
         {
             _framePool?.Dispose();
             _session?.Dispose();
-            _item.Closed -= OnClosed;
+            if (_item != null)
+            {
+                _item.Closed -= OnClosed;
+            }
             _item = null;
             _device?.Dispose();
             _currentFrame?.Dispose();
@@ -116,5 +124,6 @@ namespace CaptureFun
         private GraphicsCaptureSession _session;
         private Direct3D11CaptureFramePool _framePool;
         private SizeInt32 _size;
+        private bool _completed = false;
     }
 }
