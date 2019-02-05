@@ -68,6 +68,14 @@ namespace CaptureFunTestApp
             MainTextBlock.Text = "saving...";
 
             var newFile = await PickVideoAsync();
+            if (newFile == null)
+            {
+                button.IsChecked = false;
+                MainTextBlock.Text = "canceled";
+                MainProgressBar.IsIndeterminate = false;
+                await file.DeleteAsync();
+                return;
+            }
             await file.MoveAndReplaceAsync(newFile);
 
             button.IsChecked = false;

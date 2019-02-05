@@ -70,15 +70,10 @@ namespace CaptureFun
         public SurfaceWithInfo WaitForNewFrame()
         {
             // Let's get a fresh one.
-            if (_event.WaitOne(0))
-            {
-                _currentFrame?.Dispose();
-                _event.Reset();
-            }
+            _currentFrame?.Dispose();
+            _event.Reset();
 
-            _event.WaitOne();
-
-            if (_currentFrame == null)
+            if (!_event.WaitOne() || _currentFrame == null)
             {
                 return null;
             }
