@@ -84,7 +84,7 @@ namespace CaptureFun
             _currentFrame?.Dispose();
             _event.Reset();
 
-            if (!_event.WaitOne() || _currentFrame == null || _completed)
+            if (_completed || !_event.WaitOne() || _currentFrame == null)
             {
                 return null;
             }
