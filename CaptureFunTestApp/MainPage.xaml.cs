@@ -1,11 +1,13 @@
 ﻿using CaptureFun;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Graphics.Capture;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.System;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -43,10 +45,29 @@ namespace CaptureFunTestApp
             MainProgressBar.IsIndeterminate = true;
 
             // Kick off the encoding
-            using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
-            using (_encoder = new Encoder(_device, item))
+            try
             {
-                await _encoder.EncodeAsync(stream);
+                using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                using (_encoder = new Encoder(_device, item))
+                {
+                    await _encoder.EncodeAsync(stream);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex);
+
+                var dialog = new MessageDialog(
+                    $"Uh-oh! Something went wrong!\n0x{ex.HResult:X8} - {ex.Message}",
+                    "Recording failed");
+
+                await dialog.ShowAsync();
+
+                button.IsChecked = false;
+                MainTextBlock.Text = "failure";
+                MainProgressBar.IsIndeterminate = false;
+                return;
             }
 
             // At this point the encoding has finished,

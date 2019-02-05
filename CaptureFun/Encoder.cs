@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Foundation;
-using Windows.Graphics;
 using Windows.Graphics.Capture;
-using Windows.Graphics.DirectX;
 using Windows.Graphics.DirectX.Direct3D11;
 using Windows.Media.Core;
 using Windows.Media.MediaProperties;
@@ -45,27 +41,19 @@ namespace CaptureFun
                     _captureItem,
                     _captureItem.Size);
 
-                try
-                {
-                    var encodingProfile = new MediaEncodingProfile();
-                    encodingProfile.Container.Subtype = "MPEG4";
-                    encodingProfile.Video.Subtype = "H264";
-                    encodingProfile.Video.Width = (uint)_captureItem.Size.Width;
-                    encodingProfile.Video.Height = (uint)_captureItem.Size.Height;
-                    encodingProfile.Video.Bitrate = _videoDescriptor.EncodingProperties.Bitrate;
-                    encodingProfile.Video.FrameRate.Numerator = c_frameRateN;
-                    encodingProfile.Video.FrameRate.Denominator = 1;
-                    encodingProfile.Video.PixelAspectRatio.Numerator = 1;
-                    encodingProfile.Video.PixelAspectRatio.Denominator = 1;
-                    var transcode = await _transcoder.PrepareMediaStreamSourceTranscodeAsync(_mediaStreamSource, stream, encodingProfile);
+                var encodingProfile = new MediaEncodingProfile();
+                encodingProfile.Container.Subtype = "MPEG4";
+                encodingProfile.Video.Subtype = "H264";
+                encodingProfile.Video.Width = (uint)_captureItem.Size.Width;
+                encodingProfile.Video.Height = (uint)_captureItem.Size.Height;
+                encodingProfile.Video.Bitrate = _videoDescriptor.EncodingProperties.Bitrate;
+                encodingProfile.Video.FrameRate.Numerator = c_frameRateN;
+                encodingProfile.Video.FrameRate.Denominator = 1;
+                encodingProfile.Video.PixelAspectRatio.Numerator = 1;
+                encodingProfile.Video.PixelAspectRatio.Denominator = 1;
+                var transcode = await _transcoder.PrepareMediaStreamSourceTranscodeAsync(_mediaStreamSource, stream, encodingProfile);
 
-                    await transcode.TranscodeAsync();
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine(ex.Message);
-                    System.Diagnostics.Debug.WriteLine(ex);
-                }
+                await transcode.TranscodeAsync();
             }
         }
 
@@ -149,9 +137,9 @@ namespace CaptureFun
                 }
                 catch (Exception e)
                 {
-                    System.Diagnostics.Debug.WriteLine(e.Message);
-                    System.Diagnostics.Debug.WriteLine(e.StackTrace);
-                    System.Diagnostics.Debug.WriteLine(e);
+                    Debug.WriteLine(e.Message);
+                    Debug.WriteLine(e.StackTrace);
+                    Debug.WriteLine(e);
                     args.Request.Sample = null;
                     DisposeInternal();
                 }
