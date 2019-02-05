@@ -39,7 +39,7 @@ namespace CaptureFun
             {
                 _isRecording = true;
 
-                _frameGenerator = new CaptureFrameGenerator(
+                _frameGenerator = new CaptureFrameWait(
                     _device,
                     _captureItem,
                     _captureItem.Size);
@@ -130,7 +130,7 @@ namespace CaptureFun
             {
                 try
                 {
-                    using (var frame = GetNextFrame())
+                    using (var frame = _frameGenerator.WaitForNewFrame())
                     using (var lockSession = _multiThread.Lock())
                     {
                         if (frame == null)
@@ -164,17 +164,10 @@ namespace CaptureFun
 
         private void OnMediaStreamSourceStarting(MediaStreamSource sender, MediaStreamSourceStartingEventArgs args)
         {
-            using (var frame = GetNextFrame())
+            using (var frame = _frameGenerator.WaitForNewFrame())
             {
                 args.Request.SetActualStartPosition(frame.SystemRelativeTime);
             }
-        }
-
-        private SurfaceWithInfo GetNextFrame()
-        {
-            var task = _frameGenerator.GetNextFrameAsync().AsTask();
-            var result = task.Result;
-            return result;
         }
 
         private Direct3D11Device _device;
@@ -183,7 +176,7 @@ namespace CaptureFun
         private MediaGraphicsDevice _mediaGraphicsDevice;
 
         private GraphicsCaptureItem _captureItem;
-        private CaptureFrameGenerator _frameGenerator;
+        private CaptureFrameWait _frameGenerator;
 
         private VideoStreamDescriptor _videoDescriptor;
         private MediaStreamSource _mediaStreamSource;
