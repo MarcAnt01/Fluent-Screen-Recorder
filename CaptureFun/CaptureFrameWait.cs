@@ -34,6 +34,7 @@ namespace CaptureFun
             _device = Direct3D11Device.CreateFromDirect3D11Device(device);
             _item = item;
             _event = new ManualResetEvent(false);
+            _completed = false;
 
             InitializeCapture(size);
         }
@@ -53,7 +54,12 @@ namespace CaptureFun
 
         private void SetResult(Direct3D11CaptureFrame frame)
         {
-            _currentFrame = frame;
+            if (!_completed)
+            {
+                _currentFrame = frame;
+                _completed = _currentFrame == null;
+            }
+            
             _event.Set();
         }
 
@@ -69,11 +75,16 @@ namespace CaptureFun
 
         public SurfaceWithInfo WaitForNewFrame()
         {
+            if (_completed)
+            {
+                return null;
+            }
+
             // Let's get a fresh one.
             _currentFrame?.Dispose();
             _event.Reset();
 
-            if (!_event.WaitOne() || _currentFrame == null)
+            if (!_event.WaitOne() || _currentFrame == null || _completed)
             {
                 return null;
             }
@@ -113,6 +124,7 @@ namespace CaptureFun
         private Direct3D11Device _device;
         private ManualResetEvent _event;
         private Direct3D11CaptureFrame _currentFrame;
+        private bool _completed;
 
         private GraphicsCaptureItem _item;
         private GraphicsCaptureSession _session;
