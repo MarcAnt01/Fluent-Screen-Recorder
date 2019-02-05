@@ -12,7 +12,19 @@ using WinRTInteropTools;
 
 namespace CaptureFun
 {
-    class CaptureFrameWait : IDisposable
+    public sealed class SurfaceWithInfo : IDisposable
+    {
+        public IDirect3DSurface Surface { get; internal set; }
+        public TimeSpan SystemRelativeTime { get; internal set; }
+
+        public void Dispose()
+        {
+            Surface?.Dispose();
+            Surface = null;
+        }
+    }
+
+    public sealed class CaptureFrameWait : IDisposable
     {
         public CaptureFrameWait(
             IDirect3DDevice device,

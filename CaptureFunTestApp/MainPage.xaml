@@ -9,13 +9,12 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="250">
+            <TextBlock x:Name="MainTextBlock" Text="zzzz" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Stretch" HorizontalTextAlignment="Center" />
+            <ProgressBar x:Name="MainProgressBar" IsIndeterminate="False" Background="Transparent"/>
+            <ToggleButton Margin="5" HorizontalAlignment="Center" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked">
+                <FontIcon Glyph="&#xE722;" FontFamily="Segoe MDL2 Assets"  />
+            </ToggleButton>
+        </StackPanel>
     </Grid>
-
-    <Page.BottomAppBar>
-        <CommandBar>
-            <AppBarButton Icon="SaveLocal" Label="Snapshot" Click="SnapshotButton_Click" />
-            <AppBarToggleButton Icon="Camera" Label="Record" Click="RecordButton_Click" />
-        </CommandBar>
-    </Page.BottomAppBar>
 </Page>
