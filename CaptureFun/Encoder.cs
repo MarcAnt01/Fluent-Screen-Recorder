@@ -25,12 +25,12 @@ namespace CaptureFun
             CreateMediaObjects();
         }
 
-        public IAsyncAction EncodeAsync(IRandomAccessStream stream)
+        public IAsyncAction EncodeAsync(IRandomAccessStream stream, uint width, uint height, uint bitrateInBps, uint frameRate)
         {
-            return EncodeInternalAsync(stream).AsAsyncAction();
+            return EncodeInternalAsync(stream, width, height, bitrateInBps, frameRate).AsAsyncAction();
         }
 
-        private async Task EncodeInternalAsync(IRandomAccessStream stream)
+        private async Task EncodeInternalAsync(IRandomAccessStream stream, uint width, uint height, uint bitrateInBps, uint frameRate)
         {
             if (!_isRecording)
             {
@@ -44,10 +44,10 @@ namespace CaptureFun
                 var encodingProfile = new MediaEncodingProfile();
                 encodingProfile.Container.Subtype = "MPEG4";
                 encodingProfile.Video.Subtype = "H264";
-                encodingProfile.Video.Width = (uint)_captureItem.Size.Width;
-                encodingProfile.Video.Height = (uint)_captureItem.Size.Height;
-                encodingProfile.Video.Bitrate = _videoDescriptor.EncodingProperties.Bitrate;
-                encodingProfile.Video.FrameRate.Numerator = c_frameRateN;
+                encodingProfile.Video.Width = width;
+                encodingProfile.Video.Height = height;
+                encodingProfile.Video.Bitrate = bitrateInBps;
+                encodingProfile.Video.FrameRate.Numerator = frameRate;
                 encodingProfile.Video.FrameRate.Denominator = 1;
                 encodingProfile.Video.PixelAspectRatio.Numerator = 1;
                 encodingProfile.Video.PixelAspectRatio.Denominator = 1;
@@ -84,14 +84,12 @@ namespace CaptureFun
         private void CreateMediaObjects()
         {
             // Create our encoding profile based on the size of the item
-            // TODO: This only really makes sense for monitors, we need
-            //       to change this to make sense in all cases.
+            // TODO: This only really makes sense for monitors, we need to change this to make sense in all cases.
             int width = _captureItem.Size.Width;
             int height = _captureItem.Size.Height;
 
             // Describe our input: uncompressed BGRA8 buffers comming in at the monitor's refresh rate
-            // TODO: We pick 60Hz here because it applies to most monitors. However this should be
-            //       more robust.
+            // TODO: We pick 60Hz here because it applies to most monitors. However this should be more robust.
             var videoProperties = VideoEncodingProperties.CreateUncompressed(MediaEncodingSubtypes.Bgra8, (uint)width, (uint)height);
             _videoDescriptor = new VideoStreamDescriptor(videoProperties);
             _videoDescriptor.EncodingProperties.FrameRate.Numerator = c_frameRateN;
