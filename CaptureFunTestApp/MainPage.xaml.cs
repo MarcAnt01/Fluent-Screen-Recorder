@@ -8,10 +8,14 @@ using Windows.Media.MediaProperties;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.System;
+using Windows.UI;
+using Windows.UI.Composition;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
 using WinRTInteropTools;
 
 namespace CaptureFunTestApp
@@ -24,17 +28,21 @@ namespace CaptureFunTestApp
 
             _device = new Direct3D11Device();
 
+            var settings = GetCachedSettings();
+
             var names = new List<string>();
             names.Add(nameof(VideoEncodingQuality.HD1080p));
             names.Add(nameof(VideoEncodingQuality.HD720p));
             names.Add(nameof(VideoEncodingQuality.Uhd2160p));
             names.Add(nameof(VideoEncodingQuality.Uhd4320p));
             QualityComboBox.ItemsSource = names;
-            QualityComboBox.SelectedIndex = names.IndexOf(nameof(VideoEncodingQuality.HD1080p));
+            QualityComboBox.SelectedIndex = names.IndexOf(settings.Quality.ToString());
 
-            var frameRates = new string[] { "30fps", "60fps" };
+            var frameRates = new List<string> { "30fps", "60fps" };
             FrameRateComboBox.ItemsSource = frameRates;
-            FrameRateComboBox.SelectedIndex = 1;
+            FrameRateComboBox.SelectedIndex = frameRates.IndexOf($"{settings.FrameRate}fps");
+
+            UseCaptureItemSizeCheckBox.IsChecked = settings.UseSourceSize;
         }
 
         private async void ToggleButton_Checked(object sender, RoutedEventArgs e)
@@ -44,6 +52,8 @@ namespace CaptureFunTestApp
             // Get our encoder properties
             var frameRate = uint.Parse(((string)FrameRateComboBox.SelectedItem).Replace("fps", ""));
             var quality = (VideoEncodingQuality)Enum.Parse(typeof(VideoEncodingQuality), (string)QualityComboBox.SelectedItem, false);
+            var useSourceSize = UseCaptureItemSizeCheckBox.IsChecked.Value;
+
             var temp = MediaEncodingProfile.CreateMp4(quality);
             var bitrate = temp.Video.Bitrate;
             var width = temp.Video.Width;
@@ -59,7 +69,7 @@ namespace CaptureFunTestApp
             }
 
             // Use the capture item's size for the encoding if desired
-            if (UseCaptureItemSizeCheckBox.IsChecked.Value)
+            if (useSourceSize)
             {
                 width = (uint)item.Size.Width;
                 height = (uint)item.Size.Height;
@@ -75,7 +85,9 @@ namespace CaptureFunTestApp
             var file = await GetTempFileAsync();
 
             // Tell the user we've started recording
-            MainTextBlock.Text = "recording...";
+            MainTextBlock.Text = "● rec";
+            var originalBrush = MainTextBlock.Foreground;
+            MainTextBlock.Foreground = new SolidColorBrush(Colors.Red);
             MainProgressBar.IsIndeterminate = true;
 
             // Kick off the encoding
@@ -89,6 +101,7 @@ namespace CaptureFunTestApp
                         width, height, bitrate, 
                         frameRate);
                 }
+                MainTextBlock.Foreground = originalBrush;
             }
             catch (Exception ex)
             {
@@ -103,6 +116,7 @@ namespace CaptureFunTestApp
 
                 button.IsChecked = false;
                 MainTextBlock.Text = "failure";
+                MainTextBlock.Foreground = originalBrush;
                 MainProgressBar.IsIndeterminate = false;
                 return;
             }
@@ -171,6 +185,65 @@ namespace CaptureFunTestApp
             {
                 return number + 1;
             }
+        }
+
+        private AppSettings GetCurrentSettings()
+        {
+            var quality = ParseEnumValue<VideoEncodingQuality>((string)QualityComboBox.SelectedItem);
+            var frameRate = uint.Parse(((string)FrameRateComboBox.SelectedItem).Replace("fps", ""));
+            var useSourceSize = UseCaptureItemSizeCheckBox.IsChecked.Value;
+
+            return new AppSettings { Quality = quality, FrameRate = frameRate, UseSourceSize = useSourceSize };
+        }
+
+        private AppSettings GetCachedSettings()
+        {
+            var localSettings = ApplicationData.Current.LocalSettings;
+            var result =  new AppSettings
+            {
+                Quality = VideoEncodingQuality.HD1080p,
+                FrameRate = 60,
+                UseSourceSize = true
+            };
+            if (localSettings.Values.TryGetValue(nameof(AppSettings.Quality), out var quality))
+            {
+                result.Quality = ParseEnumValue<VideoEncodingQuality>((string)quality);
+            }
+            if (localSettings.Values.TryGetValue(nameof(AppSettings.FrameRate), out var frameRate))
+            {
+                result.FrameRate = (uint)frameRate;
+            }
+            if (localSettings.Values.TryGetValue(nameof(AppSettings.UseSourceSize), out var useSourceSize))
+            {
+                result.UseSourceSize = (bool)useSourceSize;
+            }
+            return result;
+        }
+
+        public void CacheCurrentSettings()
+        {
+            var settings = GetCurrentSettings();
+            CacheSettings(settings);
+        }
+
+        private static void CacheSettings(AppSettings settings)
+        {
+            var localSettings = ApplicationData.Current.LocalSettings;
+            localSettings.Values[nameof(AppSettings.Quality)] = settings.Quality.ToString();
+            localSettings.Values[nameof(AppSettings.FrameRate)] = settings.FrameRate;
+            localSettings.Values[nameof(AppSettings.UseSourceSize)] = settings.UseSourceSize;
+        }
+
+        private static T ParseEnumValue<T>(string input)
+        {
+            return (T)Enum.Parse(typeof(T), input, false);
+        }
+
+        struct AppSettings
+        {
+            public VideoEncodingQuality Quality;
+            public uint FrameRate;
+            public bool UseSourceSize;
         }
 
         private Direct3D11Device _device;

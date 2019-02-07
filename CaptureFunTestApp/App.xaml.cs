@@ -93,7 +93,19 @@ namespace CaptureFunTestApp
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Save application state and stop any background activity
+
+            // Save our state
+            var rootFrame = Window.Current.Content as Frame;
+            if (rootFrame != null)
+            {
+                var page = rootFrame.Content as MainPage;
+
+                if (page != null)
+                {
+                    page.CacheCurrentSettings();
+                }
+            }
+            
             deferral.Complete();
         }
     }
