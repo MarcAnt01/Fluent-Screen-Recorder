@@ -24,6 +24,18 @@ namespace SimpleRecorder
         {
             InitializeComponent();
 
+            if (!GraphicsCaptureSession.IsSupported())
+            {
+                IsEnabled = false;
+
+                var dialog = new MessageDialog(
+                    "Screen capture is not supported on this device for this release of Windows!",
+                    "Screen capture unsupported");
+
+                var ignored = dialog.ShowAsync();
+                return;
+            }
+
             _device = new CanvasDevice();
 
             var settings = GetCachedSettings();
