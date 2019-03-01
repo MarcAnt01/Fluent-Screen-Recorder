@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Microsoft.Graphics.Canvas;
+using System;
 using System.Threading;
+using Windows.Foundation.Metadata;
 using Windows.Graphics;
 using Windows.Graphics.Capture;
 using Windows.Graphics.DirectX;
 using Windows.Graphics.DirectX.Direct3D11;
-using WinRTInteropTools;
 
 namespace CaptureFun
 {
@@ -27,7 +28,9 @@ namespace CaptureFun
             GraphicsCaptureItem item,
             SizeInt32 size)
         {
-            _device = Direct3D11Device.CreateFromDirect3D11Device(device);
+            MakeCopy = !ApiInformation.IsApiContractPresent(typeof(Windows.Foundation.UniversalApiContract).FullName, 8);
+
+            _device = CanvasDevice.CreateFromDirect3D11Device(device);
             _item = item;
             _event = new ManualResetEvent(false);
             _completed = false;
@@ -88,27 +91,20 @@ namespace CaptureFun
             var result = new SurfaceWithInfo();
             if (MakeCopy)
             {
-                using (var multithread = _device.Multithread)
-                using (var lockSession = multithread.Lock())
-                using (var texture = Direct3D11Texture2D.CreateFromDirect3DSurface(_currentFrame.Surface))
-                using (var context = _device.ImmediateContext)
+                var copyBitmap = new CanvasRenderTarget(_device, _currentFrame.Surface.Description.Width, _currentFrame.Surface.Description.Height, 96);
+                using (var sourceFrame = CanvasBitmap.CreateFromDirect3D11Surface(_device, _currentFrame.Surface))
                 {
-                    var desc = texture.Description2D;
-                    desc.Usage = Direct3DUsage.Default;
-                    desc.BindFlags = 0;
-                    desc.CpuAccessFlags = 0;
-                    desc.MiscFlags = 0;
-                    result.Surface = _device.CreateTexture2D(desc);
-                    result.SystemRelativeTime = _currentFrame.SystemRelativeTime;
-                    context.CopyResource(result.Surface, texture);
+                    copyBitmap.CopyPixelsFromBitmap(sourceFrame);
+                    result.Surface = copyBitmap;
                 }
             }
             else
             {
                 result.Surface = _currentFrame.Surface;
-                result.SystemRelativeTime = _currentFrame.SystemRelativeTime;
             }
-            
+
+            result.SystemRelativeTime = _currentFrame.SystemRelativeTime;
+
             return result;
         }
 
@@ -126,7 +122,7 @@ namespace CaptureFun
             _currentFrame?.Dispose();
         }
 
-        private Direct3D11Device _device;
+        private CanvasDevice _device;
         private ManualResetEvent _event;
         private Direct3D11CaptureFrame _currentFrame;
         private bool _completed;
@@ -135,6 +131,6 @@ namespace CaptureFun
         private GraphicsCaptureSession _session;
         private Direct3D11CaptureFramePool _framePool;
 
-        private readonly bool MakeCopy = false;
+        private readonly bool MakeCopy;
     }
 }

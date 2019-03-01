@@ -1,4 +1,5 @@
 ﻿using CaptureFun;
+using Microsoft.Graphics.Canvas;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,7 +15,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
-using WinRTInteropTools;
 
 namespace CaptureFunTestApp
 {
@@ -24,7 +24,7 @@ namespace CaptureFunTestApp
         {
             InitializeComponent();
 
-            _device = new Direct3D11Device();
+            _device = new CanvasDevice();
 
             var settings = GetCachedSettings();
 
@@ -244,7 +244,7 @@ namespace CaptureFunTestApp
             public bool UseSourceSize;
         }
 
-        private Direct3D11Device _device;
+        private CanvasDevice _device;
         private Encoder _encoder;
     }
 }

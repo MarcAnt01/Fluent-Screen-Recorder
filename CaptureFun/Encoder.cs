@@ -8,7 +8,6 @@ using Windows.Media.Core;
 using Windows.Media.MediaProperties;
 using Windows.Media.Transcoding;
 using Windows.Storage.Streams;
-using WinRTInteropTools;
 
 namespace CaptureFun
 {
@@ -16,9 +15,7 @@ namespace CaptureFun
     {
         public Encoder(IDirect3DDevice device, GraphicsCaptureItem item)
         {
-            _device = Direct3D11Device.CreateFromDirect3D11Device(device);
-            _deviceContext = _device.ImmediateContext;
-            _multiThread = _device.Multithread;
+            _device = device;
             _captureItem = item;
             _isRecording = false;
 
@@ -76,8 +73,6 @@ namespace CaptureFun
         private void DisposeInternal()
         {
             _device.Dispose();
-            _deviceContext.Dispose();
-            _multiThread.Dispose();
             _frameGenerator.Dispose();
         }
 
@@ -109,7 +104,6 @@ namespace CaptureFun
                 try
                 {
                     using (var frame = _frameGenerator.WaitForNewFrame())
-                    using (var lockSession = _multiThread.Lock())
                     {
                         if (frame == null)
                         {
@@ -148,9 +142,7 @@ namespace CaptureFun
             }
         }
 
-        private Direct3D11Device _device;
-        private Direct3D11DeviceContext _deviceContext;
-        private Direct3D11Multithread _multiThread;
+        private IDirect3DDevice _device;
 
         private GraphicsCaptureItem _captureItem;
         private CaptureFrameWait _frameGenerator;
