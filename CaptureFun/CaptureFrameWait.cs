@@ -135,6 +135,6 @@ namespace CaptureFun
         private GraphicsCaptureSession _session;
         private Direct3D11CaptureFramePool _framePool;
 
-        private readonly bool MakeCopy = true;
+        private readonly bool MakeCopy = false;
     }
 }
