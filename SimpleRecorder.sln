@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaptureFun", "CaptureFun\CaptureFun.csproj", "{7FFCAEB5-D8BA-49F4-B89F-7033E7A01447}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaptureEncoder", "CaptureEncoder\CaptureEncoder.csproj", "{7FFCAEB5-D8BA-49F4-B89F-7033E7A01447}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaptureFunTestApp", "CaptureFunTestApp\CaptureFunTestApp.csproj", "{4BA5485A-9122-404C-8FE3-15A8A0E31E40}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleRecorder", "SimpleRecorder\SimpleRecorder.csproj", "{4BA5485A-9122-404C-8FE3-15A8A0E31E40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

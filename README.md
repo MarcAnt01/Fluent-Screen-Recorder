@@ -1,1 +1,1 @@
-# CaptureFun
+# Simple Recorder
