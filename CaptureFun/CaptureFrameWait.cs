@@ -92,11 +92,9 @@ namespace CaptureFun
             if (MakeCopy)
             {
                 var copyBitmap = new CanvasRenderTarget(_device, _currentFrame.Surface.Description.Width, _currentFrame.Surface.Description.Height, 96);
-                using (var sourceFrame = CanvasBitmap.CreateFromDirect3D11Surface(_device, _currentFrame.Surface))
-                {
-                    copyBitmap.CopyPixelsFromBitmap(sourceFrame);
-                    result.Surface = copyBitmap;
-                }
+                var sourceFrame = CanvasBitmap.CreateFromDirect3D11Surface(_device, _currentFrame.Surface);
+                copyBitmap.CopyPixelsFromBitmap(sourceFrame);
+                result.Surface = copyBitmap;
             }
             else
             {
@@ -118,7 +116,7 @@ namespace CaptureFun
                 _item.Closed -= OnClosed;
             }
             _item = null;
-            _device?.Dispose();
+            _device = null;
             _currentFrame?.Dispose();
         }
 

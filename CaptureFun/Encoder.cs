@@ -72,7 +72,6 @@ namespace CaptureFun
 
         private void DisposeInternal()
         {
-            _device.Dispose();
             _frameGenerator.Dispose();
         }
 
