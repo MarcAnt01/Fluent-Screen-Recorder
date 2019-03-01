@@ -32,8 +32,9 @@ namespace CaptureFun
 
             _device = CanvasDevice.CreateFromDirect3D11Device(device);
             _item = item;
-            _event = new ManualResetEvent(false);
-            _completed = false;
+            _frameEvent = new ManualResetEvent(false);
+            _closedEvent = new ManualResetEvent(false);
+            _events = new[] { _closedEvent, _frameEvent };
 
             InitializeCapture(size);
         }
@@ -53,13 +54,13 @@ namespace CaptureFun
 
         private void SetResult(Direct3D11CaptureFrame frame)
         {
-            if (!_completed)
-            {
-                _currentFrame = frame;
-                _completed = _currentFrame == null;
-            }
-            
-            _event.Set();
+            _currentFrame = frame;
+            _frameEvent.Set();
+        }
+
+        private void Stop()
+        {
+            _closedEvent.Set();
         }
 
         private void OnFrameArrived(Direct3D11CaptureFramePool sender, object args)
@@ -69,32 +70,46 @@ namespace CaptureFun
 
         private void OnClosed(GraphicsCaptureItem sender, object args)
         {
-            SetResult(null);
+            Stop();
+        }
+
+        private void Cleanup()
+        {
+            _framePool?.Dispose();
+            _session?.Dispose();
+            if (_item != null)
+            {
+                _item.Closed -= OnClosed;
+            }
+            _item = null;
+            _device = null;
+            _currentFrame?.Dispose();
         }
 
         public SurfaceWithInfo WaitForNewFrame()
         {
-            if (_completed)
-            {
-                return null;
-            }
-
             // Let's get a fresh one.
             _currentFrame?.Dispose();
-            _event.Reset();
+            _frameEvent.Reset();
 
-            if (_completed || !_event.WaitOne() || _currentFrame == null)
+            var signaledEvent = _events[WaitHandle.WaitAny(_events)];
+            if (signaledEvent == _closedEvent)
             {
+                Cleanup();
                 return null;
             }
+
+            System.Diagnostics.Debug.Assert(!_closedEvent.WaitOne(0));
 
             var result = new SurfaceWithInfo();
             if (MakeCopy)
             {
                 var copyBitmap = new CanvasRenderTarget(_device, _currentFrame.Surface.Description.Width, _currentFrame.Surface.Description.Height, 96);
-                var sourceFrame = CanvasBitmap.CreateFromDirect3D11Surface(_device, _currentFrame.Surface);
-                copyBitmap.CopyPixelsFromBitmap(sourceFrame);
-                result.Surface = copyBitmap;
+                using (var sourceFrame = CanvasBitmap.CreateFromDirect3D11Surface(_device, _currentFrame.Surface))
+                {
+                    copyBitmap.CopyPixelsFromBitmap(sourceFrame);
+                    result.Surface = copyBitmap;
+                }
             }
             else
             {
@@ -108,22 +123,15 @@ namespace CaptureFun
 
         public void Dispose()
         {
-            SetResult(null);
-            _framePool?.Dispose();
-            _session?.Dispose();
-            if (_item != null)
-            {
-                _item.Closed -= OnClosed;
-            }
-            _item = null;
-            _device = null;
-            _currentFrame?.Dispose();
+            Stop();
+            Cleanup();
         }
 
         private CanvasDevice _device;
-        private ManualResetEvent _event;
+        private ManualResetEvent[] _events;
+        private ManualResetEvent _frameEvent;
+        private ManualResetEvent _closedEvent;
         private Direct3D11CaptureFrame _currentFrame;
-        private bool _completed;
 
         private GraphicsCaptureItem _item;
         private GraphicsCaptureSession _session;
