@@ -1,5 +1,6 @@
 ﻿using Microsoft.Graphics.Canvas;
 using System;
+using System.Diagnostics;
 using System.Threading;
 using Windows.Foundation.Metadata;
 using Windows.Graphics;
@@ -29,6 +30,7 @@ namespace CaptureEncoder
             SizeInt32 size)
         {
             MakeCopy = !ApiInformation.IsApiContractPresent(typeof(Windows.Foundation.UniversalApiContract).FullName, 8);
+            Debug.WriteLine($"MakeCopy: {MakeCopy}");
 
             _device = CanvasDevice.CreateFromDirect3D11Device(device);
             _item = item;
