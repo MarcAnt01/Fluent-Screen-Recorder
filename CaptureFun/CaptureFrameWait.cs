@@ -99,8 +99,6 @@ namespace CaptureFun
                 return null;
             }
 
-            System.Diagnostics.Debug.Assert(!_closedEvent.WaitOne(0));
-
             var result = new SurfaceWithInfo();
             if (MakeCopy)
             {
