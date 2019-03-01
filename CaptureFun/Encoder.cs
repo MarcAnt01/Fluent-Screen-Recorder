@@ -84,27 +84,18 @@ namespace CaptureFun
         private void CreateMediaObjects()
         {
             // Create our encoding profile based on the size of the item
-            // TODO: This only really makes sense for monitors, we need to change this to make sense in all cases.
             int width = _captureItem.Size.Width;
             int height = _captureItem.Size.Height;
 
-            // Describe our input: uncompressed BGRA8 buffers comming in at the monitor's refresh rate
-            // TODO: We pick 60Hz here because it applies to most monitors. However this should be more robust.
+            // Describe our input: uncompressed BGRA8 buffers
             var videoProperties = VideoEncodingProperties.CreateUncompressed(MediaEncodingSubtypes.Bgra8, (uint)width, (uint)height);
             _videoDescriptor = new VideoStreamDescriptor(videoProperties);
-            _videoDescriptor.EncodingProperties.FrameRate.Numerator = c_frameRateN;
-            _videoDescriptor.EncodingProperties.FrameRate.Denominator = c_frameRateD;
-            _videoDescriptor.EncodingProperties.Bitrate = (uint)(c_frameRateN * c_frameRateD * width * height * 4);
 
             // Create our MediaStreamSource
             _mediaStreamSource = new MediaStreamSource(_videoDescriptor);
             _mediaStreamSource.BufferTime = TimeSpan.FromSeconds(0);
             _mediaStreamSource.Starting += OnMediaStreamSourceStarting;
             _mediaStreamSource.SampleRequested += OnMediaStreamSourceSampleRequested;
-
-            // Create our device manager
-            _mediaGraphicsDevice = MediaGraphicsDevice.CreateFromMediaStreamSource(_mediaStreamSource);
-            _mediaGraphicsDevice.RenderingDevice = _device;
 
             // Create our transcoder
             _transcoder = new MediaTranscoder();
@@ -160,7 +151,6 @@ namespace CaptureFun
         private Direct3D11Device _device;
         private Direct3D11DeviceContext _deviceContext;
         private Direct3D11Multithread _multiThread;
-        private MediaGraphicsDevice _mediaGraphicsDevice;
 
         private GraphicsCaptureItem _captureItem;
         private CaptureFrameWait _frameGenerator;
@@ -170,9 +160,5 @@ namespace CaptureFun
         private MediaTranscoder _transcoder;
         private bool _isRecording;
         private bool _closed = false;
-
-        // Constants
-        private const int c_frameRateN = 60;
-        private const int c_frameRateD = 1;
     }
 }

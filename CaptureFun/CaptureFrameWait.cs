@@ -85,21 +85,30 @@ namespace CaptureFun
                 return null;
             }
 
-            SurfaceWithInfo result = new SurfaceWithInfo();
-            using (var multithread = _device.Multithread)
-            using (var lockSession = multithread.Lock())
-            using (var texture = Direct3D11Texture2D.CreateFromDirect3DSurface(_currentFrame.Surface))
-            using (var context = _device.ImmediateContext)
+            var result = new SurfaceWithInfo();
+            if (MakeCopy)
             {
-                var desc = texture.Description2D;
-                desc.Usage = Direct3DUsage.Default;
-                desc.BindFlags = 0;
-                desc.CpuAccessFlags = 0;
-                desc.MiscFlags = 0;
-                result.Surface = _device.CreateTexture2D(desc);
-                result.SystemRelativeTime = _currentFrame.SystemRelativeTime;
-                context.CopyResource(result.Surface, texture);
+                using (var multithread = _device.Multithread)
+                using (var lockSession = multithread.Lock())
+                using (var texture = Direct3D11Texture2D.CreateFromDirect3DSurface(_currentFrame.Surface))
+                using (var context = _device.ImmediateContext)
+                {
+                    var desc = texture.Description2D;
+                    desc.Usage = Direct3DUsage.Default;
+                    desc.BindFlags = 0;
+                    desc.CpuAccessFlags = 0;
+                    desc.MiscFlags = 0;
+                    result.Surface = _device.CreateTexture2D(desc);
+                    result.SystemRelativeTime = _currentFrame.SystemRelativeTime;
+                    context.CopyResource(result.Surface, texture);
+                }
             }
+            else
+            {
+                result.Surface = _currentFrame.Surface;
+                result.SystemRelativeTime = _currentFrame.SystemRelativeTime;
+            }
+            
             return result;
         }
 
@@ -125,5 +134,7 @@ namespace CaptureFun
         private GraphicsCaptureItem _item;
         private GraphicsCaptureSession _session;
         private Direct3D11CaptureFramePool _framePool;
+
+        private readonly bool MakeCopy = true;
     }
 }
