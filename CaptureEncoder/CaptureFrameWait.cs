@@ -1,5 +1,4 @@
-﻿using Microsoft.Graphics.Canvas;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Threading;
 using Windows.Foundation.Metadata;
@@ -32,7 +31,8 @@ namespace CaptureEncoder
             MakeCopy = !ApiInformation.IsApiContractPresent(typeof(Windows.Foundation.UniversalApiContract).FullName, 8);
             Debug.WriteLine($"MakeCopy: {MakeCopy}");
 
-            _device = CanvasDevice.CreateFromDirect3D11Device(device);
+            _device = device;
+            _d3dDevice = Direct3D11Helpers.GetSharpDXDevice(device);
             _item = item;
             _frameEvent = new ManualResetEvent(false);
             _closedEvent = new ManualResetEvent(false);
@@ -85,6 +85,7 @@ namespace CaptureEncoder
             }
             _item = null;
             _device = null;
+            _d3dDevice = null;
             _currentFrame?.Dispose();
         }
 
@@ -104,12 +105,16 @@ namespace CaptureEncoder
             var result = new SurfaceWithInfo();
             if (MakeCopy)
             {
-                var copyBitmap = new CanvasRenderTarget(_device, _currentFrame.Surface.Description.Width, _currentFrame.Surface.Description.Height, 96);
-                using (var sourceFrame = CanvasBitmap.CreateFromDirect3D11Surface(_device, _currentFrame.Surface))
-                {
-                    copyBitmap.CopyPixelsFromBitmap(sourceFrame);
-                    result.Surface = copyBitmap;
-                }
+                var sourceTexture = Direct3D11Helpers.GetSharpDXTexture2D(_currentFrame.Surface);
+                var description = sourceTexture.Description;
+                description.Usage = SharpDX.Direct3D11.ResourceUsage.Default;
+                description.BindFlags = 0;
+                description.CpuAccessFlags = 0;
+                description.MipLevels = 0;
+                var copyTexture = new SharpDX.Direct3D11.Texture2D(_d3dDevice, description);
+                _d3dDevice.ImmediateContext.CopyResource(sourceTexture, copyTexture);
+
+                result.Surface = new SharpDXWinRTSurface(copyTexture);
             }
             else
             {
@@ -127,7 +132,9 @@ namespace CaptureEncoder
             Cleanup();
         }
 
-        private CanvasDevice _device;
+        private IDirect3DDevice _device;
+        private SharpDX.Direct3D11.Device _d3dDevice;
+
         private ManualResetEvent[] _events;
         private ManualResetEvent _frameEvent;
         private ManualResetEvent _closedEvent;
