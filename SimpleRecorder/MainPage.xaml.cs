@@ -1,10 +1,10 @@
 ﻿using CaptureEncoder;
-using Microsoft.Graphics.Canvas;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Graphics.Capture;
+using Windows.Graphics.DirectX.Direct3D11;
 using Windows.Media.MediaProperties;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -36,7 +36,7 @@ namespace SimpleRecorder
                 return;
             }
 
-            _device = new CanvasDevice();
+            _device = Direct3D11Helpers.CreateDevice();
 
             var settings = GetCachedSettings();
 
@@ -256,7 +256,7 @@ namespace SimpleRecorder
             public bool UseSourceSize;
         }
 
-        private CanvasDevice _device;
+        private IDirect3DDevice _device;
         private Encoder _encoder;
     }
 }
