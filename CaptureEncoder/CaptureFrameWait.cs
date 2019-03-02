@@ -32,7 +32,7 @@ namespace CaptureEncoder
             Debug.WriteLine($"MakeCopy: {MakeCopy}");
 
             _device = device;
-            _d3dDevice = Direct3D11Helpers.GetSharpDXDevice(device);
+            _d3dDevice = Direct3D11Helpers.CreateSharpDXDevice(device);
             _item = item;
             _frameEvent = new ManualResetEvent(false);
             _closedEvent = new ManualResetEvent(false);
@@ -105,16 +105,15 @@ namespace CaptureEncoder
             var result = new SurfaceWithInfo();
             if (MakeCopy)
             {
-                var sourceTexture = Direct3D11Helpers.GetSharpDXTexture2D(_currentFrame.Surface);
+                var sourceTexture = Direct3D11Helpers.CreateSharpDXTexture2D(_currentFrame.Surface);
                 var description = sourceTexture.Description;
                 description.Usage = SharpDX.Direct3D11.ResourceUsage.Default;
-                description.BindFlags = 0;
-                description.CpuAccessFlags = 0;
-                description.MipLevels = 0;
+                description.BindFlags = SharpDX.Direct3D11.BindFlags.ShaderResource;
+                description.CpuAccessFlags = SharpDX.Direct3D11.CpuAccessFlags.None;
                 var copyTexture = new SharpDX.Direct3D11.Texture2D(_d3dDevice, description);
                 _d3dDevice.ImmediateContext.CopyResource(sourceTexture, copyTexture);
 
-                result.Surface = new SharpDXWinRTSurface(copyTexture);
+                result.Surface = Direct3D11Helpers.CreateDirect3DSurfaceFromSharpDXTexture(copyTexture);
             }
             else
             {
