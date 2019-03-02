@@ -105,15 +105,20 @@ namespace CaptureEncoder
             var result = new SurfaceWithInfo();
             if (MakeCopy)
             {
-                var sourceTexture = Direct3D11Helpers.CreateSharpDXTexture2D(_currentFrame.Surface);
-                var description = sourceTexture.Description;
-                description.Usage = SharpDX.Direct3D11.ResourceUsage.Default;
-                description.BindFlags = SharpDX.Direct3D11.BindFlags.ShaderResource;
-                description.CpuAccessFlags = SharpDX.Direct3D11.CpuAccessFlags.None;
-                var copyTexture = new SharpDX.Direct3D11.Texture2D(_d3dDevice, description);
-                _d3dDevice.ImmediateContext.CopyResource(sourceTexture, copyTexture);
+                using (var sourceTexture = Direct3D11Helpers.CreateSharpDXTexture2D(_currentFrame.Surface))
+                {
+                    var description = sourceTexture.Description;
+                    description.Usage = SharpDX.Direct3D11.ResourceUsage.Default;
+                    description.BindFlags = SharpDX.Direct3D11.BindFlags.ShaderResource | SharpDX.Direct3D11.BindFlags.RenderTarget;
+                    description.CpuAccessFlags = SharpDX.Direct3D11.CpuAccessFlags.None;
+                    description.OptionFlags = SharpDX.Direct3D11.ResourceOptionFlags.None;
 
-                result.Surface = Direct3D11Helpers.CreateDirect3DSurfaceFromSharpDXTexture(copyTexture);
+                    using (var copyTexture = new SharpDX.Direct3D11.Texture2D(_d3dDevice, description))
+                    {
+                        _d3dDevice.ImmediateContext.CopyResource(sourceTexture, copyTexture);
+                        result.Surface = Direct3D11Helpers.CreateDirect3DSurfaceFromSharpDXTexture(copyTexture);
+                    }
+                }
             }
             else
             {
