@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap6="http://schemas.microsoft.com/appx/manifest/uap/windows10/6" IgnorableNamespaces="uap mp uap6">
-  <Identity Name="Robmikh.SimpleScreenRecorder" Publisher="CN=robmi" Version="1.0.6.0" />
-  <mp:PhoneIdentity PhoneProductId="00d57453-a2f4-448d-8e1a-883dc827cd55" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="19348RobertMikhayelyanApp.SimpleScreenRecorder" Publisher="CN=8F43D630-18C6-4037-AB42-E933EF41D095" Version="1.0.8.0" />
+  <mp:PhoneIdentity PhoneProductId="e5f8c715-7203-4e87-8858-098bdd016f79" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>SimpleScreenRecorder</DisplayName>
-    <PublisherDisplayName>robmi</PublisherDisplayName>
+    <DisplayName>Simple Screen Recorder</DisplayName>
+    <PublisherDisplayName>Robert Mikhayelyan Apps</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
