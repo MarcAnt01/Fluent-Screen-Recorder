@@ -6,7 +6,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace SimpleRecorder
+namespace FluentScreenRecorder
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
@@ -96,7 +96,7 @@ namespace SimpleRecorder
                     page.CacheCurrentSettings();
                 }
             }
-            
+
             deferral.Complete();
         }
     }

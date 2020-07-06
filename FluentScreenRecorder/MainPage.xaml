@@ -1,0 +1,39 @@
+﻿<Page
+    x:Class="FluentScreenRecorder.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FluentScreenRecorder"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock x:Name="MainTextBlock" HorizontalTextAlignment="Center" FontSize="30" HorizontalAlignment="Center"/>
+                <ToggleButton  HorizontalAlignment="Center" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Width="100" Height="100" Background="{ThemeResource SystemAccentColor}" CornerRadius="90">
+                    <StackPanel>
+                        <FontIcon x:Name="RecordIcon" Glyph="&#xE714;" FontFamily="Segoe MDL2 Assets" FontSize="70"/>
+                        <FontIcon x:Name="StopIcon" Glyph="&#xE71A;" FontFamily="Segoe MDL2 Assets" FontSize="50"/>
+                    </StackPanel>
+                </ToggleButton>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="250">
+                <TextBlock Text="options" HorizontalAlignment="Stretch" HorizontalTextAlignment="Center" FontSize="30" />
+                <ComboBox x:Name="QualityComboBox" Margin="10" MinWidth="150" HorizontalAlignment="Center"/>
+                <ComboBox x:Name="FrameRateComboBox" Margin="10" MinWidth="150" HorizontalAlignment="Center" />
+                <CheckBox x:Name="UseCaptureItemSizeCheckBox" HorizontalAlignment="Center" Margin="10" Content="Use source size as video resolution" VerticalAlignment="Top" IsChecked="False" MaxWidth="150"/>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</Page>

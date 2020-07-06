@@ -15,14 +15,29 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Media;
+using Windows.Foundation;
+using Windows.UI.ViewManagement;
+using Windows.ApplicationModel.Core;
 
-namespace SimpleRecorder
+namespace FluentScreenRecorder
 {
     public sealed partial class MainPage : Page
     {
         public MainPage()
         {
             InitializeComponent();
+
+            //hide titlebar
+            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
+
+            RecordIcon.Visibility = Visibility.Visible;
+            StopIcon.Visibility = Visibility.Collapsed;
+
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(
+               new Size(370, 220));
 
             if (!GraphicsCaptureSession.IsSupported())
             {
@@ -35,6 +50,8 @@ namespace SimpleRecorder
                 var ignored = dialog.ShowAsync();
                 return;
             }
+
+
 
             _device = Direct3D11Helpers.CreateDevice();
 
@@ -95,10 +112,12 @@ namespace SimpleRecorder
             var file = await GetTempFileAsync();
 
             // Tell the user we've started recording
-            MainTextBlock.Text = "● rec";
+            RecordIcon.Visibility = Visibility.Collapsed;
+            StopIcon.Visibility = Visibility.Visible;
+            MainTextBlock.Text = "● recording ..";
             var originalBrush = MainTextBlock.Foreground;
             MainTextBlock.Foreground = new SolidColorBrush(Colors.Red);
-            MainProgressBar.IsIndeterminate = true;
+
 
             // Kick off the encoding
             try
@@ -107,8 +126,8 @@ namespace SimpleRecorder
                 using (_encoder = new Encoder(_device, item))
                 {
                     await _encoder.EncodeAsync(
-                        stream, 
-                        width, height, bitrate, 
+                        stream,
+                        width, height, bitrate,
                         frameRate);
                 }
                 MainTextBlock.Foreground = originalBrush;
@@ -127,12 +146,14 @@ namespace SimpleRecorder
                 button.IsChecked = false;
                 MainTextBlock.Text = "failure";
                 MainTextBlock.Foreground = originalBrush;
-                MainProgressBar.IsIndeterminate = false;
+
                 return;
             }
 
             // At this point the encoding has finished,
             // tell the user we're now saving
+            RecordIcon.Visibility = Visibility.Visible;
+            StopIcon.Visibility = Visibility.Collapsed;
             MainTextBlock.Text = "saving...";
 
             // Ask the user where they'd like the video to live
@@ -143,7 +164,7 @@ namespace SimpleRecorder
                 // Throw out the encoded video
                 button.IsChecked = false;
                 MainTextBlock.Text = "canceled";
-                MainProgressBar.IsIndeterminate = false;
+
                 await file.DeleteAsync();
                 return;
             }
@@ -153,7 +174,7 @@ namespace SimpleRecorder
             // Tell the user we're done
             button.IsChecked = false;
             MainTextBlock.Text = "done";
-            MainProgressBar.IsIndeterminate = false;
+
 
             // Open the final product
             await Launcher.LaunchFileAsync(newFile);
