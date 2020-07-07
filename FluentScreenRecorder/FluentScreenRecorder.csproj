@@ -137,7 +137,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="FleuntScreenRecorder_TemporaryKey.pfx" />
+    <None Include="FluentScreenRecorder_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Default.rd.xml" />
