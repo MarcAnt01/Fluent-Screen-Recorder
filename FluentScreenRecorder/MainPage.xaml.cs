@@ -27,6 +27,9 @@ namespace FluentScreenRecorder
         {
             InitializeComponent();
 
+            ApplicationView.PreferredLaunchViewSize = new Size(370,250);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+
             //hide titlebar
             ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
             formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
@@ -35,9 +38,9 @@ namespace FluentScreenRecorder
 
             RecordIcon.Visibility = Visibility.Visible;
             StopIcon.Visibility = Visibility.Collapsed;
-
+                        
             ApplicationView.GetForCurrentView().SetPreferredMinSize(
-               new Size(370, 220));
+               new Size(370, 250));
 
             if (!GraphicsCaptureSession.IsSupported())
             {
