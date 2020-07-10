@@ -192,8 +192,9 @@ namespace FluentScreenRecorder
         private async Task<StorageFile> PickVideoAsync()
         {
             var picker = new FileSavePicker();
+            var time = DateTime.Now.ToString("yyyy-MM--dd-HHmmss");
             picker.SuggestedStartLocation = PickerLocationId.VideosLibrary;
-            picker.SuggestedFileName = "recordedVideo";
+            picker.SuggestedFileName = $"recordedVideo{time}";
             picker.DefaultFileExtension = ".mp4";
             picker.FileTypeChoices.Add("MP4 Video", new List<string> { ".mp4" });
 
