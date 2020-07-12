@@ -19,8 +19,8 @@
                 <TextBlock x:Name="MainTextBlock" HorizontalTextAlignment="Center" FontSize="30" HorizontalAlignment="Center"/>
                 <ToggleButton  HorizontalAlignment="Center" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Width="100" Height="100" Background="{ThemeResource SystemAccentColor}" CornerRadius="90">
                     <StackPanel>
-                        <FontIcon x:Name="RecordIcon" Glyph="&#xE714;" FontFamily="Segoe MDL2 Assets" FontSize="70"/>
-                        <FontIcon x:Name="StopIcon" Glyph="&#xE71A;" FontFamily="Segoe MDL2 Assets" FontSize="50"/>
+                        <FontIcon x:Name="RecordIcon" Glyph="&#xE714;" FontFamily="Segoe MDL2 Assets" FontSize="70" Foreground="White"/>
+                        <FontIcon x:Name="StopIcon" Glyph="&#xE71A;" FontFamily="Segoe MDL2 Assets" FontSize="50" Foreground="White"/>
                     </StackPanel>
                 </ToggleButton>
             </StackPanel>
