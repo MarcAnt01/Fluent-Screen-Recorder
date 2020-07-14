@@ -2,6 +2,8 @@
 
 A fork of [Simple Screen Recorder](https://github.com/robmikh/SimpleRecorder) with Fluent Design and other improvements.
 
+![](https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/Screenshot.jpg?raw=true)
+
 ### Supported platforms
 
 The app supports Windows 10 1809+ . It is a uwp app that can run on Windows 10 for PCs and Surface Hub.
