@@ -40,21 +40,7 @@ namespace FluentScreenRecorder
             StopIcon.Visibility = Visibility.Collapsed;
                         
             ApplicationView.GetForCurrentView().SetPreferredMinSize(
-               new Size(370, 250));
-
-            if (!GraphicsCaptureSession.IsSupported())
-            {
-                IsEnabled = false;
-
-                var dialog = new MessageDialog(
-                    "Screen capture is not supported on this device for this release of Windows!",
-                    "Screen capture unsupported");
-
-                var ignored = dialog.ShowAsync();
-                return;
-            }
-
-
+               new Size(370, 250));                   
 
             _device = Direct3D11Helpers.CreateDevice();
 
@@ -140,11 +126,13 @@ namespace FluentScreenRecorder
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex);
 
-                var dialog = new MessageDialog(
-                    $"Uh-oh! Something went wrong!\n0x{ex.HResult:X8} - {ex.Message}",
-                    "Recording failed");
-
-                await dialog.ShowAsync();
+                ContentDialog errorDialog = new ContentDialog
+                {
+                    Title = "Recording failed",
+                    Content = $"Whoops, something went wrong!\n0x{ex.HResult:X8} - {ex.Message}",
+                    CloseButtonText = "Ok"
+                };                
+                await errorDialog.ShowAsync();
 
                 button.IsChecked = false;
                 MainTextBlock.Text = "failure";
