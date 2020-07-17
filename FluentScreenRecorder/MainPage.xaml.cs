@@ -58,7 +58,7 @@ namespace FluentScreenRecorder
             FrameRateComboBox.ItemsSource = frameRates;
             FrameRateComboBox.SelectedIndex = frameRates.IndexOf($"{settings.FrameRate}fps");
 
-            UseCaptureItemSizeCheckBox.IsChecked = settings.UseSourceSize;
+            UseCaptureItemToggleSwitch.IsOn = settings.UseSourceSize;
         }
 
         private async void ToggleButton_Checked(object sender, RoutedEventArgs e)
@@ -68,7 +68,7 @@ namespace FluentScreenRecorder
             // Get our encoder properties
             var frameRate = uint.Parse(((string)FrameRateComboBox.SelectedItem).Replace("fps", ""));
             var quality = (VideoEncodingQuality)Enum.Parse(typeof(VideoEncodingQuality), (string)QualityComboBox.SelectedItem, false);
-            var useSourceSize = UseCaptureItemSizeCheckBox.IsChecked.Value;
+            var useSourceSize = UseCaptureItemToggleSwitch.IsOn;
 
             var temp = MediaEncodingProfile.CreateMp4(quality);
             var bitrate = temp.Video.Bitrate;
@@ -214,7 +214,7 @@ namespace FluentScreenRecorder
         {
             var quality = ParseEnumValue<VideoEncodingQuality>((string)QualityComboBox.SelectedItem);
             var frameRate = uint.Parse(((string)FrameRateComboBox.SelectedItem).Replace("fps", ""));
-            var useSourceSize = UseCaptureItemSizeCheckBox.IsChecked.Value;
+            var useSourceSize = UseCaptureItemToggleSwitch.IsOn;
 
             return new AppSettings { Quality = quality, FrameRate = frameRate, UseSourceSize = useSourceSize };
         }

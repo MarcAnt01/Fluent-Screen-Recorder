@@ -29,9 +29,9 @@
         <Grid Grid.Column="1">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="250">
                 <TextBlock Text="options" HorizontalAlignment="Stretch" HorizontalTextAlignment="Center" FontSize="30" />
-                <ComboBox x:Name="QualityComboBox" Margin="10" MinWidth="150" HorizontalAlignment="Center"/>
+                <ComboBox x:Name="QualityComboBox" Margin="10" MinWidth="150" HorizontalAlignment="Center" />
                 <ComboBox x:Name="FrameRateComboBox" Margin="10" MinWidth="150" HorizontalAlignment="Center" />
-                <CheckBox x:Name="UseCaptureItemSizeCheckBox" HorizontalAlignment="Center" Margin="10" Content="Use source size as video resolution" VerticalAlignment="Top" IsChecked="False" MaxWidth="150"/>
+                <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" HorizontalAlignment="Center" Margin="10" Header="Use source size as video resolution" VerticalAlignment="Top" IsOn="True" MaxWidth="150"/>
             </StackPanel>
         </Grid>
 
