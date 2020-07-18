@@ -27,7 +27,7 @@ namespace FluentScreenRecorder
         {
             InitializeComponent();
 
-            ApplicationView.PreferredLaunchViewSize = new Size(370,250);
+            ApplicationView.PreferredLaunchViewSize = new Size(400,270);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
 
             //hide titlebar
@@ -38,9 +38,9 @@ namespace FluentScreenRecorder
 
             RecordIcon.Visibility = Visibility.Visible;
             StopIcon.Visibility = Visibility.Collapsed;
-                        
+
             ApplicationView.GetForCurrentView().SetPreferredMinSize(
-               new Size(370, 250));                   
+               new Size(400, 270));
 
             _device = Direct3D11Helpers.CreateDevice();
 
@@ -103,7 +103,7 @@ namespace FluentScreenRecorder
             // Tell the user we've started recording
             RecordIcon.Visibility = Visibility.Collapsed;
             StopIcon.Visibility = Visibility.Visible;
-            MainTextBlock.Text = "● recording ..";
+            MainTextBlock.Text = "● recording...";
             var originalBrush = MainTextBlock.Foreground;
             MainTextBlock.Foreground = new SolidColorBrush(Colors.Red);
 
@@ -131,7 +131,7 @@ namespace FluentScreenRecorder
                     Title = "Recording failed",
                     Content = $"Whoops, something went wrong!\n0x{ex.HResult:X8} - {ex.Message}",
                     CloseButtonText = "Ok"
-                };                
+                };
                 await errorDialog.ShowAsync();
 
                 button.IsChecked = false;
