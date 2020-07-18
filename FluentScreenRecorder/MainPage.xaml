@@ -8,6 +8,10 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>        
+        <local:InvertBoolConverter x:Key="InvertBoolConv"/>        
+    </Page.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -29,7 +33,7 @@
         <Grid Grid.Column="1">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="250">
                 <TextBlock Text="options" HorizontalAlignment="Stretch" HorizontalTextAlignment="Center" FontSize="30" />
-                <ComboBox x:Name="QualityComboBox" Margin="10" MinWidth="150" HorizontalAlignment="Center" />
+                <ComboBox x:Name="QualityComboBox" Margin="10" MinWidth="150" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=UseCaptureItemToggleSwitch, Path=IsOn, Converter={StaticResource InvertBoolConv}}" />
                 <ComboBox x:Name="FrameRateComboBox" Margin="10" MinWidth="150" HorizontalAlignment="Center" />
                 <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" HorizontalAlignment="Center" Margin="10" Header="Use source size as video resolution" VerticalAlignment="Top" IsOn="True" MaxWidth="150"/>
             </StackPanel>
