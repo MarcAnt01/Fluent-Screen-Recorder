@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap6="http://schemas.microsoft.com/appx/manifest/uap/windows10/6" IgnorableNamespaces="uap mp uap6">
-  <Identity Publisher="CN=marcant01" Version="1.0.0.0"  Name="FluentScreenRecorder"/>
+  <Identity Publisher="CN=marcant01" Version="1.1.0.0"  Name="FluentScreenRecorder"/>
   <mp:PhoneIdentity PhoneProductId="e5f8c715-7203-4e87-8858-098bdd016f79" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Fluent Screen Recorder</DisplayName>
