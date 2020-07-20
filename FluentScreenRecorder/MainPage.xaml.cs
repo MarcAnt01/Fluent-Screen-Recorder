@@ -180,7 +180,7 @@ namespace FluentScreenRecorder
         private async Task<StorageFile> PickVideoAsync()
         {
             var picker = new FileSavePicker();
-            var time = DateTime.Now.ToString("yyyy-MM--dd-HHmmss");
+            var time = DateTime.Now.ToString("yyyy-MM-dd-HHmmss");
             picker.SuggestedStartLocation = PickerLocationId.VideosLibrary;
             picker.SuggestedFileName = $"recordedVideo{time}";
             picker.DefaultFileExtension = ".mp4";
@@ -193,7 +193,7 @@ namespace FluentScreenRecorder
         private async Task<StorageFile> GetTempFileAsync()
         {
             var folder = ApplicationData.Current.TemporaryFolder;
-            var name = DateTime.Now.ToString("yyyyMMdd-HHmm-ss");
+            var name = DateTime.Now.ToString("yyyy-MM-dd-HHmmss");
             var file = await folder.CreateFileAsync($"{name}.mp4");
             return file;
         }
