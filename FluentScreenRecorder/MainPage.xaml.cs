@@ -27,7 +27,7 @@ namespace FluentScreenRecorder
         {
             InitializeComponent();
 
-            ApplicationView.PreferredLaunchViewSize = new Size(400,270);
+            ApplicationView.PreferredLaunchViewSize = new Size(400,290);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
 
             //hide titlebar
@@ -40,7 +40,7 @@ namespace FluentScreenRecorder
             StopIcon.Visibility = Visibility.Collapsed;
 
             ApplicationView.GetForCurrentView().SetPreferredMinSize(
-               new Size(400, 270));
+               new Size(400, 290));
 
             _device = Direct3D11Helpers.CreateDevice();
 
@@ -177,7 +177,17 @@ namespace FluentScreenRecorder
             _encoder?.Dispose();
         }
 
-        private async Task<StorageFile> PickVideoAsync()
+        //allow to select a custom folder
+        public async void FolderLocationButton_Click(object sender, RoutedEventArgs e)
+        {
+            FolderPicker folderPicker = new FolderPicker();
+            folderPicker.FileTypeFilter.Add("*");
+            folderPicker.SuggestedStartLocation = PickerLocationId.VideosLibrary;
+            var folder = await folderPicker.PickSingleFolderAsync();
+            SelectedFolderTextBox.Text = folder.DisplayName;
+        }
+
+        public async Task<StorageFile> PickVideoAsync()
         {
             var picker = new FileSavePicker();
             var time = DateTime.Now.ToString("yyyy-MM-dd-HHmmss");

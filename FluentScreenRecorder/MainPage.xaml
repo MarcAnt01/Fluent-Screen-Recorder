@@ -8,8 +8,8 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Page.Resources>        
-        <local:InvertBoolConverter x:Key="InvertBoolConv"/>        
+    <Page.Resources>
+        <local:InvertBoolConverter x:Key="InvertBoolConv"/>
     </Page.Resources>
 
     <Grid>
@@ -30,13 +30,23 @@
             </StackPanel>
         </Grid>
 
+        
         <Grid Grid.Column="1">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="250" Padding="0,25,0,0">
-                <TextBlock Text="options" HorizontalAlignment="Stretch" HorizontalTextAlignment="Center" FontSize="30" />
-                <ComboBox x:Name="QualityComboBox" Margin="10" MinWidth="150" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=UseCaptureItemToggleSwitch, Path=IsOn, Converter={StaticResource InvertBoolConv}}" />
-                <ComboBox x:Name="FrameRateComboBox" Margin="10" MinWidth="150" HorizontalAlignment="Center" />
-                <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" HorizontalAlignment="Center" Margin="10" Header="Use source size as video resolution" VerticalAlignment="Top" IsOn="True" MaxWidth="150"/>
-            </StackPanel>
+            <ScrollViewer Margin="0,32,0,0">
+                <Grid>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="250" Height="486">
+                        <TextBlock Text="Video options" FontSize="25" HorizontalAlignment="Center"/>
+                        <ComboBox x:Name="QualityComboBox" Margin="5" MinWidth="150" HorizontalAlignment="Center" Header="Quality" IsEnabled="{Binding ElementName=UseCaptureItemToggleSwitch, Path=IsOn, Converter={StaticResource InvertBoolConv}}" />
+                        <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" HorizontalAlignment="Center" Margin="5" Header="Use source size as video resolution" VerticalAlignment="Top" IsOn="True" MaxWidth="150"/>
+                        <ComboBox x:Name="FrameRateComboBox" Margin="5" MinWidth="150" HorizontalAlignment="Center" Header="Framerate"/>
+                        <TextBlock Text="File options" Margin="20" FontSize="25" HorizontalAlignment="Center"/>
+                        <ToggleSwitch x:Name="DefaultLocationToggleSwitch"   HorizontalAlignment="Center" Header="Automatically save files in a folder" Margin="5" Width="150"/>
+                        <Button x:Name="FolderLocationButton" Content="Select folder" Click="FolderLocationButton_Click" HorizontalAlignment="Center"/>
+                        <TextBox x:Name="SelectedFolderTextBox" IsReadOnly="True" HorizontalAlignment="Center" Margin="5"/>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>          
+            
         </Grid>
 
     </Grid>
