@@ -185,6 +185,9 @@ namespace FluentScreenRecorder
             folderPicker.SuggestedStartLocation = PickerLocationId.VideosLibrary;
             var folder = await folderPicker.PickSingleFolderAsync();
             SelectedFolderTextBox.Text = folder.DisplayName;
+            var localSettings = ApplicationData.Current.LocalSettings;
+            // save folder name to local storage
+            localSettings.Values["FolderName"] = folder.DisplayName;
         }
 
         public async Task<StorageFile> PickVideoAsync()
