@@ -45,6 +45,8 @@ namespace FluentScreenRecorder
             _device = Direct3D11Helpers.CreateDevice();
 
             var settings = GetCachedSettings();
+            var localSettings = ApplicationData.Current.LocalSettings;
+            SelectedFolderTextBox.Text = (string)localSettings.Values["FolderName"];
 
             var names = new List<string>();
             names.Add(nameof(VideoEncodingQuality.HD1080p));
