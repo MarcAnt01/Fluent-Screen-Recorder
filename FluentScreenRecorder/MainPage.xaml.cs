@@ -38,6 +38,9 @@ namespace FluentScreenRecorder
 
             RecordIcon.Visibility = Visibility.Visible;
             StopIcon.Visibility = Visibility.Collapsed;
+            ToolTip toolTip = new ToolTip();
+            toolTip.Content = "Start recording";
+            ToolTipService.SetToolTip(MainButton, toolTip);
 
             ApplicationView.GetForCurrentView().SetPreferredMinSize(
                new Size(400, 270));
@@ -103,6 +106,10 @@ namespace FluentScreenRecorder
             // Tell the user we've started recording
             RecordIcon.Visibility = Visibility.Collapsed;
             StopIcon.Visibility = Visibility.Visible;
+            ToolTip toolTip = new ToolTip();
+            toolTip.Content = "Stop recording";
+            ToolTipService.SetToolTip(MainButton, toolTip);
+
             MainTextBlock.Text = "● recording...";
             var originalBrush = MainTextBlock.Foreground;
             MainTextBlock.Foreground = new SolidColorBrush(Colors.Red);
@@ -146,6 +153,9 @@ namespace FluentScreenRecorder
             RecordIcon.Visibility = Visibility.Visible;
             StopIcon.Visibility = Visibility.Collapsed;
             MainTextBlock.Text = "saving...";
+            ToolTip newtoolTip = new ToolTip();
+            toolTip.Content = "Start recording";
+            ToolTipService.SetToolTip(MainButton, toolTip);
 
             // Ask the user where they'd like the video to live
             var newFile = await PickVideoAsync();
