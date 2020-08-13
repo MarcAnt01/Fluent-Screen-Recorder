@@ -27,7 +27,8 @@ namespace FluentScreenRecorder
         {
             InitializeComponent();
 
-            ApplicationView.PreferredLaunchViewSize = new Size(400,270);
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(400, 260));
+            ApplicationView.PreferredLaunchViewSize = new Size(400,260);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
 
             //hide titlebar
@@ -40,10 +41,7 @@ namespace FluentScreenRecorder
             StopIcon.Visibility = Visibility.Collapsed;
             ToolTip toolTip = new ToolTip();
             toolTip.Content = "Start recording";
-            ToolTipService.SetToolTip(MainButton, toolTip);
-
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(
-               new Size(400, 270));
+            ToolTipService.SetToolTip(MainButton, toolTip);            
 
             _device = Direct3D11Helpers.CreateDevice();
 
