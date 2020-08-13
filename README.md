@@ -2,7 +2,7 @@
 
 A fork of [Simple Screen Recorder](https://github.com/robmikh/SimpleRecorder) with Fluent Design and other improvements.
 
-![](https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/develop/Screenshot.jpg?raw=true)
+![](https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/848392b1631170b3c7deed9f1ffe35fd60d72a41/Screenshot.jpg?raw=true)
 
 ### Supported platforms
 
