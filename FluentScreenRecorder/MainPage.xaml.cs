@@ -99,7 +99,7 @@ namespace FluentScreenRecorder
             }
 
             // Find a place to put our vidoe for now
-            var file = await GetTempFileAsync();
+            var tempFile = await GetTempFileAsync();
 
             // Tell the user we've started recording
             RecordIcon.Visibility = Visibility.Collapsed;
@@ -116,7 +116,7 @@ namespace FluentScreenRecorder
             // Kick off the encoding
             try
             {
-                using (var stream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                using (var stream = await tempFile.OpenAsync(FileAccessMode.ReadWrite))
                 using (_encoder = new Encoder(_device, item))
                 {
                     await _encoder.EncodeAsync(
@@ -155,28 +155,22 @@ namespace FluentScreenRecorder
             toolTip.Content = "Start recording";
             ToolTipService.SetToolTip(MainButton, toolTip);
 
-            // Ask the user where they'd like the video to live
-            var newFile = await PickVideoAsync();
+            //move the temp file to Videos Library
+            StorageFolder localFolder = KnownFolders.VideosLibrary;
+            var newFile = await tempFile.CopyAsync (localFolder);            
             if (newFile == null)
             {
-                // User decided they didn't want it
                 // Throw out the encoded video
                 button.IsChecked = false;
                 MainTextBlock.Text = "canceled";
 
-                await file.DeleteAsync();
-                return;
-            }
-            // Move our vidoe to its new home
-            await file.MoveAndReplaceAsync(newFile);
-
+                await tempFile.DeleteAsync();
+                await newFile.DeleteAsync();
+            }      
+            
             // Tell the user we're done
             button.IsChecked = false;
-            MainTextBlock.Text = "done";
-
-
-            // Open the final product
-            await Launcher.LaunchFileAsync(newFile);
+            MainTextBlock.Text = "done";            
         }
 
         private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
