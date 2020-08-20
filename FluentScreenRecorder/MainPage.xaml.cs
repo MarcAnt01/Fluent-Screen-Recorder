@@ -10,7 +10,6 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.System;
 using Windows.UI;
-using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -18,7 +17,7 @@ using Windows.UI.Xaml.Media;
 using Windows.Foundation;
 using Windows.UI.ViewManagement;
 using Windows.ApplicationModel.Core;
-using System.IO;
+
 
 namespace FluentScreenRecorder
 {
@@ -28,6 +27,7 @@ namespace FluentScreenRecorder
         {
             InitializeComponent();
 
+            //Adjust minimum and default window size
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(400, 260));
             ApplicationView.PreferredLaunchViewSize = new Size(400,260);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
@@ -38,6 +38,7 @@ namespace FluentScreenRecorder
             CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
 
+            //Record icon
             RecordIcon.Visibility = Visibility.Visible;
             StopIcon.Visibility = Visibility.Collapsed;
             ToolTip toolTip = new ToolTip();
@@ -110,11 +111,9 @@ namespace FluentScreenRecorder
             ToolTip toolTip = new ToolTip();
             toolTip.Content = "Stop recording";
             ToolTipService.SetToolTip(MainButton, toolTip);
-
             MainTextBlock.Text = "● recording...";
             var originalBrush = MainTextBlock.Foreground;
             MainTextBlock.Foreground = new SolidColorBrush(Colors.Red);
-
 
             // Kick off the encoding
             try
@@ -168,18 +167,14 @@ namespace FluentScreenRecorder
             saveDialog.SecondaryButtonClick += SaveAs_Click;
             saveDialog.CloseButtonText = "Delete";
             saveDialog.CloseButtonClick += Cancel_Click; 
-            await saveDialog.ShowAsync();
-
-            
+            await saveDialog.ShowAsync();            
         }
 
         private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
             // If the encoder is doing stuff, tell it to stop
             _encoder?.Dispose();
-        }
-
-        
+        }        
 
         private async void Save_Click(object sender, ContentDialogButtonClickEventArgs e)
         {
@@ -200,15 +195,12 @@ namespace FluentScreenRecorder
             MainButton.IsChecked = false;
             MainTextBlock.Text = "done";
 
-        }
-
-        
+        }        
 
         private async void SaveAs_Click(object sender, ContentDialogButtonClickEventArgs e)
         {
 
-            StorageFile newFile = await PickVideoAsync();
-            
+            StorageFile newFile = await PickVideoAsync();            
 
             //move the file to the location selected with the picker
             await _tempFile.MoveAndReplaceAsync(newFile);
@@ -228,8 +220,6 @@ namespace FluentScreenRecorder
 
             await _tempFile.DeleteAsync();
         }
-
-
 
         private async Task<StorageFile> PickVideoAsync()
         {
@@ -296,7 +286,6 @@ namespace FluentScreenRecorder
             }
             return result;
         }
-
         public void CacheCurrentSettings()
         {
             var settings = GetCurrentSettings();
