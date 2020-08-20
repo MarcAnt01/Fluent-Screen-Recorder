@@ -20,7 +20,7 @@
 
         <Grid Grid.Column="0" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock x:Name="MainTextBlock" HorizontalTextAlignment="Center" FontSize="30" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="MainTextBlock" HorizontalTextAlignment="Center" FontSize="30" HorizontalAlignment="Center" Margin="10"/>
                 <ToggleButton  x:Name="MainButton" HorizontalAlignment="Center" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Width="100" Height="100" Background="{ThemeResource SystemAccentColor}" CornerRadius="99">
                     <StackPanel>
                         <FontIcon x:Name="RecordIcon" Glyph="&#xE714;" FontFamily="Segoe MDL2 Assets" FontSize="70" Foreground="White"/>

@@ -43,7 +43,7 @@ namespace FluentScreenRecorder
             StopIcon.Visibility = Visibility.Collapsed;
             ToolTip toolTip = new ToolTip();
             toolTip.Content = "Start recording";
-            ToolTipService.SetToolTip(MainButton, toolTip);            
+            ToolTipService.SetToolTip(MainButton, toolTip);
 
             _device = Direct3D11Helpers.CreateDevice();
 
@@ -144,9 +144,14 @@ namespace FluentScreenRecorder
                 button.IsChecked = false;
                 MainTextBlock.Text = "failure";
                 MainTextBlock.Foreground = originalBrush;
+                RecordIcon.Visibility = Visibility.Visible;
+                StopIcon.Visibility = Visibility.Collapsed;
+                MainTextBlock.Text = "saving...";
+                toolTip.Content = "Start recording";
+                ToolTipService.SetToolTip(MainButton, toolTip);
 
                 return;
-            }  
+            }
 
             // At this point the encoding has finished,
             // tell the user we're now saving
@@ -157,7 +162,7 @@ namespace FluentScreenRecorder
             toolTip.Content = "Start recording";
             ToolTipService.SetToolTip(MainButton, toolTip);
 
-            var saveDialog = new ContentDialog();            
+            var saveDialog = new ContentDialog();
             saveDialog.Title = "Do you want to save your file?";
             saveDialog.Content = "You can choose among the following options";
             saveDialog.PrimaryButtonText = "Save";
@@ -166,19 +171,19 @@ namespace FluentScreenRecorder
             saveDialog.SecondaryButtonText = "Save as...";
             saveDialog.SecondaryButtonClick += SaveAs_Click;
             saveDialog.CloseButtonText = "Delete";
-            saveDialog.CloseButtonClick += Cancel_Click; 
-            await saveDialog.ShowAsync();            
+            saveDialog.CloseButtonClick += Cancel_Click;
+            await saveDialog.ShowAsync();
         }
 
         private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
             // If the encoder is doing stuff, tell it to stop
             _encoder?.Dispose();
-        }        
+        }
 
         private async void Save_Click(object sender, ContentDialogButtonClickEventArgs e)
         {
-            //move the temp file to Videos Library            
+            //move the temp file to Videos Library
             StorageFolder localFolder = KnownFolders.VideosLibrary;
             var newFile = await _tempFile.CopyAsync(localFolder);
             if (newFile == null)
@@ -195,12 +200,21 @@ namespace FluentScreenRecorder
             MainButton.IsChecked = false;
             MainTextBlock.Text = "done";
 
-        }        
+        }
 
         private async void SaveAs_Click(object sender, ContentDialogButtonClickEventArgs e)
         {
 
-            StorageFile newFile = await PickVideoAsync();            
+            StorageFile newFile = await PickVideoAsync();
+            if (newFile == null)
+            {
+                // Throw out the encoded video
+                MainButton.IsChecked = false;
+                MainTextBlock.Text = "canceled";
+
+                await _tempFile.DeleteAsync();
+                await newFile.DeleteAsync();
+            }
 
             //move the file to the location selected with the picker
             await _tempFile.MoveAndReplaceAsync(newFile);
@@ -208,8 +222,6 @@ namespace FluentScreenRecorder
             // Tell the user we're done
             MainButton.IsChecked = false;
             MainTextBlock.Text = "done";
-
-            await Launcher.LaunchFileAsync(newFile);
         }
 
         private async void Cancel_Click(object sender, ContentDialogButtonClickEventArgs e)
