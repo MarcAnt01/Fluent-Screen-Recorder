@@ -38,19 +38,22 @@ namespace CaptureEncoder
                     _captureItem,
                     _captureItem.Size);
 
-                var encodingProfile = new MediaEncodingProfile();
-                encodingProfile.Container.Subtype = "MPEG4";
-                encodingProfile.Video.Subtype = "H264";
-                encodingProfile.Video.Width = width;
-                encodingProfile.Video.Height = height;
-                encodingProfile.Video.Bitrate = bitrateInBps;
-                encodingProfile.Video.FrameRate.Numerator = frameRate;
-                encodingProfile.Video.FrameRate.Denominator = 1;
-                encodingProfile.Video.PixelAspectRatio.Numerator = 1;
-                encodingProfile.Video.PixelAspectRatio.Denominator = 1;
-                var transcode = await _transcoder.PrepareMediaStreamSourceTranscodeAsync(_mediaStreamSource, stream, encodingProfile);
+                using (_frameGenerator)
+                {
+                    var encodingProfile = new MediaEncodingProfile();
+                    encodingProfile.Container.Subtype = "MPEG4";
+                    encodingProfile.Video.Subtype = "H264";
+                    encodingProfile.Video.Width = width;
+                    encodingProfile.Video.Height = height;
+                    encodingProfile.Video.Bitrate = bitrateInBps;
+                    encodingProfile.Video.FrameRate.Numerator = frameRate;
+                    encodingProfile.Video.FrameRate.Denominator = 1;
+                    encodingProfile.Video.PixelAspectRatio.Numerator = 1;
+                    encodingProfile.Video.PixelAspectRatio.Denominator = 1;
+                    var transcode = await _transcoder.PrepareMediaStreamSourceTranscodeAsync(_mediaStreamSource, stream, encodingProfile);
 
-                await transcode.TranscodeAsync();
+                    await transcode.TranscodeAsync();
+                }
             }
         }
 
