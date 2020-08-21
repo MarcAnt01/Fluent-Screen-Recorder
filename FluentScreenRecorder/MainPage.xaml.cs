@@ -28,8 +28,8 @@ namespace FluentScreenRecorder
             InitializeComponent();
 
             //Adjust minimum and default window size
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(400, 260));
-            ApplicationView.PreferredLaunchViewSize = new Size(400,260);
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(440, 320));
+            ApplicationView.PreferredLaunchViewSize = new Size(440,320);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
 
             //hide titlebar
@@ -326,5 +326,10 @@ namespace FluentScreenRecorder
 
         private IDirect3DDevice _device;
         private Encoder _encoder;
+
+        private void InfoButton_Click(object sender, RoutedEventArgs e)
+        {
+            InfoTip.IsOpen = true;            
+        }
     }
 }

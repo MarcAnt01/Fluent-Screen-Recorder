@@ -9,8 +9,8 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Page.Resources>        
-        <local:InvertBoolConverter x:Key="InvertBoolConv"/>        
+    <Page.Resources>
+        <local:InvertBoolConverter x:Key="InvertBoolConv"/>
     </Page.Resources>
 
     <Grid>
@@ -21,24 +21,39 @@
 
         <Grid Grid.Column="0" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock x:Name="MainTextBlock" HorizontalTextAlignment="Center" FontSize="30" HorizontalAlignment="Center" Margin="10"/>
+                <TextBlock x:Name="MainTextBlock" HorizontalTextAlignment="Center" FontSize="30" VerticalAlignment="Center" Margin="10"/>
                 <ToggleButton  x:Name="MainButton" HorizontalAlignment="Center" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Width="100" Height="100" Background="{ThemeResource SystemAccentColor}" CornerRadius="99">
                     <StackPanel>
                         <FontIcon x:Name="RecordIcon" Glyph="&#xE714;" FontFamily="Segoe MDL2 Assets" FontSize="70" Foreground="White"/>
                         <FontIcon x:Name="StopIcon" Glyph="&#xE71A;" FontFamily="Segoe MDL2 Assets" FontSize="50" Foreground="White"/>
                     </StackPanel>
                 </ToggleButton>
+                <TextBlock HorizontalAlignment="Center" FontSize="30" Margin="10"/>
             </StackPanel>
         </Grid>
 
         <Grid Grid.Column="1">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="250" Padding="0,25,0,0">
-                <TextBlock Text="options" HorizontalAlignment="Stretch" HorizontalTextAlignment="Center" FontSize="30" />
-                <ComboBox x:Name="QualityComboBox" Margin="10" MinWidth="150" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=UseCaptureItemToggleSwitch, Path=IsOn, Converter={StaticResource InvertBoolConv}}" />
-                <ComboBox x:Name="FrameRateComboBox" Margin="10" MinWidth="150" HorizontalAlignment="Center" />
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="171" Padding="0,25,0,0">                
+                <ComboBox x:Name="QualityComboBox" Header="Resolution" Margin="10" MinWidth="150" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=UseCaptureItemToggleSwitch, Path=IsOn, Converter={StaticResource InvertBoolConv}}" />
+                <ComboBox x:Name="FrameRateComboBox" Header="Framerate" Margin="10" MinWidth="150" HorizontalAlignment="Center" />
                 <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" HorizontalAlignment="Center" Margin="10" Header="Use source size as video resolution" VerticalAlignment="Top" IsOn="True" MaxWidth="150"/>
+                <StackPanel Orientation="Horizontal">
+                    <ToggleSwitch x:Name="GlobalShortCutToggleSwitch" Margin="10" Header="Global Shortcut" Width="100"/>
+                    <Button x:Name="InfoButton" Content="i" Click="InfoButton_Click" CornerRadius="99" Width="30" Height="30">                        
+                        <Button.Resources>
+                            <muxc:TeachingTip x:Name="InfoTip"
+                                Target="{x:Bind InfoButton}"
+                                Title="Win + Shift + R"
+                                Subtitle="Global Shortcut will require a background process to work when the app is closed"
+                                IsLightDismissEnabled="True">
+                            </muxc:TeachingTip>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
             </StackPanel>
         </Grid>
-
     </Grid>
+
+
+
 </Page>
