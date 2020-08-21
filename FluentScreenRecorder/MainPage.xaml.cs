@@ -17,7 +17,7 @@ using Windows.UI.Xaml.Media;
 using Windows.Foundation;
 using Windows.UI.ViewManagement;
 using Windows.ApplicationModel.Core;
-
+using MUXC = Microsoft.UI.Xaml.Controls;
 
 namespace FluentScreenRecorder
 {
