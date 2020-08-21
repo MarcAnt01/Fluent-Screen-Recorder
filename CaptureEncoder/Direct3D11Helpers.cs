@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Windows.Graphics.DirectX;
 using Windows.Graphics.DirectX.Direct3D11;
 
 namespace CaptureEncoder
