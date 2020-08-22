@@ -14,5 +14,5 @@ The app supports Windows 10 1809+ . It is a uwp app that can run on Windows 10 f
 3. Install the ```.msixbundle``` file from the latest version in [releases section](https://github.com/MarcAnt01/Fluent-Screen-Recorder/releases).
 
 ### Credits
-- [Robert Mikhayelyan](https://github.com/robmikh) for the core of the app; 
-- [Emiliano84](https://github.com/emiliano84) for helping me to make my first uwp app.
+- [Robert Mikhayelyan](https://github.com/robmikh) for the encoder and core of the app; 
+- [Uwp Community Discord Server](https://aka.ms/winui/discord) for helping me to me during the making of this app, special thanks to [Lance Mc Carthy](https://github.com/LanceMcCarthy), [Emiliano84](https://github.com/emiliano84) and [FireCubeStudios](https://github.com/FireCubeStudios)
