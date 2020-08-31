@@ -36,7 +36,7 @@
         <uap:SplashScreen Image="Images\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.appService">
+        <uap:Extension Category="windows.appService" EntryPoint="HotkeyConnection.GlobalShorcut.exe">
           <uap:AppService Name="HotkeyConnection" />
         </uap:Extension>
         <desktop:Extension Category="windows.fullTrustProcess" Executable="GlobalShorcut\GlobalShortcut.exe" />
