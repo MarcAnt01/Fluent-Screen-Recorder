@@ -47,8 +47,8 @@ namespace FluentScreenRecorder
             InitializeComponent();
 
             //Adjust minimum and default window size
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(440, 320));
-            ApplicationView.PreferredLaunchViewSize = new Size(440,320);
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(400, 240));
+            ApplicationView.PreferredLaunchViewSize = new Size(400, 240);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
 
             //hide titlebar
@@ -457,11 +457,17 @@ namespace FluentScreenRecorder
         private List<FrameRateItem> _frameRates;
 
 
-        private void InfoButton_Click(object sender, RoutedEventArgs e)
+        
+
+        private void InfoButton_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            InfoTip.IsOpen = true;            
+            InfoTip.IsOpen = false;            
+        }
+
+        private void InfoButton_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            InfoTip.IsOpen = true;
         }
     }
 }
 
-//Resolution = new SizeUInt32() { Width = 0, Height = 0 },

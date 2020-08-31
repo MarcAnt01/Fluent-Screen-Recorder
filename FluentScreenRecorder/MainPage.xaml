@@ -33,24 +33,46 @@
         </Grid>
 
         <Grid Grid.Column="1">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="171" Padding="0,25,0,0">                
-                <ComboBox x:Name="QualityComboBox" Header="Resolution" Margin="10" MinWidth="150" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=UseCaptureItemToggleSwitch, Path=IsOn, Converter={StaticResource InvertBoolConv}}" />
-                <ComboBox x:Name="FrameRateComboBox" Header="Framerate" Margin="10" MinWidth="150" HorizontalAlignment="Center" />
-                <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" HorizontalAlignment="Center" Margin="10" Header="Use source size as video resolution" VerticalAlignment="Top" IsOn="True" MaxWidth="150"/>
-                <StackPanel Orientation="Horizontal">
-                    <ToggleSwitch x:Name="GlobalShortCutToggleSwitch" Margin="10" Header="Global Shortcut" Width="100"/>
-                    <Button x:Name="InfoButton" Content="i" Click="InfoButton_Click" CornerRadius="99" Width="30" Height="30">                        
-                        <Button.Resources>
-                            <muxc:TeachingTip x:Name="InfoTip"
+            <ScrollViewer>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="171" Padding="0,20,0,0">
+                    <ComboBox x:Name="ResolutionComboBox" Header="Resolution" Margin="10" MinWidth="150" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=UseCaptureItemToggleSwitch, Path=IsOn, Converter={StaticResource InvertBoolConv}}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="local:ResolutionItem">
+                                <TextBlock Text="{x:Bind DisplayName}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ComboBox x:Name="FrameRateComboBox" Header="Framerate" Margin="10" MinWidth="150" HorizontalAlignment="Center">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="local:FrameRateItem">
+                                <TextBlock Text="{x:Bind DisplayName}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ComboBox x:Name="BitrateComboBox" Header="Bitrate" Margin="10" MinWidth="150" HorizontalAlignment="Center">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="local:BitrateItem">
+                                <TextBlock Text="{x:Bind DisplayName}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" HorizontalAlignment="Center" Margin="10" Header="Use source size as video resolution" VerticalAlignment="Top" IsOn="True" MaxWidth="150"/>
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <ToggleSwitch x:Name="GlobalShortCutToggleSwitch" Header="Global Shortcut" Margin="0,0,-35,0"/>
+                        <Button x:Name="InfoButton" Content="i" PointerEntered="InfoButton_PointerEntered" PointerExited="InfoButton_PointerExited" CornerRadius="99" Width="31" Height="31" Margin="0,0,10,0">
+                            <Button.Resources>
+                                <muxc:TeachingTip x:Name="InfoTip"
                                 Target="{x:Bind InfoButton}"
                                 Title="Win + Shift + R"
                                 Subtitle="Global Shortcut will require a background process to work when the app is closed"
                                 IsLightDismissEnabled="True">
-                            </muxc:TeachingTip>
-                        </Button.Resources>
-                    </Button>
+                                </muxc:TeachingTip>
+                            </Button.Resources>
+                        </Button>
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
+            </ScrollViewer>
+            
         </Grid>
     </Grid>
 
