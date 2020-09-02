@@ -16,6 +16,8 @@ using Windows.UI.Xaml.Media;
 using Windows.Foundation;
 using Windows.UI.ViewManagement;
 using Windows.ApplicationModel.Core;
+using Windows.UI.Xaml.Documents;
+using Windows.ApplicationModel;
 
 namespace FluentScreenRecorder
 {
@@ -47,8 +49,8 @@ namespace FluentScreenRecorder
             InitializeComponent();
 
             //Adjust minimum and default window size
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(400, 240));
-            ApplicationView.PreferredLaunchViewSize = new Size(400, 240);
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(400, 250));
+            ApplicationView.PreferredLaunchViewSize = new Size(400, 250);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
 
             //hide titlebar
@@ -76,7 +78,7 @@ namespace FluentScreenRecorder
                     DisplayName = $"{resolution.Width} x {resolution.Height}",
                     Resolution = resolution,
                 });
-            }            
+            }
             ResolutionComboBox.ItemsSource = _resolutions;
             ResolutionComboBox.SelectedIndex = GetResolutionIndex(settings.Width, settings.Height);
 
@@ -122,11 +124,11 @@ namespace FluentScreenRecorder
             {
                 resolutionItem.IsZero();
             }
-            
+
             var width = resolutionItem.Resolution.Width;
             var height = resolutionItem.Resolution.Height;
             var bitrate = bitrateItem.Bitrate;
-            var frameRate = frameRateItem.FrameRate;            
+            var frameRate = frameRateItem.FrameRate;
             if (UseCaptureItemToggleSwitch.IsOn)
             {
                 resolutionItem.IsZero();
@@ -330,34 +332,34 @@ namespace FluentScreenRecorder
             var frameRate = frameRateItem.FrameRate;
             var useSourceSize = UseCaptureItemToggleSwitch.IsOn;
 
-            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize};           
+            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize };
 
         }
 
         private AppSettings GetCachedSettings()
         {
             var localSettings = ApplicationData.Current.LocalSettings;
-            var result =  new AppSettings
+            var result = new AppSettings
             {
                 Width = 1920,
                 Height = 1080,
                 Bitrate = 18000000,
                 FrameRate = 60,
-                UseSourceSize = true                
+                UseSourceSize = true
             };
             // Resolution
             if (localSettings.Values.TryGetValue(nameof(AppSettings.Width), out var width) &&
                 localSettings.Values.TryGetValue(nameof(AppSettings.Height), out var height))
-            {                
+            {
                 result.Width = (uint)width;
                 result.Height = (uint)height;
             }
             // Support the old settings
             //else if (localSettings.Values.TryGetValue("UseSourceSize", out var useSourceSize) &&
-                //(bool)useSourceSize == true)
+            //(bool)useSourceSize == true)
             //{
-                //result.Width = 0;
-                //result.Height = 0;
+            //result.Width = 0;
+            //result.Height = 0;
             //}
             else if (localSettings.Values.TryGetValue("Quality", out var quality))
             {
@@ -372,7 +374,7 @@ namespace FluentScreenRecorder
             {
                 result.FrameRate = (uint)frameRate;
             }
-            
+
             if (localSettings.Values.TryGetValue(nameof(AppSettings.UseSourceSize), out var useSourceSize))
             {
                 result.UseSourceSize = (bool)useSourceSize;
@@ -433,9 +435,6 @@ namespace FluentScreenRecorder
             return -1;
         }
 
-
-
-
         private static T ParseEnumValue<T>(string input)
         {
             return (T)Enum.Parse(typeof(T), input, false);
@@ -445,7 +444,7 @@ namespace FluentScreenRecorder
         {
             public uint Width;
             public uint Height;
-            public uint Bitrate;            
+            public uint Bitrate;
             public uint FrameRate;
             public bool UseSourceSize;
         }
@@ -456,18 +455,67 @@ namespace FluentScreenRecorder
         private List<BitrateItem> _bitrates;
         private List<FrameRateItem> _frameRates;
 
-
-        
-
-        private void InfoButton_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        public static string GetAppVersion()
         {
-            InfoTip.IsOpen = false;            
+
+            Package package = Package.Current;
+            PackageId packageId = package.Id;
+            PackageVersion version = packageId.Version;
+
+            return string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
         }
 
-        private void InfoButton_PointerEntered(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        private async void AboutButton_Click(object sender, RoutedEventArgs e)
         {
-            InfoTip.IsOpen = true;
+            TextBlock gHRepoTB = new TextBlock();
+            Hyperlink hyperlink1 = new Hyperlink();
+            Run run1 = new Run();
+            run1.Text = "View GitHub repository";
+            hyperlink1.NavigateUri = new Uri("https://github.com/MarcAnt01/Fluent-Screen-Recorder");
+            hyperlink1.Inlines.Add(run1);
+            gHRepoTB.Inlines.Add(hyperlink1);
+
+            TextBlock privacyPolicyTB = new TextBlock();
+            privacyPolicyTB.Margin = new Thickness(0,10,0,10);
+            Hyperlink hyperlink2 = new Hyperlink();
+            Run run2 = new Run();
+            run2.Text = "Privacy Policy";
+            hyperlink2.NavigateUri = new Uri("https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/PRIVACY.md");
+            hyperlink2.Inlines.Add(run2);
+            privacyPolicyTB.Inlines.Add(hyperlink2);
+
+            TextBlock versionTB = new TextBlock();
+            versionTB.Text = "Version";
+            versionTB.Margin = new Thickness(0,0,3,0);
+            TextBlock versionNumberTB = new TextBlock();
+            string version = GetAppVersion();
+            versionNumberTB.Text = version;
+            versionNumberTB.FontWeight = Windows.UI.Text.FontWeights.Bold;
+            StackPanel versionPanel = new StackPanel();
+            versionPanel.Children.Add(versionTB);
+            versionPanel.Children.Add(versionNumberTB);
+            versionPanel.Orientation = Orientation.Horizontal;
+
+            StackPanel aboutPanel = new StackPanel();
+            aboutPanel.Children.Add(gHRepoTB);
+            aboutPanel.Children.Add(privacyPolicyTB);
+            aboutPanel.Children.Add(versionPanel);
+
+            ContentDialog aboutDialog = new ContentDialog();
+            aboutDialog.Title = "About";
+            aboutDialog.Content = aboutPanel;
+            aboutDialog.PrimaryButtonText = "Report a bug";
+            aboutDialog.PrimaryButtonClick += ReportBug_Click;
+            aboutDialog.PrimaryButtonStyle = App.Current.Resources["AccentButtonStyle"] as Style;
+            aboutDialog.CloseButtonText = "Close";
+            await aboutDialog.ShowAsync();
+        }
+
+        private async void ReportBug_Click(object sender, ContentDialogButtonClickEventArgs e)
+        {
+            string gitHubIssue = @"https://github.com/MarcAnt01/Fluent-Screen-Recorder/issues/new";
+            var uri = new Uri(gitHubIssue);
+            var uriOpened = await Windows.System.Launcher.LaunchUriAsync(uri);
         }
     }
 }
-
