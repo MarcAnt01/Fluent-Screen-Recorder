@@ -4,15 +4,16 @@ A fork of [Simple Screen Recorder](https://github.com/robmikh/SimpleRecorder) wi
 
 ![](https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/848392b1631170b3c7deed9f1ffe35fd60d72a41/Screenshot.jpg?raw=true)
 
+
+<a href='https://www.microsoft.com/en-us/p/fluent-screen-recorder/9mwv79xlfqh7'><img src='https://developer.microsoft.com/en-us/store/badges/images/English_get-it-from-MS.png' alt='Store Link' height="50px"/></a>
+
 ### Supported platforms
 
 The app supports Windows 10 1809+ . It is a uwp app that can run on Windows 10 for PCs and Surface Hub.
 
-### How to install
-1. Install [the certificate file](https://www.dropbox.com/s/zoq77myhpnl717z/FluentScreenRecorder_1.0.0.0_x86_x64_arm64.cer?dl=1) and select ```Local machine```;
-2. Choose the option to place the certificate in a custom folder and select ```Trusted Root Certification Authorities```;
-3. Install the ```.msixbundle``` file from the latest version in [releases section](https://github.com/MarcAnt01/Fluent-Screen-Recorder/releases).
+### Alternative downloads
+You can also download the app manually from [Releases section](https://github.com/MarcAnt01/Fluent-Screen-Recorder/releases) assets, but this way you won't receive automatic updates. Microsoft Store is the recommended choice.
 
 ### Credits
-- [Robert Mikhayelyan](https://github.com/robmikh) for the core of the app; 
-- [Emiliano84](https://github.com/emiliano84) for helping me to make my first uwp app.
+- [Robert Mikhayelyan](https://github.com/robmikh) for the core of the app and the encoder; 
+- [UWP Community Discord Server](https://discord.com/channels/372137812037730304/625787190605250590/701120022793158686) for helping me during the making of the app.
