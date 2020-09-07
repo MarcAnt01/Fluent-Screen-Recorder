@@ -200,8 +200,7 @@ namespace FluentScreenRecorder
                 MainTextBlock.Text = "failure";
                 MainTextBlock.Foreground = originalBrush;
                 RecordIcon.Visibility = Visibility.Visible;
-                StopIcon.Visibility = Visibility.Collapsed;
-                MainTextBlock.Text = "saving...";
+                StopIcon.Visibility = Visibility.Collapsed;                
                 toolTip.Content = "Start recording";
                 ToolTipService.SetToolTip(MainButton, toolTip);
 
