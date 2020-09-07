@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap6="http://schemas.microsoft.com/appx/manifest/uap/windows10/6" IgnorableNamespaces="uap mp uap6">
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap6="http://schemas.microsoft.com/appx/manifest/uap/windows10/6" xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" IgnorableNamespaces="uap mp uap6 rescap">
   <Identity Publisher="CN=marcant01" Version="1.2.0.0"  Name="FluentScreenRecorder"/>
   <mp:PhoneIdentity PhoneProductId="e5f8c715-7203-4e87-8858-098bdd016f79" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
@@ -28,6 +28,7 @@
     </Application>
   </Applications>
   <Capabilities>
+    <rescap:Capability Name="extendedExecutionUnconstrained"/>
     <uap6:Capability Name="graphicsCapture" />
     <uap:Capability Name="videosLibrary"/>
   </Capabilities>

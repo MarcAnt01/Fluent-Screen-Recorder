@@ -1,6 +1,7 @@
 ﻿using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.ExtendedExecution;
 using Windows.Graphics.Capture;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -22,6 +23,24 @@ namespace FluentScreenRecorder
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
+
+        private ExtendedExecutionSession _extendedSession;
+
+        private async void ExtendExecution()
+        {
+            
+            var session = new ExtendedExecutionSession { Reason = ExtendedExecutionReason.Unspecified };
+            var result = await session.RequestExtensionAsync();
+
+            if (result == ExtendedExecutionResult.Allowed)
+            {
+                _extendedSession = session;                
+            }
+            else
+            {
+                session.Dispose();                
+            }
+        }   
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
