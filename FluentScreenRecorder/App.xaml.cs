@@ -1,8 +1,12 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Uwp.Helpers;
+using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.ExtendedExecution;
 using Windows.Graphics.Capture;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -22,13 +26,13 @@ namespace FluentScreenRecorder
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            ExtendExecution();            
         }
 
         private ExtendedExecutionSession _extendedSession;
 
         private async void ExtendExecution()
         {
-            
             var session = new ExtendedExecutionSession { Reason = ExtendedExecutionReason.Unspecified };
             var result = await session.RequestExtensionAsync();
 
@@ -40,14 +44,39 @@ namespace FluentScreenRecorder
             {
                 session.Dispose();                
             }
-        }   
+        }
+
+        private async Task StartupAsync()
+        {
+            await WhatsNewDisplayService.ShowIfAppropriateAsync();
+        }
+
+        public static class WhatsNewDisplayService
+        {
+            private static bool shown = false;
+
+            internal static async Task ShowIfAppropriateAsync()
+            {
+                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
+                    CoreDispatcherPriority.Normal, async () =>
+                    {
+                        if (SystemInformation.IsAppUpdated && !shown)
+                        {
+                            shown = true;
+                            var dialog = new ChangelogDialog();
+                            await dialog.ShowAsync();
+                        }
+                    });
+            }
+        }
+
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
@@ -64,6 +93,8 @@ namespace FluentScreenRecorder
                 {
                     //TODO: Load state from previously suspended application
                 }
+
+                await StartupAsync();
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
