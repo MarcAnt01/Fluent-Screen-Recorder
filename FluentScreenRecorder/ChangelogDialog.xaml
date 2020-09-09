@@ -13,7 +13,8 @@
         <StackPanel>
             <TextBlock Text="What's new?" FontWeight="Bold" Margin="0,0,0,5"/>
             <RichTextBlock>
-                <Paragraph>Changelog</Paragraph>               
+                <Paragraph>- Fixed apps recording with minimized window</Paragraph>
+                <Paragraph>- Other bug fixes and improvements</Paragraph>
             </RichTextBlock>
         </StackPanel>        
     </ScrollViewer>
