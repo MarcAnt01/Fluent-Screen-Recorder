@@ -246,14 +246,14 @@ namespace FluentScreenRecorder
                 MainButton.IsChecked = false;
                 MainTextBlock.Text = "canceled";
 
-                await _tempFile.DeleteAsync();
-                await newFile.DeleteAsync();
+                await _tempFile.DeleteAsync();                
             }
-
-            // Tell the user we're done
-            MainButton.IsChecked = false;
-            MainTextBlock.Text = "done";
-
+            else
+            {
+                // Tell the user we're done
+                MainButton.IsChecked = false;
+                MainTextBlock.Text = "done";
+            }          
         }
 
         private async void SaveAs_Click(object sender, ContentDialogButtonClickEventArgs e)
@@ -263,19 +263,19 @@ namespace FluentScreenRecorder
             if (newFile == null)
             {
                 // Throw out the encoded video
-                MainButton.IsChecked = false;
-                MainTextBlock.Text = "canceled";
-
                 await _tempFile.DeleteAsync();
-                await newFile.DeleteAsync();
+                MainButton.IsChecked = false;
+                MainTextBlock.Text = "canceled";                             
             }
+            else
+            {
+                //move the file to the location selected with the picker
+                await _tempFile.MoveAndReplaceAsync(newFile);
 
-            //move the file to the location selected with the picker
-            await _tempFile.MoveAndReplaceAsync(newFile);
-
-            // Tell the user we're done
-            MainButton.IsChecked = false;
-            MainTextBlock.Text = "done";
+                // Tell the user we're done
+                MainButton.IsChecked = false;
+                MainTextBlock.Text = "done";
+            }            
         }
 
         private async void Cancel_Click(object sender, ContentDialogButtonClickEventArgs e)
