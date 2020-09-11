@@ -18,6 +18,7 @@ using Windows.UI.ViewManagement;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml.Documents;
 using Windows.ApplicationModel;
+using Windows.System;
 
 namespace FluentScreenRecorder
 {
@@ -253,6 +254,10 @@ namespace FluentScreenRecorder
                 // Tell the user we're done
                 MainButton.IsChecked = false;
                 MainTextBlock.Text = "done";
+                if (OpenFileToggleSwitch.IsOn)
+                {
+                    await Launcher.LaunchFileAsync(newFile);
+                }
             }          
         }
 
@@ -275,6 +280,12 @@ namespace FluentScreenRecorder
                 // Tell the user we're done
                 MainButton.IsChecked = false;
                 MainTextBlock.Text = "done";
+                await Launcher.LaunchFileAsync(newFile);
+
+                if (OpenFileToggleSwitch.IsOn)
+                {
+                    await Launcher.LaunchFileAsync(newFile);
+                }
             }            
         }
 
