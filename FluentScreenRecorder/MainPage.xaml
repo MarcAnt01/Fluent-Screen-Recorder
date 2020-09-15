@@ -1,4 +1,4 @@
-﻿<Page
+<Page
     x:Class="FluentScreenRecorder.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -55,14 +55,17 @@
                                 <TextBlock Text="{x:Bind DisplayName}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
-                    </ComboBox>                    
+
+                    </ComboBox>
                     <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" Margin="10" MaxWidth="150" Header="Use source size as video resolution" VerticalAlignment="Top" IsOn="True"/>
                     <ToggleSwitch x:Name="OpenFileToggleSwitch" Margin="10" MaxWidth="150" Header="Open files after saving" IsOn="True"/>
+                    <ToggleSwitch x:Name="OpenFileToggleSwitch" Margin="10" MaxWidth="150" Header="Open files after saving" IsOn="True"/>
+                  <ToggleSwitch x:Name="RecordAudio" Margin="10" MaxWidth="150" Header="Record microphone audio" VerticalAlignment="Top" IsOn="True" />
                     <Button x:Name="AboutButton" Width="144" HorizontalAlignment="Center" Margin="10" Style="{StaticResource ButtonRevealStyle}" Click="AboutButton_Click">
                         <StackPanel Orientation="Horizontal">
                             <FontIcon Glyph="&#xE946;" Margin="0,0,10,0"/>
                             <TextBlock Text="About the app"/>
-                        </StackPanel>                        
+                        </StackPanel>
                     </Button>
                 </StackPanel>
             </ScrollViewer>

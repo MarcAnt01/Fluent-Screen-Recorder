@@ -1,4 +1,4 @@
-﻿using CaptureEncoder;
+using CaptureEncoder;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,7 +18,15 @@ using Windows.UI.ViewManagement;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml.Documents;
 using Windows.ApplicationModel;
-using Windows.System;
+
+using System.Collections.ObjectModel;
+using Windows.Media.Capture;
+using Windows.Media.Audio;
+using Windows.Media;
+using Windows.Storage.Streams;
+using Windows.Media.Editing;
+using Windows.Media.Transcoding;
+using Windows.UI.Core;
 
 namespace FluentScreenRecorder
 {
@@ -42,9 +50,12 @@ namespace FluentScreenRecorder
         public uint FrameRate { get; set; }
     }
 
-
     public sealed partial class MainPage : Page
     {
+        private readonly StorageFolder TempFolder = ApplicationData.Current.TemporaryFolder;
+        private MediaCapture _AudioCapture;
+        private LowLagMediaRecording _AudioRecording;
+
         public MainPage()
         {
             InitializeComponent();
@@ -113,6 +124,8 @@ namespace FluentScreenRecorder
         }
 
         private StorageFile _tempFile;
+        private StorageFile _micAudioFile;
+
         private async void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             var button = (ToggleButton)sender;
@@ -135,6 +148,16 @@ namespace FluentScreenRecorder
             {
                 resolutionItem.IsZero();
             }
+
+            // Get our microphone capture
+
+            _micAudioFile = await GetTempFileForAudioAsync();
+
+            _AudioCapture = new MediaCapture();
+            _AudioRecording = await _AudioCapture.PrepareLowLagRecordToStorageFileAsync(MediaEncodingProfile.CreateMp3(AudioEncodingQuality.High), _micAudioFile);
+
+
+            await _AudioRecording.StartAsync();
 
             // Get our capture item
             var picker = new GraphicsCapturePicker();
@@ -202,12 +225,72 @@ namespace FluentScreenRecorder
                 MainTextBlock.Text = "failure";
                 MainTextBlock.Foreground = originalBrush;
                 RecordIcon.Visibility = Visibility.Visible;
-                StopIcon.Visibility = Visibility.Collapsed;                
+                StopIcon.Visibility = Visibility.Collapsed;
                 toolTip.Content = "Start recording";
                 ToolTipService.SetToolTip(MainButton, toolTip);
 
                 return;
             }
+
+            try
+            {
+                await _AudioRecording.StopAsync();
+                await _AudioRecording.FinishAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex);
+
+                ContentDialog errorDialog = new ContentDialog
+                {
+                    Title = "Recording failed",
+                    Content = $"Whoops, something went wrong!\n0x{ex.HResult:X8} - {ex.Message}",
+                    CloseButtonText = "Ok"
+                };
+                await errorDialog.ShowAsync();
+
+                button.IsChecked = false;
+                MainTextBlock.Text = "failure";
+                MainTextBlock.Foreground = originalBrush;
+                RecordIcon.Visibility = Visibility.Visible;
+                StopIcon.Visibility = Visibility.Collapsed;
+                toolTip.Content = "Start recording";
+                ToolTipService.SetToolTip(MainButton, toolTip);
+
+                return;
+            }
+
+            // Merge audio and video
+
+            var mediaComposition = new MediaComposition();
+            var videoClip = await MediaClip.CreateFromFileAsync(tempFile);
+            var backgroundTrack = await BackgroundAudioTrack.CreateFromFileAsync(_micAudioFile);
+            mediaComposition.Clips.Add(videoClip);
+            mediaComposition.BackgroundAudioTracks.Add(backgroundTrack);
+            var saveOperation = mediaComposition.RenderToFileAsync(tempFile, MediaTrimmingPreference.Precise);
+
+            saveOperation.Completed = new AsyncOperationWithProgressCompletedHandler<TranscodeFailureReason, double>(async (info, status) =>
+            {
+                await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+                {
+                    var results = info.GetResults();
+                    if (results != TranscodeFailureReason.None || status != AsyncStatus.Completed)
+                    {
+                        Debug.WriteLine("Audio video merge failed");
+                        button.IsChecked = false;
+                        MainTextBlock.Text = "failure";
+                        MainTextBlock.Foreground = originalBrush;
+                        RecordIcon.Visibility = Visibility.Visible;
+                        StopIcon.Visibility = Visibility.Collapsed;
+                        toolTip.Content = "Start recording";
+                        ToolTipService.SetToolTip(MainButton, toolTip);
+
+                        return;
+                    }
+
+                }));
+            });
 
             // At this point the encoding has finished,
             // tell the user we're now saving
@@ -234,6 +317,8 @@ namespace FluentScreenRecorder
         private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
             // If the encoder is doing stuff, tell it to stop
+            _AudioRecording?.StopAsync();
+            _AudioCapture?.Dispose();
             _encoder?.Dispose();
         }
 
@@ -248,7 +333,7 @@ namespace FluentScreenRecorder
                 MainButton.IsChecked = false;
                 MainTextBlock.Text = "canceled";
 
-                await _tempFile.DeleteAsync();                
+                await _tempFile.DeleteAsync();
             }
             else
             {
@@ -259,7 +344,10 @@ namespace FluentScreenRecorder
                 {
                     await Launcher.LaunchFileAsync(newFile);
                 }
-            }          
+
+
+            }
+
         }
 
         private async void SaveAs_Click(object sender, ContentDialogButtonClickEventArgs e)
@@ -270,8 +358,9 @@ namespace FluentScreenRecorder
             {
                 // Throw out the encoded video
                 await _tempFile.DeleteAsync();
+                await _micAudioFile.DeleteAsync();
                 MainButton.IsChecked = false;
-                MainTextBlock.Text = "canceled";                             
+                MainTextBlock.Text = "canceled";
             }
             else
             {
@@ -287,7 +376,9 @@ namespace FluentScreenRecorder
                 {
                     await Launcher.LaunchFileAsync(newFile);
                 }
-            }            
+
+            }
+
         }
 
         private async void Cancel_Click(object sender, ContentDialogButtonClickEventArgs e)
@@ -297,6 +388,7 @@ namespace FluentScreenRecorder
             MainTextBlock.Text = "canceled";
 
             await _tempFile.DeleteAsync();
+            await _micAudioFile.DeleteAsync();
         }
 
         private async Task<StorageFile> PickVideoAsync()
@@ -314,10 +406,19 @@ namespace FluentScreenRecorder
 
         private async Task<StorageFile> GetTempFileAsync()
         {
-            var folder = ApplicationData.Current.TemporaryFolder;
             var name = DateTime.Now.ToString("yyyy-MM-dd-HHmmss");
-            var file = await folder.CreateFileAsync($"{name}.mp4");
+            var file = await TempFolder.CreateFileAsync($"{name}.mp4");
             return file;
+        }
+
+        private async Task<StorageFile> GetTempFileForAudioAsync()
+        {
+            var storageItem = await TempFolder.TryGetItemAsync("audio");
+            if (storageItem == null)
+            {
+                return await TempFolder.CreateFileAsync("audio", CreationCollisionOption.ReplaceExisting);
+            }
+            else return storageItem as StorageFile;
         }
 
         private uint EnsureEven(uint number)
@@ -344,7 +445,9 @@ namespace FluentScreenRecorder
             var useSourceSize = UseCaptureItemToggleSwitch.IsOn;
             var openSaved = OpenFileToggleSwitch.IsOn;
 
-            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize , OpenSaved = openSaved };
+            var recordMic = RecordAudio.IsOn;
+
+            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize , OpenSaved = openSaved , RecordMicAudio = recordMic };
 
         }
 
@@ -367,7 +470,7 @@ namespace FluentScreenRecorder
                 result.Width = (uint)width;
                 result.Height = (uint)height;
             }
-            
+
             else if (localSettings.Values.TryGetValue("Quality", out var quality))
             {
                 var videoQuality = ParseEnumValue<VideoEncodingQuality>((string)quality);
@@ -384,13 +487,20 @@ namespace FluentScreenRecorder
 
             if (localSettings.Values.TryGetValue(nameof(AppSettings.UseSourceSize), out var useSourceSize))
             {
-                result.UseSourceSize = (bool)useSourceSize;            }
-            
+                result.UseSourceSize = (bool)useSourceSize;
+            }
+
 
             if (localSettings.Values.TryGetValue(nameof(AppSettings.OpenSaved), out var openSaved))
             {
                 result.OpenSaved = (bool)openSaved;
             }
+
+            if (localSettings.Values.TryGetValue(nameof(AppSettings.RecordMicAudio), out var recordMic))
+            {
+                result.RecordMicAudio = (bool)recordMic;
+            }
+
             return result;
         }
         public void CacheCurrentSettings()
@@ -408,6 +518,9 @@ namespace FluentScreenRecorder
             localSettings.Values[nameof(AppSettings.FrameRate)] = settings.FrameRate;
             localSettings.Values[nameof(AppSettings.UseSourceSize)] = settings.UseSourceSize;
             localSettings.Values[nameof(AppSettings.OpenSaved)] = settings.OpenSaved;
+
+            localSettings.Values[nameof(AppSettings.RecordMicAudio)] = settings.RecordMicAudio;
+
         }
 
         private int GetResolutionIndex(uint width, uint height)
@@ -461,6 +574,9 @@ namespace FluentScreenRecorder
             public uint FrameRate;
             public bool UseSourceSize;
             public bool OpenSaved;
+
+            public bool RecordMicAudio;
+
         }
 
         private IDirect3DDevice _device;
@@ -490,7 +606,7 @@ namespace FluentScreenRecorder
             gHRepoTB.Inlines.Add(hyperlink1);
 
             TextBlock privacyPolicyTB = new TextBlock();
-            privacyPolicyTB.Margin = new Thickness(0,10,0,10);
+            privacyPolicyTB.Margin = new Thickness(0, 10, 0, 10);
             Hyperlink hyperlink2 = new Hyperlink();
             Run run2 = new Run();
             run2.Text = "Privacy Policy";
@@ -500,7 +616,7 @@ namespace FluentScreenRecorder
 
             TextBlock versionTB = new TextBlock();
             versionTB.Text = "Version";
-            versionTB.Margin = new Thickness(0,0,3,0);
+            versionTB.Margin = new Thickness(0, 0, 3, 0);
             TextBlock versionNumberTB = new TextBlock();
             string version = GetAppVersion();
             versionNumberTB.Text = version;
