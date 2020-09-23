@@ -15,20 +15,23 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition/>
+            <ColumnDefinition/>            
         </Grid.ColumnDefinitions>
-
+        
         <Grid Grid.Column="0" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock x:Name="MainTextBlock" HorizontalTextAlignment="Center" FontSize="30" VerticalAlignment="Center" Margin="10"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="AnimatedPointTextBlock" HorizontalAlignment="Center" FontSize="30" Foreground="Red"/>
+                    <TextBlock x:Name="MainTextBlock" HorizontalTextAlignment="Center" FontSize="30" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                </StackPanel>
                 <ToggleButton  x:Name="MainButton" HorizontalAlignment="Center" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Width="100" Height="100" Background="{ThemeResource SystemAccentColor}" CornerRadius="99">
                     <StackPanel>
                         <FontIcon x:Name="RecordIcon" Glyph="&#xE714;" FontFamily="Segoe MDL2 Assets" FontSize="70" Foreground="White"/>
                         <FontIcon x:Name="StopIcon" Glyph="&#xE71A;" FontFamily="Segoe MDL2 Assets" FontSize="50" Foreground="White"/>
                     </StackPanel>
                 </ToggleButton>
-                <TextBlock HorizontalAlignment="Center" FontSize="30" Margin="10"/>
+                <TextBlock />
             </StackPanel>
         </Grid>
 
@@ -55,14 +58,14 @@
                                 <TextBlock Text="{x:Bind DisplayName}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
-                    </ComboBox>                    
+                    </ComboBox>
                     <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" Margin="10" MaxWidth="150" Header="Use source size as video resolution" VerticalAlignment="Top" IsOn="True"/>
                     <ToggleSwitch x:Name="OpenFileToggleSwitch" Margin="10" MaxWidth="150" Header="Open files after saving" IsOn="True"/>
                     <Button x:Name="AboutButton" Width="144" HorizontalAlignment="Center" Margin="10" Style="{StaticResource ButtonRevealStyle}" Click="AboutButton_Click">
                         <StackPanel Orientation="Horizontal">
                             <FontIcon Glyph="&#xE946;" Margin="0,0,10,0"/>
                             <TextBlock Text="About the app"/>
-                        </StackPanel>                        
+                        </StackPanel>
                     </Button>
                 </StackPanel>
             </ScrollViewer>
