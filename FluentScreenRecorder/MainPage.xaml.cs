@@ -66,9 +66,10 @@ namespace FluentScreenRecorder
             //Record icon
             RecordIcon.Visibility = Visibility.Visible;
             StopIcon.Visibility = Visibility.Collapsed;
+            Ellipse.Visibility = Visibility.Collapsed;
             ToolTip toolTip = new ToolTip();
             toolTip.Content = "Start recording";
-            ToolTipService.SetToolTip(MainButton, toolTip);
+            ToolTipService.SetToolTip(MainButton, toolTip);            
 
             _device = Direct3D11Helpers.CreateDevice();
 
@@ -166,8 +167,8 @@ namespace FluentScreenRecorder
             _tempFile = tempFile;
 
             // Tell the user we've started recording
-            AnimatedPointTextBlock.Text = "●";
-            var visual = ElementCompositionPreview.GetElementVisual(AnimatedPointTextBlock);
+            
+            var visual = ElementCompositionPreview.GetElementVisual(Ellipse);
             var animation = visual.Compositor.CreateScalarKeyFrameAnimation();
             animation.InsertKeyFrame(0, 1);
             animation.InsertKeyFrame(1, 0);
@@ -177,6 +178,7 @@ namespace FluentScreenRecorder
 
             RecordIcon.Visibility = Visibility.Collapsed;
             StopIcon.Visibility = Visibility.Visible;
+            Ellipse.Visibility = Visibility.Visible;
             ToolTip toolTip = new ToolTip();
             toolTip.Content = "Stop recording";
             ToolTipService.SetToolTip(MainButton, toolTip);
@@ -212,7 +214,8 @@ namespace FluentScreenRecorder
 
                 button.IsChecked = false;
                 visual.StopAnimation("Opacity");
-                AnimatedPointTextBlock.Text = "";
+
+                Ellipse.Visibility = Visibility.Collapsed;
                 MainTextBlock.Text = "failure";
                 MainTextBlock.Foreground = originalBrush;
                 RecordIcon.Visibility = Visibility.Visible;
@@ -226,8 +229,7 @@ namespace FluentScreenRecorder
             // At this point the encoding has finished,
             // tell the user we're now saving
             visual.StopAnimation("Opacity");
-            AnimatedPointTextBlock.Text = "";
-
+            Ellipse.Visibility = Visibility.Collapsed;
             RecordIcon.Visibility = Visibility.Visible;
             StopIcon.Visibility = Visibility.Collapsed;
             MainTextBlock.Text = "saving...";

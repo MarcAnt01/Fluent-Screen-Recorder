@@ -16,14 +16,14 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition/>            
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        
+
         <Grid Grid.Column="0" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock x:Name="AnimatedPointTextBlock" HorizontalAlignment="Center" FontSize="30" Foreground="Red"/>
-                    <TextBlock x:Name="MainTextBlock" HorizontalTextAlignment="Center" FontSize="30" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    <Ellipse x:Name="Ellipse" HorizontalAlignment="Center" Fill="Red" Width="15" Height="15" Margin="0,0,5,-10"/>
+                    <TextBlock x:Name="MainTextBlock" HorizontalTextAlignment="Center" FontSize="30"/>
                 </StackPanel>
                 <ToggleButton  x:Name="MainButton" HorizontalAlignment="Center" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Width="100" Height="100" Background="{ThemeResource SystemAccentColor}" CornerRadius="99">
                     <StackPanel>
