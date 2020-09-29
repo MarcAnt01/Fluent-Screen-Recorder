@@ -13,8 +13,9 @@
         <StackPanel>
             <TextBlock Text="What's new?" FontWeight="Bold" Margin="0,0,0,5"/>
             <RichTextBlock>
-                <Paragraph>- Fixed apps recording with minimized window</Paragraph>
-                <Paragraph>- Other bug fixes and improvements</Paragraph>
+                <Paragraph>- Now you can have an option to automatically play the recorded video</Paragraph>
+                <Paragraph>- Recording animation</Paragraph>
+                <Paragraph>- More bug fixes and improvements</Paragraph>
             </RichTextBlock>
         </StackPanel>        
     </ScrollViewer>
