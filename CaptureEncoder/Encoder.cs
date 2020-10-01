@@ -64,12 +64,7 @@ namespace CaptureEncoder
                 return;
             }
             _closed = true;
-
-            if (!_isRecording)
-            {
-                DisposeInternal();
-            }
-
+            DisposeInternal();
             _isRecording = false;            
         }
 
