@@ -232,7 +232,7 @@ namespace FluentScreenRecorder
             Ellipse.Visibility = Visibility.Collapsed;
             RecordIcon.Visibility = Visibility.Visible;
             StopIcon.Visibility = Visibility.Collapsed;
-            MainTextBlock.Text = "saving...";
+            MainTextBlock.Text = " saving...";
             ToolTip newtoolTip = new ToolTip();
             toolTip.Content = "Start recording";
             ToolTipService.SetToolTip(MainButton, toolTip);
@@ -273,7 +273,7 @@ namespace FluentScreenRecorder
             {
                 // Tell the user we're done
                 MainButton.IsChecked = false;
-                MainTextBlock.Text = "done";
+                MainTextBlock.Text = "  done";
                 if (OpenFileToggleSwitch.IsOn)
                 {
                     await Launcher.LaunchFileAsync(newFile);
@@ -299,7 +299,7 @@ namespace FluentScreenRecorder
 
                 // Tell the user we're done
                 MainButton.IsChecked = false;
-                MainTextBlock.Text = "done";
+                MainTextBlock.Text = "  done";
                 await Launcher.LaunchFileAsync(newFile);
 
                 if (OpenFileToggleSwitch.IsOn)
