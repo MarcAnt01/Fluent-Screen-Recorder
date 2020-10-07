@@ -1,5 +1,6 @@
 ﻿using Microsoft.Toolkit.Uwp.Helpers;
 using System;
+using System.Runtime.ExceptionServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -26,9 +27,29 @@ namespace FluentScreenRecorder
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            UnhandledException += OnUnhandledException;
+            TaskScheduler.UnobservedTaskException += OnUnobservedException;
+            AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
             ExtendExecution();            
         }
-
+        private void CurrentDomain_FirstChanceException(object sender, FirstChanceExceptionEventArgs e)
+        {
+            // Occurs when an exception occurs
+        }
+        private static void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            // Occurs when an exception is not handled on the UI thread.
+            // if you want to suppress and handle it manually, 
+            // otherwise app shuts down.
+            e.Handled = true;
+        }
+        private static void OnUnobservedException(object sender, UnobservedTaskExceptionEventArgs e)
+        {
+            // Occurs when an exception is not handled on a background thread.
+            // ie. A task is fired and forgotten Task.Run(() => {...})
+            // suppress and handle it manually.
+            e.SetObserved();
+        }
         private ExtendedExecutionSession _extendedSession;
 
         private async void ExtendExecution()
