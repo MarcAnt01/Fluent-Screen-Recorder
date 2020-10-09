@@ -22,6 +22,8 @@ using Windows.System;
 using Windows.UI.Xaml.Hosting;
 using System.Numerics;
 using Windows.UI.Composition;
+using Windows.UI.WindowManagement;
+using FluentScreenRecorder.Views;
 
 namespace FluentScreenRecorder
 {
@@ -228,7 +230,8 @@ namespace FluentScreenRecorder
 
             // At this point the encoding has finished,
             // tell the user we're now saving
-            visual.StopAnimation("Opacity");
+            
+           visual.StopAnimation("Opacity");
             Ellipse.Visibility = Visibility.Collapsed;
             RecordIcon.Visibility = Visibility.Visible;
             StopIcon.Visibility = Visibility.Collapsed;
@@ -237,17 +240,19 @@ namespace FluentScreenRecorder
             toolTip.Content = "Start recording";
             ToolTipService.SetToolTip(MainButton, toolTip);
 
-            var saveDialog = new ContentDialog();
-            saveDialog.Title = "Do you want to save your file?";
-            saveDialog.Content = "You can choose among the following options";
-            saveDialog.PrimaryButtonText = "Save";
-            saveDialog.PrimaryButtonClick += Save_Click;
-            saveDialog.PrimaryButtonStyle = App.Current.Resources["AccentButtonStyle"] as Style;
-            saveDialog.SecondaryButtonText = "Save as...";
-            saveDialog.SecondaryButtonClick += SaveAs_Click;
-            saveDialog.CloseButtonText = "Delete";
-            saveDialog.CloseButtonClick += Cancel_Click;
-            await saveDialog.ShowAsync();
+
+            AppWindow appWindow = await AppWindow.TryCreateAsync();
+
+            // Create a Frame and navigate to the Page you want to show in the new window.
+            Frame appWindowContentFrame = new Frame();
+            VideoPreviewPage.Appwindowref = appWindow;
+            VideoPreviewPage.VideoFile = _tempFile;
+            appWindowContentFrame.Navigate(typeof(VideoPreviewPage));
+          
+            ElementCompositionPreview.SetAppWindowContent(appWindow, appWindowContentFrame);
+            await appWindow.TryShowAsync();
+            MainButton.IsChecked = false;
+            MainTextBlock.Text = "";
         }
 
         private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
@@ -255,82 +260,7 @@ namespace FluentScreenRecorder
             // If the encoder is doing stuff, tell it to stop
             _encoder?.Dispose();
         }
-
-        private async void Save_Click(object sender, ContentDialogButtonClickEventArgs e)
-        {
-            //move the temp file to Videos Library
-            StorageFolder localFolder = KnownFolders.VideosLibrary;
-            var newFile = await _tempFile.CopyAsync(localFolder);
-            if (newFile == null)
-            {
-                // Throw out the encoded video
-                MainButton.IsChecked = false;
-                MainTextBlock.Text = "canceled";
-
-                await _tempFile.DeleteAsync();                
-            }
-            else
-            {
-                // Tell the user we're done
-                MainButton.IsChecked = false;
-                MainTextBlock.Text = "  done";
-                if (OpenFileToggleSwitch.IsOn)
-                {
-                    await Launcher.LaunchFileAsync(newFile);
-                }
-            }          
-        }
-
-        private async void SaveAs_Click(object sender, ContentDialogButtonClickEventArgs e)
-        {
-
-            StorageFile newFile = await PickVideoAsync();
-            if (newFile == null)
-            {
-                // Throw out the encoded video
-                await _tempFile.DeleteAsync();
-                MainButton.IsChecked = false;
-                MainTextBlock.Text = "canceled";                             
-            }
-            else
-            {
-                //move the file to the location selected with the picker
-                await _tempFile.MoveAndReplaceAsync(newFile);
-
-                // Tell the user we're done
-                MainButton.IsChecked = false;
-                MainTextBlock.Text = "  done";
-                await Launcher.LaunchFileAsync(newFile);
-
-                if (OpenFileToggleSwitch.IsOn)
-                {
-                    await Launcher.LaunchFileAsync(newFile);
-                }
-            }            
-        }
-
-        private async void Cancel_Click(object sender, ContentDialogButtonClickEventArgs e)
-        {
-            // Throw out the encoded video
-            MainButton.IsChecked = false;
-            MainTextBlock.Text = "canceled";
-
-            await _tempFile.DeleteAsync();
-        }
-
-        private async Task<StorageFile> PickVideoAsync()
-        {
-            var picker = new FileSavePicker();
-            var time = DateTime.Now.ToString("yyyy-MM-dd-HHmmss");
-            picker.SuggestedStartLocation = PickerLocationId.VideosLibrary;
-            picker.SuggestedFileName = $"recordedVideo{time}";
-            picker.DefaultFileExtension = ".mp4";
-            picker.FileTypeChoices.Add("MP4 Video", new List<string> { ".mp4" });
-
-            var file = await picker.PickSaveFileAsync();
-            return file;
-        }
-
+     
         private async Task<StorageFile> GetTempFileAsync()
         {
             var folder = ApplicationData.Current.TemporaryFolder;

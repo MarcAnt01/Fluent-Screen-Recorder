@@ -1,0 +1,26 @@
+﻿<Page
+    x:Class="FluentScreenRecorder.Views.VideoPreviewPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FluentScreenRecorder.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+
+    <Grid>
+        <StackPanel>
+            <CommandBar Background="Transparent" IsOpen="False" DefaultLabelPosition="Right">
+                <AppBarButton Icon="Save" Label="Save" Click="Save_Click"/>
+                <AppBarButton Icon="SaveLocal" Label="Save As" Click="SaveAs_Click"/>
+                <AppBarButton Icon="Share" Label="Share"/>
+                <AppBarButton Icon="Delete" Label="Delete" Click="Cancel_Click"/>
+            </CommandBar>
+            <MediaPlayerElement 
+                x:Name="MediaPlayer"
+                    MaxWidth="500"
+                    AutoPlay="False"
+                    AreTransportControlsEnabled="True" />
+        </StackPanel>
+    </Grid>
+</Page>
