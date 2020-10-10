@@ -9,18 +9,25 @@
     Background="{ThemeResource SystemControlAcrylicWindowBrush}">
 
     <Grid>
-        <StackPanel>
-            <CommandBar Background="Transparent" IsOpen="False" DefaultLabelPosition="Right">
-                <AppBarButton Icon="Save" Label="Save" Click="Save_Click"/>
-                <AppBarButton Icon="SaveLocal" Label="Save As" Click="SaveAs_Click"/>
-                <AppBarButton Icon="Share" Label="Share"/>
-                <AppBarButton Icon="Delete" Label="Delete" Click="Cancel_Click"/>
-            </CommandBar>
-            <MediaPlayerElement 
-                x:Name="MediaPlayer"
-                    MaxWidth="500"
-                    AutoPlay="False"
-                    AreTransportControlsEnabled="True" />
-        </StackPanel>
-    </Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <MediaPlayerElement x:Name="PreviewPlayer"  AutoPlay="True" AreTransportControlsEnabled="True">
+                <MediaPlayerElement.TransportControls>
+                    <MediaTransportControls IsFullWindowEnabled="False" IsFullWindowButtonVisible="False"  />
+                </MediaPlayerElement.TransportControls>
+            </MediaPlayerElement>
+        </Grid>
+
+        <Grid Grid.Row="1" Background="{StaticResource AppBarBackgroundThemeBrush}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="SaveButton" Style="{ThemeResource AccentButtonStyle}" Content="Save" Click="Save_Click" Margin="5"/>
+                <Button x:Name="SaveAsButton" Content="Save as" Click="SaveAs_Click" Margin="5"/>
+                <Button x:Name="Cancel" Content="Cancel" Click="Cancel_Click" Margin="5"/>
+            </StackPanel>
+        </Grid>   
+     </Grid>
 </Page>
