@@ -1,0 +1,33 @@
+﻿<Page
+    x:Class="FluentScreenRecorder.Views.VideoPreviewPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FluentScreenRecorder.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <MediaPlayerElement x:Name="PreviewPlayer"  AutoPlay="True" AreTransportControlsEnabled="True">
+                <MediaPlayerElement.TransportControls>
+                    <MediaTransportControls IsFullWindowEnabled="False" IsFullWindowButtonVisible="False" IsZoomButtonVisible="False"/>
+                </MediaPlayerElement.TransportControls>
+            </MediaPlayerElement>
+        </Grid>
+
+        <Grid Grid.Row="1" Background="{StaticResource AppBarBackgroundThemeBrush}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="SaveButton" Style="{ThemeResource AccentButtonStyle}" Content="Save" Click="Save_Click" Margin="5"/>
+                <Button x:Name="SaveAsButton" Content="Save as" Click="SaveAs_Click" Margin="5"/>
+                <Button x:Name="Cancel" Content="Cancel" Click="Cancel_Click" Margin="5"/>
+            </StackPanel>
+        </Grid>   
+     </Grid>
+</Page>
