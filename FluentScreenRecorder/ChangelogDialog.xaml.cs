@@ -32,7 +32,7 @@ namespace FluentScreenRecorder
             PackageId packageId = package.Id;
             PackageVersion version = packageId.Version;
 
-            return string.Format("Fluent Screen Recorder version {0}.{1}.{2}", version.Major, version.Minor, version.Build);
+            return string.Format("Fluent Screen Recorder version {0}.{1}", version.Major, version.Minor);
         }       
         private string displayedVersion = GetAppVersion();
     }
