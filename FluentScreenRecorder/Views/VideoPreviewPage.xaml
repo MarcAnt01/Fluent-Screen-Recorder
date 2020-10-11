@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+    Background="{ThemeResource AppBarBackgroundThemeBrush}">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -22,12 +22,33 @@
             </MediaPlayerElement>
         </Grid>
 
-        <Grid Grid.Row="1" Background="{StaticResource AppBarBackgroundThemeBrush}">
+        <Grid Grid.Row="1" Margin="0,5">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="SaveButton" Style="{ThemeResource AccentButtonStyle}" Content="Save" Click="Save_Click" Margin="5"/>
-                <Button x:Name="SaveAsButton" Content="Save as" Click="SaveAs_Click" Margin="5"/>
-                <Button x:Name="Cancel" Content="Cancel" Click="Cancel_Click" Margin="5"/>
+                <Button x:Name="SaveButton" Style="{ThemeResource AccentButtonStyle}" Click="Save_Click" Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon Glyph="&#xE74E;" Margin="0,0,5,0" FontSize="16"/>
+                        <TextBlock Text="Save"/>
+                    </StackPanel>                    
+                </Button>
+                <Button x:Name="SaveAsButton" Click="SaveAs_Click" Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon Glyph="&#xE792;" Margin="0,0,5,0" FontSize="16"/>
+                        <TextBlock Text="Save as"/>
+                    </StackPanel>                    
+                </Button>
+                <Button x:Name="Cancel" Click="Cancel_Click" Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon Glyph="&#xE74D;" Margin="0,0,5,0" FontSize="16"/>
+                        <TextBlock Text="Delete"/>
+                    </StackPanel>                    
+                </Button>
+                <Button x:Name="Share" Click="Share_Click" Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon Glyph="&#xE72D;" Margin="0,0,5,0" FontSize="16"/>
+                        <TextBlock Text="Share"/>
+                    </StackPanel>
+                </Button>
             </StackPanel>
-        </Grid>   
+        </Grid>    
      </Grid>
 </Page>

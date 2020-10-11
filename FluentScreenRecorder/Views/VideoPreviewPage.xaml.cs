@@ -29,20 +29,19 @@ namespace FluentScreenRecorder.Views
     /// </summary>
     public sealed partial class VideoPreviewPage : Page
     {
-        StorageFile _tempFile;
-        //i used static because normal way wasnt working. feel free to refactor.
+        StorageFile _tempFile;        
         public static StorageFile VideoFile;
         public static AppWindow Appwindowref;
         AppWindow appwindow;
+
         public VideoPreviewPage()
         {
-            this.InitializeComponent();
-            //Set up share
+            this.InitializeComponent();           
             _tempFile = VideoFile;
             appwindow = Appwindowref;
             Appwindowref = null;
             VideoFile = null;
-            MediaPlayer.Source = MediaSource.CreateFromStorageFile(_tempFile);
+            PreviewPlayer.Source = MediaSource.CreateFromStorageFile(_tempFile);
         }
 
         private async void Save_Click(object sender, RoutedEventArgs e)
@@ -94,5 +93,23 @@ namespace FluentScreenRecorder.Views
             return file;
         }
 
+        private void Share_Click(object sender, RoutedEventArgs e)
+        {
+            ShareSourceLoad();
+        }
+
+        private void ShareSourceLoad()
+        {
+            DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
+            dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(this.DataRequested);
+            DataTransferManager.ShowShareUI();
+        }
+
+        private void DataRequested(DataTransferManager sender, DataRequestedEventArgs e)
+        {
+            DataRequest request = e.Request;
+            request.Data.Properties.Title = _tempFile.Name;
+            request.Data.SetStorageItems(new StorageFile[] { _tempFile });        
+        }        
     }
 }
