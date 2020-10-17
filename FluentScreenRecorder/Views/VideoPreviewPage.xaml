@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <MediaPlayerElement x:Name="PreviewPlayer"  AutoPlay="True" AreTransportControlsEnabled="True">
+            <MediaPlayerElement x:Name="PreviewPlayer"  AutoPlay="True" AreTransportControlsEnabled="True" Margin="0,32,0,0">
                 <MediaPlayerElement.TransportControls>
                     <MediaTransportControls IsFullWindowEnabled="False" IsFullWindowButtonVisible="False" IsZoomButtonVisible="False"/>
                 </MediaPlayerElement.TransportControls>

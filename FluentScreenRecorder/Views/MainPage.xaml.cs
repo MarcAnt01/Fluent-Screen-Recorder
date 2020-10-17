@@ -242,6 +242,7 @@ namespace FluentScreenRecorder
 
 
             AppWindow appWindow = await AppWindow.TryCreateAsync();
+            appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
 
             // Create a Frame and navigate to the Page you want to show in the new window.
             Frame appWindowContentFrame = new Frame();
