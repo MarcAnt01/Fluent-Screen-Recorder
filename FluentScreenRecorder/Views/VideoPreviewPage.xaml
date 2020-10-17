@@ -36,18 +36,18 @@
                         <TextBlock Text="Save as"/>
                     </StackPanel>                    
                 </Button>
-                <Button x:Name="Cancel" Click="Cancel_Click" Margin="5">
-                    <StackPanel Orientation="Horizontal">
-                        <FontIcon Glyph="&#xE74D;" Margin="0,0,5,0" FontSize="16"/>
-                        <TextBlock Text="Delete"/>
-                    </StackPanel>                    
-                </Button>
                 <Button x:Name="Share" Click="Share_Click" Margin="5">
                     <StackPanel Orientation="Horizontal">
                         <FontIcon Glyph="&#xE72D;" Margin="0,0,5,0" FontSize="16"/>
                         <TextBlock Text="Share"/>
                     </StackPanel>
                 </Button>
+                <Button x:Name="Cancel" Click="Cancel_Click" Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <FontIcon Glyph="&#xE74D;" Margin="0,0,5,0" FontSize="16"/>
+                        <TextBlock Text="Delete"/>
+                    </StackPanel>                    
+                </Button>                
             </StackPanel>
         </Grid>    
      </Grid>
