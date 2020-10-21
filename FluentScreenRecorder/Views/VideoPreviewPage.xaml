@@ -24,13 +24,13 @@
 
         <Grid Grid.Row="1" Margin="0,5">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="SaveButton" Style="{ThemeResource AccentButtonStyle}" Click="Save_Click" Margin="5">
+                <Button x:Name="SaveButton" Style="{ThemeResource AccentButtonStyle}" Click="SaveButton_Click" Margin="5">
                     <StackPanel Orientation="Horizontal">
                         <FontIcon Glyph="&#xE74E;" Margin="0,0,5,0" FontSize="16"/>
                         <TextBlock Text="Save"/>
                     </StackPanel>                    
                 </Button>
-                <Button x:Name="SaveAsButton" Click="SaveAs_Click" Margin="5">
+                <Button x:Name="SaveAsButton" Click="SaveAsButton_Click" Margin="5">
                     <StackPanel Orientation="Horizontal">
                         <FontIcon Glyph="&#xE792;" Margin="0,0,5,0" FontSize="16"/>
                         <TextBlock Text="Save as"/>

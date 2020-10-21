@@ -24,6 +24,8 @@ using System.Numerics;
 using Windows.UI.Composition;
 using Windows.UI.WindowManagement;
 using FluentScreenRecorder.Views;
+using FluentScreenRecorder.Dialogs;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace FluentScreenRecorder
 {
@@ -118,7 +120,7 @@ namespace FluentScreenRecorder
             OpenFileToggleSwitch.IsOn = settings.OpenSaved;
         }
 
-        private StorageFile _tempFile;
+        public static StorageFile _tempFile;
         private async void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             var button = (ToggleButton)sender;
@@ -231,7 +233,7 @@ namespace FluentScreenRecorder
             // At this point the encoding has finished,
             // tell the user we're now saving
             
-           visual.StopAnimation("Opacity");
+            visual.StopAnimation("Opacity");
             Ellipse.Visibility = Visibility.Collapsed;
             RecordIcon.Visibility = Visibility.Visible;
             StopIcon.Visibility = Visibility.Collapsed;
@@ -240,20 +242,27 @@ namespace FluentScreenRecorder
             toolTip.Content = "Start recording";
             ToolTipService.SetToolTip(MainButton, toolTip);
 
+            if (OpenFileToggleSwitch.IsOn)
+            {
+                AppWindow appWindow = await AppWindow.TryCreateAsync();
+                appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
 
-            AppWindow appWindow = await AppWindow.TryCreateAsync();
-            appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+                // Create a Frame and navigate to the Page you want to show in the new window.
+                Frame appWindowContentFrame = new Frame();
+                VideoPreviewPage.Appwindowref = appWindow;
+                VideoPreviewPage.VideoFile = _tempFile;
+                appWindowContentFrame.Navigate(typeof(VideoPreviewPage));
 
-            // Create a Frame and navigate to the Page you want to show in the new window.
-            Frame appWindowContentFrame = new Frame();
-            VideoPreviewPage.Appwindowref = appWindow;
-            VideoPreviewPage.VideoFile = _tempFile;
-            appWindowContentFrame.Navigate(typeof(VideoPreviewPage));
-          
-            ElementCompositionPreview.SetAppWindowContent(appWindow, appWindowContentFrame);
-            await appWindow.TryShowAsync();
-            MainButton.IsChecked = false;
-            MainTextBlock.Text = "";
+                ElementCompositionPreview.SetAppWindowContent(appWindow, appWindowContentFrame);
+                await appWindow.TryShowAsync();
+                MainButton.IsChecked = false;
+                MainTextBlock.Text = "";
+            }
+            else
+            {
+                ContentDialog dialog = new SaveDialog();
+                await dialog.ShowAsync();               
+            }         
         }
 
         private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
@@ -261,7 +270,70 @@ namespace FluentScreenRecorder
             // If the encoder is doing stuff, tell it to stop
             _encoder?.Dispose();
         }
-     
+
+        public static async void Save()
+        {
+            //move the temp file to Videos Library
+            StorageFolder localFolder = KnownFolders.VideosLibrary;
+            var newFile = await _tempFile.CopyAsync(localFolder);
+            if (newFile == null)
+            {
+                await _tempFile.DeleteAsync();
+            }
+            else
+            {
+                MainTextBlock.Text=""
+            }            
+        }
+
+        public  static async void SaveAs()
+        {
+            StorageFile newFile = await PickVideoAsync();
+            if (newFile == null)
+            {
+                // Throw out the encoded video
+                await _tempFile.DeleteAsync();
+            }
+            else
+            {
+                //move the file to the location selected with the picker
+                await _tempFile.MoveAndReplaceAsync(newFile);                
+            }
+        }
+
+        public static async void Cancel()
+        {
+            await _tempFile.DeleteAsync();            
+        }
+
+        static async Task<StorageFile> PickVideoAsync()
+        {
+            var picker = new FileSavePicker();
+            var time = DateTime.Now.ToString("yyyy-MM-dd-HHmmss");
+            picker.SuggestedStartLocation = PickerLocationId.VideosLibrary;
+            picker.SuggestedFileName = $"recordedVideo{time}";
+            picker.DefaultFileExtension = ".mp4";
+            picker.FileTypeChoices.Add("MP4 Video", new List<string> { ".mp4" });
+
+            var file = await picker.PickSaveFileAsync();
+            return file;
+        }
+
+        public static void Share()
+        {
+            DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
+            //DataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(this.DataRequested);
+            DataTransferManager.ShowShareUI();
+        }
+
+
+        private void DataRequested(DataTransferManager sender, DataRequestedEventArgs e)
+        {
+            DataRequest request = e.Request;
+            request.Data.Properties.Title = _tempFile.Name;
+            request.Data.SetStorageItems(new StorageFile[] { _tempFile });
+        }
+
         private async Task<StorageFile> GetTempFileAsync()
         {
             var folder = ApplicationData.Current.TemporaryFolder;

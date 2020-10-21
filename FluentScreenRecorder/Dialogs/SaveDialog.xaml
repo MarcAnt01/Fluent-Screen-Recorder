@@ -1,0 +1,21 @@
+﻿<ContentDialog
+    x:Class="FluentScreenRecorder.Dialogs.SaveDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FluentScreenRecorder.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Do you want to save your file?"
+    PrimaryButtonText="Save"
+    SecondaryButtonText="Save as"
+    CloseButtonText="Delete"
+    PrimaryButtonClick="Save_Click"
+    SecondaryButtonClick="SaveAs_Click"
+    CloseButtonClick="Cancel_Click"   
+    PrimaryButtonStyle="{ThemeResource SystemAccentColor}">
+
+    <Grid>
+        <TextBlock Text="You can choose among the following options"/>
+    </Grid>
+</ContentDialog>

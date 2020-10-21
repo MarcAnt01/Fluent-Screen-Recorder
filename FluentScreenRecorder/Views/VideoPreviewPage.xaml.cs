@@ -44,72 +44,24 @@ namespace FluentScreenRecorder.Views
             PreviewPlayer.Source = MediaSource.CreateFromStorageFile(_tempFile);
         }
 
-        private async void Save_Click(object sender, RoutedEventArgs e)
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            //move the temp file to Videos Library
-            StorageFolder localFolder = KnownFolders.VideosLibrary;
-            var newFile = await _tempFile.CopyAsync(localFolder);
-            if (newFile == null)
-            {
-                await _tempFile.DeleteAsync();
-            }
-            else
-            {
-                await appwindow.CloseAsync();
-            }
+            MainPage.Save();
         }
 
-        private async void SaveAs_Click(object sender, RoutedEventArgs e)
+        private void SaveAsButton_Click(object sender, RoutedEventArgs e)
         {
-            StorageFile newFile = await PickVideoAsync();
-            if (newFile == null)
-            {
-                // Throw out the encoded video
-                await _tempFile.DeleteAsync();
-            }
-            else
-            {
-                //move the file to the location selected with the picker
-                await _tempFile.MoveAndReplaceAsync(newFile);
-               await appwindow.CloseAsync();
-            }
-        }
-
-        private async void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            await _tempFile.DeleteAsync();
-            await appwindow.CloseAsync();
-        }
-        private async Task<StorageFile> PickVideoAsync()
-        {
-            var picker = new FileSavePicker();
-            var time = DateTime.Now.ToString("yyyy-MM-dd-HHmmss");
-            picker.SuggestedStartLocation = PickerLocationId.VideosLibrary;
-            picker.SuggestedFileName = $"recordedVideo{time}";
-            picker.DefaultFileExtension = ".mp4";
-            picker.FileTypeChoices.Add("MP4 Video", new List<string> { ".mp4" });
-
-            var file = await picker.PickSaveFileAsync();
-            return file;
+            MainPage.SaveAs();
         }
 
         private void Share_Click(object sender, RoutedEventArgs e)
         {
-            ShareSourceLoad();
+            MainPage.Share();
         }
 
-        private void ShareSourceLoad()
+        private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
-            dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(this.DataRequested);
-            DataTransferManager.ShowShareUI();
+            MainPage.Cancel();
         }
-
-        private void DataRequested(DataTransferManager sender, DataRequestedEventArgs e)
-        {
-            DataRequest request = e.Request;
-            request.Data.Properties.Title = _tempFile.Name;
-            request.Data.SetStorageItems(new StorageFile[] { _tempFile });        
-        }        
     }
 }
