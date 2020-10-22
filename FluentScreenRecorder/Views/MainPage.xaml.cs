@@ -275,15 +275,11 @@ namespace FluentScreenRecorder
         {
             //move the temp file to Videos Library
             StorageFolder localFolder = KnownFolders.VideosLibrary;
-            var newFile = await _tempFile.CopyAsync(localFolder);
+            var newFile = await _tempFile.CopyAsync(localFolder);            
             if (newFile == null)
             {
-                await _tempFile.DeleteAsync();
-            }
-            else
-            {
-                MainTextBlock.Text=""
-            }            
+                await _tempFile.DeleteAsync();                
+            }                        
         }
 
         public  static async void SaveAs()
@@ -306,7 +302,13 @@ namespace FluentScreenRecorder
             await _tempFile.DeleteAsync();            
         }
 
-        static async Task<StorageFile> PickVideoAsync()
+        private void Saved()
+        {
+            MainTextBlock.Text = "Saved";
+        }       
+
+
+        private static async Task<StorageFile> PickVideoAsync()
         {
             var picker = new FileSavePicker();
             var time = DateTime.Now.ToString("yyyy-MM-dd-HHmmss");
