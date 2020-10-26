@@ -44,14 +44,16 @@ namespace FluentScreenRecorder.Views
             PreviewPlayer.Source = MediaSource.CreateFromStorageFile(_tempFile);
         }
 
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             MainPage.Save();
+            await appwindow.CloseAsync(); 
         }
 
-        private void SaveAsButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveAsButton_Click(object sender, RoutedEventArgs e)
         {
             MainPage.SaveAs();
+            await appwindow.CloseAsync();
         }
 
         private void Share_Click(object sender, RoutedEventArgs e)
@@ -59,9 +61,10 @@ namespace FluentScreenRecorder.Views
             MainPage.Share();
         }
 
-        private void Cancel_Click(object sender, RoutedEventArgs e)
+        private async void Cancel_Click(object sender, RoutedEventArgs e)
         {
             MainPage.Cancel();
+            await appwindow.CloseAsync();
         }
     }
 }

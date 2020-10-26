@@ -232,12 +232,13 @@ namespace FluentScreenRecorder
 
             // At this point the encoding has finished,
             // tell the user we're now saving
-            
+
+            MainButton.IsChecked = false;
+            MainTextBlock.Text = "";
             visual.StopAnimation("Opacity");
             Ellipse.Visibility = Visibility.Collapsed;
             RecordIcon.Visibility = Visibility.Visible;
-            StopIcon.Visibility = Visibility.Collapsed;
-            MainTextBlock.Text = " saving...";
+            StopIcon.Visibility = Visibility.Collapsed;            
             ToolTip newtoolTip = new ToolTip();
             toolTip.Content = "Start recording";
             ToolTipService.SetToolTip(MainButton, toolTip);
@@ -255,14 +256,12 @@ namespace FluentScreenRecorder
 
                 ElementCompositionPreview.SetAppWindowContent(appWindow, appWindowContentFrame);
                 await appWindow.TryShowAsync();
-                MainButton.IsChecked = false;
-                MainTextBlock.Text = "";
             }
             else
             {
                 ContentDialog dialog = new SaveDialog();
-                await dialog.ShowAsync();               
-            }         
+                await dialog.ShowAsync();                
+            }            
         }
 
         private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
