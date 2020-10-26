@@ -117,7 +117,7 @@ namespace FluentScreenRecorder
             FrameRateComboBox.SelectedIndex = GetFrameRateIndex(settings.FrameRate);
 
             UseCaptureItemToggleSwitch.IsOn = settings.UseSourceSize;
-            OpenFileToggleSwitch.IsOn = settings.OpenSaved;
+            PreviewToggleSwitch.IsOn = settings.Preview;
         }
 
         public static StorageFile _tempFile;
@@ -243,7 +243,7 @@ namespace FluentScreenRecorder
             toolTip.Content = "Start recording";
             ToolTipService.SetToolTip(MainButton, toolTip);
 
-            if (OpenFileToggleSwitch.IsOn)
+            if (PreviewToggleSwitch.IsOn)
             {
                 AppWindow appWindow = await AppWindow.TryCreateAsync();
                 appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
@@ -365,9 +365,9 @@ namespace FluentScreenRecorder
             var frameRateItem = (FrameRateItem)FrameRateComboBox.SelectedItem;
             var frameRate = frameRateItem.FrameRate;
             var useSourceSize = UseCaptureItemToggleSwitch.IsOn;
-            var openSaved = OpenFileToggleSwitch.IsOn;
+            var preview = PreviewToggleSwitch.IsOn;
 
-            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize , OpenSaved = openSaved };
+            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize , Preview = preview };
 
         }
 
@@ -381,7 +381,7 @@ namespace FluentScreenRecorder
                 Bitrate = 18000000,
                 FrameRate = 60,
                 UseSourceSize = true,
-                OpenSaved = true
+                Preview = true
             };
             // Resolution
             if (localSettings.Values.TryGetValue(nameof(AppSettings.Width), out var width) &&
@@ -410,9 +410,9 @@ namespace FluentScreenRecorder
                 result.UseSourceSize = (bool)useSourceSize;            }
             
 
-            if (localSettings.Values.TryGetValue(nameof(AppSettings.OpenSaved), out var openSaved))
+            if (localSettings.Values.TryGetValue(nameof(AppSettings.Preview), out var preview))
             {
-                result.OpenSaved = (bool)openSaved;
+                result.Preview = (bool)preview;
             }
             return result;
         }
@@ -430,7 +430,7 @@ namespace FluentScreenRecorder
             localSettings.Values[nameof(AppSettings.Bitrate)] = settings.Bitrate;
             localSettings.Values[nameof(AppSettings.FrameRate)] = settings.FrameRate;
             localSettings.Values[nameof(AppSettings.UseSourceSize)] = settings.UseSourceSize;
-            localSettings.Values[nameof(AppSettings.OpenSaved)] = settings.OpenSaved;
+            localSettings.Values[nameof(AppSettings.Preview)] = settings.Preview;
         }
 
         private int GetResolutionIndex(uint width, uint height)
@@ -483,7 +483,7 @@ namespace FluentScreenRecorder
             public uint Bitrate;
             public uint FrameRate;
             public bool UseSourceSize;
-            public bool OpenSaved;
+            public bool Preview;
         }
 
         private IDirect3DDevice _device;
