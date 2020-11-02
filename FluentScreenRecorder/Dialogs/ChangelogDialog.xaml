@@ -13,10 +13,12 @@
         <StackPanel>
             <TextBlock Text="What's new?" FontWeight="Bold" Margin="0,0,0,5"/>
             <RichTextBlock>
-                <Paragraph>- Now you can have an option to automatically play the recorded video</Paragraph>
-                <Paragraph>- Recording animation</Paragraph>
+                <Paragraph>- Now you can see a preview of the recorded video (can be disabled)</Paragraph>
+                <Paragraph>- Share the recorded video to other UWP apps in one click</Paragraph>
                 <Paragraph>- More bug fixes and improvements</Paragraph>
+                <Paragraph>- We now have a Discord server if you want to join us :)</Paragraph>                
             </RichTextBlock>
+            <HyperlinkButton Content="Join Discord server" NavigateUri="https://discord.com/invite/v4EXAwXPHw"/>
         </StackPanel>        
     </ScrollViewer>
 </ContentDialog>

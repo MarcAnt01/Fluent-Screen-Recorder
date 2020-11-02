@@ -70,7 +70,7 @@ namespace FluentScreenRecorder
             Ellipse.Visibility = Visibility.Collapsed;
             ToolTip toolTip = new ToolTip();
             toolTip.Content = "Start recording";
-            ToolTipService.SetToolTip(MainButton, toolTip);            
+            ToolTipService.SetToolTip(MainButton, toolTip);
 
             _device = Direct3D11Helpers.CreateDevice();
 
@@ -168,13 +168,13 @@ namespace FluentScreenRecorder
             _tempFile = tempFile;
 
             // Tell the user we've started recording
-            
+
             var visual = ElementCompositionPreview.GetElementVisual(Ellipse);
             var animation = visual.Compositor.CreateScalarKeyFrameAnimation();
             animation.InsertKeyFrame(0, 1);
             animation.InsertKeyFrame(1, 0);
             animation.Duration = TimeSpan.FromMilliseconds(1500);
-            animation.IterationBehavior = AnimationIterationBehavior.Forever;                        
+            animation.IterationBehavior = AnimationIterationBehavior.Forever;
             visual.StartAnimation("Opacity", animation);
 
             RecordIcon.Visibility = Visibility.Collapsed;
@@ -221,7 +221,7 @@ namespace FluentScreenRecorder
                 MainTextBlock.Text = "failure";
                 MainTextBlock.Foreground = originalBrush;
                 RecordIcon.Visibility = Visibility.Visible;
-                StopIcon.Visibility = Visibility.Collapsed;                
+                StopIcon.Visibility = Visibility.Collapsed;
                 toolTip.Content = "Start recording";
                 ToolTipService.SetToolTip(MainButton, toolTip);
 
@@ -236,7 +236,7 @@ namespace FluentScreenRecorder
             visual.StopAnimation("Opacity");
             Ellipse.Visibility = Visibility.Collapsed;
             RecordIcon.Visibility = Visibility.Visible;
-            StopIcon.Visibility = Visibility.Collapsed;            
+            StopIcon.Visibility = Visibility.Collapsed;
             ToolTip newtoolTip = new ToolTip();
             toolTip.Content = "Start recording";
             ToolTipService.SetToolTip(MainButton, toolTip);
@@ -258,8 +258,8 @@ namespace FluentScreenRecorder
             else
             {
                 ContentDialog dialog = new SaveDialog();
-                await dialog.ShowAsync();                
-            }            
+                await dialog.ShowAsync();
+            }
         }
 
         private void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
@@ -272,14 +272,14 @@ namespace FluentScreenRecorder
         {
             //move the temp file to Videos Library
             StorageFolder localFolder = KnownFolders.VideosLibrary;
-            var newFile = await _tempFile.CopyAsync(localFolder);            
+            var newFile = await _tempFile.CopyAsync(localFolder);
             if (newFile == null)
             {
-                await _tempFile.DeleteAsync();                
-            }                        
+                await _tempFile.DeleteAsync();
+            }
         }
 
-        public  static async void SaveAs()
+        public static async void SaveAs()
         {
             StorageFile newFile = await PickVideoAsync();
             if (newFile == null)
@@ -290,19 +290,19 @@ namespace FluentScreenRecorder
             else
             {
                 //move the file to the location selected with the picker
-                await _tempFile.MoveAndReplaceAsync(newFile);                
+                await _tempFile.MoveAndReplaceAsync(newFile);
             }
         }
 
         public static async void Cancel()
         {
-            await _tempFile.DeleteAsync();            
+            await _tempFile.DeleteAsync();
         }
 
         private void Saved()
         {
             MainTextBlock.Text = "Saved";
-        }       
+        }
 
 
         private static async Task<StorageFile> PickVideoAsync()
@@ -365,7 +365,7 @@ namespace FluentScreenRecorder
             var useSourceSize = UseCaptureItemToggleSwitch.IsOn;
             var preview = PreviewToggleSwitch.IsOn;
 
-            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize , Preview = preview };
+            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize, Preview = preview };
 
         }
 
@@ -388,7 +388,7 @@ namespace FluentScreenRecorder
                 result.Width = (uint)width;
                 result.Height = (uint)height;
             }
-            
+
             else if (localSettings.Values.TryGetValue("Quality", out var quality))
             {
                 var videoQuality = ParseEnumValue<VideoEncodingQuality>((string)quality);
@@ -405,8 +405,8 @@ namespace FluentScreenRecorder
 
             if (localSettings.Values.TryGetValue(nameof(AppSettings.UseSourceSize), out var useSourceSize))
             {
-                result.UseSourceSize = (bool)useSourceSize;            }
-            
+                result.UseSourceSize = (bool)useSourceSize; }
+
 
             if (localSettings.Values.TryGetValue(nameof(AppSettings.Preview), out var preview))
             {
@@ -488,6 +488,12 @@ namespace FluentScreenRecorder
         private Encoder _encoder;
         private List<ResolutionItem> _resolutions;
         private List<BitrateItem> _bitrates;
-        private List<FrameRateItem> _frameRates;      
+        private List<FrameRateItem> _frameRates;
+
+        private async void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            ContentDialog dialog = new AboutDialog();
+            await dialog.ShowAsync();
+        }
     }
 }
