@@ -1,0 +1,24 @@
+﻿<ContentDialog
+    x:Class="FluentScreenRecorder.Dialogs.AboutDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FluentScreenRecorder.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"    
+    PrimaryButtonText="Report a bug"
+    SecondaryButtonText="Close"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    PrimaryButtonStyle="{ThemeResource SystemAccentColor}">
+
+    <StackPanel>
+        <HyperlinkButton Content="View GitHub Repository" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder"/>
+        <HyperlinkButton Content="Join our Discord server" NavigateUri="https://discord.gg/v4EXAwXPHw"/>
+        <HyperlinkButton Content="Privacy policy" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/PRIVACY.md"/>
+        <HyperlinkButton Content="Copyright" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/LICENSE"/>
+        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+            <TextBlock Text="Version"/>
+            <TextBlock x:Name="VersionNumberTextBlock" FontWeight="Bold"/>          
+        </StackPanel> 
+    </StackPanel>  
+</ContentDialog>

@@ -16,8 +16,6 @@ using Windows.UI.Xaml.Media;
 using Windows.Foundation;
 using Windows.UI.ViewManagement;
 using Windows.ApplicationModel.Core;
-using Windows.UI.Xaml.Documents;
-using Windows.ApplicationModel;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Composition;
 using Windows.UI.WindowManagement;
@@ -490,69 +488,6 @@ namespace FluentScreenRecorder
         private Encoder _encoder;
         private List<ResolutionItem> _resolutions;
         private List<BitrateItem> _bitrates;
-        private List<FrameRateItem> _frameRates;
-
-        public static string GetAppVersion()
-        {
-
-            Package package = Package.Current;
-            PackageId packageId = package.Id;
-            PackageVersion version = packageId.Version;
-
-            return string.Format("{0}.{1}.{2}", version.Major, version.Minor, version.Build);
-        }
-
-        private async void AboutButton_Click(object sender, RoutedEventArgs e)
-        {
-            TextBlock gHRepoTB = new TextBlock();
-            Hyperlink hyperlink1 = new Hyperlink();
-            Run run1 = new Run();
-            run1.Text = "View GitHub repository";
-            hyperlink1.NavigateUri = new Uri("https://github.com/MarcAnt01/Fluent-Screen-Recorder");
-            hyperlink1.Inlines.Add(run1);
-            gHRepoTB.Inlines.Add(hyperlink1);
-
-            TextBlock privacyPolicyTB = new TextBlock();
-            privacyPolicyTB.Margin = new Thickness(0,10,0,10);
-            Hyperlink hyperlink2 = new Hyperlink();
-            Run run2 = new Run();
-            run2.Text = "Privacy Policy";
-            hyperlink2.NavigateUri = new Uri("https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/PRIVACY.md");
-            hyperlink2.Inlines.Add(run2);
-            privacyPolicyTB.Inlines.Add(hyperlink2);
-
-            TextBlock versionTB = new TextBlock();
-            versionTB.Text = "Version";
-            versionTB.Margin = new Thickness(0,0,3,0);
-            TextBlock versionNumberTB = new TextBlock();
-            string version = GetAppVersion();
-            versionNumberTB.Text = version;
-            versionNumberTB.FontWeight = Windows.UI.Text.FontWeights.Bold;
-            StackPanel versionPanel = new StackPanel();
-            versionPanel.Children.Add(versionTB);
-            versionPanel.Children.Add(versionNumberTB);
-            versionPanel.Orientation = Orientation.Horizontal;
-
-            StackPanel aboutPanel = new StackPanel();
-            aboutPanel.Children.Add(gHRepoTB);
-            aboutPanel.Children.Add(privacyPolicyTB);
-            aboutPanel.Children.Add(versionPanel);
-
-            ContentDialog aboutDialog = new ContentDialog();
-            aboutDialog.Title = "About";
-            aboutDialog.Content = aboutPanel;
-            aboutDialog.PrimaryButtonText = "Report a bug";
-            aboutDialog.PrimaryButtonClick += ReportBug_Click;
-            aboutDialog.PrimaryButtonStyle = App.Current.Resources["AccentButtonStyle"] as Style;
-            aboutDialog.CloseButtonText = "Close";
-            await aboutDialog.ShowAsync();
-        }
-
-        private async void ReportBug_Click(object sender, ContentDialogButtonClickEventArgs e)
-        {
-            string gitHubIssue = @"https://github.com/MarcAnt01/Fluent-Screen-Recorder/issues/new";
-            var uri = new Uri(gitHubIssue);
-            var uriOpened = await Windows.System.Launcher.LaunchUriAsync(uri);
-        }
+        private List<FrameRateItem> _frameRates;      
     }
 }
