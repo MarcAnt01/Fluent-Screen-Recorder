@@ -18,14 +18,13 @@ using Windows.UI.ViewManagement;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml.Documents;
 using Windows.ApplicationModel;
-using Windows.System;
 using Windows.UI.Xaml.Hosting;
-using System.Numerics;
 using Windows.UI.Composition;
 using Windows.UI.WindowManagement;
 using FluentScreenRecorder.Views;
 using FluentScreenRecorder.Dialogs;
 using Windows.ApplicationModel.DataTransfer;
+using Microsoft.AppCenter.Crashes;
 
 namespace FluentScreenRecorder
 {
@@ -205,6 +204,7 @@ namespace FluentScreenRecorder
             }
             catch (Exception ex)
             {
+                Crashes.TrackError(ex);
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex);
 
