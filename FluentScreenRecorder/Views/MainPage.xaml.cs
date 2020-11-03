@@ -321,12 +321,12 @@ namespace FluentScreenRecorder
         public static void Share()
         {
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
-            //DataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(this.DataRequested);
+            dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(DataRequested);
             DataTransferManager.ShowShareUI();
         }
 
 
-        private void DataRequested(DataTransferManager sender, DataRequestedEventArgs e)
+        private static void DataRequested(DataTransferManager sender, DataRequestedEventArgs e)
         {
             DataRequest request = e.Request;
             request.Data.Properties.Title = _tempFile.Name;
