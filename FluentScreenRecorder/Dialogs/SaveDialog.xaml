@@ -13,7 +13,7 @@
     PrimaryButtonClick="Save_Click"
     SecondaryButtonClick="SaveAs_Click"
     CloseButtonClick="Cancel_Click"   
-    PrimaryButtonStyle="{ThemeResource SystemAccentColor}">
+    PrimaryButtonStyle="{ThemeResource AccentButtonStyle}">
 
     <Grid>
         <TextBlock Text="You can choose among the following options"/>

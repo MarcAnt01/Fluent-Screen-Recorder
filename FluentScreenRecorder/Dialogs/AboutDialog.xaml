@@ -9,7 +9,7 @@
     PrimaryButtonText="Report a bug"
     SecondaryButtonText="Close"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    PrimaryButtonStyle="{ThemeResource SystemAccentColor}">
+    PrimaryButtonStyle="{ThemeResource AccentButtonStyle}">
 
     <StackPanel>
         <HyperlinkButton Content="View GitHub Repository" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder"/>
