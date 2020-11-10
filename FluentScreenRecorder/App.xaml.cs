@@ -28,7 +28,10 @@ namespace FluentScreenRecorder
         public App()
         {
             this.InitializeComponent();
-            this.Suspending += OnSuspending;                      
+            this.Suspending += OnSuspending;
+#if !DEBUG
+            AppCenter.Start(APPCENTER_SECRET, typeof(Analytics), typeof(Crashes));
+#endif
             ExtendExecution();            
         }
 
