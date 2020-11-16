@@ -5,7 +5,7 @@ A fork of [Simple Screen Recorder](https://github.com/robmikh/SimpleRecorder) wi
 ![](https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/848392b1631170b3c7deed9f1ffe35fd60d72a41/Screenshot.jpg?raw=true)
 
 
-<a href='https://www.microsoft.com/en-us/p/fluent-screen-recorder/9mwv79xlfqh7'><img src='https://developer.microsoft.com/en-us/store/badges/images/English_get-it-from-MS.png' alt='Store Link' height="50px"/></a>
+<a href='https://www.microsoft.com/en-us/p/fluent-screen-recorder/9mwv79xlfqh7'><img src='https://developer.microsoft.com/en-us/store/badges/images/English_get-it-from-MS.png' alt='Store Link' height="50px"/></a> <a href='https://discord.gg/UZgbJP2'><img src='https://media.moddb.com/images/members/1/454/453186/profile/news-discord-join.jpg' alt='Discord Link' height="50px"/></a>
 
 ### Supported platforms
 
