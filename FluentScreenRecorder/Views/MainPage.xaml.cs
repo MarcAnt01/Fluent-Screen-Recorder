@@ -247,7 +247,11 @@ namespace FluentScreenRecorder
                 int newViewId = 0;
                 await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
-                    var preview = new VideoPreviewPage(_tempFile);                    
+                    var preview = new VideoPreviewPage(_tempFile);
+                    ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+                    formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+                    CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+                    coreTitleBar.ExtendViewIntoTitleBar = true;
                     Window.Current.Content = preview;                    
                     Window.Current.Activate();
                     newViewId = ApplicationView.GetForCurrentView().Id;                    
