@@ -18,11 +18,10 @@ using Windows.UI.ViewManagement;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Composition;
-using Windows.UI.WindowManagement;
 using FluentScreenRecorder.Views;
 using FluentScreenRecorder.Dialogs;
-using Windows.ApplicationModel.DataTransfer;
 using Microsoft.AppCenter.Crashes;
+using Windows.UI.Core;
 
 namespace FluentScreenRecorder
 {
@@ -117,7 +116,8 @@ namespace FluentScreenRecorder
             PreviewToggleSwitch.IsOn = settings.Preview;
         }
 
-        public static StorageFile _tempFile;
+        public StorageFile _tempFile;
+
         private async void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             var button = (ToggleButton)sender;
@@ -243,21 +243,21 @@ namespace FluentScreenRecorder
 
             if (PreviewToggleSwitch.IsOn)
             {
-                AppWindow appWindow = await AppWindow.TryCreateAsync();
-                appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-
-                // Create a Frame and navigate to the Page you want to show in the new window.
-                Frame appWindowContentFrame = new Frame();
-                VideoPreviewPage.Appwindowref = appWindow;
-                VideoPreviewPage.VideoFile = _tempFile;
-                appWindowContentFrame.Navigate(typeof(VideoPreviewPage));
-
-                ElementCompositionPreview.SetAppWindowContent(appWindow, appWindowContentFrame);
-                await appWindow.TryShowAsync();
+                CoreApplicationView newView = CoreApplication.CreateNewView();
+                int newViewId = 0;
+                await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    var preview = new VideoPreviewPage(_tempFile);                    
+                    Window.Current.Content = preview;                    
+                    Window.Current.Activate();
+                    newViewId = ApplicationView.GetForCurrentView().Id;                    
+                });
+                bool viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);                
+                               
             }
             else
             {
-                ContentDialog dialog = new SaveDialog();
+                ContentDialog dialog = new SaveDialog(_tempFile);
                 await dialog.ShowAsync();
             }
         }
@@ -268,35 +268,38 @@ namespace FluentScreenRecorder
             _encoder?.Dispose();
         }
 
-        public static async void Save()
+        public static async Task<bool> Save(StorageFile file)
         {
-            //move the temp file to Videos Library
-            StorageFolder localFolder = KnownFolders.VideosLibrary;
-            var newFile = await _tempFile.CopyAsync(localFolder);
-            if (newFile == null)
+            try
             {
-                await _tempFile.DeleteAsync();
+                //move the temp file to Videos Library
+                StorageFolder localFolder = KnownFolders.VideosLibrary;
+                await file.MoveAsync(localFolder);
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
 
-        public static async void SaveAs()
+        public static async Task<bool> SaveAs(StorageFile file)
         {
-            StorageFile newFile = await PickVideoAsync();
+            var newFile = await PickVideoAsync();
             if (newFile == null)
             {
-                // Throw out the encoded video
-                await _tempFile.DeleteAsync();
+                return false;
             }
-            else
-            {
-                //move the file to the location selected with the picker
-                await _tempFile.MoveAndReplaceAsync(newFile);
-            }
+
+            //move the file to the location selected with the picker
+            await file.MoveAndReplaceAsync(newFile);
+            return true;
         }
 
-        public static async void Cancel()
+        public static async Task<bool> Delete(StorageFile file)
         {
-            await _tempFile.DeleteAsync();
+            await file.DeleteAsync();
+            return true;
         }
 
         private void Saved()
@@ -307,30 +310,22 @@ namespace FluentScreenRecorder
 
         private static async Task<StorageFile> PickVideoAsync()
         {
-            var picker = new FileSavePicker();
-            var time = DateTime.Now.ToString("yyyy-MM-dd-HHmmss");
-            picker.SuggestedStartLocation = PickerLocationId.VideosLibrary;
-            picker.SuggestedFileName = $"recordedVideo{time}";
-            picker.DefaultFileExtension = ".mp4";
-            picker.FileTypeChoices.Add("MP4 Video", new List<string> { ".mp4" });
+            try
+            {
+                var picker = new FileSavePicker();
+                var time = DateTime.Now.ToString("yyyy-MM-dd-HHmmss");
+                picker.SuggestedStartLocation = PickerLocationId.VideosLibrary;
+                picker.SuggestedFileName = $"recordedVideo{time}";
+                picker.DefaultFileExtension = ".mp4";
+                picker.FileTypeChoices.Add("MP4 Video", new List<string> { ".mp4" });
 
-            var file = await picker.PickSaveFileAsync();
-            return file;
-        }
-
-        public static void Share()
-        {
-            DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
-            dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(DataRequested);
-            DataTransferManager.ShowShareUI();
-        }
-
-
-        private static void DataRequested(DataTransferManager sender, DataRequestedEventArgs e)
-        {
-            DataRequest request = e.Request;
-            request.Data.Properties.Title = _tempFile.Name;
-            request.Data.SetStorageItems(new StorageFile[] { _tempFile });
+                var file = await picker.PickSaveFileAsync();
+                return file;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         private async Task<StorageFile> GetTempFileAsync()
