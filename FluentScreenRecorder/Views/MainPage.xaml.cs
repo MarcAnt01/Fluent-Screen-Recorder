@@ -206,11 +206,16 @@ namespace FluentScreenRecorder
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex);
 
+                var message = GetMessageForHResult(ex.HResult);
+                if (message == null)
+                {
+                    message = $"Whoops, something went wrong!\n0x{ex.HResult:X8} - {ex.Message}";
+                }
                 ContentDialog errorDialog = new ContentDialog
                 {
                     Title = "Recording failed",
-                    Content = $"Whoops, something went wrong!\n0x{ex.HResult:X8} - {ex.Message}",
-                    CloseButtonText = "Ok"
+                    Content = message,
+                    CloseButtonText = "OK"
                 };
                 await errorDialog.ShowAsync();
 
@@ -350,6 +355,18 @@ namespace FluentScreenRecorder
             {
                 return number + 1;
             }
+        }
+
+        private string GetMessageForHResult(int hresult)
+        {
+            switch ((uint)hresult)
+            {
+                // MF_E_TRANSFORM_TYPE_NOT_SET
+                case 0xC00DA412:
+                    return "The combination of options you've chosen are not supported by your hardware.";
+                default:
+                    return null;
+            } 
         }
 
         private AppSettings GetCurrentSettings()
