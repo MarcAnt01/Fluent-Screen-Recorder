@@ -229,6 +229,7 @@ namespace FluentScreenRecorder
                 StopIcon.Visibility = Visibility.Collapsed;
                 toolTip.Content = "Start recording";
                 ToolTipService.SetToolTip(MainButton, toolTip);
+                await _tempFile.DeleteAsync();
 
                 return;
             }
