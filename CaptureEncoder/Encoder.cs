@@ -22,12 +22,12 @@ namespace CaptureEncoder
             CreateMediaObjects();
         }
 
-        public IAsyncAction EncodeAsync(IRandomAccessStream stream, uint width, uint height, uint bitrateInBps, uint frameRate)
+        public IAsyncOperation<bool> EncodeAsync(IRandomAccessStream stream, uint width, uint height, uint bitrateInBps, uint frameRate)
         {
-            return EncodeInternalAsync(stream, width, height, bitrateInBps, frameRate).AsAsyncAction();
+            return EncodeInternalAsync(stream, width, height, bitrateInBps, frameRate).AsAsyncOperation();
         }
 
-        private async Task EncodeInternalAsync(IRandomAccessStream stream, uint width, uint height, uint bitrateInBps, uint frameRate)
+        private async Task<bool> EncodeInternalAsync(IRandomAccessStream stream, uint width, uint height, uint bitrateInBps, uint frameRate)
         {
             if (!_isRecording)
             {
@@ -37,7 +37,7 @@ namespace CaptureEncoder
                     _device,
                     _captureItem,
                     _captureItem.Size);
-
+                
                 using (_frameGenerator)
                 {
                     var encodingProfile = new MediaEncodingProfile();
@@ -50,11 +50,17 @@ namespace CaptureEncoder
                     encodingProfile.Video.FrameRate.Denominator = 1;
                     encodingProfile.Video.PixelAspectRatio.Numerator = 1;
                     encodingProfile.Video.PixelAspectRatio.Denominator = 1;
-                    var transcode = await _transcoder.PrepareMediaStreamSourceTranscodeAsync(_mediaStreamSource, stream, encodingProfile);
 
-                    await transcode.TranscodeAsync();
+                    var transcode = await _transcoder.PrepareMediaStreamSourceTranscodeAsync(_mediaStreamSource, stream, encodingProfile);
+                    if (transcode.CanTranscode)
+                    {
+                        await transcode.TranscodeAsync();
+                        return true;
+                    }
                 }
             }
+
+            return false;
         }
 
         public void Dispose()

@@ -193,10 +193,20 @@ namespace FluentScreenRecorder
                 using (var stream = await tempFile.OpenAsync(FileAccessMode.ReadWrite))
                 using (_encoder = new Encoder(_device, item))
                 {
-                    await _encoder.EncodeAsync(
+                    var encodesuccess = await _encoder.EncodeAsync(
                         stream,
                         width, height, bitrate,
-                        frameRate);
+                        frameRate);                    
+                    if (encodesuccess == false)
+                    {
+                        ContentDialog errorDialog = new ContentDialog
+                        {
+                            Title = "Recording failed",
+                            Content = "Windows cannot encode your video",
+                            CloseButtonText = "OK"
+                        };
+                    }
+                     
                 }
                 MainTextBlock.Foreground = originalBrush;
             }
@@ -365,6 +375,8 @@ namespace FluentScreenRecorder
                 // MF_E_TRANSFORM_TYPE_NOT_SET
                 case 0xC00DA412:
                     return "The combination of options you've chosen are not supported by your hardware.";
+                case 0x80070070:
+                    return "There is not enough space for recording in your device. ";
                 default:
                     return null;
             } 
