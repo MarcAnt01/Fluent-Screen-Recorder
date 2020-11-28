@@ -11,6 +11,18 @@ A fork of [Simple Screen Recorder](https://github.com/robmikh/SimpleRecorder) wi
 
 The app supports Windows 10 1809+ . It is a uwp app that can run on Windows 10 for PCs and Surface Hub.
 
+### Contributions
+
+Contributions are appreciated, anyway you should open an issue explaining what you want to implement and why first, in order to avoid spending time on something that couldn't be merged.
+
+### Bug reports
+
+The best way to report a bug is opening a ticket in this repo. In order to be helpful, you should specify the app version (without using the word latest), your Windows 10 version, what is happening in detail and the repro-steps.
+
+### Feature requests
+
+Also for requesting features the best way is opening a ticket in this repo, providing as much information as possible. 
+
 ### Credits
 - [Robert Mikhayelyan](https://github.com/robmikh) for the core of the app and the encoder; 
 - [UWP Community Discord Server](https://discord.com/channels/372137812037730304/625787190605250590/701120022793158686) for helping me during the making of the app.
