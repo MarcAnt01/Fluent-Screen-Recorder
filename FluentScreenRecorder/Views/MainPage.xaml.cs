@@ -205,6 +205,7 @@ namespace FluentScreenRecorder
                             Content = "Windows cannot encode your video",
                             CloseButtonText = "OK"
                         };
+                        await errorDialog.ShowAsync();
                     }
                      
                 }
