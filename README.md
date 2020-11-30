@@ -25,4 +25,4 @@ Also for requesting features the best way is opening a ticket in this repo, prov
 
 ### Credits
 - [Robert Mikhayelyan](https://github.com/robmikh) for the core of the app and the encoder; 
-- [UWP Community Discord Server](https://discord.com/channels/372137812037730304/625787190605250590/701120022793158686) for helping me during the making of the app.
+- [UWP Community Discord Server](https://aka.ms/winui/discord) for helping me during the making of the app.
