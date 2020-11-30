@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
-using Windows.ApplicationModel.ExtendedExecution;
 using Windows.Graphics.Capture;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -13,6 +12,7 @@ using Windows.UI.Xaml.Navigation;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using Windows.ApplicationModel.ExtendedExecution.Foreground;
 
 namespace FluentScreenRecorder
 {
@@ -35,14 +35,14 @@ namespace FluentScreenRecorder
             ExtendExecution();            
         }
 
-        private ExtendedExecutionSession _extendedSession;
+        private ExtendedExecutionForegroundSession _extendedSession;
 
         private async void ExtendExecution()
         {
-            var session = new ExtendedExecutionSession { Reason = ExtendedExecutionReason.Unspecified };
+            var session = new ExtendedExecutionForegroundSession { Reason = ExtendedExecutionForegroundReason.Unspecified };
             var result = await session.RequestExtensionAsync();
 
-            if (result == ExtendedExecutionResult.Allowed)
+            if (result == ExtendedExecutionForegroundResult.Allowed)
             {
                 _extendedSession = session;                
             }
