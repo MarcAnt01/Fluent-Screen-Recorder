@@ -22,6 +22,7 @@ using FluentScreenRecorder.Views;
 using FluentScreenRecorder.Dialogs;
 using Microsoft.AppCenter.Crashes;
 using Windows.UI.Core;
+using Windows.UI.Xaml.Automation;
 
 namespace FluentScreenRecorder
 {
@@ -70,6 +71,8 @@ namespace FluentScreenRecorder
             ToolTip toolTip = new ToolTip();
             toolTip.Content = "Start recording";
             ToolTipService.SetToolTip(MainButton, toolTip);
+            AutomationProperties.SetName(MainButton, "Start recording");
+
 
             _device = Direct3D11Helpers.CreateDevice();
 
@@ -183,6 +186,7 @@ namespace FluentScreenRecorder
             ToolTip toolTip = new ToolTip();
             toolTip.Content = "Stop recording";
             ToolTipService.SetToolTip(MainButton, toolTip);
+            AutomationProperties.SetName(MainButton, "Stop recording");
             MainTextBlock.Text = "recording...";
             var originalBrush = MainTextBlock.Foreground;
             MainTextBlock.Foreground = new SolidColorBrush(Colors.Red);
@@ -240,6 +244,7 @@ namespace FluentScreenRecorder
                 StopIcon.Visibility = Visibility.Collapsed;
                 toolTip.Content = "Start recording";
                 ToolTipService.SetToolTip(MainButton, toolTip);
+                AutomationProperties.SetName(MainButton, "Start recording");
                 await _tempFile.DeleteAsync();
 
                 return;
@@ -257,6 +262,7 @@ namespace FluentScreenRecorder
             ToolTip newtoolTip = new ToolTip();
             toolTip.Content = "Start recording";
             ToolTipService.SetToolTip(MainButton, toolTip);
+            AutomationProperties.SetName(MainButton, "Start recording");
 
             if (PreviewToggleSwitch.IsOn)
             {
