@@ -378,6 +378,8 @@ namespace FluentScreenRecorder
                     return "The combination of options you've chosen are not supported by your hardware.";
                 case 0x80070070:
                     return "There is not enough space for recording in your device. ";
+                case 0xC00D4A44:
+                    return "The recorder wasn't able to capture enough frames";
                 default:
                     return null;
             } 
