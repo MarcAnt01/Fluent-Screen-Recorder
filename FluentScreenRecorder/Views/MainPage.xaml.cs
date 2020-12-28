@@ -18,11 +18,11 @@ using Windows.UI.ViewManagement;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml.Hosting;
 using Windows.UI.Composition;
-using Windows.UI.WindowManagement;
 using FluentScreenRecorder.Views;
 using FluentScreenRecorder.Dialogs;
-using Windows.ApplicationModel.DataTransfer;
 using Microsoft.AppCenter.Crashes;
+using Windows.UI.Core;
+using Windows.UI.Xaml.Automation;
 
 namespace FluentScreenRecorder
 {
@@ -71,6 +71,8 @@ namespace FluentScreenRecorder
             ToolTip toolTip = new ToolTip();
             toolTip.Content = "Start recording";
             ToolTipService.SetToolTip(MainButton, toolTip);
+            AutomationProperties.SetName(MainButton, "Start recording");
+
 
             _device = Direct3D11Helpers.CreateDevice();
 
@@ -117,7 +119,8 @@ namespace FluentScreenRecorder
             PreviewToggleSwitch.IsOn = settings.Preview;
         }
 
-        public static StorageFile _tempFile;
+        public StorageFile _tempFile;
+
         private async void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             var button = (ToggleButton)sender;
@@ -183,6 +186,7 @@ namespace FluentScreenRecorder
             ToolTip toolTip = new ToolTip();
             toolTip.Content = "Stop recording";
             ToolTipService.SetToolTip(MainButton, toolTip);
+            AutomationProperties.SetName(MainButton, "Stop recording");
             MainTextBlock.Text = "recording...";
             var originalBrush = MainTextBlock.Foreground;
             MainTextBlock.Foreground = new SolidColorBrush(Colors.Red);
@@ -193,10 +197,21 @@ namespace FluentScreenRecorder
                 using (var stream = await tempFile.OpenAsync(FileAccessMode.ReadWrite))
                 using (_encoder = new Encoder(_device, item))
                 {
-                    await _encoder.EncodeAsync(
+                    var encodesuccess = await _encoder.EncodeAsync(
                         stream,
                         width, height, bitrate,
-                        frameRate);
+                        frameRate);                    
+                    if (encodesuccess == false)
+                    {
+                        ContentDialog errorDialog = new ContentDialog
+                        {
+                            Title = "Recording failed",
+                            Content = "Windows cannot encode your video",
+                            CloseButtonText = "OK"
+                        };
+                        await errorDialog.ShowAsync();
+                    }
+                     
                 }
                 MainTextBlock.Foreground = originalBrush;
             }
@@ -206,11 +221,16 @@ namespace FluentScreenRecorder
                 Debug.WriteLine(ex.Message);
                 Debug.WriteLine(ex);
 
+                var message = GetMessageForHResult(ex.HResult);
+                if (message == null)
+                {
+                    message = $"Whoops, something went wrong!\n0x{ex.HResult:X8} - {ex.Message}";
+                }
                 ContentDialog errorDialog = new ContentDialog
                 {
                     Title = "Recording failed",
-                    Content = $"Whoops, something went wrong!\n0x{ex.HResult:X8} - {ex.Message}",
-                    CloseButtonText = "Ok"
+                    Content = message,
+                    CloseButtonText = "OK"
                 };
                 await errorDialog.ShowAsync();
 
@@ -224,6 +244,8 @@ namespace FluentScreenRecorder
                 StopIcon.Visibility = Visibility.Collapsed;
                 toolTip.Content = "Start recording";
                 ToolTipService.SetToolTip(MainButton, toolTip);
+                AutomationProperties.SetName(MainButton, "Start recording");
+                await _tempFile.DeleteAsync();
 
                 return;
             }
@@ -240,24 +262,29 @@ namespace FluentScreenRecorder
             ToolTip newtoolTip = new ToolTip();
             toolTip.Content = "Start recording";
             ToolTipService.SetToolTip(MainButton, toolTip);
+            AutomationProperties.SetName(MainButton, "Start recording");
 
             if (PreviewToggleSwitch.IsOn)
             {
-                AppWindow appWindow = await AppWindow.TryCreateAsync();
-                appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-
-                // Create a Frame and navigate to the Page you want to show in the new window.
-                Frame appWindowContentFrame = new Frame();
-                VideoPreviewPage.Appwindowref = appWindow;
-                VideoPreviewPage.VideoFile = _tempFile;
-                appWindowContentFrame.Navigate(typeof(VideoPreviewPage));
-
-                ElementCompositionPreview.SetAppWindowContent(appWindow, appWindowContentFrame);
-                await appWindow.TryShowAsync();
+                CoreApplicationView newView = CoreApplication.CreateNewView();
+                int newViewId = 0;
+                await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    var preview = new VideoPreviewPage(_tempFile);
+                    ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+                    formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+                    CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+                    coreTitleBar.ExtendViewIntoTitleBar = true;
+                    Window.Current.Content = preview;                    
+                    Window.Current.Activate();
+                    newViewId = ApplicationView.GetForCurrentView().Id;                    
+                });
+                bool viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);                
+                               
             }
             else
             {
-                ContentDialog dialog = new SaveDialog();
+                ContentDialog dialog = new SaveDialog(_tempFile);
                 await dialog.ShowAsync();
             }
         }
@@ -268,35 +295,38 @@ namespace FluentScreenRecorder
             _encoder?.Dispose();
         }
 
-        public static async void Save()
+        public static async Task<bool> Save(StorageFile file)
         {
-            //move the temp file to Videos Library
-            StorageFolder localFolder = KnownFolders.VideosLibrary;
-            var newFile = await _tempFile.CopyAsync(localFolder);
-            if (newFile == null)
+            try
             {
-                await _tempFile.DeleteAsync();
+                //move the temp file to Videos Library
+                StorageFolder localFolder = KnownFolders.VideosLibrary;
+                await file.MoveAsync(localFolder);
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
 
-        public static async void SaveAs()
+        public static async Task<bool> SaveAs(StorageFile file)
         {
-            StorageFile newFile = await PickVideoAsync();
+            var newFile = await PickVideoAsync();
             if (newFile == null)
             {
-                // Throw out the encoded video
-                await _tempFile.DeleteAsync();
+                return false;
             }
-            else
-            {
-                //move the file to the location selected with the picker
-                await _tempFile.MoveAndReplaceAsync(newFile);
-            }
+
+            //move the file to the location selected with the picker
+            await file.MoveAndReplaceAsync(newFile);
+            return true;
         }
 
-        public static async void Cancel()
+        public static async Task<bool> Delete(StorageFile file)
         {
-            await _tempFile.DeleteAsync();
+            await file.DeleteAsync();
+            return true;
         }
 
         private void Saved()
@@ -307,30 +337,22 @@ namespace FluentScreenRecorder
 
         private static async Task<StorageFile> PickVideoAsync()
         {
-            var picker = new FileSavePicker();
-            var time = DateTime.Now.ToString("yyyy-MM-dd-HHmmss");
-            picker.SuggestedStartLocation = PickerLocationId.VideosLibrary;
-            picker.SuggestedFileName = $"recordedVideo{time}";
-            picker.DefaultFileExtension = ".mp4";
-            picker.FileTypeChoices.Add("MP4 Video", new List<string> { ".mp4" });
+            try
+            {
+                var picker = new FileSavePicker();
+                var time = DateTime.Now.ToString("yyyy-MM-dd-HHmmss");
+                picker.SuggestedStartLocation = PickerLocationId.VideosLibrary;
+                picker.SuggestedFileName = $"recordedVideo{time}";
+                picker.DefaultFileExtension = ".mp4";
+                picker.FileTypeChoices.Add("MP4 Video", new List<string> { ".mp4" });
 
-            var file = await picker.PickSaveFileAsync();
-            return file;
-        }
-
-        public static void Share()
-        {
-            DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
-            dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(DataRequested);
-            DataTransferManager.ShowShareUI();
-        }
-
-
-        private static void DataRequested(DataTransferManager sender, DataRequestedEventArgs e)
-        {
-            DataRequest request = e.Request;
-            request.Data.Properties.Title = _tempFile.Name;
-            request.Data.SetStorageItems(new StorageFile[] { _tempFile });
+                var file = await picker.PickSaveFileAsync();
+                return file;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         private async Task<StorageFile> GetTempFileAsync()
@@ -351,6 +373,22 @@ namespace FluentScreenRecorder
             {
                 return number + 1;
             }
+        }
+
+        private string GetMessageForHResult(int hresult)
+        {
+            switch ((uint)hresult)
+            {
+                // MF_E_TRANSFORM_TYPE_NOT_SET
+                case 0xC00DA412:
+                    return "The combination of options you've chosen are not supported by your hardware.";
+                case 0x80070070:
+                    return "There is not enough space for recording in your device. ";
+                case 0xC00D4A44:
+                    return "The recorder wasn't able to capture enough frames";
+                default:
+                    return null;
+            } 
         }
 
         private AppSettings GetCurrentSettings()

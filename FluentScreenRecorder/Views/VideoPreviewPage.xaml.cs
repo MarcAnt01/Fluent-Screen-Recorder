@@ -27,44 +27,59 @@ namespace FluentScreenRecorder.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class VideoPreviewPage : Page
+    public sealed partial class VideoPreviewPage : Page   
+    
     {
-        StorageFile _tempFile;        
-        public static StorageFile VideoFile;
-        public static AppWindow Appwindowref;
-        AppWindow appwindow;
+        private readonly StorageFile _tempFile;
 
-        public VideoPreviewPage()
+        public VideoPreviewPage(StorageFile file)
         {
-            this.InitializeComponent();           
-            _tempFile = VideoFile;
-            appwindow = Appwindowref;
-            Appwindowref = null;
-            VideoFile = null;
-            PreviewPlayer.Source = MediaSource.CreateFromStorageFile(_tempFile);
+            this.InitializeComponent();
+
+            _tempFile = file;
+            PreviewPlayer.Source = MediaSource.CreateFromStorageFile(file);
+
+            DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
+            dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(DataRequested);
+        }
+
+        private void DataRequested(DataTransferManager sender, DataRequestedEventArgs e)
+        {
+            if (_tempFile != null)
+            {
+                DataRequest request = e.Request;
+                request.Data.Properties.Title = _tempFile.Name;
+                request.Data.SetStorageItems(new StorageFile[] { _tempFile });
+            }
         }
 
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            MainPage.Save();
-            await appwindow.CloseAsync(); 
+            if (await MainPage.Save(_tempFile))
+            {
+                Window.Current.Close();
+            }
         }
 
         private async void SaveAsButton_Click(object sender, RoutedEventArgs e)
         {
-            MainPage.SaveAs();
-            await appwindow.CloseAsync();
+            if (await MainPage.SaveAs(_tempFile))
+            {
+                Window.Current.Close();
+            }
         }
 
         private void Share_Click(object sender, RoutedEventArgs e)
         {
-            MainPage.Share();
+            DataTransferManager.ShowShareUI();
         }
 
         private async void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            MainPage.Cancel();
-            await appwindow.CloseAsync();
+            if (await MainPage.Delete(_tempFile))
+            {
+                Window.Current.Close();
+            }
         }
     }
 }

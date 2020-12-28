@@ -22,26 +22,28 @@ namespace FluentScreenRecorder.Dialogs
 {
     public sealed partial class SaveDialog : ContentDialog
     {
-        public static StorageFile _tempFile;
+        public StorageFile _tempFile;
 
-        public SaveDialog()
+        public SaveDialog(StorageFile file)
         {
             this.InitializeComponent();
+
+            _tempFile = file;
         }
 
-        private void Save_Click(object sender, ContentDialogButtonClickEventArgs e)
+        private async void Save_Click(object sender, ContentDialogButtonClickEventArgs e)
         {
-            MainPage.Save();                      
+            await MainPage.Save(_tempFile);
         }
 
-        private void SaveAs_Click(object sender, ContentDialogButtonClickEventArgs e)
+        private async void SaveAs_Click(object sender, ContentDialogButtonClickEventArgs e)
         {
-            MainPage.SaveAs();
+            await MainPage.SaveAs(_tempFile);
         }
 
-        private void Cancel_Click(object sender, ContentDialogButtonClickEventArgs e)
+        private async void Cancel_Click(object sender, ContentDialogButtonClickEventArgs e)
         {
-            MainPage.Cancel();         
+            await MainPage.Delete(_tempFile);         
         }        
     }
 }

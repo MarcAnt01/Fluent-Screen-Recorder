@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
-using Windows.ApplicationModel.ExtendedExecution;
 using Windows.Graphics.Capture;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
@@ -13,6 +12,7 @@ using Windows.UI.Xaml.Navigation;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using Windows.ApplicationModel.ExtendedExecution.Foreground;
 
 namespace FluentScreenRecorder
 {
@@ -28,18 +28,21 @@ namespace FluentScreenRecorder
         public App()
         {
             this.InitializeComponent();
-            this.Suspending += OnSuspending;                      
+            this.Suspending += OnSuspending;
+#if !DEBUG
+            AppCenter.Start(APPCENTER_SECRET, typeof(Analytics), typeof(Crashes));
+#endif
             ExtendExecution();            
         }
 
-        private ExtendedExecutionSession _extendedSession;
+        private ExtendedExecutionForegroundSession _extendedSession;
 
         private async void ExtendExecution()
         {
-            var session = new ExtendedExecutionSession { Reason = ExtendedExecutionReason.Unspecified };
+            var session = new ExtendedExecutionForegroundSession { Reason = ExtendedExecutionForegroundReason.Unspecified };
             var result = await session.RequestExtensionAsync();
 
-            if (result == ExtendedExecutionResult.Allowed)
+            if (result == ExtendedExecutionForegroundResult.Allowed)
             {
                 _extendedSession = session;                
             }
@@ -81,10 +84,11 @@ namespace FluentScreenRecorder
         /// <param name="e">Details about the launch request and process.</param>
         protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            bool canEnablePrelaunch = Windows.Foundation.Metadata.ApiInformation.IsMethodPresent("Windows.ApplicationModel.Core.CoreApplication", "EnablePrelaunch");
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
-            // just ensure that the window is active
+            // just ensure that the window is active 
             if (rootFrame == null)
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
@@ -105,6 +109,12 @@ namespace FluentScreenRecorder
 
             if (e.PrelaunchActivated == false)
             {
+                // On Windows 10 version 1607 or later, this code signals that this app wants to participate in prelaunch
+                if (canEnablePrelaunch)
+                {
+                    TryEnablePrelaunch();
+                }
+
                 if (rootFrame.Content == null)
                 {
                     // When the navigation stack isn't restored navigate to the first page,
@@ -115,6 +125,11 @@ namespace FluentScreenRecorder
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+        }
+
+        private void TryEnablePrelaunch()
+        {
+            Windows.ApplicationModel.Core.CoreApplication.EnablePrelaunch(true);
         }
 
         /// <summary>
