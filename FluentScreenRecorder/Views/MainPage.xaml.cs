@@ -236,6 +236,7 @@ namespace FluentScreenRecorder
 
                 }
                 MainTextBlock.Foreground = originalBrush;
+                visual.StopAnimation("Opacity");
             }
             catch (Exception ex)
             {
