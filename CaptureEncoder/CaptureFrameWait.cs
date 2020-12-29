@@ -4,6 +4,7 @@ using Windows.Graphics;
 using Windows.Graphics.Capture;
 using Windows.Graphics.DirectX;
 using Windows.Graphics.DirectX.Direct3D11;
+using ScreenSenderComponent;
 
 namespace CaptureEncoder
 {
@@ -41,7 +42,8 @@ namespace CaptureEncoder
         public CaptureFrameWait(
             IDirect3DDevice device,
             GraphicsCaptureItem item,
-            SizeInt32 size)
+            SizeInt32 size,
+            LoopbackAudioCapture loopbackAudioCapture)
         {
             _device = device;
             _d3dDevice = Direct3D11Helpers.CreateSharpDXDevice(device);
@@ -53,10 +55,10 @@ namespace CaptureEncoder
             _events = new[] { _closedEvent, _frameEvent };
 
             InitializeBlankTexture(size);
-            InitializeCapture(size);
+            InitializeCapture(size, loopbackAudioCapture);
         }
 
-        private void InitializeCapture(SizeInt32 size)
+        private async void InitializeCapture(SizeInt32 size, LoopbackAudioCapture loopbackAudioCapture)
         {
             _item.Closed += OnClosed;
             _framePool = Direct3D11CaptureFramePool.CreateFreeThreaded(
@@ -66,6 +68,9 @@ namespace CaptureEncoder
                 size);
             _framePool.FrameArrived += OnFrameArrived;
             _session = _framePool.CreateCaptureSession(_item);
+
+            if (loopbackAudioCapture != null) await loopbackAudioCapture.Start();
+
             _session.StartCapture();
         }
 

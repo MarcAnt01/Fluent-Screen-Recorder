@@ -61,6 +61,7 @@
                     </ComboBox>
                     <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" Margin="10" MaxWidth="150" Header="Use source size as video resolution" VerticalAlignment="Top" IsOn="True"/>
                     <ToggleSwitch x:Name="PreviewToggleSwitch"  Margin="10" MaxWidth="150" Header="Video preview" IsOn="True"/>
+                    <ToggleSwitch x:Name="AudioToggleSwitch"  Margin="10" MaxWidth="150" Header="Internal audio recording" IsOn="True"/>
                     <Button x:Name="AboutButton" Width="144" HorizontalAlignment="Center" Margin="10" Style="{StaticResource ButtonRevealStyle}" Click="AboutButton_Click">
                         <StackPanel Orientation="Horizontal">
                             <FontIcon Glyph="&#xE946;" Margin="0,0,10,0"/>

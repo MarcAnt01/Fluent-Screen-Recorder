@@ -134,6 +134,12 @@
       <Version>4.2.0</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ScreenSenderComponent">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\libs\ScreenSenderComponent\$(Platform)\ScreenSenderComponent.winmd</HintPath>
+    </Reference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
