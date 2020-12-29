@@ -71,12 +71,7 @@ namespace FluentScreenRecorder
 
             SilentPlayer = new MediaPlayer() { IsLoopingEnabled = true };
             SilentPlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/Silence.ogg"));
-            SilentPlayer.Play();
-
-            //Adjust minimum and default window size
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(400, 250));
-            ApplicationView.PreferredLaunchViewSize = new Size(400, 250);
-            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+            SilentPlayer.Play();            
 
             //hide titlebar
             ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
