@@ -8,6 +8,7 @@ using Windows.Media.Core;
 using Windows.Media.MediaProperties;
 using Windows.Media.Transcoding;
 using Windows.Storage.Streams;
+using ScreenSenderComponent;
 
 namespace CaptureEncoder
 {
@@ -22,12 +23,12 @@ namespace CaptureEncoder
             CreateMediaObjects();
         }
 
-        public IAsyncOperation<bool> EncodeAsync(IRandomAccessStream stream, uint width, uint height, uint bitrateInBps, uint frameRate)
+        public IAsyncOperation<bool> EncodeAsync(IRandomAccessStream stream, uint width, uint height, uint bitrateInBps, uint frameRate, LoopbackAudioCapture loopbackAudioCapture)
         {
-            return EncodeInternalAsync(stream, width, height, bitrateInBps, frameRate).AsAsyncOperation();
+            return EncodeInternalAsync(stream, width, height, bitrateInBps, frameRate, loopbackAudioCapture).AsAsyncOperation();
         }
 
-        private async Task<bool> EncodeInternalAsync(IRandomAccessStream stream, uint width, uint height, uint bitrateInBps, uint frameRate)
+        private async Task<bool> EncodeInternalAsync(IRandomAccessStream stream, uint width, uint height, uint bitrateInBps, uint frameRate, LoopbackAudioCapture loopbackAudioCapture)
         {
             if (!_isRecording)
             {
@@ -36,7 +37,8 @@ namespace CaptureEncoder
                 _frameGenerator = new CaptureFrameWait(
                     _device,
                     _captureItem,
-                    _captureItem.Size);
+                    _captureItem.Size,
+                    loopbackAudioCapture);
                 
                 using (_frameGenerator)
                 {
