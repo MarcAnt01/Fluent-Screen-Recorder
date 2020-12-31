@@ -7,8 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+    
     <Page.Resources>
         <local:InvertBoolConverter x:Key="InvertBoolConv"/>
     </Page.Resources>
@@ -16,7 +16,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition x:Name="SecondColumn"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
@@ -35,7 +35,7 @@
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Column="1">
+        <Grid Grid.Column="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <ScrollViewer Margin="0,32,0,0">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="150">
                     <ComboBox x:Name="ResolutionComboBox" Header="Resolution" Margin="10,0,10,10" MinWidth="150" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=UseCaptureItemToggleSwitch, Path=IsOn, Converter={StaticResource InvertBoolConv}}">

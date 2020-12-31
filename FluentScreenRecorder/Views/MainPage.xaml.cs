@@ -192,7 +192,8 @@ namespace FluentScreenRecorder
             var tempFile = await GetTempFileAsync();
             _tempFile = tempFile;
 
-            // Tell the user we've started recording
+            // Tell the user we've started recording            
+            SecondColumn.Width = new GridLength(0);
 
             visual = ElementCompositionPreview.GetElementVisual(Ellipse);
             var animation = visual.Compositor.CreateScalarKeyFrameAnimation();
@@ -236,6 +237,8 @@ namespace FluentScreenRecorder
 
                 }
                 MainTextBlock.Foreground = originalBrush;
+
+                Ellipse.Visibility = Visibility.Collapsed;
                 visual.StopAnimation("Opacity");
             }
             catch (Exception ex)
@@ -327,7 +330,7 @@ namespace FluentScreenRecorder
             // If the encoder is doing stuff, tell it to stop
             if (loopbackAudioCapture.Started)
                 await loopbackAudioCapture.Stop();
-            _encoder?.Dispose();
+            _encoder?.Dispose();            
         }
 
         private unsafe void LoopbackBufferReady(AudioClientBufferDetails details, out int numSamplesRead)
@@ -350,12 +353,12 @@ namespace FluentScreenRecorder
             var composition = new MediaComposition();
             composition.Clips.Add(clip);
 
-            StorageFile _tempAudioFile = await GetAudioTempFileAsync(audioBuffer);
+            StorageFile internalAudioFile = await GetAudioTempFileAsync(audioBuffer);
 
-            var backgroundTrack = await BackgroundAudioTrack.CreateFromFileAsync(_tempAudioFile);
+            var backgroundTrack = await BackgroundAudioTrack.CreateFromFileAsync(internalAudioFile);
             composition.BackgroundAudioTracks.Add(backgroundTrack);
 
-            var oldTempFile = _tempFile;
+            var videoFile = _tempFile;
 
             var newFile = await GetTempFileAsync();
 
@@ -400,8 +403,9 @@ namespace FluentScreenRecorder
                 await dialog.ShowAsync();
             }
 
-            await oldTempFile.DeleteAsync();
-            await _tempAudioFile.DeleteAsync();
+            SecondColumn.Width = new GridLength(1, GridUnitType.Star);
+            await videoFile.DeleteAsync();
+            await internalAudioFile.DeleteAsync();
         }
 
         public static async Task<bool> Save(StorageFile file)
