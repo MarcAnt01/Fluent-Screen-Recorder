@@ -32,6 +32,7 @@ using Windows.UI.Core;
 using Windows.UI.Xaml.Automation;
 using NAudio.Wave;
 using ScreenSenderComponent;
+using Windows.Media.Transcoding;
 
 namespace FluentScreenRecorder
 {
@@ -68,6 +69,8 @@ namespace FluentScreenRecorder
         public MainPage()
         {
             InitializeComponent();
+
+            MergingProgressRing.Visibility = Visibility.Collapsed;
 
             SilentPlayer = new MediaPlayer() { IsLoopingEnabled = true };
             SilentPlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/Silence.ogg"));
@@ -363,49 +366,67 @@ namespace FluentScreenRecorder
             var newFile = await GetTempFileAsync();
 
             MainTextBlock.Text = "saving...";
+            MergingProgressRing.Visibility = Visibility.Visible;
 
-            await composition.RenderToFileAsync(newFile, MediaTrimmingPreference.Fast);
-
-            _tempFile = newFile;
-
-            MainButton.IsChecked = false;
-            MainTextBlock.Text = "";
-            visual.StopAnimation("Opacity");
-            Ellipse.Visibility = Visibility.Collapsed;
-            RecordIcon.Visibility = Visibility.Visible;
-            StopIcon.Visibility = Visibility.Collapsed;
-            ToolTip newtoolTip = new ToolTip();
-            toolTip.Content = "Start recording";
-            ToolTipService.SetToolTip(MainButton, toolTip);
-            AutomationProperties.SetName(MainButton, "Start recording");
-
-            if (PreviewToggleSwitch.IsOn)
+            var merge = composition.RenderToFileAsync(newFile, MediaTrimmingPreference.Fast);
+            merge.Progress = new AsyncOperationProgressHandler<TranscodeFailureReason, double>(async (info, progress) =>
             {
-                CoreApplicationView newView = CoreApplication.CreateNewView();
-                int newViewId = 0;
-                await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
                 {
-                    var preview = new VideoPreviewPage(_tempFile);
-                    ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-                    formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
-                    CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-                    coreTitleBar.ExtendViewIntoTitleBar = true;
-                    Window.Current.Content = preview;
-                    Window.Current.Activate();
-                    newViewId = ApplicationView.GetForCurrentView().Id;
-                });
-                bool viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
-
-            }
-            else
+                    MergingProgressRing.Value = Math.Round(progress * 100);
+                }));
+            });
+            merge.Completed = new AsyncOperationWithProgressCompletedHandler<TranscodeFailureReason, double>(async (info, status) =>
             {
-                ContentDialog dialog = new SaveDialog(_tempFile);
-                await dialog.ShowAsync();
-            }
+                await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler( async() =>
 
-            SecondColumn.Width = new GridLength(1, GridUnitType.Star);
-            await videoFile.DeleteAsync();
-            await internalAudioFile.DeleteAsync();
+                {
+                    MergingProgressRing.Value = 0;
+                    MergingProgressRing.Visibility = Visibility.Collapsed;
+                    _tempFile = newFile;
+
+                    MainButton.IsChecked = false;
+                    MainTextBlock.Text = "";
+                    visual.StopAnimation("Opacity");
+                    Ellipse.Visibility = Visibility.Collapsed;
+                    RecordIcon.Visibility = Visibility.Visible;
+                    StopIcon.Visibility = Visibility.Collapsed;
+                    ToolTip newtoolTip = new ToolTip();
+                    toolTip.Content = "Start recording";
+                    ToolTipService.SetToolTip(MainButton, toolTip);
+                    AutomationProperties.SetName(MainButton, "Start recording");
+
+                    if (PreviewToggleSwitch.IsOn)
+                    {
+                        CoreApplicationView newView = CoreApplication.CreateNewView();
+                        int newViewId = 0;
+                        await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                        {
+                            var preview = new VideoPreviewPage(_tempFile);
+                            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+                            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+                            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+                            coreTitleBar.ExtendViewIntoTitleBar = true;
+                            Window.Current.Content = preview;
+                            Window.Current.Activate();
+                            newViewId = ApplicationView.GetForCurrentView().Id;
+                        });
+                        bool viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
+
+                    }
+                    else
+                    {
+                        ContentDialog dialog = new SaveDialog(_tempFile);
+                        await dialog.ShowAsync();
+                    }
+
+                    SecondColumn.Width = new GridLength(1, GridUnitType.Star);
+                    await videoFile.DeleteAsync();
+                    await internalAudioFile.DeleteAsync();
+                }));
+            });
+
+            
         }
 
         public static async Task<bool> Save(StorageFile file)

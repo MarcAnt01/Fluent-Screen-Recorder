@@ -31,7 +31,7 @@
                         <FontIcon x:Name="StopIcon"  FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF72B;" FontSize="50" Foreground="White"/>
                     </StackPanel>
                 </ToggleButton>
-                <TextBlock />
+                <muxc:ProgressRing x:Name="MergingProgressRing" Value="0" IsIndeterminate="False" Margin="10"/>
             </StackPanel>
         </Grid>
 
