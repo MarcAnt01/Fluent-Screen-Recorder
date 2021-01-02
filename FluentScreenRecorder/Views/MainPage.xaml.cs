@@ -373,7 +373,7 @@ namespace FluentScreenRecorder
             {
                 await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
                 {
-                    MergingProgressRing.Value = Math.Round(progress * 100);
+                    MergingProgressRing.Value = Math.Round(progress);
                 }));
             });
             merge.Completed = new AsyncOperationWithProgressCompletedHandler<TranscodeFailureReason, double>(async (info, status) =>
