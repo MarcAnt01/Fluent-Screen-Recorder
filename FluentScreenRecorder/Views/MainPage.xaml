@@ -20,18 +20,19 @@
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+            <TextBlock Text="Fluent Screen Recorder" Style="{StaticResource CaptionTextBlockStyle}" Margin="12,6,6,6"/>
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
                     <Ellipse x:Name="Ellipse" HorizontalAlignment="Center" Fill="Red" Width="15" Height="15" Margin="0,0,5,-10"/>
                     <TextBlock x:Name="MainTextBlock" HorizontalTextAlignment="Center" FontSize="30"/>
                 </StackPanel>
                 <ToggleButton  x:Name="MainButton" HorizontalAlignment="Center" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Width="100" Height="100" Background="{ThemeResource SystemAccentColor}" CornerRadius="99">
-                    <StackPanel>
+                    <StackPanel HorizontalAlignment="Center">
                         <FontIcon x:Name="RecordIcon" FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF84E;" FontSize="70" Foreground="White"/>
                         <FontIcon x:Name="StopIcon"  FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF72B;" FontSize="50" Foreground="White"/>
                     </StackPanel>
                 </ToggleButton>
-                <muxc:ProgressRing x:Name="MergingProgressRing" Value="0" IsIndeterminate="False" Margin="10"/>
+                <muxc:ProgressRing x:Name="MergingProgressRing" Value="0" IsIndeterminate="False" Margin="10" Width="70" Height="70"/>
             </StackPanel>
         </Grid>
 

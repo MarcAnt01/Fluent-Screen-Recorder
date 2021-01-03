@@ -367,13 +367,14 @@ namespace FluentScreenRecorder
 
             MainTextBlock.Text = "saving...";
             MergingProgressRing.Visibility = Visibility.Visible;
+            MainButton.Visibility = Visibility.Collapsed;
 
             var merge = composition.RenderToFileAsync(newFile, MediaTrimmingPreference.Fast);
             merge.Progress = new AsyncOperationProgressHandler<TranscodeFailureReason, double>(async (info, progress) =>
             {
                 await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
                 {
-                    MergingProgressRing.Value = Math.Round(progress);
+                    MergingProgressRing.Value = progress;
                 }));
             });
             merge.Completed = new AsyncOperationWithProgressCompletedHandler<TranscodeFailureReason, double>(async (info, status) =>
@@ -420,6 +421,7 @@ namespace FluentScreenRecorder
                         await dialog.ShowAsync();
                     }
 
+                    MainButton.Visibility = Visibility.Visible;
                     SecondColumn.Width = new GridLength(1, GridUnitType.Star);
                     await videoFile.DeleteAsync();
                     await internalAudioFile.DeleteAsync();
@@ -461,11 +463,6 @@ namespace FluentScreenRecorder
         {
             await file.DeleteAsync();
             return true;
-        }
-
-        private void Saved()
-        {
-            MainTextBlock.Text = "Saved";
         }
 
 
