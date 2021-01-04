@@ -436,8 +436,8 @@ namespace FluentScreenRecorder
             try
             {
                 //move the temp file to Videos Library
-                StorageFolder localFolder = KnownFolders.VideosLibrary;
-                await file.MoveAsync(localFolder);
+                StorageFolder FluentScreenRecorderFolder = await KnownFolders.VideosLibrary.CreateFolderAsync("Fluent Screen Recorder", CreationCollisionOption.OpenIfExists);
+                await file.MoveAsync(FluentScreenRecorderFolder);
                 return true;
             }
             catch
