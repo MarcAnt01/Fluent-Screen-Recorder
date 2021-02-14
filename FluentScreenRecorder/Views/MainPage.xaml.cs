@@ -33,6 +33,10 @@ using Windows.UI.Xaml.Automation;
 using NAudio.Wave;
 using ScreenSenderComponent;
 using Windows.Media.Transcoding;
+using Windows.Storage.FileProperties;
+using Windows.Storage.Search;
+using Windows.UI.Xaml.Media.Imaging;
+using Windows.System;
 
 namespace FluentScreenRecorder
 {
@@ -56,6 +60,12 @@ namespace FluentScreenRecorder
         public uint FrameRate { get; set; }
     }
 
+    public class ThumbItem
+    {
+        public BitmapImage img { get; set; }
+        public String fileN { get; set; }
+    }
+
 
     public sealed partial class MainPage : Page
     {
@@ -64,11 +74,12 @@ namespace FluentScreenRecorder
         private ToolTip toolTip;
         private List<byte> BufferList = new List<byte>();
         MediaPlayer SilentPlayer;
-        private AudioEncodingProperties audioEncodingProperties;
+        private AudioEncodingProperties audioEncodingProperties;        
 
         public MainPage()
         {
             InitializeComponent();
+            this.Loaded += LoadedHandler;
 
             MergingProgressRing.Visibility = Visibility.Collapsed;
 
@@ -137,6 +148,25 @@ namespace FluentScreenRecorder
             PreviewToggleSwitch.IsOn = settings.Preview;
         }
 
+        private async void LoadedHandler(object sender, RoutedEventArgs e)
+        {
+            this.Loaded -= LoadedHandler;
+            var folder = await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder");
+            IReadOnlyList<StorageFile> sortedItems = await folder.GetFilesAsync(CommonFileQuery.OrderByDate);
+            List<ThumbItem> thumbnailsList = new List<ThumbItem>();
+            foreach (StorageFile file in sortedItems)
+            {
+                StorageItemThumbnail thumbnail = await file.GetThumbnailAsync(ThumbnailMode.SingleItem);
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.SetSource(thumbnail);
+                thumbnailsList.Add(new ThumbItem() { img = bitmap , fileN = file.Name});
+                
+            }
+            BasicGridView.ItemsSource = thumbnailsList;
+
+        }
+
+
         public StorageFile _tempFile;
 
         private async void ToggleButton_Checked(object sender, RoutedEventArgs e)
@@ -197,6 +227,9 @@ namespace FluentScreenRecorder
 
             // Tell the user we've started recording            
             SecondColumn.Width = new GridLength(0);
+            ThirdColumn.Width = new GridLength(0);
+
+
 
             visual = ElementCompositionPreview.GetElementVisual(Ellipse);
             var animation = visual.Compositor.CreateScalarKeyFrameAnimation();
@@ -267,6 +300,8 @@ namespace FluentScreenRecorder
                 visual.StopAnimation("Opacity");
 
                 Ellipse.Visibility = Visibility.Collapsed;
+                SecondColumn.Width = new GridLength(1, GridUnitType.Star);
+                ThirdColumn.Width = new GridLength(1, GridUnitType.Star);
                 MainTextBlock.Text = "failure";
                 MainTextBlock.Foreground = originalBrush;
                 RecordIcon.Visibility = Visibility.Visible;
@@ -423,6 +458,7 @@ namespace FluentScreenRecorder
 
                     MainButton.Visibility = Visibility.Visible;
                     SecondColumn.Width = new GridLength(1, GridUnitType.Star);
+                    ThirdColumn.Width = new GridLength(1, GridUnitType.Star);
                     await videoFile.DeleteAsync();
                     await internalAudioFile.DeleteAsync();
                 }));
@@ -690,6 +726,13 @@ namespace FluentScreenRecorder
         {
             ContentDialog dialog = new AboutDialog();
             await dialog.ShowAsync();
+        }
+
+        private async void Image_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            ThumbItem item = (sender as Image).DataContext as ThumbItem;
+            var file = await(await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder")).GetFileAsync(item.fileN);
+            await Launcher.LaunchFileAsync(file);
         }
     }
 }
