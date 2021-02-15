@@ -15,14 +15,10 @@
             <StackPanel>
                 <TextBlock Text="{Binding fileN}" HorizontalAlignment="Center" Margin="0,0,0,-16"/>
                 <Image Stretch="UniformToFill" Source="{Binding img}" Width="190" Height="130" Margin="20" Tapped="Image_Tapped"/>                
-            </StackPanel>
-            
+            </StackPanel>            
         </DataTemplate>
         <media:AcrylicBrush x:Key="CustomAcrylicBackgroundBrushStrong" TintColor="{StaticResource SystemChromeAltHighColor}" BackgroundSource="HostBackdrop" FallbackColor="{StaticResource SystemChromeMediumColor}" TintOpacity="0.7"/>
         <media:AcrylicBrush x:Key="CustomAcrylicBackgroundBrushWeak" TintColor="{StaticResource SystemChromeAltHighColor}" BackgroundSource="HostBackdrop" FallbackColor="{StaticResource SystemChromeMediumColor}" TintOpacity="0.5"/>
-
-
-
     </Page.Resources>
     
     
@@ -91,16 +87,6 @@
                 </StackPanel>
             </ScrollViewer>
         </Grid>
-
-
-
     </Grid>
-
-    
-
-
-
-
-
 
 </Page>

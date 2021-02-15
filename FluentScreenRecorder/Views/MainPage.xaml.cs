@@ -730,7 +730,7 @@ namespace FluentScreenRecorder
 
         private async void Image_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            ThumbItem item = (sender as Image).DataContext as ThumbItem;
+            ThumbItem item = (sender as GridViewItem).DataContext as ThumbItem;
             var file = await(await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder")).GetFileAsync(item.fileN);
             await Launcher.LaunchFileAsync(file);
         }
