@@ -146,24 +146,36 @@ namespace FluentScreenRecorder
 
             UseCaptureItemToggleSwitch.IsOn = settings.UseSourceSize;
             PreviewToggleSwitch.IsOn = settings.Preview;
+            AudioToggleSwitch.IsOn = settings.IntAudio;
+            ExtAudioToggleSwitch.IsOn = settings.ExtAudio;
+            GalleryToggleSwitch.IsOn = settings.Gallery;
         }
 
         private async void LoadedHandler(object sender, RoutedEventArgs e)
         {
             this.Loaded -= LoadedHandler;
-            var folder = await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder");
-            IReadOnlyList<StorageFile> sortedItems = await folder.GetFilesAsync(CommonFileQuery.OrderByDate);
-            List<ThumbItem> thumbnailsList = new List<ThumbItem>();
-            foreach (StorageFile file in sortedItems)
+            var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");            
+            if (folder != null & GalleryToggleSwitch.IsOn)
             {
-                StorageItemThumbnail thumbnail = await file.GetThumbnailAsync(ThumbnailMode.SingleItem);
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.SetSource(thumbnail);
-                thumbnailsList.Add(new ThumbItem() { img = bitmap , fileN = file.Name});
-                
-            }
-            BasicGridView.ItemsSource = thumbnailsList;
+                var actualFolder = folder as StorageFolder;
+                IReadOnlyList<StorageFile> sortedItems = await actualFolder.GetFilesAsync(CommonFileQuery.OrderByDate);
+                List<ThumbItem> thumbnailsList = new List<ThumbItem>();
+                foreach (StorageFile file in sortedItems)
+                {
+                    StorageItemThumbnail thumbnail = await file.GetThumbnailAsync(ThumbnailMode.SingleItem);
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.SetSource(thumbnail);
+                    thumbnailsList.Add(new ThumbItem() { img = bitmap, fileN = file.Name });
 
+                }
+                BasicGridView.ItemsSource = thumbnailsList;
+            }
+            else
+            {
+                FirstColumn.Width = new GridLength(1, GridUnitType.Star);
+                SecondColumn.Width = new GridLength(0);
+                ThirdColumn.Width = new GridLength(1, GridUnitType.Star);
+            }
         }
 
 
@@ -300,8 +312,8 @@ namespace FluentScreenRecorder
                 visual.StopAnimation("Opacity");
 
                 Ellipse.Visibility = Visibility.Collapsed;
-                SecondColumn.Width = new GridLength(1, GridUnitType.Star);
-                ThirdColumn.Width = new GridLength(1, GridUnitType.Star);
+                SecondColumn.Width = new GridLength(4, GridUnitType.Star);
+                ThirdColumn.Width = new GridLength(2, GridUnitType.Star);
                 MainTextBlock.Text = "failure";
                 MainTextBlock.Foreground = originalBrush;
                 RecordIcon.Visibility = Visibility.Visible;
@@ -457,8 +469,8 @@ namespace FluentScreenRecorder
                     }
 
                     MainButton.Visibility = Visibility.Visible;
-                    SecondColumn.Width = new GridLength(1, GridUnitType.Star);
-                    ThirdColumn.Width = new GridLength(1, GridUnitType.Star);
+                    SecondColumn.Width = new GridLength(4, GridUnitType.Star);
+                    ThirdColumn.Width = new GridLength(2, GridUnitType.Star);
                     await videoFile.DeleteAsync();
                     await internalAudioFile.DeleteAsync();
                 }));
@@ -595,8 +607,10 @@ namespace FluentScreenRecorder
             var frameRate = frameRateItem.FrameRate;
             var useSourceSize = UseCaptureItemToggleSwitch.IsOn;
             var preview = PreviewToggleSwitch.IsOn;
-
-            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize, Preview = preview };
+            var intAudio = AudioToggleSwitch.IsOn;
+            var extAudio = ExtAudioToggleSwitch.IsOn;
+            var gallery = GalleryToggleSwitch.IsOn;
+            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize, Preview = preview, IntAudio = intAudio, ExtAudio = extAudio, Gallery = gallery };
 
         }
 
@@ -610,7 +624,10 @@ namespace FluentScreenRecorder
                 Bitrate = 18000000,
                 FrameRate = 60,
                 UseSourceSize = true,
-                Preview = true
+                Preview = true,
+                IntAudio = true,
+                ExtAudio = true,
+                Gallery = true
             };
             // Resolution
             if (localSettings.Values.TryGetValue(nameof(AppSettings.Width), out var width) &&
@@ -639,10 +656,24 @@ namespace FluentScreenRecorder
                 result.UseSourceSize = (bool)useSourceSize;
             }
 
-
             if (localSettings.Values.TryGetValue(nameof(AppSettings.Preview), out var preview))
             {
                 result.Preview = (bool)preview;
+            }
+
+            if (localSettings.Values.TryGetValue(nameof(AppSettings.IntAudio), out var intAudio))
+            {
+                result.IntAudio = (bool)intAudio;
+            }
+
+            if (localSettings.Values.TryGetValue(nameof(AppSettings.ExtAudio), out var extAudio))
+            {
+                result.ExtAudio = (bool)extAudio;
+            }
+
+            if (localSettings.Values.TryGetValue(nameof(AppSettings.Gallery), out var gallery))
+            {
+                result.Gallery = (bool)gallery;
             }
             return result;
         }
@@ -661,6 +692,9 @@ namespace FluentScreenRecorder
             localSettings.Values[nameof(AppSettings.FrameRate)] = settings.FrameRate;
             localSettings.Values[nameof(AppSettings.UseSourceSize)] = settings.UseSourceSize;
             localSettings.Values[nameof(AppSettings.Preview)] = settings.Preview;
+            localSettings.Values[nameof(AppSettings.IntAudio)] = settings.IntAudio;
+            localSettings.Values[nameof(AppSettings.ExtAudio)] = settings.ExtAudio;
+            localSettings.Values[nameof(AppSettings.Gallery)] = settings.Gallery;
         }
 
         private int GetResolutionIndex(uint width, uint height)
@@ -714,6 +748,9 @@ namespace FluentScreenRecorder
             public uint FrameRate;
             public bool UseSourceSize;
             public bool Preview;
+            public bool IntAudio;
+            public bool ExtAudio;
+            public bool Gallery;
         }
 
         private IDirect3DDevice _device;
@@ -730,7 +767,7 @@ namespace FluentScreenRecorder
 
         private async void Image_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            ThumbItem item = (sender as GridViewItem).DataContext as ThumbItem;
+            ThumbItem item = (sender as Image).DataContext as ThumbItem;
             var file = await(await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder")).GetFileAsync(item.fileN);
             await Launcher.LaunchFileAsync(file);
         }
