@@ -312,8 +312,18 @@ namespace FluentScreenRecorder
                 visual.StopAnimation("Opacity");
 
                 Ellipse.Visibility = Visibility.Collapsed;
-                SecondColumn.Width = new GridLength(4, GridUnitType.Star);
-                ThirdColumn.Width = new GridLength(2, GridUnitType.Star);
+                if (GalleryToggleSwitch.IsOn)
+                {
+                    SecondColumn.Width = new GridLength(4, GridUnitType.Star);
+                    ThirdColumn.Width = new GridLength(2, GridUnitType.Star);
+                }
+                else
+                {
+                    FirstColumn.Width = new GridLength(1, GridUnitType.Star);
+                    SecondColumn.Width = new GridLength(0);
+                    ThirdColumn.Width = new GridLength(1, GridUnitType.Star);
+                }
+                
                 MainTextBlock.Text = "failure";
                 MainTextBlock.Foreground = originalBrush;
                 RecordIcon.Visibility = Visibility.Visible;
@@ -469,8 +479,17 @@ namespace FluentScreenRecorder
                     }
 
                     MainButton.Visibility = Visibility.Visible;
-                    SecondColumn.Width = new GridLength(4, GridUnitType.Star);
-                    ThirdColumn.Width = new GridLength(2, GridUnitType.Star);
+                    if (GalleryToggleSwitch.IsOn)
+                    {
+                        SecondColumn.Width = new GridLength(4, GridUnitType.Star);
+                        ThirdColumn.Width = new GridLength(2, GridUnitType.Star);
+                    }
+                    else
+                    {
+                        FirstColumn.Width = new GridLength(1, GridUnitType.Star);
+                        SecondColumn.Width = new GridLength(0);
+                        ThirdColumn.Width = new GridLength(1, GridUnitType.Star);
+                    }
                     await videoFile.DeleteAsync();
                     await internalAudioFile.DeleteAsync();
                 }));
