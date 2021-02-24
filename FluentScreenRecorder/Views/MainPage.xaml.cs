@@ -168,7 +168,9 @@ namespace FluentScreenRecorder
                     thumbnailsList.Add(new ThumbItem() { img = bitmap, fileN = file.Name });
 
                 }
-                BasicGridView.ItemsSource = thumbnailsList;
+                BasicGridView.ItemsSource = thumbnailsList;                
+                SecondColumn.Width = new GridLength(4, GridUnitType.Star);
+                ThirdColumn.Width = new GridLength(2, GridUnitType.Star);
             }
             else
             {
@@ -184,6 +186,7 @@ namespace FluentScreenRecorder
         private async void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
             var button = (ToggleButton)sender;
+            var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
             // Get our encoder properties
             var frameRateItem = (FrameRateItem)FrameRateComboBox.SelectedItem;
@@ -312,7 +315,7 @@ namespace FluentScreenRecorder
                 visual.StopAnimation("Opacity");
 
                 Ellipse.Visibility = Visibility.Collapsed;
-                if (GalleryToggleSwitch.IsOn)
+                if (GalleryToggleSwitch.IsOn & folder != null)
                 {
                     SecondColumn.Width = new GridLength(4, GridUnitType.Star);
                     ThirdColumn.Width = new GridLength(2, GridUnitType.Star);
@@ -478,8 +481,10 @@ namespace FluentScreenRecorder
                         await dialog.ShowAsync();
                     }
 
+                    var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
+
                     MainButton.Visibility = Visibility.Visible;
-                    if (GalleryToggleSwitch.IsOn)
+                    if (folder != null & GalleryToggleSwitch.IsOn)
                     {
                         SecondColumn.Width = new GridLength(4, GridUnitType.Star);
                         ThirdColumn.Width = new GridLength(2, GridUnitType.Star);
