@@ -54,36 +54,36 @@
         <Grid Grid.Column="2" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <ScrollViewer Margin="0,32,0,0">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="150">
-                    <ComboBox x:Name="ResolutionComboBox" Header="Resolution" Margin="10,0,10,10" MinWidth="150" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=UseCaptureItemToggleSwitch, Path=IsOn, Converter={StaticResource InvertBoolConv}}">
+                    <ComboBox x:Name="ResolutionComboBox" x:Uid="Resolution" Margin="10,0,10,10" MinWidth="150" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=UseCaptureItemToggleSwitch, Path=IsOn, Converter={StaticResource InvertBoolConv}}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="local:ResolutionItem">
                                 <TextBlock Text="{x:Bind DisplayName}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <ComboBox x:Name="FrameRateComboBox" Header="Framerate" Margin="10" MinWidth="150" HorizontalAlignment="Center">
+                    <ComboBox x:Name="FrameRateComboBox" x:Uid="Framerate" Margin="10" MinWidth="150" HorizontalAlignment="Center">
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="local:FrameRateItem">
                                 <TextBlock Text="{x:Bind DisplayName}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <ComboBox x:Name="BitrateComboBox" Header="Bitrate" Margin="10" MinWidth="150" HorizontalAlignment="Center">
+                    <ComboBox x:Name="BitrateComboBox" x:Uid="Bitrate" Margin="10" MinWidth="150" HorizontalAlignment="Center">
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="local:BitrateItem">
                                 <TextBlock Text="{x:Bind DisplayName}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
-                    <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" Margin="10" MaxWidth="150" Header="Use source size as video resolution" VerticalAlignment="Top" IsOn="True"/>
-                    <ToggleSwitch x:Name="PreviewToggleSwitch"  Margin="10" MaxWidth="150" Header="Video preview" IsOn="True"/>
-                    <ToggleSwitch x:Name="AudioToggleSwitch"  Margin="10" MaxWidth="150" Header="Internal audio recording" IsOn="True"/>
-                    <ToggleSwitch x:Name="ExtAudioToggleSwitch"  Margin="10" MaxWidth="150" Header="External audio recording" IsOn="True"/>
-                    <ToggleSwitch x:Name="GalleryToggleSwitch"  Margin="10" MaxWidth="150" Header="Gallery view" IsOn="True"/>
+                    <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" x:Uid="SourceSizeToggle" Margin="10" MaxWidth="150" VerticalAlignment="Top" IsOn="True"/>
+                    <ToggleSwitch x:Name="PreviewToggleSwitch" x:Uid="VideoPreview" Margin="10" MaxWidth="150" IsOn="True"/>
+                    <ToggleSwitch x:Name="AudioToggleSwitch" x:Uid="InternalAudio" Margin="10" MaxWidth="150" IsOn="True"/>
+                    <ToggleSwitch x:Name="ExtAudioToggleSwitch" x:Uid="ExternalAudio" Margin="10" MaxWidth="150" Header="External audio recording" IsOn="True"/>
+                    <ToggleSwitch x:Name="GalleryToggleSwitch" x:Uid="GalleryView" Margin="10" MaxWidth="150" Header="Gallery view" IsOn="True"/>
                     <Button x:Name="AboutButton" Width="144" HorizontalAlignment="Center" Margin="10" Style="{StaticResource ButtonRevealStyle}" Click="AboutButton_Click">
                         <StackPanel Orientation="Horizontal">
                             <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF4A3;" Margin="0,0,10,0"/>
-                            <TextBlock Text="About the app"/>
+                            <TextBlock x:Uid="About"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>

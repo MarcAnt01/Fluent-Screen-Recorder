@@ -12,10 +12,10 @@
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}">
 
     <StackPanel>
-        <HyperlinkButton Content="View GitHub Repository" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder"/>
-        <HyperlinkButton Content="Join our Discord server" NavigateUri="https://discord.gg/v4EXAwXPHw"/>
-        <HyperlinkButton Content="Privacy policy" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/PRIVACY.md"/>
-        <HyperlinkButton Content="Copyright" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/LICENSE"/>
+        <HyperlinkButton x:Uid="GitHub" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder"/>
+        <HyperlinkButton x:Uid="Discord" NavigateUri="https://discord.gg/v4EXAwXPHw"/>
+        <HyperlinkButton x:Uid="Privacy" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/PRIVACY.md"/>
+        <HyperlinkButton x:Uid="Copyright" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/LICENSE"/>
         <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
             <TextBlock Text="Version"/>
             <TextBlock x:Name="VersionNumberTextBlock" FontWeight="Bold"/>          
