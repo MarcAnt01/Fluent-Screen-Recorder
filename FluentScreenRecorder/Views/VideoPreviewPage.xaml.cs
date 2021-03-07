@@ -30,17 +30,23 @@ namespace FluentScreenRecorder.Views
     public sealed partial class VideoPreviewPage : Page   
     
     {
-        private readonly StorageFile _tempFile;
+        private StorageFile _tempFile;
 
-        public VideoPreviewPage(StorageFile file)
+        public VideoPreviewPage(StorageFile file = null)
         {
             this.InitializeComponent();
-
-            _tempFile = file;
+            if (file != null)
+                _tempFile = file;
             PreviewPlayer.Source = MediaSource.CreateFromStorageFile(file);
 
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
-            dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(DataRequested);
+            dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(DataRequested);            
+        }
+
+        public VideoPreviewPage()
+        {
+            this.InitializeComponent();
+
         }
 
         private void DataRequested(DataTransferManager sender, DataRequestedEventArgs e)
@@ -53,20 +59,27 @@ namespace FluentScreenRecorder.Views
             }
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            if (e.Parameter is StorageFile file)
+            {
+                _tempFile = file;
+                PreviewPlayer.Source = MediaSource.CreateFromStorageFile(file);
+
+                DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
+                dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(DataRequested);
+            }
+            base.OnNavigatedTo(e);
+        }
+
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            if (await MainPage.Save(_tempFile))
-            {
-                Window.Current.Close();
-            }
+            await MainPage.Save(_tempFile);
         }
 
         private async void SaveAsButton_Click(object sender, RoutedEventArgs e)
         {
-            if (await MainPage.SaveAs(_tempFile))
-            {
-                Window.Current.Close();
-            }
+            await MainPage.SaveAs(_tempFile);          
         }
 
         private void Share_Click(object sender, RoutedEventArgs e)
@@ -76,10 +89,7 @@ namespace FluentScreenRecorder.Views
 
         private async void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            if (await MainPage.Delete(_tempFile))
-            {
-                Window.Current.Close();
-            }
+            await MainPage.Delete(_tempFile);            
         }
-    }
+    }   
 }
