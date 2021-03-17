@@ -75,11 +75,13 @@ namespace FluentScreenRecorder.Views
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             await MainPage.Save(_tempFile);
+            this.Frame.Navigate(typeof(MainPage));
         }
 
         private async void SaveAsButton_Click(object sender, RoutedEventArgs e)
         {
-            await MainPage.SaveAs(_tempFile);          
+            await MainPage.SaveAs(_tempFile);
+            this.Frame.Navigate(typeof(MainPage));
         }
 
         private void Share_Click(object sender, RoutedEventArgs e)
@@ -89,7 +91,8 @@ namespace FluentScreenRecorder.Views
 
         private async void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            await MainPage.Delete(_tempFile);            
+            await MainPage.Delete(_tempFile);
+            this.Frame.Navigate(typeof(MainPage));
         }
     }   
 }

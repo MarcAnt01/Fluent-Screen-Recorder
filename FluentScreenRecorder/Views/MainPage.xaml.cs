@@ -357,21 +357,8 @@ namespace FluentScreenRecorder
 
                 if (PreviewToggleSwitch.IsOn)
                 {
-                    CoreApplicationView newView = CoreApplication.CreateNewView();
-                    int newViewId = 0;
-                    await newView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-                    {
-                        var preview = new VideoPreviewPage(_tempFile);
-                        ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-                        formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
-                        CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-                        coreTitleBar.ExtendViewIntoTitleBar = true;
-                        Window.Current.Content = preview;
-                        Window.Current.Activate();
-                        newViewId = ApplicationView.GetForCurrentView().Id;
-                    });
-                    bool viewShown = await ApplicationViewSwitcher.TryShowAsStandaloneAsync(newViewId);
-
+                    var preview = new VideoPreviewPage(_tempFile);
+                    this.Frame.Navigate(typeof(VideoPreviewPage)); 
                 }
                 else
                 {
@@ -385,14 +372,17 @@ namespace FluentScreenRecorder
             }
         }
 
-        private async void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
+        public async void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
             //Collecting some info before being lost
-            audioEncodingProperties = loopbackAudioCapture.EncodingProperties;
-
-            // If the encoder is doing stuff, tell it to stop
-            if (loopbackAudioCapture.Started)
+            
+            if (AudioToggleSwitch.IsOn)
+            {
+                audioEncodingProperties = loopbackAudioCapture.EncodingProperties;
                 await loopbackAudioCapture.Stop();
+
+            }
+   
             _encoder?.Dispose();            
         }
 
@@ -460,7 +450,6 @@ namespace FluentScreenRecorder
                     if (PreviewToggleSwitch.IsOn)
                     {
                         this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
-
                     }
                     else
                     {
