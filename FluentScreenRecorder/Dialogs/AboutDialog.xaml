@@ -5,17 +5,18 @@
     xmlns:local="using:FluentScreenRecorder.Dialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:strings="using:FluentScreenRecorder.Strings"
     mc:Ignorable="d"    
-    PrimaryButtonText="Report a bug"
-    SecondaryButtonText="Close"
+    PrimaryButtonText="{x:Bind strings:Resources.BugReport}"
+    SecondaryButtonText="{x:Bind strings:Resources.Ok}"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}">
 
     <StackPanel>
-        <HyperlinkButton x:Uid="GitHub" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder"/>
-        <HyperlinkButton x:Uid="Discord" NavigateUri="https://discord.gg/v4EXAwXPHw"/>
-        <HyperlinkButton x:Uid="Privacy" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/PRIVACY.md"/>
-        <HyperlinkButton x:Uid="Copyright" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/LICENSE"/>
+        <HyperlinkButton Content="{x:Bind strings:Resources.GitHub}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder"/>
+        <HyperlinkButton Content="{x:Bind strings:Resources.Discord}" NavigateUri="https://discord.gg/v4EXAwXPHw"/>
+        <HyperlinkButton Content="{x:Bind strings:Resources.Privacy}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/PRIVACY.md"/>
+        <HyperlinkButton Content="{x:Bind strings:Resources.Copyright}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/LICENSE"/>
         <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
             <TextBlock Text="Version"/>
             <TextBlock x:Name="VersionNumberTextBlock" FontWeight="Bold"/>          

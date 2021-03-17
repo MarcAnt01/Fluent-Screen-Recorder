@@ -5,14 +5,17 @@
     xmlns:local="using:FluentScreenRecorder.Dialogs"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    x:Uid="SaveDialog"  
+    xmlns:strings="using:FluentScreenRecorder.Strings"
+    mc:Ignorable="d"      
     PrimaryButtonClick="Save_Click"
     SecondaryButtonClick="SaveAs_Click"
-    CloseButtonClick="Cancel_Click"   
+    CloseButtonClick="Cancel_Click"
+    PrimaryButtonText="{x:Bind strings:Resources.Save}"
+    SecondaryButtonText="{x:Bind strings:Resources.SaveAs}"
+    CloseButtonText="{x:Bind strings:Resources.Delete}"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}">
 
     <Grid>
-        <TextBlock x:Uid="Options"/>
+        <TextBlock Text="{x:Bind strings:Resources.Options}"/>
     </Grid>
 </ContentDialog>

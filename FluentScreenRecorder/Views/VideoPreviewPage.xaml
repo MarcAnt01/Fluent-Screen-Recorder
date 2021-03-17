@@ -5,6 +5,7 @@
     xmlns:local="using:FluentScreenRecorder.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:strings="using:FluentScreenRecorder.Strings"
     mc:Ignorable="d"
     Background="{ThemeResource AppBarBackgroundThemeBrush}">
 
@@ -27,25 +28,25 @@
                 <Button x:Name="SaveButton" Style="{ThemeResource AccentButtonStyle}" Click="SaveButton_Click" Margin="5">
                     <StackPanel Orientation="Horizontal">
                         <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF67F;" Margin="0,0,5,0" FontSize="16"/>
-                        <TextBlock x:Uid="Save"/>
+                        <TextBlock Text="{x:Bind strings:Resources.Save}"/>
                     </StackPanel>                    
                 </Button>
                 <Button x:Name="SaveAsButton" Click="SaveAsButton_Click" Margin="5">
                     <StackPanel Orientation="Horizontal">
                         <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF681;" Margin="0,0,5,0" FontSize="16"/>
-                        <TextBlock x:Uid="SaveAs"/>
+                        <TextBlock Text="{x:Bind strings:Resources.SaveAs}"/>
                     </StackPanel>                    
                 </Button>
                 <Button x:Name="Share" Click="Share_Click" Margin="5">
                     <StackPanel Orientation="Horizontal">
                         <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF6AF;" Margin="0,0,5,0" FontSize="16"/>
-                        <TextBlock x:Uid="Share"/>
+                        <TextBlock Text="{x:Bind strings:Resources.Share}"/>
                     </StackPanel>
                 </Button>
                 <Button x:Name="Cancel" Click="Cancel_Click" Margin="5">
                     <StackPanel Orientation="Horizontal">
                         <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF34C;" Margin="0,0,5,0" FontSize="16"/>
-                        <TextBlock x:Uid="Delete"/>
+                        <TextBlock Text="{x:Bind strings:Resources.Delete}"/>
                     </StackPanel>                    
                 </Button>                
             </StackPanel>
