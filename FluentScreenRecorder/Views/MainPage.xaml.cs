@@ -357,8 +357,7 @@ namespace FluentScreenRecorder
 
                 if (PreviewToggleSwitch.IsOn)
                 {
-                    var preview = new VideoPreviewPage(_tempFile);
-                    this.Frame.Navigate(typeof(VideoPreviewPage)); 
+                    this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
                 }
                 else
                 {
@@ -376,11 +375,10 @@ namespace FluentScreenRecorder
         {
             //Collecting some info before being lost
             
-            if (AudioToggleSwitch.IsOn)
+            if (AudioToggleSwitch.IsOn && loopbackAudioCapture.Started)
             {
                 audioEncodingProperties = loopbackAudioCapture.EncodingProperties;
                 await loopbackAudioCapture.Stop();
-
             }
    
             _encoder?.Dispose();            
