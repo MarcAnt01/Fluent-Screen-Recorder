@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en-US" target-language="it" original="FLUENTSCREENRECORDER/STRINGS/EN-US/RESOURCES.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6916.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="FLUENTSCREENRECORDER/STRINGS/EN-US/RESOURCES.RESW" datatype="resx">
+        <trans-unit id="About" translate="yes" xml:space="preserve">
+          <source>About the app</source>
+          <target state="translated">About the app</target>
+        </trans-unit>
+        <trans-unit id="Bitrate" translate="yes" xml:space="preserve">
+          <source>Bitrate</source>
+          <target state="translated">Bitrate</target>
+        </trans-unit>
+        <trans-unit id="BugReport" translate="yes" xml:space="preserve">
+          <source>Report a bug</source>
+          <target state="translated">Report a bug</target>
+        </trans-unit>
+        <trans-unit id="Copyright" translate="yes" xml:space="preserve">
+          <source>Copyright</source>
+          <target state="translated">Copyright</target>
+        </trans-unit>
+        <trans-unit id="Delete" translate="yes" xml:space="preserve">
+          <source>Delete</source>
+          <target state="translated">Delete</target>
+        </trans-unit>
+        <trans-unit id="Discord" translate="yes" xml:space="preserve">
+          <source>Join our Discord server</source>
+          <target state="translated">Join our Discord server</target>
+        </trans-unit>
+        <trans-unit id="ExternalAudio" translate="yes" xml:space="preserve">
+          <source>External Audio Recording</source>
+          <target state="translated">External Audio Recording</target>
+        </trans-unit>
+        <trans-unit id="Failure" translate="yes" xml:space="preserve">
+          <source>Failure</source>
+          <target state="translated">Failure</target>
+        </trans-unit>
+        <trans-unit id="Framerate" translate="yes" xml:space="preserve">
+          <source>Framerate</source>
+          <target state="translated">Framerate</target>
+        </trans-unit>
+        <trans-unit id="GalleryView" translate="yes" xml:space="preserve">
+          <source>Gallery View</source>
+          <target state="translated">Gallery View</target>
+        </trans-unit>
+        <trans-unit id="GitHub" translate="yes" xml:space="preserve">
+          <source>View GitHub repository</source>
+          <target state="translated">View GitHub repository</target>
+        </trans-unit>
+        <trans-unit id="InternalAudio" translate="yes" xml:space="preserve">
+          <source>Internal Audio Recording</source>
+          <target state="translated">Internal Audio Recording</target>
+        </trans-unit>
+        <trans-unit id="Ok" translate="yes" xml:space="preserve">
+          <source>Ok</source>
+          <target state="translated">Ok</target>
+        </trans-unit>
+        <trans-unit id="Options" translate="yes" xml:space="preserve">
+          <source>You can choose among the following options</source>
+          <target state="translated">You can choose among the following options</target>
+        </trans-unit>
+        <trans-unit id="Privacy" translate="yes" xml:space="preserve">
+          <source>Privacy policy</source>
+          <target state="translated">Privacy policy</target>
+        </trans-unit>
+        <trans-unit id="Recording" translate="yes" xml:space="preserve">
+          <source>Recording</source>
+          <target state="translated">Recording</target>
+        </trans-unit>
+        <trans-unit id="Resolution" translate="yes" xml:space="preserve">
+          <source>Resolution</source>
+          <target state="translated">Resolution</target>
+        </trans-unit>
+        <trans-unit id="Save" translate="yes" xml:space="preserve">
+          <source>Save</source>
+          <target state="translated">Save</target>
+        </trans-unit>
+        <trans-unit id="SaveAs" translate="yes" xml:space="preserve">
+          <source>Save as</source>
+          <target state="translated">Save as</target>
+        </trans-unit>
+        <trans-unit id="SaveConfirm" translate="yes" xml:space="preserve">
+          <source>Do you want to save your file?</source>
+          <target state="translated">Do you want to save your file?</target>
+        </trans-unit>
+        <trans-unit id="Share" translate="yes" xml:space="preserve">
+          <source>Share</source>
+          <target state="translated">Share</target>
+        </trans-unit>
+        <trans-unit id="SourceSizeToggle" translate="yes" xml:space="preserve">
+          <source>Use source size as video resolution</source>
+          <target state="translated">Use source size as video resolution</target>
+        </trans-unit>
+        <trans-unit id="Version" translate="yes" xml:space="preserve">
+          <source>Version</source>
+          <target state="translated">Version</target>
+        </trans-unit>
+        <trans-unit id="VideoPreview" translate="yes" xml:space="preserve">
+          <source>Video Preview</source>
+          <target state="translated">Video Preview</target>
+        </trans-unit>
+        <trans-unit id="Whatsnew" translate="yes" xml:space="preserve">
+          <source>What's translated?</source>
+          <target state="translated">What's translated?</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>
