@@ -103,8 +103,9 @@
           <target state="translated">Video Preview</target>
         </trans-unit>
         <trans-unit id="Whatsnew" translate="yes" xml:space="preserve">
-          <source>What's translated?</source>
-          <target state="translated">What's translated?</target>
+          <source>What's new?</source>
+          <target state="needs-review-translation">What's translated?</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
       </group>
     </body>
