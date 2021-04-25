@@ -1,0 +1,28 @@
+﻿<Page
+    x:Class="FluentScreenRecorder.Views.PlayerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FluentScreenRecorder"    
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"    
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">  
+
+
+    <Grid>
+        <MediaPlayerElement x:Name="VideoPlayer" AreTransportControlsEnabled="True" Source="ms-appx:///Assets/video.mp4">
+            <MediaPlayerElement.TransportControls>
+                <local:CustomMediaTransportControls x:Name="customControls"
+                                            IsFastForwardButtonVisible="True"
+                                            IsFastForwardEnabled="True"
+                                            IsFastRewindButtonVisible="True"
+                                            IsFastRewindEnabled="True"
+                                            IsPlaybackRateButtonVisible="True"
+                                            IsPlaybackRateEnabled="True"
+                                            IsCompact="False">
+                </local:CustomMediaTransportControls>
+            </MediaPlayerElement.TransportControls>
+        </MediaPlayerElement>
+
+    </Grid>
+</Page>

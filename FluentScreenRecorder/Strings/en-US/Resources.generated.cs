@@ -185,6 +185,19 @@ namespace FluentScreenRecorder.Strings{
         }
         #endregion
 
+        #region OpenFolder
+        /// <summary>
+        ///   Looks up a localized string similar to: Open the folder where the video has been saved
+        /// </summary>
+        public static string OpenFolder
+        {
+            get
+            {
+                return _resourceLoader.GetString("OpenFolder");
+            }
+        }
+        #endregion
+
         #region Options
         /// <summary>
         ///   Looks up a localized string similar to: You can choose among the following options
@@ -302,6 +315,19 @@ namespace FluentScreenRecorder.Strings{
         }
         #endregion
 
+        #region SystemVideoPlayerOption
+        /// <summary>
+        ///   Looks up a localized string similar to: Use system player to open videos
+        /// </summary>
+        public static string SystemVideoPlayerOption
+        {
+            get
+            {
+                return _resourceLoader.GetString("SystemVideoPlayerOption");
+            }
+        }
+        #endregion
+
         #region Version
         /// <summary>
         ///   Looks up a localized string similar to: Version
@@ -364,6 +390,7 @@ namespace FluentScreenRecorder.Strings{
             GitHub,
             InternalAudio,
             Ok,
+            OpenFolder,
             Options,
             Privacy,
             Recording,
@@ -373,6 +400,7 @@ namespace FluentScreenRecorder.Strings{
             SaveConfirm,
             Share,
             SourceSizeToggle,
+            SystemVideoPlayerOption,
             Version,
             VideoPreview,
             Whatsnew,

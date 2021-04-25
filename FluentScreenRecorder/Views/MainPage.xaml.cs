@@ -37,6 +37,7 @@ using Windows.Storage.FileProperties;
 using Windows.Storage.Search;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.System;
+using Windows.UI.Popups;
 
 namespace FluentScreenRecorder
 {
@@ -149,6 +150,8 @@ namespace FluentScreenRecorder
             AudioToggleSwitch.IsOn = settings.IntAudio;
             ExtAudioToggleSwitch.IsOn = settings.ExtAudio;
             GalleryToggleSwitch.IsOn = settings.Gallery;
+            OpenFolderToggleSwitch.IsOn = settings.OpenFolder;
+            SystemPlayerToggleSwitch.IsOn = settings.SystemPlayer;
         }
 
         private async void LoadedHandler(object sender, RoutedEventArgs e)
@@ -608,7 +611,9 @@ namespace FluentScreenRecorder
             var intAudio = AudioToggleSwitch.IsOn;
             var extAudio = ExtAudioToggleSwitch.IsOn;
             var gallery = GalleryToggleSwitch.IsOn;
-            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize, Preview = preview, IntAudio = intAudio, ExtAudio = extAudio, Gallery = gallery };
+            var openFolder = OpenFolderToggleSwitch.IsOn;
+            var systemPlayer = SystemPlayerToggleSwitch.IsOn;
+            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize, Preview = preview, IntAudio = intAudio, ExtAudio = extAudio, Gallery = gallery, OpenFolder = openFolder, SystemPlayer = systemPlayer};
 
         }
 
@@ -625,7 +630,9 @@ namespace FluentScreenRecorder
                 Preview = true,
                 IntAudio = true,
                 ExtAudio = true,
-                Gallery = true
+                Gallery = true,
+                OpenFolder = false,
+                SystemPlayer = false
             };
             // Resolution
             if (localSettings.Values.TryGetValue(nameof(AppSettings.Width), out var width) &&
@@ -673,6 +680,16 @@ namespace FluentScreenRecorder
             {
                 result.Gallery = (bool)gallery;
             }
+
+            if (localSettings.Values.TryGetValue(nameof(AppSettings.OpenFolder), out var openFolder))
+            {
+                result.OpenFolder = (bool)openFolder;
+            }
+
+            if (localSettings.Values.TryGetValue(nameof(AppSettings.SystemPlayer), out var systemPlayer))
+            {
+                result.SystemPlayer = (bool)systemPlayer;
+            }
             return result;
         }
         public void CacheCurrentSettings()
@@ -693,6 +710,8 @@ namespace FluentScreenRecorder
             localSettings.Values[nameof(AppSettings.IntAudio)] = settings.IntAudio;
             localSettings.Values[nameof(AppSettings.ExtAudio)] = settings.ExtAudio;
             localSettings.Values[nameof(AppSettings.Gallery)] = settings.Gallery;
+            localSettings.Values[nameof(AppSettings.OpenFolder)] = settings.OpenFolder;
+            localSettings.Values[nameof(AppSettings.SystemPlayer)] = settings.SystemPlayer;
         }
 
         private int GetResolutionIndex(uint width, uint height)
@@ -749,6 +768,8 @@ namespace FluentScreenRecorder
             public bool IntAudio;
             public bool ExtAudio;
             public bool Gallery;
+            public bool OpenFolder;
+            public bool SystemPlayer;
         }
 
         private IDirect3DDevice _device;
@@ -763,11 +784,24 @@ namespace FluentScreenRecorder
             await dialog.ShowAsync();
         }
 
-        private async void Image_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
+        public async void Image_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {            
             ThumbItem item = (sender as Image).DataContext as ThumbItem;
-            var file = await(await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder")).GetFileAsync(item.fileN);
-            await Launcher.LaunchFileAsync(file);
+            var videoFile = await(await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder")).GetFileAsync(item.fileN);
+            if (SystemPlayerToggleSwitch.IsOn)
+            {
+                await Launcher.LaunchFileAsync(videoFile);
+            }
+            else
+            {
+                this.Frame.Navigate(typeof(PlayerPage), videoFile);                
+            }
+        }
+
+        private async void DeleteButton_Click(object sender, EventArgs e)
+        {
+            var messageDialog = new MessageDialog("Test");
+            await messageDialog.ShowAsync();
         }
     }
 }

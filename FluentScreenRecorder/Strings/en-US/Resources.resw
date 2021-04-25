@@ -156,6 +156,9 @@
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
+  <data name="OpenFolder" xml:space="preserve">
+    <value>Open the folder where the video has been saved</value>
+  </data>
   <data name="Options" xml:space="preserve">
     <value>You can choose among the following options</value>
   </data>
@@ -182,6 +185,9 @@
   </data>
   <data name="SourceSizeToggle" xml:space="preserve">
     <value>Use source size as video resolution</value>
+  </data>
+  <data name="SystemVideoPlayerOption" xml:space="preserve">
+    <value>Use system player to open videos</value>
   </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>

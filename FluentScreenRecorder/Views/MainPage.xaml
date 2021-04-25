@@ -81,6 +81,8 @@
                     <ToggleSwitch x:Name="AudioToggleSwitch" Header="{x:Bind strings:Resources.InternalAudio}" Margin="10" MaxWidth="150" IsOn="True"/>
                     <ToggleSwitch x:Name="ExtAudioToggleSwitch" Header="{x:Bind strings:Resources.ExternalAudio}" Margin="10" MaxWidth="150" IsOn="True"/>
                     <ToggleSwitch x:Name="GalleryToggleSwitch" Header="{x:Bind strings:Resources.GalleryView}" Margin="10" MaxWidth="150" IsOn="True"/>
+                    <ToggleSwitch x:Name="OpenFolderToggleSwitch" Header="{x:Bind strings:Resources.OpenFolder}" Margin="10" MaxWidth="150" IsOn="False"/>
+                    <ToggleSwitch x:Name="SystemPlayerToggleSwitch" Header="{x:Bind strings:Resources.SystemVideoPlayerOption}" Margin="10" MaxWidth="150" IsOn="False"/>
                     <Button x:Name="AboutButton" Width="144" HorizontalAlignment="Center" Margin="10" Style="{StaticResource ButtonRevealStyle}" Click="AboutButton_Click">
                         <StackPanel Orientation="Horizontal">
                             <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF4A3;" Margin="0,0,10,0"/>
