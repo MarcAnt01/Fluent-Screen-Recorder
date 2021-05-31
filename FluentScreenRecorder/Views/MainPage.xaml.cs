@@ -38,6 +38,7 @@ using Windows.Storage.Search;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.System;
 using Windows.UI.Popups;
+using System.Linq;
 
 namespace FluentScreenRecorder
 {
@@ -157,10 +158,12 @@ namespace FluentScreenRecorder
         private async void LoadedHandler(object sender, RoutedEventArgs e)
         {
             this.Loaded -= LoadedHandler;
-            var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");            
-            if (folder != null & GalleryToggleSwitch.IsOn)
+            var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
+            var actualFolder = folder as StorageFolder;
+            if (folder != null && GalleryToggleSwitch.IsOn && (await actualFolder.GetFilesAsync()).Count() != 0) 
             {
-                var actualFolder = folder as StorageFolder;
+
+               
                 IReadOnlyList<StorageFile> sortedItems = await actualFolder.GetFilesAsync(CommonFileQuery.OrderByDate);
                 List<ThumbItem> thumbnailsList = new List<ThumbItem>();
                 foreach (StorageFile file in sortedItems)
@@ -787,7 +790,7 @@ namespace FluentScreenRecorder
         public async void Image_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {            
             ThumbItem item = (sender as Image).DataContext as ThumbItem;
-            var videoFile = await(await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder")).GetFileAsync(item.fileN);
+            var videoFile = await(await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder")).GetFileAsync(item.fileN);            
             if (SystemPlayerToggleSwitch.IsOn)
             {
                 await Launcher.LaunchFileAsync(videoFile);
@@ -796,12 +799,6 @@ namespace FluentScreenRecorder
             {
                 this.Frame.Navigate(typeof(PlayerPage), videoFile);                
             }
-        }
-
-        private async void DeleteButton_Click(object sender, EventArgs e)
-        {
-            var messageDialog = new MessageDialog("Test");
-            await messageDialog.ShowAsync();
         }
     }
 }

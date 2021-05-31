@@ -1,31 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel.DataTransfer;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+﻿using FluentScreenRecorder.Dialogs;
+using System;
 using Windows.Media.Core;
 using Windows.Storage;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace FluentScreenRecorder.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class PlayerPage : Page
     {
         private StorageFile videoFile;
+
         public PlayerPage(StorageFile file = null)
         {
             this.InitializeComponent();
@@ -45,6 +30,24 @@ namespace FluentScreenRecorder.Views
             }            
         }
 
-       
+        private async void CustomMediaTransportControls_Deleted(object sender, EventArgs e)
+        {
+            this.Frame.Navigate(typeof(MainPage));
+            await videoFile.DeleteAsync();
+        }
+
+        private async void CustomMediaTransportControls_InfoTap(object sender, EventArgs e)
+        {
+            var frameRate = await videoFile.Properties.RetrievePropertiesAsync(new string[] { "System.Video.FrameRate" });
+            var width = await videoFile.Properties.RetrievePropertiesAsync(new string[] { "System.Video.FrameWidth" });
+            var height = await videoFile.Properties.RetrievePropertiesAsync(new string[] { "System.Video.FrameHeight" });
+            ContentDialog dialog = new VideoInfoDialog(frameRate, width, height);
+            await dialog.ShowAsync();
+        }
+
+        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MainPage));
+        }
     }
 }
