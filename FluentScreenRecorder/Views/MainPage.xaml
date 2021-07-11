@@ -8,89 +8,113 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:media="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     mc:Ignorable="d"
-    Background="{ThemeResource SystemControlAcrylicWindowBrush}">
-    
+    Background="{ThemeResource SystemControlAcrylicWindowBrush}"
+    SizeChanged="Page_SizeChanged">
+
     <Page.Resources>
         <local:InvertBoolConverter x:Key="InvertBoolConv"/>
         <DataTemplate x:Key="ImageTemplate">
             <StackPanel>
                 <TextBlock Text="{Binding fileN}" HorizontalAlignment="Center" Margin="0,0,0,-16"/>
-                <Image Stretch="UniformToFill" Source="{Binding img}" Width="190" Height="130" Margin="20" Tapped="Image_Tapped"/>                
-            </StackPanel>            
+                <Image Stretch="UniformToFill" Source="{Binding img}" Width="190" Height="130" Margin="20" Tapped="Image_Tapped"/>
+            </StackPanel>
         </DataTemplate>
         <media:AcrylicBrush x:Key="CustomAcrylicBackgroundBrushStrong" TintColor="{StaticResource SystemChromeAltHighColor}" BackgroundSource="HostBackdrop" FallbackColor="{StaticResource SystemChromeMediumColor}" TintOpacity="0.7"/>
         <media:AcrylicBrush x:Key="CustomAcrylicBackgroundBrushWeak" TintColor="{StaticResource SystemChromeAltHighColor}" BackgroundSource="HostBackdrop" FallbackColor="{StaticResource SystemChromeMediumColor}" TintOpacity="0.5"/>
     </Page.Resources>
-    
-    
+
+
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="FirstColumn"/>
-            <ColumnDefinition Width="4*" x:Name="SecondColumn"/>
-            <ColumnDefinition Width="2*" x:Name="ThirdColumn"/>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
-        <Grid Grid.Column="0" Background="{ThemeResource CustomAcrylicBackgroundBrushWeak}">
-            <TextBlock Text="Fluent Screen Recorder" Style="{StaticResource CaptionTextBlockStyle}" Margin="12,6,6,6"/>
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <StackPanel Orientation="Horizontal">
-                    <Ellipse x:Name="Ellipse" HorizontalAlignment="Center" Fill="Red" Width="15" Height="15" Margin="0,0,5,-10"/>
-                    <TextBlock x:Name="MainTextBlock" HorizontalTextAlignment="Center" FontSize="30"/>
+        
+        <Grid x:Name="TopBar" Grid.Row="0" Height="32" >
+            <Grid x:Name="UserLayout" Background="Transparent" />
+            <Grid Canvas.ZIndex="1">
+                <StackPanel x:Name="LeftPanel" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+                    <TextBlock Text="Fluent Screen Recorder" Grid.Column="1" Style="{StaticResource CaptionTextBlockStyle}" Margin="12,4,4,4"/>
                 </StackPanel>
-                <ToggleButton  x:Name="MainButton" HorizontalAlignment="Center" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Width="100" Height="100" Background="{ThemeResource SystemAccentColor}" CornerRadius="99">
-                    <StackPanel HorizontalAlignment="Center">
-                        <FontIcon x:Name="RecordIcon" FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF84E;" FontSize="70" Foreground="White"/>
-                        <FontIcon x:Name="StopIcon"  FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF72B;" FontSize="50" Foreground="White"/>
-                    </StackPanel>
-                </ToggleButton>
-                <muxc:ProgressRing x:Name="MergingProgressRing" Value="0" IsIndeterminate="False" Margin="10" Width="70" Height="70"/>
-            </StackPanel>
-        </Grid>        
-
-        <Grid Grid.Column="1" Background="{ThemeResource CustomAcrylicBackgroundBrushStrong}">
-            <GridView x:Name="BasicGridView" ItemTemplate="{StaticResource ImageTemplate}" SelectionMode="Single" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,32,0,0"/>
+                <StackPanel x:Name="RightPanel" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Right">
+                    <Button  x:Name="OverlayButton" Click="OverlayButton_Click" VerticalAlignment="Stretch">
+                        <FontIcon Glyph="&#xEE49;" FontSize="14"/>
+                    </Button>
+                    
+                </StackPanel>
+            </Grid>
         </Grid>
 
-        <Grid Grid.Column="2" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <ScrollViewer Margin="0,32,0,0">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="150">
-                    <ComboBox x:Name="ResolutionComboBox" Header="{x:Bind strings:Resources.Resolution}" Margin="10,0,10,10" MinWidth="150" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=UseCaptureItemToggleSwitch, Path=IsOn, Converter={StaticResource InvertBoolConv}}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate x:DataType="local:ResolutionItem">
-                                <TextBlock Text="{x:Bind DisplayName}"/>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <ComboBox x:Name="FrameRateComboBox" Header="{x:Bind strings:Resources.Framerate}"  Margin="10" MinWidth="150" HorizontalAlignment="Center">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate x:DataType="local:FrameRateItem">
-                                <TextBlock Text="{x:Bind DisplayName}"/>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <ComboBox x:Name="BitrateComboBox" Text="{x:Bind strings:Resources.Bitrate}" Margin="10" MinWidth="150" HorizontalAlignment="Center">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate x:DataType="local:BitrateItem">
-                                <TextBlock Text="{x:Bind DisplayName}"/>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" Header="{x:Bind strings:Resources.SourceSizeToggle}" Margin="10" MaxWidth="150" VerticalAlignment="Top" IsOn="True"/>
-                    <ToggleSwitch x:Name="PreviewToggleSwitch" Header="{x:Bind strings:Resources.VideoPreview}" Margin="10" MaxWidth="150" IsOn="True"/>
-                    <ToggleSwitch x:Name="AudioToggleSwitch" Header="{x:Bind strings:Resources.InternalAudio}" Margin="10" MaxWidth="150" IsOn="True"/>
-                    <ToggleSwitch x:Name="ExtAudioToggleSwitch" Header="{x:Bind strings:Resources.ExternalAudio}" Margin="10" MaxWidth="150" IsOn="True"/>
-                    <ToggleSwitch x:Name="GalleryToggleSwitch" Header="{x:Bind strings:Resources.GalleryView}" Margin="10" MaxWidth="150" IsOn="True"/>
-                    <ToggleSwitch x:Name="OpenFolderToggleSwitch" Header="{x:Bind strings:Resources.OpenFolder}" Margin="10" MaxWidth="150" IsOn="False"/>
-                    <ToggleSwitch x:Name="SystemPlayerToggleSwitch" Header="{x:Bind strings:Resources.SystemVideoPlayerOption}" Margin="10" MaxWidth="150" IsOn="False"/>
-                    <Button x:Name="AboutButton" Width="144" HorizontalAlignment="Center" Margin="10" Style="{StaticResource ButtonRevealStyle}" Click="AboutButton_Click">
-                        <StackPanel Orientation="Horizontal">
-                            <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF4A3;" Margin="0,0,10,0"/>
-                            <TextBlock Text="{x:Bind strings:Resources.About}"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="FirstColumn"/>
+                <ColumnDefinition Width="4*" x:Name="SecondColumn"/>
+                <ColumnDefinition Width="2*" x:Name="ThirdColumn"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Background="{ThemeResource CustomAcrylicBackgroundBrushWeak}">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse x:Name="Ellipse" HorizontalAlignment="Center" Fill="Red" Width="15" Height="15" Margin="0,0,5,-10"/>
+                        <TextBlock x:Name="MainTextBlock" HorizontalTextAlignment="Center" FontSize="30"/>
+                    </StackPanel>
+                    <ToggleButton  x:Name="MainButton" HorizontalAlignment="Center" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Width="100" Height="100" Background="{ThemeResource SystemAccentColor}" CornerRadius="99">
+                        <StackPanel HorizontalAlignment="Center">
+                            <FontIcon x:Name="RecordIcon" FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF84E;" FontSize="70" Foreground="White"/>
+                            <FontIcon x:Name="StopIcon"  FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF72B;" FontSize="50" Foreground="White"/>
                         </StackPanel>
-                    </Button>
+                    </ToggleButton>
+                    <muxc:ProgressRing x:Name="MergingProgressRing" Value="0" IsIndeterminate="False" Margin="10" Width="70" Height="70"/>
                 </StackPanel>
-            </ScrollViewer>
+            </Grid>
+
+            <Grid Grid.Column="1" Background="{ThemeResource CustomAcrylicBackgroundBrushStrong}">
+                <GridView x:Name="BasicGridView" ItemTemplate="{StaticResource ImageTemplate}" SelectionMode="Single" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,32,0,0"/>
+            </Grid>
+
+            <Grid Grid.Column="2" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <ScrollViewer>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="150">
+
+                        <ComboBox x:Name="ResolutionComboBox" Header="{x:Bind strings:Resources.Resolution}" Margin="10" MinWidth="150" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=UseCaptureItemToggleSwitch, Path=IsOn, Converter={StaticResource InvertBoolConv}}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="local:ResolutionItem">
+                                    <TextBlock Text="{x:Bind DisplayName}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <ComboBox x:Name="FrameRateComboBox" Header="{x:Bind strings:Resources.Framerate}"  Margin="10" MinWidth="150" HorizontalAlignment="Center">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="local:FrameRateItem">
+                                    <TextBlock Text="{x:Bind DisplayName}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <ComboBox x:Name="BitrateComboBox" Header="{x:Bind strings:Resources.Bitrate}" Margin="10" MinWidth="150" HorizontalAlignment="Center">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="local:BitrateItem">
+                                    <TextBlock Text="{x:Bind DisplayName}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" Header="{x:Bind strings:Resources.SourceSizeToggle}" Margin="10" MaxWidth="150" VerticalAlignment="Top" IsOn="True"/>
+                        <ToggleSwitch x:Name="PreviewToggleSwitch" Header="{x:Bind strings:Resources.VideoPreview}" Margin="10" MaxWidth="150" IsOn="True"/>
+                        <ToggleSwitch x:Name="AudioToggleSwitch" Header="{x:Bind strings:Resources.InternalAudio}" Margin="10" MaxWidth="150" IsOn="True"/>
+                        <ToggleSwitch x:Name="ExtAudioToggleSwitch" Header="{x:Bind strings:Resources.ExternalAudio}" Margin="10" MaxWidth="150" IsOn="True"/>
+                        <ToggleSwitch x:Name="GalleryToggleSwitch" Header="{x:Bind strings:Resources.GalleryView}" Margin="10" MaxWidth="150" IsOn="True"/>
+                        <ToggleSwitch x:Name="OpenFolderToggleSwitch" Header="{x:Bind strings:Resources.OpenFolder}" Margin="10" MaxWidth="150" IsOn="False"/>
+                        <ToggleSwitch x:Name="SystemPlayerToggleSwitch" Header="{x:Bind strings:Resources.SystemVideoPlayerOption}" Margin="10" MaxWidth="150" IsOn="False"/>
+                        <Button x:Name="AboutButton" Width="144" HorizontalAlignment="Center" Margin="10" Style="{StaticResource ButtonRevealStyle}" Click="AboutButton_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF4A3;" Margin="0,0,10,0"/>
+                                <TextBlock Text="{x:Bind strings:Resources.About}"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
         </Grid>
     </Grid>
 

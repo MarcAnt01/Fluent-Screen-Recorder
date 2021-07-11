@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Windows.Graphics.Capture;
 using Windows.Graphics.DirectX.Direct3D11;
@@ -66,7 +65,7 @@ namespace FluentScreenRecorder
     {
         public BitmapImage img { get; set; }
         public String fileN { get; set; }
-    }
+    }    
 
 
     public sealed partial class MainPage : Page
@@ -87,13 +86,16 @@ namespace FluentScreenRecorder
 
             SilentPlayer = new MediaPlayer() { IsLoopingEnabled = true };
             SilentPlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/Silence.ogg"));
-            SilentPlayer.Play();            
+            SilentPlayer.Play();
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(400, 260));
 
             //hide titlebar
-            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
-            CoreApplicationViewTitleBar coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
+            coreTitleBar.LayoutMetricsChanged += OnTitleBarLayoutMetricsChanged;           
+            Window.Current.SetTitleBar(UserLayout);
+            var tBar = CoreApplication.GetCurrentView().TitleBar;
+            tBar.LayoutMetricsChanged += OnTitleBarLayoutMetricsChanged;
 
             //Record icon
             RecordIcon.Visibility = Visibility.Visible;
@@ -154,16 +156,17 @@ namespace FluentScreenRecorder
             OpenFolderToggleSwitch.IsOn = settings.OpenFolder;
             SystemPlayerToggleSwitch.IsOn = settings.SystemPlayer;
         }
+        
+
+        public bool filesInFolder;
 
         private async void LoadedHandler(object sender, RoutedEventArgs e)
         {
             this.Loaded -= LoadedHandler;
             var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
             var actualFolder = folder as StorageFolder;
-            if (folder != null && GalleryToggleSwitch.IsOn && (await actualFolder.GetFilesAsync()).Count() != 0) 
+            if ((await actualFolder.GetFilesAsync()).Count() != 0)
             {
-
-               
                 IReadOnlyList<StorageFile> sortedItems = await actualFolder.GetFilesAsync(CommonFileQuery.OrderByDate);
                 List<ThumbItem> thumbnailsList = new List<ThumbItem>();
                 foreach (StorageFile file in sortedItems)
@@ -174,15 +177,8 @@ namespace FluentScreenRecorder
                     thumbnailsList.Add(new ThumbItem() { img = bitmap, fileN = file.Name });
 
                 }
-                BasicGridView.ItemsSource = thumbnailsList;                
-                SecondColumn.Width = new GridLength(4, GridUnitType.Star);
-                ThirdColumn.Width = new GridLength(2, GridUnitType.Star);
-            }
-            else
-            {
-                FirstColumn.Width = new GridLength(1, GridUnitType.Star);
-                SecondColumn.Width = new GridLength(0);
-                ThirdColumn.Width = new GridLength(1, GridUnitType.Star);
+                BasicGridView.ItemsSource = thumbnailsList;
+                filesInFolder = true;
             }
         }
 
@@ -321,19 +317,8 @@ namespace FluentScreenRecorder
                 visual.StopAnimation("Opacity");
 
                 Ellipse.Visibility = Visibility.Collapsed;
-                if (GalleryToggleSwitch.IsOn & folder != null)
-                {
-                    SecondColumn.Width = new GridLength(4, GridUnitType.Star);
-                    ThirdColumn.Width = new GridLength(2, GridUnitType.Star);
-                }
-                else
-                {
-                    FirstColumn.Width = new GridLength(1, GridUnitType.Star);
-                    SecondColumn.Width = new GridLength(0);
-                    ThirdColumn.Width = new GridLength(1, GridUnitType.Star);
-                }
+                               
                 
-                MainTextBlock.Text = "failure";
                 MainTextBlock.Foreground = originalBrush;
                 RecordIcon.Visibility = Visibility.Visible;
                 StopIcon.Visibility = Visibility.Collapsed;
@@ -464,17 +449,6 @@ namespace FluentScreenRecorder
                     var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
                     MainButton.Visibility = Visibility.Visible;
-                    if (folder != null & GalleryToggleSwitch.IsOn)
-                    {
-                        SecondColumn.Width = new GridLength(4, GridUnitType.Star);
-                        ThirdColumn.Width = new GridLength(2, GridUnitType.Star);
-                    }
-                    else
-                    {
-                        FirstColumn.Width = new GridLength(1, GridUnitType.Star);
-                        SecondColumn.Width = new GridLength(0);
-                        ThirdColumn.Width = new GridLength(1, GridUnitType.Star);
-                    }
                     await videoFile.DeleteAsync();
                     await internalAudioFile.DeleteAsync();
                 }));
@@ -799,6 +773,53 @@ namespace FluentScreenRecorder
             {
                 this.Frame.Navigate(typeof(PlayerPage), videoFile);                
             }
+        }
+        
+
+        private async void OverlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ApplicationView.GetForCurrentView().ViewMode == ApplicationViewMode.Default)
+            {
+                var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
+                preferences.CustomSize = new Size(400, 260);                
+                bool modeSwitched = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
+                if (modeSwitched)
+                {
+                    //CompactOverlayArrowsMinimizeIcon.Visibility = Visibility.Collapsed;
+                }
+            }
+            else
+            {
+                bool modeSwitched = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.Default);
+                if (modeSwitched)
+                {
+                    //CompactOverlayArrowsMaximizeIcon.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+        {          
+
+                      
+            if (filesInFolder = true && GalleryToggleSwitch.IsOn && e.NewSize.Width > 680)                
+            {
+                SecondColumn.Width = new GridLength(4, GridUnitType.Star);
+                ThirdColumn.Width = new GridLength(2, GridUnitType.Star);
+            }
+            else
+            {
+                FirstColumn.Width = new GridLength(1, GridUnitType.Star);
+                SecondColumn.Width = new GridLength(0);
+                ThirdColumn.Width = new GridLength(1, GridUnitType.Star);
+            }
+
+        }
+
+        public void OnTitleBarLayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
+        {
+            var bar = sender as CoreApplicationViewTitleBar;
+            RightPanel.Margin = new Thickness(0, 0, bar.SystemOverlayRightInset, 0);
         }
     }
 }
