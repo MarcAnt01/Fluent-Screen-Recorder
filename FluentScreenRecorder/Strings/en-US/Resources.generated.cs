@@ -94,6 +94,19 @@ namespace FluentScreenRecorder.Strings{
         }
         #endregion
 
+        #region ExitOverlay
+        /// <summary>
+        ///   Looks up a localized string similar to: Back to full view
+        /// </summary>
+        public static string ExitOverlay
+        {
+            get
+            {
+                return _resourceLoader.GetString("ExitOverlay");
+            }
+        }
+        #endregion
+
         #region ExternalAudio
         /// <summary>
         ///   Looks up a localized string similar to: External Audio Recording
@@ -155,6 +168,19 @@ namespace FluentScreenRecorder.Strings{
             get
             {
                 return _resourceLoader.GetString("GitHub");
+            }
+        }
+        #endregion
+
+        #region GoToOverlay
+        /// <summary>
+        ///   Looks up a localized string similar to: Switch to always on top
+        /// </summary>
+        public static string GoToOverlay
+        {
+            get
+            {
+                return _resourceLoader.GetString("GoToOverlay");
             }
         }
         #endregion
@@ -396,11 +422,13 @@ namespace FluentScreenRecorder.Strings{
             Copyright,
             Delete,
             Discord,
+            ExitOverlay,
             ExternalAudio,
             Failure,
             Framerate,
             GalleryView,
             GitHub,
+            GoToOverlay,
             InternalAudio,
             Ok,
             OpenFolder,

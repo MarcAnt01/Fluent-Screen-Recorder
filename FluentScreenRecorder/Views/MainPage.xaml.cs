@@ -169,6 +169,13 @@ namespace FluentScreenRecorder
                 var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
                 preferences.CustomSize = new Size(400, 260);
                 bool modeSwitched = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
+                GoToOverlayIcon.Visibility = Visibility.Collapsed;
+                ExitOverlayIcon.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ExitOverlayIcon.Visibility = Visibility.Collapsed;
+                GoToOverlayIcon.Visibility = Visibility.Visible;
             }
             var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
             var actualFolder = folder as StorageFolder;
@@ -801,7 +808,8 @@ namespace FluentScreenRecorder
                 bool modeSwitched = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
                 if (modeSwitched)
                 {
-                    //CompactOverlayArrowsMinimizeIcon.Visibility = Visibility.Collapsed;
+                    GoToOverlayIcon.Visibility = Visibility.Collapsed;
+                    ExitOverlayIcon.Visibility = Visibility.Visible;
                 }
             }
             else
@@ -809,7 +817,8 @@ namespace FluentScreenRecorder
                 bool modeSwitched = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.Default);
                 if (modeSwitched)
                 {
-                    //CompactOverlayArrowsMaximizeIcon.Visibility = Visibility.Visible;
+                    ExitOverlayIcon.Visibility = Visibility.Collapsed;
+                    GoToOverlayIcon.Visibility = Visibility.Visible;
                 }
             }
         }

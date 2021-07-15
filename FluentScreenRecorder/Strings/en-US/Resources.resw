@@ -135,6 +135,9 @@
   <data name="Discord" xml:space="preserve">
     <value>Join our Discord server</value>
   </data>
+  <data name="ExitOverlay" xml:space="preserve">
+    <value>Back to full view</value>
+  </data>
   <data name="ExternalAudio" xml:space="preserve">
     <value>External Audio Recording</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="GitHub" xml:space="preserve">
     <value>View GitHub repository</value>
+  </data>
+  <data name="GoToOverlay" xml:space="preserve">
+    <value>Switch to always on top</value>
   </data>
   <data name="InternalAudio" xml:space="preserve">
     <value>Internal Audio Recording</value>

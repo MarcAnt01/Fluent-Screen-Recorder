@@ -119,6 +119,14 @@
           <source>Open overlay mode by default</source>
           <target state="new">Open overlay mode by default</target>
         </trans-unit>
+        <trans-unit id="ExitOverlay" translate="yes" xml:space="preserve">
+          <source>Back to full view</source>
+          <target state="new">Back to full view</target>
+        </trans-unit>
+        <trans-unit id="GoToOverlay" translate="yes" xml:space="preserve">
+          <source>Switch to always on top</source>
+          <target state="new">Switch to always on top</target>
+        </trans-unit>
       </group>
     </body>
   </file>
