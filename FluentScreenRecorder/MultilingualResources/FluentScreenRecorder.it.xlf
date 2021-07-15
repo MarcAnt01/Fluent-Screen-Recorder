@@ -115,6 +115,10 @@
           <source>Use system player to open videos</source>
           <target state="new">Use system player to open videos</target>
         </trans-unit>
+        <trans-unit id="OverlayMode" translate="yes" xml:space="preserve">
+          <source>Open overlay mode by default</source>
+          <target state="new">Open overlay mode by default</target>
+        </trans-unit>
       </group>
     </body>
   </file>

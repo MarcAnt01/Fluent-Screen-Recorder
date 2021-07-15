@@ -211,6 +211,19 @@ namespace FluentScreenRecorder.Strings{
         }
         #endregion
 
+        #region OverlayMode
+        /// <summary>
+        ///   Looks up a localized string similar to: Open overlay mode by default
+        /// </summary>
+        public static string OverlayMode
+        {
+            get
+            {
+                return _resourceLoader.GetString("OverlayMode");
+            }
+        }
+        #endregion
+
         #region Privacy
         /// <summary>
         ///   Looks up a localized string similar to: Privacy policy
@@ -392,6 +405,7 @@ namespace FluentScreenRecorder.Strings{
             Ok,
             OpenFolder,
             Options,
+            OverlayMode,
             Privacy,
             Recording,
             Resolution,

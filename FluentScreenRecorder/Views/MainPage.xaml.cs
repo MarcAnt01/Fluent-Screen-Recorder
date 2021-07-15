@@ -155,6 +155,7 @@ namespace FluentScreenRecorder
             GalleryToggleSwitch.IsOn = settings.Gallery;
             OpenFolderToggleSwitch.IsOn = settings.OpenFolder;
             SystemPlayerToggleSwitch.IsOn = settings.SystemPlayer;
+            OverlayToggleSwitch.IsOn = settings.ShowOnTop;
         }
         
 
@@ -163,6 +164,12 @@ namespace FluentScreenRecorder
         private async void LoadedHandler(object sender, RoutedEventArgs e)
         {
             this.Loaded -= LoadedHandler;
+            if (OverlayToggleSwitch.IsOn)
+            {
+                var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
+                preferences.CustomSize = new Size(400, 260);
+                bool modeSwitched = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
+            }
             var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
             var actualFolder = folder as StorageFolder;
             if ((await actualFolder.GetFilesAsync()).Count() != 0)
@@ -590,7 +597,8 @@ namespace FluentScreenRecorder
             var gallery = GalleryToggleSwitch.IsOn;
             var openFolder = OpenFolderToggleSwitch.IsOn;
             var systemPlayer = SystemPlayerToggleSwitch.IsOn;
-            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize, Preview = preview, IntAudio = intAudio, ExtAudio = extAudio, Gallery = gallery, OpenFolder = openFolder, SystemPlayer = systemPlayer};
+            var showOnTop = OverlayToggleSwitch.IsOn;
+            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize, Preview = preview, IntAudio = intAudio, ExtAudio = extAudio, Gallery = gallery, OpenFolder = openFolder, SystemPlayer = systemPlayer, ShowOnTop = showOnTop};
 
         }
 
@@ -609,7 +617,8 @@ namespace FluentScreenRecorder
                 ExtAudio = true,
                 Gallery = true,
                 OpenFolder = false,
-                SystemPlayer = false
+                SystemPlayer = false,
+                ShowOnTop = false
             };
             // Resolution
             if (localSettings.Values.TryGetValue(nameof(AppSettings.Width), out var width) &&
@@ -667,6 +676,11 @@ namespace FluentScreenRecorder
             {
                 result.SystemPlayer = (bool)systemPlayer;
             }
+
+            if (localSettings.Values.TryGetValue(nameof(AppSettings.ShowOnTop), out var showOnTop))
+            {
+                result.ShowOnTop = (bool)showOnTop;
+            }
             return result;
         }
         public void CacheCurrentSettings()
@@ -689,6 +703,7 @@ namespace FluentScreenRecorder
             localSettings.Values[nameof(AppSettings.Gallery)] = settings.Gallery;
             localSettings.Values[nameof(AppSettings.OpenFolder)] = settings.OpenFolder;
             localSettings.Values[nameof(AppSettings.SystemPlayer)] = settings.SystemPlayer;
+            localSettings.Values[nameof(AppSettings.ShowOnTop)] = settings.ShowOnTop;
         }
 
         private int GetResolutionIndex(uint width, uint height)
@@ -747,6 +762,7 @@ namespace FluentScreenRecorder
             public bool Gallery;
             public bool OpenFolder;
             public bool SystemPlayer;
+            public bool ShowOnTop;
         }
 
         private IDirect3DDevice _device;

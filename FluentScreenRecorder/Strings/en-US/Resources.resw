@@ -162,6 +162,9 @@
   <data name="Options" xml:space="preserve">
     <value>You can choose among the following options</value>
   </data>
+  <data name="OverlayMode" xml:space="preserve">
+    <value>Open overlay mode by default</value>
+  </data>
   <data name="Privacy" xml:space="preserve">
     <value>Privacy policy</value>
   </data>
