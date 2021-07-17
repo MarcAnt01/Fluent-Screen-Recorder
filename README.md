@@ -15,6 +15,12 @@ The app supports Windows 10 1809+ . It is a uwp app that can run on Windows 10 f
 
 Contributions are appreciated, anyway you should open an issue explaining what you want to implement and why first, in order to avoid spending time on something that couldn't be merged.
 
+#### Device requirements:
+- [Windows 10 version 1809 or later](http://windows.com)
+- [Visual Studio 2019 or later with Universal Windows Platform development workload](https://visualstudio.microsoft.com/vs/features/universal-windows-platform/)
+- [Multilingual App Toolkit](https://developer.microsoft.com/en-us/windows/downloads/multilingual-app-toolkit/)
+- [ReswPlus extension](https://marketplace.visualstudio.com/items?itemName=rudyhuyn.ReswPlus)
+
 ### Bug reports
 
 The best way to report a bug is opening a ticket in this repo. In order to be helpful, you should specify the app version (without using the word latest), your Windows 10 version, what is happening in detail and the repro-steps.
