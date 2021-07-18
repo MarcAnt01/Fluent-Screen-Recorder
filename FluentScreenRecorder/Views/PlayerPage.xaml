@@ -8,15 +8,32 @@
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <MediaPlayerElement x:Name="VideoPlayer"
-                            AreTransportControlsEnabled="True">
-            <MediaPlayerElement.TransportControls>
-                <local:CustomMediaTransportControls IsZoomButtonVisible="False" IsFullWindowButtonVisible="False" Deleted="CustomMediaTransportControls_Deleted" InfoTap="CustomMediaTransportControls_InfoTap"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 
-            </MediaPlayerElement.TransportControls>
-        </MediaPlayerElement>
-        <Button VerticalAlignment="Top" Click="Button_Click" Margin="8,8,0,0">
-            <SymbolIcon Symbol="Back" x:Name="BackButton"/>
-        </Button>
+
+        <Grid x:Name="TopBar" Grid.Row="0" Height="32" >
+            <Grid x:Name="UserLayout" Background="Transparent" />
+            <Grid Canvas.ZIndex="1">
+                <StackPanel x:Name="LeftPanel" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+                    <Button VerticalAlignment="Top" Click="Button_Click" Background="Transparent">
+                        <SymbolIcon Symbol="Back" x:Name="BackButton"/>
+                    </Button>
+                    <TextBlock Text="Fluent Screen Recorder" Grid.Column="1" Style="{StaticResource CaptionTextBlockStyle}" Margin="4,4,4,8" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <MediaPlayerElement x:Name="VideoPlayer"
+                            AreTransportControlsEnabled="True">
+                <MediaPlayerElement.TransportControls>
+                    <local:CustomMediaTransportControls IsZoomButtonVisible="False" IsFullWindowButtonVisible="False" Deleted="CustomMediaTransportControls_Deleted" InfoTap="CustomMediaTransportControls_InfoTap"/>
+
+                </MediaPlayerElement.TransportControls>
+            </MediaPlayerElement>
+        </Grid>
     </Grid>
 </Page>

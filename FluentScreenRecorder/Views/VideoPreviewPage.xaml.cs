@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -34,9 +35,11 @@ namespace FluentScreenRecorder.Views
 
         public VideoPreviewPage(StorageFile file = null)
         {
-            this.InitializeComponent();
+            this.InitializeComponent();            
             if (file != null)
+            {
                 _tempFile = file;
+            }                
             PreviewPlayer.Source = MediaSource.CreateFromStorageFile(file);
 
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
@@ -46,11 +49,10 @@ namespace FluentScreenRecorder.Views
         public VideoPreviewPage()
         {
             this.InitializeComponent();
-
         }
 
         private void DataRequested(DataTransferManager sender, DataRequestedEventArgs e)
-        {
+        {                       
             if (_tempFile != null)
             {
                 DataRequest request = e.Request;
@@ -61,6 +63,9 @@ namespace FluentScreenRecorder.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
+            Window.Current.SetTitleBar(UserLayout);
             if (e.Parameter is StorageFile file)
             {
                 _tempFile = file;

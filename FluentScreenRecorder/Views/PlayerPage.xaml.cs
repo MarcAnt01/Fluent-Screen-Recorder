@@ -1,7 +1,9 @@
 ﻿using FluentScreenRecorder.Dialogs;
 using System;
+using Windows.ApplicationModel.Core;
 using Windows.Media.Core;
 using Windows.Storage;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -23,6 +25,9 @@ namespace FluentScreenRecorder.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;            
+            Window.Current.SetTitleBar(UserLayout);            
             if (e.Parameter is StorageFile file)
             {
                 videoFile = file;
