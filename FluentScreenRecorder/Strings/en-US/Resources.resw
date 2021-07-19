@@ -159,6 +159,9 @@
   <data name="InternalAudio" xml:space="preserve">
     <value>Internal Audio Recording</value>
   </data>
+  <data name="MicSettings" xml:space="preserve">
+    <value>System microphone settings</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
@@ -188,6 +191,9 @@
   </data>
   <data name="SaveConfirm" xml:space="preserve">
     <value>Do you want to save your file?</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
   </data>
   <data name="Share" xml:space="preserve">
     <value>Share</value>

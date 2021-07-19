@@ -127,6 +127,14 @@
           <source>Switch to always on top</source>
           <target state="new">Switch to always on top</target>
         </trans-unit>
+        <trans-unit id="MicSettings" translate="yes" xml:space="preserve">
+          <source>System microphone settings</source>
+          <target state="new">System microphone settings</target>
+        </trans-unit>
+        <trans-unit id="Settings" translate="yes" xml:space="preserve">
+          <source>Settings</source>
+          <target state="new">Settings</target>
+        </trans-unit>
       </group>
     </body>
   </file>

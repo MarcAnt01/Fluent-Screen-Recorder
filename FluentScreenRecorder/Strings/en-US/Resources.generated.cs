@@ -198,6 +198,19 @@ namespace FluentScreenRecorder.Strings{
         }
         #endregion
 
+        #region MicSettings
+        /// <summary>
+        ///   Looks up a localized string similar to: System microphone settings
+        /// </summary>
+        public static string MicSettings
+        {
+            get
+            {
+                return _resourceLoader.GetString("MicSettings");
+            }
+        }
+        #endregion
+
         #region Ok
         /// <summary>
         ///   Looks up a localized string similar to: Ok
@@ -328,6 +341,19 @@ namespace FluentScreenRecorder.Strings{
         }
         #endregion
 
+        #region Settings
+        /// <summary>
+        ///   Looks up a localized string similar to: Settings
+        /// </summary>
+        public static string Settings
+        {
+            get
+            {
+                return _resourceLoader.GetString("Settings");
+            }
+        }
+        #endregion
+
         #region Share
         /// <summary>
         ///   Looks up a localized string similar to: Share
@@ -430,6 +456,7 @@ namespace FluentScreenRecorder.Strings{
             GitHub,
             GoToOverlay,
             InternalAudio,
+            MicSettings,
             Ok,
             OpenFolder,
             Options,
@@ -440,6 +467,7 @@ namespace FluentScreenRecorder.Strings{
             Save,
             SaveAs,
             SaveConfirm,
+            Settings,
             Share,
             SourceSizeToggle,
             SystemVideoPlayerOption,

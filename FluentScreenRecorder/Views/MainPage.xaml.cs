@@ -846,5 +846,12 @@ namespace FluentScreenRecorder
             var bar = sender as CoreApplicationViewTitleBar;
             RightPanel.Margin = new Thickness(0, 0, bar.SystemOverlayRightInset, 0);
         }
+
+        private async void MicSettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            string uriToLaunch = @"ms-settings:sound";
+            var uri = new Uri(uriToLaunch);
+            await Launcher.LaunchUriAsync(uri);
+        }
     }
 }
