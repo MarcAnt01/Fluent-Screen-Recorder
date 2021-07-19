@@ -177,11 +177,13 @@ namespace FluentScreenRecorder
                 ExitOverlayIcon.Visibility = Visibility.Collapsed;
                 GoToOverlayIcon.Visibility = Visibility.Visible;
             }
-            var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
-            var actualFolder = folder as StorageFolder;
-            if ((await actualFolder.GetFilesAsync()).Count() != 0)
+
+            // We don't have to create the video folder at startup - just ignore populating the folder view if the folder doesn't exist (yet).
+            // Saving a recording will automatically create the folder if missing.
+            StorageFolder videoFolder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder") as StorageFolder;
+            if (videoFolder != null && (await videoFolder.GetFilesAsync()).Count() != 0)
             {
-                IReadOnlyList<StorageFile> sortedItems = await actualFolder.GetFilesAsync(CommonFileQuery.OrderByDate);
+                IReadOnlyList<StorageFile> sortedItems = await videoFolder.GetFilesAsync(CommonFileQuery.OrderByDate);
                 List<ThumbItem> thumbnailsList = new List<ThumbItem>();
                 foreach (StorageFile file in sortedItems)
                 {
