@@ -120,6 +120,9 @@
   <data name="About" xml:space="preserve">
     <value>About the app</value>
   </data>
+  <data name="Back" xml:space="preserve">
+    <value>Go back</value>
+  </data>
   <data name="Bitrate" xml:space="preserve">
     <value>Bitrate</value>
   </data>
@@ -139,7 +142,7 @@
     <value>Back to full view</value>
   </data>
   <data name="ExternalAudio" xml:space="preserve">
-    <value>External Audio Recording</value>
+    <value>Microphone recording</value>
   </data>
   <data name="Failure" xml:space="preserve">
     <value>Failure</value>
@@ -156,8 +159,11 @@
   <data name="GoToOverlay" xml:space="preserve">
     <value>Switch to always on top</value>
   </data>
+  <data name="Info" xml:space="preserve">
+    <value>File info</value>
+  </data>
   <data name="InternalAudio" xml:space="preserve">
-    <value>Internal Audio Recording</value>
+    <value>Audio Recording</value>
   </data>
   <data name="MicSettings" xml:space="preserve">
     <value>System microphone settings</value>
@@ -180,6 +186,12 @@
   <data name="Recording" xml:space="preserve">
     <value>Recording</value>
   </data>
+  <data name="RecordingStart" xml:space="preserve">
+    <value>Start Recording</value>
+  </data>
+  <data name="RecordingStop" xml:space="preserve">
+    <value>Stop Recording</value>
+  </data>
   <data name="Resolution" xml:space="preserve">
     <value>Resolution</value>
   </data>
@@ -191,6 +203,9 @@
   </data>
   <data name="SaveConfirm" xml:space="preserve">
     <value>Do you want to save your file?</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>Saving...</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
@@ -209,6 +224,9 @@
   </data>
   <data name="VideoPreview" xml:space="preserve">
     <value>Video Preview</value>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>Volume</value>
   </data>
   <data name="Whatsnew" xml:space="preserve">
     <value>What's new?</value>

@@ -29,6 +29,19 @@ namespace FluentScreenRecorder.Strings{
         }
         #endregion
 
+        #region Back
+        /// <summary>
+        ///   Looks up a localized string similar to: Go back
+        /// </summary>
+        public static string Back
+        {
+            get
+            {
+                return _resourceLoader.GetString("Back");
+            }
+        }
+        #endregion
+
         #region Bitrate
         /// <summary>
         ///   Looks up a localized string similar to: Bitrate
@@ -109,7 +122,7 @@ namespace FluentScreenRecorder.Strings{
 
         #region ExternalAudio
         /// <summary>
-        ///   Looks up a localized string similar to: External Audio Recording
+        ///   Looks up a localized string similar to: Microphone recording
         /// </summary>
         public static string ExternalAudio
         {
@@ -185,9 +198,22 @@ namespace FluentScreenRecorder.Strings{
         }
         #endregion
 
+        #region Info
+        /// <summary>
+        ///   Looks up a localized string similar to: File info
+        /// </summary>
+        public static string Info
+        {
+            get
+            {
+                return _resourceLoader.GetString("Info");
+            }
+        }
+        #endregion
+
         #region InternalAudio
         /// <summary>
-        ///   Looks up a localized string similar to: Internal Audio Recording
+        ///   Looks up a localized string similar to: Audio Recording
         /// </summary>
         public static string InternalAudio
         {
@@ -289,6 +315,32 @@ namespace FluentScreenRecorder.Strings{
         }
         #endregion
 
+        #region RecordingStart
+        /// <summary>
+        ///   Looks up a localized string similar to: Start Recording
+        /// </summary>
+        public static string RecordingStart
+        {
+            get
+            {
+                return _resourceLoader.GetString("RecordingStart");
+            }
+        }
+        #endregion
+
+        #region RecordingStop
+        /// <summary>
+        ///   Looks up a localized string similar to: Stop Recording
+        /// </summary>
+        public static string RecordingStop
+        {
+            get
+            {
+                return _resourceLoader.GetString("RecordingStop");
+            }
+        }
+        #endregion
+
         #region Resolution
         /// <summary>
         ///   Looks up a localized string similar to: Resolution
@@ -337,6 +389,19 @@ namespace FluentScreenRecorder.Strings{
             get
             {
                 return _resourceLoader.GetString("SaveConfirm");
+            }
+        }
+        #endregion
+
+        #region Saving
+        /// <summary>
+        ///   Looks up a localized string similar to: Saving...
+        /// </summary>
+        public static string Saving
+        {
+            get
+            {
+                return _resourceLoader.GetString("Saving");
             }
         }
         #endregion
@@ -419,6 +484,19 @@ namespace FluentScreenRecorder.Strings{
         }
         #endregion
 
+        #region Volume
+        /// <summary>
+        ///   Looks up a localized string similar to: Volume
+        /// </summary>
+        public static string Volume
+        {
+            get
+            {
+                return _resourceLoader.GetString("Volume");
+            }
+        }
+        #endregion
+
         #region Whatsnew
         /// <summary>
         ///   Looks up a localized string similar to: What's new?
@@ -443,6 +521,7 @@ namespace FluentScreenRecorder.Strings{
         {
             __Undefined = 0,
             About,
+            Back,
             Bitrate,
             BugReport,
             Copyright,
@@ -455,6 +534,7 @@ namespace FluentScreenRecorder.Strings{
             GalleryView,
             GitHub,
             GoToOverlay,
+            Info,
             InternalAudio,
             MicSettings,
             Ok,
@@ -463,16 +543,20 @@ namespace FluentScreenRecorder.Strings{
             OverlayMode,
             Privacy,
             Recording,
+            RecordingStart,
+            RecordingStop,
             Resolution,
             Save,
             SaveAs,
             SaveConfirm,
+            Saving,
             Settings,
             Share,
             SourceSizeToggle,
             SystemVideoPlayerOption,
             Version,
             VideoPreview,
+            Volume,
             Whatsnew,
         }
 

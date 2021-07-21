@@ -31,8 +31,9 @@
           <target state="translated">Join our Discord server</target>
         </trans-unit>
         <trans-unit id="ExternalAudio" translate="yes" xml:space="preserve">
-          <source>External Audio Recording</source>
-          <target state="translated">External Audio Recording</target>
+          <source>Microphone recording</source>
+          <target state="needs-review-translation">External Audio Recording</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="Failure" translate="yes" xml:space="preserve">
           <source>Failure</source>
@@ -51,8 +52,9 @@
           <target state="translated">View GitHub repository</target>
         </trans-unit>
         <trans-unit id="InternalAudio" translate="yes" xml:space="preserve">
-          <source>Internal Audio Recording</source>
-          <target state="translated">Internal Audio Recording</target>
+          <source>Audio Recording</source>
+          <target state="needs-review-translation">Internal Audio Recording</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="Ok" translate="yes" xml:space="preserve">
           <source>Ok</source>
