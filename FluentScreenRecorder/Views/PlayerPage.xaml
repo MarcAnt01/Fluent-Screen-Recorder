@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
+      xmlns:strings="using:FluentScreenRecorder.Strings"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
@@ -18,10 +19,18 @@
             <Grid x:Name="UserLayout" Background="Transparent" />
             <Grid Canvas.ZIndex="1">
                 <StackPanel x:Name="LeftPanel" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Left">
-                    <Button VerticalAlignment="Top" Click="Button_Click" Background="Transparent">
+                    <Button VerticalAlignment="Top" Click="Button_Click" Background="Transparent" ToolTipService.ToolTip="{x:Bind strings:Resources.Back}" AutomationProperties.AutomationId="{x:Bind strings:Resources.Back}">
                         <SymbolIcon Symbol="Back" x:Name="BackButton"/>
                     </Button>
                     <TextBlock Text="Fluent Screen Recorder" Grid.Column="1" Style="{StaticResource CaptionTextBlockStyle}" Margin="4,4,4,8" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel x:Name="RightPanel" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Right">
+                    <Button  x:Name="OverlayButton" VerticalAlignment="Stretch" Click="OverlayButton_Click">
+                        <StackPanel>
+                            <FontIcon x:Name="GoToOverlayIcon" Glyph="&#xEE49;" FontSize="16" ToolTipService.ToolTip="{x:Bind strings:Resources.GoToOverlay}"/>
+                            <FontIcon x:Name="ExitOverlayIcon" Glyph="&#xEE47;" FontSize="16 " ToolTipService.ToolTip="{x:Bind strings:Resources.ExitOverlay}"/>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
             </Grid>
         </Grid>

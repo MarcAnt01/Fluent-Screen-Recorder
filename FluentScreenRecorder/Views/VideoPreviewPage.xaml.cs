@@ -12,6 +12,7 @@ using Windows.Media.Core;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.System;
+using Windows.UI.ViewManagement;
 using Windows.UI.WindowManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -35,7 +36,7 @@ namespace FluentScreenRecorder.Views
 
         public VideoPreviewPage(StorageFile file = null)
         {
-            this.InitializeComponent();            
+            this.InitializeComponent();
             if (file != null)
             {
                 _tempFile = file;
@@ -66,6 +67,8 @@ namespace FluentScreenRecorder.Views
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
             Window.Current.SetTitleBar(UserLayout);
+            var tBar = CoreApplication.GetCurrentView().TitleBar;
+            tBar.LayoutMetricsChanged += OnTitleBarLayoutMetricsChanged;
             if (e.Parameter is StorageFile file)
             {
                 _tempFile = file;
@@ -74,7 +77,13 @@ namespace FluentScreenRecorder.Views
                 DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
                 dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(DataRequested);
             }
-            base.OnNavigatedTo(e);
+            base.OnNavigatedTo(e);            
+        }
+
+        public void OnTitleBarLayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
+        {
+            var bar = sender as CoreApplicationViewTitleBar;
+            RightPanel.Margin = new Thickness(0, 0, bar.SystemOverlayRightInset, 0);
         }
 
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -98,6 +107,30 @@ namespace FluentScreenRecorder.Views
         {
             await MainPage.Delete(_tempFile);
             this.Frame.Navigate(typeof(MainPage));
+        }
+
+        private async void OverlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (ApplicationView.GetForCurrentView().ViewMode == ApplicationViewMode.Default)
+            {
+                var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
+                preferences.CustomSize = new Size(400, 260);
+                bool modeSwitched = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
+                if (modeSwitched)
+                {
+                    GoToOverlayIcon.Visibility = Visibility.Collapsed;
+                    ExitOverlayIcon.Visibility = Visibility.Visible;
+                }
+            }
+            else
+            {
+                bool modeSwitched = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.Default);
+                if (modeSwitched)
+                {
+                    ExitOverlayIcon.Visibility = Visibility.Collapsed;
+                    GoToOverlayIcon.Visibility = Visibility.Visible;
+                }
+            }
         }
     }   
 }

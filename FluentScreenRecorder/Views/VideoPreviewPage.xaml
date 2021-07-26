@@ -16,11 +16,19 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid x:Name="TopBar" Grid.Row="0">
+        <Grid x:Name="TopBar" Grid.Row="0" Height="32" >
             <Grid x:Name="UserLayout" Background="Transparent" />
             <Grid Canvas.ZIndex="1">
-                <StackPanel x:Name="LeftPanel" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Left">                    
-                    <TextBlock Text="Fluent Screen Recorder" Grid.Column="1" Style="{StaticResource CaptionTextBlockStyle}" Margin="4,4,4,8" VerticalAlignment="Center"/>
+                <StackPanel x:Name="LeftPanel" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+                    <TextBlock Text="Fluent Screen Recorder" Style="{StaticResource CaptionTextBlockStyle}" Margin="12,4,4,4"/>
+                </StackPanel>
+                <StackPanel x:Name="RightPanel" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Right">
+                    <Button  x:Name="OverlayButton" Click="OverlayButton_Click" VerticalAlignment="Stretch">
+                        <StackPanel>
+                            <FontIcon x:Name="GoToOverlayIcon" Glyph="&#xEE49;" FontSize="16" ToolTipService.ToolTip="{x:Bind strings:Resources.GoToOverlay}"/>
+                            <FontIcon x:Name="ExitOverlayIcon" Glyph="&#xEE47;" FontSize="16 " ToolTipService.ToolTip="{x:Bind strings:Resources.ExitOverlay}"/>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
             </Grid>
         </Grid>
