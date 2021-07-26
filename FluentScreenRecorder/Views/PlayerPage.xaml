@@ -16,23 +16,47 @@
 
 
         <Grid x:Name="TopBar" Grid.Row="0" Height="32" >
-            <Grid x:Name="UserLayout" Background="Transparent" />
-            <Grid Canvas.ZIndex="1">
-                <StackPanel x:Name="LeftPanel" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Left">
-                    <Button VerticalAlignment="Top" Click="Button_Click" Background="Transparent" ToolTipService.ToolTip="{x:Bind strings:Resources.Back}" AutomationProperties.AutomationId="{x:Bind strings:Resources.Back}">
-                        <SymbolIcon Symbol="Back" x:Name="BackButton"/>
-                    </Button>
-                    <TextBlock Text="Fluent Screen Recorder" Grid.Column="1" Style="{StaticResource CaptionTextBlockStyle}" Margin="4,4,4,8" VerticalAlignment="Center"/>
-                </StackPanel>
-                <StackPanel x:Name="RightPanel" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Right">
-                    <Button  x:Name="OverlayButton" VerticalAlignment="Stretch" Click="OverlayButton_Click">
-                        <StackPanel>
-                            <FontIcon x:Name="GoToOverlayIcon" Glyph="&#xEE49;" FontSize="16" ToolTipService.ToolTip="{x:Bind strings:Resources.GoToOverlay}"/>
-                            <FontIcon x:Name="ExitOverlayIcon" Glyph="&#xEE47;" FontSize="16 " ToolTipService.ToolTip="{x:Bind strings:Resources.ExitOverlay}"/>
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="LeftPaddingColumn"
+                                  Width="0" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition x:Name="RightPaddingColumn"
+                                  Width="0" />
+            </Grid.ColumnDefinitions>
+            <Button VerticalAlignment="Top"
+                    Click="Button_Click"
+                    Background="Transparent"
+                    ToolTipService.ToolTip="{x:Bind strings:Resources.Back}"
+                    AutomationProperties.AutomationId="{x:Bind strings:Resources.Back}"
+                    Grid.Column="1">
+                <SymbolIcon Symbol="Back"
+                            x:Name="BackButton" />
+            </Button>
+            <Grid x:Name="UserLayout"
+                  Background="Transparent"
+                  Grid.Column="2">
+                <TextBlock Text="Fluent Screen Recorder"
+                           Style="{StaticResource CaptionTextBlockStyle}"
+                           Margin="4,4,4,8"
+                           VerticalAlignment="Center" />
             </Grid>
+            <Button  x:Name="OverlayButton"
+                     VerticalAlignment="Stretch"
+                     Click="OverlayButton_Click"
+                     Grid.Column="3">
+                <StackPanel>
+                    <FontIcon x:Name="GoToOverlayIcon"
+                              Glyph="&#xEE49;"
+                              FontSize="16"
+                              ToolTipService.ToolTip="{x:Bind strings:Resources.GoToOverlay}" />
+                    <FontIcon x:Name="ExitOverlayIcon"
+                              Glyph="&#xEE47;"
+                              FontSize="16 "
+                              ToolTipService.ToolTip="{x:Bind strings:Resources.ExitOverlay}" />
+                </StackPanel>
+            </Button>
         </Grid>
 
         <Grid Grid.Row="1">
