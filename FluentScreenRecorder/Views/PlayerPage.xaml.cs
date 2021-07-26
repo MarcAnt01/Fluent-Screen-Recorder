@@ -16,32 +16,47 @@ namespace FluentScreenRecorder.Views
         private StorageFile videoFile;
 
         public PlayerPage(StorageFile file = null)
-        {            
+        {
+            this.InitializeComponent();
+            SetupTitleBar();
         }
 
         public PlayerPage()
         {
             this.InitializeComponent();
+            SetupTitleBar();
+        }
+
+        private void SetupTitleBar(CoreApplicationViewTitleBar coreAppTitleBar = null)
+        {
+            var coreTitleBar = coreAppTitleBar ?? CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
+
+            // Get the size of the caption controls area and back button 
+            // (returned in logical pixels), and move your content around as necessary.
+            LeftPaddingColumn.Width = new GridLength(coreTitleBar.SystemOverlayLeftInset);
+            RightPaddingColumn.Width = new GridLength(coreTitleBar.SystemOverlayRightInset);
+
+            // Set XAML element as a draggable region.
+            Window.Current.SetTitleBar(UserLayout);
+
+            // Register a handler for when the size of the overlaid caption control changes.
+            // For example, when the app moves to a screen with a different DPI.
+            coreTitleBar.LayoutMetricsChanged += OnTitleBarLayoutMetricsChanged;
+        }
+
+        public void OnTitleBarLayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
+        {
+            SetupTitleBar(sender);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)   
         {
-            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
-            Window.Current.SetTitleBar(UserLayout);
-            var tBar = CoreApplication.GetCurrentView().TitleBar;
-            tBar.LayoutMetricsChanged += OnTitleBarLayoutMetricsChanged;
             if (e.Parameter is StorageFile file)
             {
                 videoFile = file;
                 VideoPlayer.Source = MediaSource.CreateFromStorageFile(file);                
             }            
-        }
-
-        public void OnTitleBarLayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
-        {
-            var bar = sender as CoreApplicationViewTitleBar;
-            RightPanel.Margin = new Thickness(0, 0, bar.SystemOverlayRightInset, 0);
         }
 
         private async void CustomMediaTransportControls_Deleted(object sender, EventArgs e)

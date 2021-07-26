@@ -90,12 +90,7 @@ namespace FluentScreenRecorder
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(400, 260));
 
             //hide titlebar
-            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-            coreTitleBar.ExtendViewIntoTitleBar = true;
-            coreTitleBar.LayoutMetricsChanged += OnTitleBarLayoutMetricsChanged;           
-            Window.Current.SetTitleBar(UserLayout);
-            var tBar = CoreApplication.GetCurrentView().TitleBar;
-            tBar.LayoutMetricsChanged += OnTitleBarLayoutMetricsChanged;
+            SetupTitleBar();
 
             //Record icon
             RecordIcon.Visibility = Visibility.Visible;
@@ -843,10 +838,27 @@ namespace FluentScreenRecorder
 
         }
 
+        private void SetupTitleBar(CoreApplicationViewTitleBar coreAppTitleBar = null)
+        {
+            var coreTitleBar = coreAppTitleBar ?? CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
+
+            // Get the size of the caption controls area and back button 
+            // (returned in logical pixels), and move your content around as necessary.
+            LeftPaddingColumn.Width = new GridLength(coreTitleBar.SystemOverlayLeftInset);
+            RightPaddingColumn.Width = new GridLength(coreTitleBar.SystemOverlayRightInset);
+
+            // Set XAML element as a draggable region.
+            Window.Current.SetTitleBar(UserLayout);
+
+            // Register a handler for when the size of the overlaid caption control changes.
+            // For example, when the app moves to a screen with a different DPI.
+            coreTitleBar.LayoutMetricsChanged += OnTitleBarLayoutMetricsChanged;
+        }
+
         public void OnTitleBarLayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
         {
-            var bar = sender as CoreApplicationViewTitleBar;
-            RightPanel.Margin = new Thickness(0, 0, bar.SystemOverlayRightInset, 0);
+            SetupTitleBar(sender);
         }
 
         private async void MicSettingsButton_Click(object sender, RoutedEventArgs e)
