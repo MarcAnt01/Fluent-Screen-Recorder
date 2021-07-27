@@ -37,7 +37,8 @@
             <Button  x:Name="OverlayButton"
                      Click="OverlayButton_Click"
                      VerticalAlignment="Stretch"
-                     Grid.Column="2">
+                     Grid.Column="2"
+                     Background="Transparent">
                 <StackPanel>
                     <FontIcon x:Name="GoToOverlayIcon"
                               Glyph="&#xEE49;"

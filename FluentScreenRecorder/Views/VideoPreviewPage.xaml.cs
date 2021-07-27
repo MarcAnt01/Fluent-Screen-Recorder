@@ -71,6 +71,18 @@ namespace FluentScreenRecorder.Views
             // Register a handler for when the size of the overlaid caption control changes.
             // For example, when the app moves to a screen with a different DPI.
             coreTitleBar.LayoutMetricsChanged += OnTitleBarLayoutMetricsChanged;
+
+            //Display the right icon for exiting/entering Overlay Mode
+            if (ApplicationView.GetForCurrentView().ViewMode == ApplicationViewMode.Default)
+            {
+                ExitOverlayIcon.Visibility = Visibility.Collapsed;
+                GoToOverlayIcon.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ExitOverlayIcon.Visibility = Visibility.Visible;
+                GoToOverlayIcon.Visibility = Visibility.Collapsed;
+            }
         }
 
         public void OnTitleBarLayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)

@@ -6,7 +6,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
       xmlns:strings="using:FluentScreenRecorder.Strings"
-      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+      Background="{ThemeResource AppBarBackgroundThemeBrush}">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -45,7 +45,8 @@
             <Button  x:Name="OverlayButton"
                      VerticalAlignment="Stretch"
                      Click="OverlayButton_Click"
-                     Grid.Column="3">
+                     Grid.Column="3"
+                     Background="Transparent">
                 <StackPanel>
                     <FontIcon x:Name="GoToOverlayIcon"
                               Glyph="&#xEE49;"
