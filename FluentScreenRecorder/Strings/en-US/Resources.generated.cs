@@ -107,6 +107,19 @@ namespace FluentScreenRecorder.Strings{
         }
         #endregion
 
+        #region Donate
+        /// <summary>
+        ///   Looks up a localized string similar to: Donate
+        /// </summary>
+        public static string Donate
+        {
+            get
+            {
+                return _resourceLoader.GetString("Donate");
+            }
+        }
+        #endregion
+
         #region ExitOverlay
         /// <summary>
         ///   Looks up a localized string similar to: Back to full view
@@ -527,6 +540,7 @@ namespace FluentScreenRecorder.Strings{
             Copyright,
             Delete,
             Discord,
+            Donate,
             ExitOverlay,
             ExternalAudio,
             Failure,

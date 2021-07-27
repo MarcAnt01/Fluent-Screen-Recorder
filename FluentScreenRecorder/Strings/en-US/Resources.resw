@@ -138,6 +138,9 @@
   <data name="Discord" xml:space="preserve">
     <value>Join our Discord server</value>
   </data>
+  <data name="Donate" xml:space="preserve">
+    <value>Donate</value>
+  </data>
   <data name="ExitOverlay" xml:space="preserve">
     <value>Back to full view</value>
   </data>

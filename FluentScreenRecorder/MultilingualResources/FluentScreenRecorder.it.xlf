@@ -137,6 +137,34 @@
           <source>Settings</source>
           <target state="new">Settings</target>
         </trans-unit>
+        <trans-unit id="Back" translate="yes" xml:space="preserve">
+          <source>Go back</source>
+          <target state="new">Go back</target>
+        </trans-unit>
+        <trans-unit id="Info" translate="yes" xml:space="preserve">
+          <source>File info</source>
+          <target state="new">File info</target>
+        </trans-unit>
+        <trans-unit id="RecordingStart" translate="yes" xml:space="preserve">
+          <source>Start Recording</source>
+          <target state="new">Start Recording</target>
+        </trans-unit>
+        <trans-unit id="RecordingStop" translate="yes" xml:space="preserve">
+          <source>Stop Recording</source>
+          <target state="new">Stop Recording</target>
+        </trans-unit>
+        <trans-unit id="Saving" translate="yes" xml:space="preserve">
+          <source>Saving...</source>
+          <target state="new">Saving...</target>
+        </trans-unit>
+        <trans-unit id="Volume" translate="yes" xml:space="preserve">
+          <source>Volume</source>
+          <target state="new">Volume</target>
+        </trans-unit>
+        <trans-unit id="Donate" translate="yes" xml:space="preserve">
+          <source>Donate</source>
+          <target state="new">Donate</target>
+        </trans-unit>
       </group>
     </body>
   </file>

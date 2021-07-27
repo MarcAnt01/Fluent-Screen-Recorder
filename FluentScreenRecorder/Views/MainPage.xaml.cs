@@ -867,5 +867,12 @@ namespace FluentScreenRecorder
             var uri = new Uri(uriToLaunch);
             await Launcher.LaunchUriAsync(uri);
         }
+
+        private async void DonateButton_Click(object sender, RoutedEventArgs e)
+        {
+            string uriToLaunch = @"https://paypal.me/pools/c/8Bxl3GiJqn";
+            var uri = new Uri(uriToLaunch);
+            await Launcher.LaunchUriAsync(uri);
+        }
     }
 }
