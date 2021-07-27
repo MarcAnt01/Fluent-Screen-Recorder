@@ -7,7 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="Info" 
-    CloseButtonText="Ok">
+    CloseButtonText="Ok"
+    CloseButtonStyle="{ThemeResource ButtonRevealStyle}">
 
     <StackPanel>
         <TextBlock x:Name="Frameblock"/>

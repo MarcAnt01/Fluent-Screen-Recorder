@@ -13,7 +13,9 @@
     PrimaryButtonText="{x:Bind strings:Resources.Save}"
     SecondaryButtonText="{x:Bind strings:Resources.SaveAs}"
     CloseButtonText="{x:Bind strings:Resources.Delete}"
-    PrimaryButtonStyle="{ThemeResource AccentButtonStyle}">
+    PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
+    SecondaryButtonStyle="{ThemeResource ButtonRevealStyle}"
+    CloseButtonStyle="{ThemeResource ButtonRevealStyle}">
 
     <Grid>
         <TextBlock Text="{x:Bind strings:Resources.Options}"/>
