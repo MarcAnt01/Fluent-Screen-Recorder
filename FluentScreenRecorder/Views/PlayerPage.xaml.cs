@@ -6,6 +6,7 @@ using Windows.Media.Core;
 using Windows.Storage;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -49,11 +50,19 @@ namespace FluentScreenRecorder.Views
             {
                 ExitOverlayIcon.Visibility = Visibility.Collapsed;
                 GoToOverlayIcon.Visibility = Visibility.Visible;
+                ToolTip toolTip = new ToolTip();
+                toolTip.Content = Strings.Resources.GoToOverlay;
+                ToolTipService.SetToolTip(OverlayButton, toolTip);
+                AutomationProperties.SetName(OverlayButton, Strings.Resources.GoToOverlay);
             }
             else
             {
                 ExitOverlayIcon.Visibility = Visibility.Visible;
                 GoToOverlayIcon.Visibility = Visibility.Collapsed;
+                ToolTip toolTip = new ToolTip();
+                toolTip.Content = Strings.Resources.ExitOverlay;
+                ToolTipService.SetToolTip(OverlayButton, toolTip);
+                AutomationProperties.SetName(OverlayButton, Strings.Resources.ExitOverlay);
             }
         }
 
@@ -102,6 +111,10 @@ namespace FluentScreenRecorder.Views
                 {
                     GoToOverlayIcon.Visibility = Visibility.Collapsed;
                     ExitOverlayIcon.Visibility = Visibility.Visible;
+                    ToolTip toolTip = new ToolTip();
+                    toolTip.Content = Strings.Resources.ExitOverlay;
+                    ToolTipService.SetToolTip(OverlayButton, toolTip);
+                    AutomationProperties.SetName(OverlayButton, Strings.Resources.ExitOverlay);
                 }
             }
             else
@@ -111,6 +124,10 @@ namespace FluentScreenRecorder.Views
                 {
                     ExitOverlayIcon.Visibility = Visibility.Collapsed;
                     GoToOverlayIcon.Visibility = Visibility.Visible;
+                    ToolTip toolTip = new ToolTip();
+                    toolTip.Content = Strings.Resources.GoToOverlay;
+                    ToolTipService.SetToolTip(OverlayButton, toolTip);
+                    AutomationProperties.SetName(OverlayButton, Strings.Resources.GoToOverlay);
                 }
             }
         }

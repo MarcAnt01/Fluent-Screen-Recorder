@@ -97,9 +97,9 @@ namespace FluentScreenRecorder
             StopIcon.Visibility = Visibility.Collapsed;
             Ellipse.Visibility = Visibility.Collapsed;
             ToolTip toolTip = new ToolTip();
-            toolTip.Content = "Start recording";
+            toolTip.Content = Strings.Resources.RecordingStart;
             ToolTipService.SetToolTip(MainButton, toolTip);
-            AutomationProperties.SetName(MainButton, "Start recording");
+            AutomationProperties.SetName(MainButton, Strings.Resources.RecordingStart);
 
 
             _device = Direct3D11Helpers.CreateDevice();
@@ -166,11 +166,19 @@ namespace FluentScreenRecorder
                 bool modeSwitched = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
                 GoToOverlayIcon.Visibility = Visibility.Collapsed;
                 ExitOverlayIcon.Visibility = Visibility.Visible;
+                ToolTip toolTip = new ToolTip();
+                toolTip.Content = Strings.Resources.ExitOverlay;
+                ToolTipService.SetToolTip(OverlayButton, toolTip);
+                AutomationProperties.SetName(OverlayButton, Strings.Resources.ExitOverlay);
             }
             else
             {
                 ExitOverlayIcon.Visibility = Visibility.Collapsed;
                 GoToOverlayIcon.Visibility = Visibility.Visible;
+                ToolTip toolTip = new ToolTip();
+                toolTip.Content = Strings.Resources.GoToOverlay;
+                ToolTipService.SetToolTip(OverlayButton, toolTip);
+                AutomationProperties.SetName(OverlayButton, Strings.Resources.GoToOverlay);
             }
 
             // We don't have to create the video folder at startup - just ignore populating the folder view if the folder doesn't exist (yet).
@@ -271,10 +279,10 @@ namespace FluentScreenRecorder
             StopIcon.Visibility = Visibility.Visible;
             Ellipse.Visibility = Visibility.Visible;
             toolTip = new ToolTip();
-            toolTip.Content = "Stop recording";
+            toolTip.Content = Strings.Resources.RecordingStop;
             ToolTipService.SetToolTip(MainButton, toolTip);
-            AutomationProperties.SetName(MainButton, "Stop recording");
-            MainTextBlock.Text = "recording...";
+            AutomationProperties.SetName(MainButton, Strings.Resources.RecordingStop);
+            MainTextBlock.Text = Strings.Resources.Recording;
             var originalBrush = MainTextBlock.Foreground;
             MainTextBlock.Foreground = new SolidColorBrush(Colors.Red);
 
@@ -333,9 +341,9 @@ namespace FluentScreenRecorder
                 MainTextBlock.Foreground = originalBrush;
                 RecordIcon.Visibility = Visibility.Visible;
                 StopIcon.Visibility = Visibility.Collapsed;
-                toolTip.Content = "Start recording";
+                toolTip.Content = Strings.Resources.RecordingStart;
                 ToolTipService.SetToolTip(MainButton, toolTip);
-                AutomationProperties.SetName(MainButton, "Start recording");
+                AutomationProperties.SetName(MainButton, Strings.Resources.RecordingStart);
                 await _tempFile.DeleteAsync();
 
                 return;
@@ -353,8 +361,8 @@ namespace FluentScreenRecorder
                 RecordIcon.Visibility = Visibility.Visible;
                 StopIcon.Visibility = Visibility.Collapsed;
                 ToolTip newtoolTip = new ToolTip();
-                toolTip.Content = "Start recording";
-                ToolTipService.SetToolTip(MainButton, toolTip);
+                toolTip.Content = Strings.Resources.RecordingStart;
+                ToolTipService.SetToolTip(MainButton, Strings.Resources.RecordingStart);
                 AutomationProperties.SetName(MainButton, "Start recording");
 
                 if (PreviewToggleSwitch.IsOn)
@@ -415,7 +423,7 @@ namespace FluentScreenRecorder
 
             var newFile = await GetTempFileAsync();
 
-            MainTextBlock.Text = "saving...";
+            MainTextBlock.Text = Strings.Resources.Saving;
             MergingProgressRing.Visibility = Visibility.Visible;
             MainButton.Visibility = Visibility.Collapsed;
 
@@ -443,9 +451,9 @@ namespace FluentScreenRecorder
                     RecordIcon.Visibility = Visibility.Visible;
                     StopIcon.Visibility = Visibility.Collapsed;
                     ToolTip newtoolTip = new ToolTip();
-                    toolTip.Content = "Start recording";
+                    toolTip.Content = Strings.Resources.RecordingStart;
                     ToolTipService.SetToolTip(MainButton, toolTip);
-                    AutomationProperties.SetName(MainButton, "Start recording");
+                    AutomationProperties.SetName(MainButton, Strings.Resources.RecordingStart);
 
                     if (PreviewToggleSwitch.IsOn)
                     {
@@ -807,6 +815,10 @@ namespace FluentScreenRecorder
                 {
                     GoToOverlayIcon.Visibility = Visibility.Collapsed;
                     ExitOverlayIcon.Visibility = Visibility.Visible;
+                    ToolTip toolTip = new ToolTip();
+                    toolTip.Content = Strings.Resources.ExitOverlay;
+                    ToolTipService.SetToolTip(OverlayButton, toolTip);
+                    AutomationProperties.SetName(OverlayButton, Strings.Resources.ExitOverlay);
                 }
             }
             else
@@ -816,6 +828,10 @@ namespace FluentScreenRecorder
                 {
                     ExitOverlayIcon.Visibility = Visibility.Collapsed;
                     GoToOverlayIcon.Visibility = Visibility.Visible;
+                    ToolTip toolTip = new ToolTip();
+                    toolTip.Content = Strings.Resources.GoToOverlay;
+                    ToolTipService.SetToolTip(OverlayButton, toolTip);
+                    AutomationProperties.SetName(OverlayButton, Strings.Resources.GoToOverlay);
                 }
             }
         }
