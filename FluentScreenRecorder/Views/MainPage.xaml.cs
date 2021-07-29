@@ -91,6 +91,8 @@ namespace FluentScreenRecorder
 
             //hide titlebar
             SetupTitleBar();
+            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
 
             //Record icon
             RecordIcon.Visibility = Visibility.Visible;
