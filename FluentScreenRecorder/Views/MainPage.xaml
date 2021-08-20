@@ -157,8 +157,7 @@
                                             <TextBlock Grid.Column="1" Text="{x:Bind strings:Resources.MicSettings}" Margin="8,0,0,0" TextWrapping="WrapWholeWords"/>
                                         </Grid>
                                     </Button>
-                                    <ToggleSwitch x:Name="GalleryToggleSwitch" Header="{x:Bind strings:Resources.GalleryView}" Margin="8" MaxWidth="150" IsOn="True"/>
-                                    <ToggleSwitch x:Name="OpenFolderToggleSwitch" Header="{x:Bind strings:Resources.OpenFolder}" Margin="8" MaxWidth="150" IsOn="False"/>
+                                    <ToggleSwitch x:Name="GalleryToggleSwitch" Header="{x:Bind strings:Resources.GalleryView}" Margin="8" MaxWidth="150" IsOn="True"/>                                    
                                     <ToggleSwitch x:Name="SystemPlayerToggleSwitch" Header="{x:Bind strings:Resources.SystemVideoPlayerOption}" Margin="8" MaxWidth="150" IsOn="False"/>
                                     <ToggleSwitch x:Name="OverlayToggleSwitch" Header="{x:Bind strings:Resources.OverlayMode}" Margin="8" MaxWidth="150" IsOn="False" />
                                     <Button x:Name="DonateButton" Width="144" HorizontalAlignment="Center" Margin="8" Style="{StaticResource ButtonRevealStyle}" Click="DonateButton_Click"> 

@@ -150,7 +150,7 @@ namespace FluentScreenRecorder
             AudioToggleSwitch.IsOn = settings.IntAudio;
             ExtAudioToggleSwitch.IsOn = settings.ExtAudio;
             GalleryToggleSwitch.IsOn = settings.Gallery;
-            OpenFolderToggleSwitch.IsOn = settings.OpenFolder;
+            
             SystemPlayerToggleSwitch.IsOn = settings.SystemPlayer;
             OverlayToggleSwitch.IsOn = settings.ShowOnTop;
         }
@@ -608,11 +608,10 @@ namespace FluentScreenRecorder
             var preview = PreviewToggleSwitch.IsOn;
             var intAudio = AudioToggleSwitch.IsOn;
             var extAudio = ExtAudioToggleSwitch.IsOn;
-            var gallery = GalleryToggleSwitch.IsOn;
-            var openFolder = OpenFolderToggleSwitch.IsOn;
+            var gallery = GalleryToggleSwitch.IsOn;            
             var systemPlayer = SystemPlayerToggleSwitch.IsOn;
             var showOnTop = OverlayToggleSwitch.IsOn;
-            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize, Preview = preview, IntAudio = intAudio, ExtAudio = extAudio, Gallery = gallery, OpenFolder = openFolder, SystemPlayer = systemPlayer, ShowOnTop = showOnTop};
+            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize, Preview = preview, IntAudio = intAudio, ExtAudio = extAudio, Gallery = gallery, SystemPlayer = systemPlayer, ShowOnTop = showOnTop};
 
         }
 
@@ -629,8 +628,7 @@ namespace FluentScreenRecorder
                 Preview = true,
                 IntAudio = true,
                 ExtAudio = true,
-                Gallery = true,
-                OpenFolder = false,
+                Gallery = true,                
                 SystemPlayer = false,
                 ShowOnTop = false
             };
@@ -681,11 +679,6 @@ namespace FluentScreenRecorder
                 result.Gallery = (bool)gallery;
             }
 
-            if (localSettings.Values.TryGetValue(nameof(AppSettings.OpenFolder), out var openFolder))
-            {
-                result.OpenFolder = (bool)openFolder;
-            }
-
             if (localSettings.Values.TryGetValue(nameof(AppSettings.SystemPlayer), out var systemPlayer))
             {
                 result.SystemPlayer = (bool)systemPlayer;
@@ -714,8 +707,7 @@ namespace FluentScreenRecorder
             localSettings.Values[nameof(AppSettings.Preview)] = settings.Preview;
             localSettings.Values[nameof(AppSettings.IntAudio)] = settings.IntAudio;
             localSettings.Values[nameof(AppSettings.ExtAudio)] = settings.ExtAudio;
-            localSettings.Values[nameof(AppSettings.Gallery)] = settings.Gallery;
-            localSettings.Values[nameof(AppSettings.OpenFolder)] = settings.OpenFolder;
+            localSettings.Values[nameof(AppSettings.Gallery)] = settings.Gallery;            
             localSettings.Values[nameof(AppSettings.SystemPlayer)] = settings.SystemPlayer;
             localSettings.Values[nameof(AppSettings.ShowOnTop)] = settings.ShowOnTop;
         }
@@ -774,7 +766,6 @@ namespace FluentScreenRecorder
             public bool IntAudio;
             public bool ExtAudio;
             public bool Gallery;
-            public bool OpenFolder;
             public bool SystemPlayer;
             public bool ShowOnTop;
         }
