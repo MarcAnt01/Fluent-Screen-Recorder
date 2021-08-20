@@ -38,6 +38,8 @@ using Windows.UI.Xaml.Media.Imaging;
 using Windows.System;
 using Windows.UI.Popups;
 using System.Linq;
+using Windows.Media.Capture;
+using Windows.Storage.Streams;
 
 namespace FluentScreenRecorder
 {
@@ -65,7 +67,7 @@ namespace FluentScreenRecorder
     {
         public BitmapImage img { get; set; }
         public String fileN { get; set; }
-    }    
+    }
 
 
     public sealed partial class MainPage : Page
@@ -75,7 +77,9 @@ namespace FluentScreenRecorder
         private ToolTip toolTip;
         private List<byte> BufferList = new List<byte>();
         MediaPlayer SilentPlayer;
-        private AudioEncodingProperties audioEncodingProperties;        
+        private AudioEncodingProperties audioEncodingProperties;
+        private StorageFile micFile;
+        public MediaCapture mediaCapture;
 
         public MainPage()
         {
@@ -144,17 +148,15 @@ namespace FluentScreenRecorder
             }
             FrameRateComboBox.ItemsSource = _frameRates;
             FrameRateComboBox.SelectedIndex = GetFrameRateIndex(settings.FrameRate);
-
             UseCaptureItemToggleSwitch.IsOn = settings.UseSourceSize;
             PreviewToggleSwitch.IsOn = settings.Preview;
             AudioToggleSwitch.IsOn = settings.IntAudio;
             ExtAudioToggleSwitch.IsOn = settings.ExtAudio;
-            GalleryToggleSwitch.IsOn = settings.Gallery;
-            
+            GalleryToggleSwitch.IsOn = settings.Gallery;        
             SystemPlayerToggleSwitch.IsOn = settings.SystemPlayer;
             OverlayToggleSwitch.IsOn = settings.ShowOnTop;
         }
-        
+
 
         public bool filesInFolder;
 
@@ -221,11 +223,39 @@ namespace FluentScreenRecorder
                 resolutionItem.IsZero();
             }
 
+            MediaCapture mediaCapture = null;
+
             if (AudioToggleSwitch.IsOn)
             {
                 loopbackAudioCapture = new LoopbackAudioCapture(MediaDevice.GetDefaultAudioRenderId(AudioDeviceRole.Default));
                 loopbackAudioCapture.BufferReadyDelegate = LoopbackBufferReady;
                 BufferList.Clear();
+            }
+            else if (ExtAudioToggleSwitch.IsOn)
+            {
+                if (await IsMicAllowed())
+                {
+                    mediaCapture = new MediaCapture();
+                    MediaCaptureInitializationSettings settings = new MediaCaptureInitializationSettings
+                    {
+                        StreamingCaptureMode = StreamingCaptureMode.Audio
+                    };
+                    await mediaCapture.InitializeAsync(settings);
+                    var tempfolder = ApplicationData.Current.TemporaryFolder;
+                    var name = DateTime.Now.ToString("yyyy-MM-dd-HHmmss");
+                     micFile = await tempfolder.CreateFileAsync($"{name}.mp3");
+                }
+                else
+                {
+                    ContentDialog errorDialog = new ContentDialog
+                    {
+                        Title = "Recording failed",
+                        Content = "Permission to use microphone was not given", //TODO: fix this non-english horror
+                        CloseButtonText = "OK"
+                    };
+                    await errorDialog.ShowAsync();
+                    return;
+                }
             }
 
             var width = resolutionItem.Resolution.Width;
@@ -294,6 +324,10 @@ namespace FluentScreenRecorder
                 using (var stream = await tempFile.OpenAsync(FileAccessMode.ReadWrite))
                 using (_encoder = new Encoder(_device, item))
                 {
+                    if (mediaCapture != null)
+                    {
+                        await mediaCapture.StartRecordToStorageFileAsync(MediaEncodingProfile.CreateMp3(AudioEncodingQuality.High), micFile);
+                    }
                     var encodesuccess = await _encoder.EncodeAsync(
                     stream,
                     width, height, bitrate,
@@ -338,8 +372,8 @@ namespace FluentScreenRecorder
                 visual.StopAnimation("Opacity");
 
                 Ellipse.Visibility = Visibility.Collapsed;
-                               
-                
+
+
                 MainTextBlock.Foreground = originalBrush;
                 RecordIcon.Visibility = Visibility.Visible;
                 StopIcon.Visibility = Visibility.Collapsed;
@@ -354,7 +388,78 @@ namespace FluentScreenRecorder
             // At this point the encoding has finished,
             // tell the user we're now saving
 
-            if (!AudioToggleSwitch.IsOn)
+            if (AudioToggleSwitch.IsOn)
+            {
+                CompleteRecording(BufferList.ToArray(), width, height, bitrate, frameRate);
+            }
+            else if (ExtAudioToggleSwitch.IsOn)
+            {
+                var clip = await MediaClip.CreateFromFileAsync(_tempFile);
+                var composition = new MediaComposition();
+                composition.Clips.Add(clip);
+
+                StorageFile internalAudioFile = micFile;
+                mediaCapture.Dispose();
+                mediaCapture = null;
+
+                var backgroundTrack = await BackgroundAudioTrack.CreateFromFileAsync(internalAudioFile);
+                composition.BackgroundAudioTracks.Add(backgroundTrack);
+
+                var videoFile = _tempFile;
+
+                var newFile = await GetTempFileAsync();
+
+                MainTextBlock.Text = Strings.Resources.Saving;
+                MergingProgressRing.Visibility = Visibility.Visible;
+                MainButton.Visibility = Visibility.Collapsed;
+
+                var merge = composition.RenderToFileAsync(newFile, MediaTrimmingPreference.Fast);
+                merge.Progress = new AsyncOperationProgressHandler<TranscodeFailureReason, double>(async (info, progress) =>
+                {
+                    await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+                    {
+                        MergingProgressRing.Value = progress;
+                    }));
+                });
+                merge.Completed = new AsyncOperationWithProgressCompletedHandler<TranscodeFailureReason, double>(async (info, status) =>
+                {
+                    await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(async () =>
+
+                    {
+                        MergingProgressRing.Value = 0;
+                        MergingProgressRing.Visibility = Visibility.Collapsed;
+                        _tempFile = newFile;
+
+                        MainButton.IsChecked = false;
+                        MainTextBlock.Text = "";
+                        visual.StopAnimation("Opacity");
+                        Ellipse.Visibility = Visibility.Collapsed;
+                        RecordIcon.Visibility = Visibility.Visible;
+                        StopIcon.Visibility = Visibility.Collapsed;
+                        ToolTip newtoolTip = new ToolTip();
+                        toolTip.Content = Strings.Resources.RecordingStart;
+                        ToolTipService.SetToolTip(MainButton, toolTip);
+                        AutomationProperties.SetName(MainButton, Strings.Resources.RecordingStart);
+
+                        if (PreviewToggleSwitch.IsOn)
+                        {
+                            this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
+                        }
+                        else
+                        {
+                            ContentDialog dialog = new SaveDialog(_tempFile);
+                            await dialog.ShowAsync();
+                        }
+
+                        var videofolder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
+
+                        MainButton.Visibility = Visibility.Visible;
+                        await videoFile.DeleteAsync();
+                        await internalAudioFile.DeleteAsync();
+                    }));
+                });
+            }
+            else
             {
                 MainButton.IsChecked = false;
                 MainTextBlock.Text = "";
@@ -377,23 +482,52 @@ namespace FluentScreenRecorder
                     await dialog.ShowAsync();
                 }
             }
-            else
+        }
+
+        async Task<byte[]> Convert(IRandomAccessStream s)
+        {
+            var dr = new DataReader(s.GetInputStreamAt(0));
+            var bytes = new byte[s.Size];
+            await dr.LoadAsync((uint)s.Size);
+            dr.ReadBytes(bytes);
+            return bytes;
+        }
+
+        private async Task<bool> IsMicAllowed()
+        {
+            bool isMicAvailable = true;
+            try
             {
-                CompleteRecording(BufferList.ToArray(), width, height, bitrate, frameRate);
+                MediaCapture mediaCapture = new MediaCapture();
+                var settings = new MediaCaptureInitializationSettings();
+                settings.StreamingCaptureMode = StreamingCaptureMode.Audio;
+                await mediaCapture.InitializeAsync(settings);
+                mediaCapture.Dispose();
             }
+            catch (Exception)
+            {
+                isMicAvailable = false;
+            }
+
+            return isMicAvailable;
         }
 
         public async void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
             //Collecting some info before being lost
-            
+
             if (AudioToggleSwitch.IsOn && loopbackAudioCapture.Started)
             {
                 audioEncodingProperties = loopbackAudioCapture.EncodingProperties;
                 await loopbackAudioCapture.Stop();
             }
-   
-            _encoder?.Dispose();            
+
+            if (mediaCapture != null)
+            {
+                await mediaCapture.StopRecordAsync();
+            }
+
+            _encoder?.Dispose();
         }
 
         private unsafe void LoopbackBufferReady(AudioClientBufferDetails details, out int numSamplesRead)
@@ -439,7 +573,7 @@ namespace FluentScreenRecorder
             });
             merge.Completed = new AsyncOperationWithProgressCompletedHandler<TranscodeFailureReason, double>(async (info, status) =>
             {
-                await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler( async() =>
+                await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(async () =>
 
                 {
                     MergingProgressRing.Value = 0;
@@ -475,7 +609,7 @@ namespace FluentScreenRecorder
                 }));
             });
 
-            
+
         }
 
         public static async Task<bool> Save(StorageFile file)
@@ -611,7 +745,7 @@ namespace FluentScreenRecorder
             var gallery = GalleryToggleSwitch.IsOn;            
             var systemPlayer = SystemPlayerToggleSwitch.IsOn;
             var showOnTop = OverlayToggleSwitch.IsOn;
-            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize, Preview = preview, IntAudio = intAudio, ExtAudio = extAudio, Gallery = gallery, SystemPlayer = systemPlayer, ShowOnTop = showOnTop};
+            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize, Preview = preview, IntAudio = intAudio, ExtAudio = extAudio, Gallery = gallery, SystemPlayer = systemPlayer, ShowOnTop = showOnTop };
 
         }
 
@@ -677,7 +811,7 @@ namespace FluentScreenRecorder
             if (localSettings.Values.TryGetValue(nameof(AppSettings.Gallery), out var gallery))
             {
                 result.Gallery = (bool)gallery;
-            }
+            }            
 
             if (localSettings.Values.TryGetValue(nameof(AppSettings.SystemPlayer), out var systemPlayer))
             {
@@ -707,7 +841,7 @@ namespace FluentScreenRecorder
             localSettings.Values[nameof(AppSettings.Preview)] = settings.Preview;
             localSettings.Values[nameof(AppSettings.IntAudio)] = settings.IntAudio;
             localSettings.Values[nameof(AppSettings.ExtAudio)] = settings.ExtAudio;
-            localSettings.Values[nameof(AppSettings.Gallery)] = settings.Gallery;            
+            localSettings.Values[nameof(AppSettings.Gallery)] = settings.Gallery;
             localSettings.Values[nameof(AppSettings.SystemPlayer)] = settings.SystemPlayer;
             localSettings.Values[nameof(AppSettings.ShowOnTop)] = settings.ShowOnTop;
         }
@@ -765,7 +899,7 @@ namespace FluentScreenRecorder
             public bool Preview;
             public bool IntAudio;
             public bool ExtAudio;
-            public bool Gallery;
+            public bool Gallery;            
             public bool SystemPlayer;
             public bool ShowOnTop;
         }
@@ -783,26 +917,26 @@ namespace FluentScreenRecorder
         }
 
         public async void Image_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {            
+        {
             ThumbItem item = (sender as Image).DataContext as ThumbItem;
-            var videoFile = await(await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder")).GetFileAsync(item.fileN);            
+            var videoFile = await (await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder")).GetFileAsync(item.fileN);
             if (SystemPlayerToggleSwitch.IsOn)
             {
                 await Launcher.LaunchFileAsync(videoFile);
             }
             else
             {
-                this.Frame.Navigate(typeof(PlayerPage), videoFile);                
+                this.Frame.Navigate(typeof(PlayerPage), videoFile);
             }
         }
-        
+
 
         private async void OverlayButton_Click(object sender, RoutedEventArgs e)
         {
             if (ApplicationView.GetForCurrentView().ViewMode == ApplicationViewMode.Default)
             {
                 var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
-                preferences.CustomSize = new Size(400, 260);                
+                preferences.CustomSize = new Size(400, 260);
                 bool modeSwitched = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
                 if (modeSwitched)
                 {
@@ -830,10 +964,10 @@ namespace FluentScreenRecorder
         }
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
-        {          
+        {
 
-                      
-            if (filesInFolder = true && GalleryToggleSwitch.IsOn && e.NewSize.Width > 680)                
+
+            if (filesInFolder = true && GalleryToggleSwitch.IsOn && e.NewSize.Width > 680)
             {
                 SecondColumn.Width = new GridLength(4, GridUnitType.Star);
                 ThirdColumn.Width = new GridLength(2, GridUnitType.Star);

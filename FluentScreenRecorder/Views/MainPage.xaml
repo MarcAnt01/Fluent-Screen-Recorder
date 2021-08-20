@@ -135,9 +135,8 @@
                         </ComboBox>
                         <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" Header="{x:Bind strings:Resources.SourceSizeToggle}" Margin="8" MaxWidth="150" IsOn="True" HorizontalAlignment="Center"/>
                         <ToggleSwitch x:Name="PreviewToggleSwitch" Header="{x:Bind strings:Resources.VideoPreview}" Margin="8" MaxWidth="150" IsOn="True" HorizontalAlignment="Center"/>
-                        <ToggleSwitch x:Name="AudioToggleSwitch" Header="{x:Bind strings:Resources.InternalAudio}" Margin="8" MaxWidth="150" IsOn="True" HorizontalAlignment="Center"/>
-                        <ToggleSwitch x:Name="ExtAudioToggleSwitch" Header="{x:Bind strings:Resources.ExternalAudio}" Margin="8" MaxWidth="150" IsOn="True" HorizontalAlignment="Center"/>
-
+                        <ToggleSwitch x:Name="AudioToggleSwitch" Header="{x:Bind strings:Resources.InternalAudio}" Margin="8" MaxWidth="150" IsOn="True" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=ExtAudioToggleSwitch, Path=IsOn, Converter={StaticResource InvertBoolConv}}"/>
+                        <ToggleSwitch x:Name="ExtAudioToggleSwitch" Header="{x:Bind strings:Resources.ExternalAudio}" Margin="8" MaxWidth="150" IsOn="True" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=AudioToggleSwitch, Path=IsOn, Converter={StaticResource InvertBoolConv}}"/>
                         <muxc:Expander>
                             <muxc:Expander.Header>                                
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
