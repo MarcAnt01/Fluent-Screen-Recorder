@@ -21,6 +21,9 @@
         </DataTemplate>
         <media:AcrylicBrush x:Key="CustomAcrylicBackgroundBrushStrong" TintColor="{StaticResource SystemChromeAltHighColor}" BackgroundSource="HostBackdrop" FallbackColor="{StaticResource SystemChromeMediumColor}" TintOpacity="0.7"/>
         <media:AcrylicBrush x:Key="CustomAcrylicBackgroundBrushWeak" TintColor="{StaticResource SystemChromeAltHighColor}" BackgroundSource="HostBackdrop" FallbackColor="{StaticResource SystemChromeMediumColor}" TintOpacity="0.5"/>
+        <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="{ThemeResource SystemAccentColor}"/>
+        <SolidColorBrush x:Key="ToggleSwitchFillOn" Color="{ThemeResource SystemAccentColor}"/>
+        <SolidColorBrush x:Key="ToggleSwitchStrokeOn" Color="{ThemeResource SystemAccentColor}"/>
     </Page.Resources>
 
 
@@ -86,7 +89,7 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0" Background="{ThemeResource CustomAcrylicBackgroundBrushWeak}">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">                    
                     <StackPanel Orientation="Horizontal">
                         <Ellipse x:Name="Ellipse" HorizontalAlignment="Center" Fill="Red" Width="15" Height="15" Margin="0,0,5,-10"/>
                         <TextBlock x:Name="MainTextBlock" HorizontalTextAlignment="Center" FontSize="30"/>
@@ -134,7 +137,7 @@
                         <ToggleSwitch x:Name="PreviewToggleSwitch" Header="{x:Bind strings:Resources.VideoPreview}" Margin="8" MaxWidth="150" IsOn="True" HorizontalAlignment="Center"/>
                         <ToggleSwitch x:Name="AudioToggleSwitch" Header="{x:Bind strings:Resources.InternalAudio}" Margin="8" MaxWidth="150" IsOn="True" HorizontalAlignment="Center"/>
                         <ToggleSwitch x:Name="ExtAudioToggleSwitch" Header="{x:Bind strings:Resources.ExternalAudio}" Margin="8" MaxWidth="150" IsOn="True" HorizontalAlignment="Center"/>
-                        
+
                         <muxc:Expander>
                             <muxc:Expander.Header>                                
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
