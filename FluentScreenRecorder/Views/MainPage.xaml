@@ -135,10 +135,10 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" Header="{x:Bind strings:Resources.SourceSizeToggle}" Margin="8" MaxWidth="150" IsOn="True" HorizontalAlignment="Center"/>
-                        <ToggleSwitch x:Name="PreviewToggleSwitch" Header="{x:Bind strings:Resources.VideoPreview}" Margin="8" MaxWidth="150" IsOn="True" HorizontalAlignment="Center"/>
-                        <ToggleSwitch x:Name="AudioToggleSwitch" Header="{x:Bind strings:Resources.InternalAudio}" Margin="8" MaxWidth="150" IsOn="True" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=ExtAudioToggleSwitch, Path=IsOn, Converter={StaticResource InvertBoolConv}}"/>
-                        <ToggleSwitch x:Name="ExtAudioToggleSwitch" Header="{x:Bind strings:Resources.ExternalAudio}" Margin="8" MaxWidth="150" IsOn="True" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=AudioToggleSwitch, Path=IsOn, Converter={StaticResource InvertBoolConv}}"/>
+                        <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" Header="{x:Bind strings:Resources.SourceSizeToggle}" Margin="8" MaxWidth="150" HorizontalAlignment="Center"/>
+                        <ToggleSwitch x:Name="PreviewToggleSwitch" Header="{x:Bind strings:Resources.VideoPreview}" Margin="8" MaxWidth="150" HorizontalAlignment="Center"/>
+                        <ToggleSwitch x:Name="AudioToggleSwitch" Header="{x:Bind strings:Resources.InternalAudio}" Margin="8" MaxWidth="150" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=ExtAudioToggleSwitch, Path=IsOn, Converter={StaticResource InvertBoolConv}}"/>
+                        <ToggleSwitch x:Name="ExtAudioToggleSwitch" Header="{x:Bind strings:Resources.ExternalAudio}" Margin="8" MaxWidth="150" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=AudioToggleSwitch, Path=IsOn, Converter={StaticResource InvertBoolConv}}"/>
                         <muxc:Expander>
                             <muxc:Expander.Header>                                
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -158,9 +158,9 @@
                                             <TextBlock Grid.Column="1" Text="{x:Bind strings:Resources.MicSettings}" Margin="8,0,0,0" TextWrapping="WrapWholeWords"/>
                                         </Grid>
                                     </Button>
-                                    <ToggleSwitch x:Name="GalleryToggleSwitch" Header="{x:Bind strings:Resources.GalleryView}" Margin="8" MaxWidth="150" IsOn="True"/>                                    
-                                    <ToggleSwitch x:Name="SystemPlayerToggleSwitch" Header="{x:Bind strings:Resources.SystemVideoPlayerOption}" Margin="8" MaxWidth="150" IsOn="False"/>
-                                    <ToggleSwitch x:Name="OverlayToggleSwitch" Header="{x:Bind strings:Resources.OverlayMode}" Margin="8" MaxWidth="150" IsOn="False" />
+                                    <ToggleSwitch x:Name="GalleryToggleSwitch" Header="{x:Bind strings:Resources.GalleryView}" Margin="8" MaxWidth="150"/>
+                                    <ToggleSwitch x:Name="SystemPlayerToggleSwitch" Header="{x:Bind strings:Resources.SystemVideoPlayerOption}" Margin="8" MaxWidth="150"/>
+                                    <ToggleSwitch x:Name="OverlayToggleSwitch" Header="{x:Bind strings:Resources.OverlayMode}" Margin="8" MaxWidth="150"/>
                                     <Button x:Name="DonateButton" Width="144" HorizontalAlignment="Center" Margin="8" Style="{StaticResource ButtonRevealStyle}" Click="DonateButton_Click"> 
                                         <StackPanel Orientation="Horizontal">
                                             <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF479;" Margin="0,0,8,0"/>
