@@ -761,7 +761,7 @@ namespace FluentScreenRecorder
                 UseSourceSize = true,
                 Preview = true,
                 IntAudio = true,
-                ExtAudio = true,
+                ExtAudio = false,
                 Gallery = true,                
                 SystemPlayer = false,
                 ShowOnTop = false
