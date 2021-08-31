@@ -1,43 +1,54 @@
-﻿<Page
-    x:Class="FluentScreenRecorder.Views.VideoPreviewPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:FluentScreenRecorder.Views"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:strings="using:FluentScreenRecorder.Strings"
-    mc:Ignorable="d"
-    Background="{ThemeResource AppBarBackgroundThemeBrush}">
+﻿<Page x:Class="FluentScreenRecorder.Views.PlayerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:FluentScreenRecorder"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      xmlns:strings="using:FluentScreenRecorder.Strings"
+      Background="{ThemeResource AppBarBackgroundThemeBrush}">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="32"/>
-            <RowDefinition/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
+
 
         <Grid x:Name="TopBar" Grid.Row="0" Height="32" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="LeftPaddingColumn"
                                   Width="0" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition x:Name="RightPaddingColumn"
                                   Width="0" />
             </Grid.ColumnDefinitions>
+            <Button VerticalAlignment="Top"
+                    Click="Button_Click"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    BorderThickness="0"
+                    ToolTipService.ToolTip="{x:Bind strings:Resources.Back}"
+                    AutomationProperties.AutomationId="{x:Bind strings:Resources.Back}"
+                    Grid.Column="1">
+                <FontIcon Glyph="&#xE72B;"
+                          FontSize="12"
+                          Margin="0,4,-4,0"/>                
+            </Button>
             <Grid x:Name="UserLayout"
                   Background="Transparent"
-                  Grid.Column="1">
+                  Grid.Column="2">
                 <TextBlock Text="Fluent Screen Recorder"
-                           VerticalAlignment="Center"
-                           Grid.Column="1"
                            Style="{StaticResource CaptionTextBlockStyle}"
-                           Margin="12,4,4,4" />
+                           Margin="4,4,4,8"
+                           VerticalAlignment="Center" />
             </Grid>
             <Button  x:Name="OverlayButton"
                      Click="OverlayButton_Click"
                      VerticalAlignment="Stretch"
-                     Grid.Column="2"
+                     Grid.Column="3"
                      Background="Transparent"
                      BorderBrush="Transparent"
                      BorderThickness="0">
@@ -65,40 +76,13 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <MediaPlayerElement x:Name="PreviewPlayer"  AutoPlay="True" AreTransportControlsEnabled="True" Margin="0,32,0,0">
+            <MediaPlayerElement x:Name="VideoPlayer"
+                            AreTransportControlsEnabled="True">
                 <MediaPlayerElement.TransportControls>
-                    <MediaTransportControls IsFullWindowEnabled="False" IsFullWindowButtonVisible="False" IsZoomButtonVisible="False"/>
+                    <local:CustomMediaTransportControls IsZoomButtonVisible="False" IsFullWindowButtonVisible="False" Deleted="CustomMediaTransportControls_Deleted" InfoTap="CustomMediaTransportControls_InfoTap"/>
+
                 </MediaPlayerElement.TransportControls>
             </MediaPlayerElement>
         </Grid>
-
-        <Grid Grid.Row="2" Margin="0,5">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="SaveButton" Style="{ThemeResource AccentButtonStyle}" Click="SaveButton_Click" Margin="5">
-                    <StackPanel Orientation="Horizontal">
-                        <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF67F;" Margin="0,0,5,0" FontSize="16"/>
-                        <TextBlock Text="{x:Bind strings:Resources.Save}"/>
-                    </StackPanel>                    
-                </Button>
-                <Button x:Name="SaveAsButton" Click="SaveAsButton_Click" Margin="5">
-                    <StackPanel Orientation="Horizontal">
-                        <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF681;" Margin="0,0,5,0" FontSize="16"/>
-                        <TextBlock Text="{x:Bind strings:Resources.SaveAs}"/>
-                    </StackPanel>                    
-                </Button>
-                <Button x:Name="Share" Click="Share_Click" Margin="5">
-                    <StackPanel Orientation="Horizontal">
-                        <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF6AF;" Margin="0,0,5,0" FontSize="16"/>
-                        <TextBlock Text="{x:Bind strings:Resources.Share}"/>
-                    </StackPanel>
-                </Button>
-                <Button x:Name="Cancel" Click="Cancel_Click" Margin="5">
-                    <StackPanel Orientation="Horizontal">
-                        <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF34C;" Margin="0,0,5,0" FontSize="16"/>
-                        <TextBlock Text="{x:Bind strings:Resources.Delete}"/>
-                    </StackPanel>                    
-                </Button>                
-            </StackPanel>
-        </Grid>    
-     </Grid>
+    </Grid>
 </Page>

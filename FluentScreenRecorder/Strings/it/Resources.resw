@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>About the app</value>
+  </data>
+  <data name="Bitrate" xml:space="preserve">
+    <value>Bitrate</value>
+  </data>
+  <data name="BugReport" xml:space="preserve">
+    <value>Report a bug</value>
+  </data>
+  <data name="Copyright" xml:space="preserve">
+    <value>Copyright</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Discord" xml:space="preserve">
+    <value>Join our Discord server</value>
+  </data>
+  <data name="ExternalAudio" xml:space="preserve">
+    <value>External Audio Recording</value>
+  </data>
+  <data name="Failure" xml:space="preserve">
+    <value>Failure</value>
+  </data>
+  <data name="Framerate" xml:space="preserve">
+    <value>Framerate</value>
+  </data>
+  <data name="GalleryView" xml:space="preserve">
+    <value>Gallery View</value>
+  </data>
+  <data name="GitHub" xml:space="preserve">
+    <value>View GitHub repository</value>
+  </data>
+  <data name="InternalAudio" xml:space="preserve">
+    <value>Internal Audio Recording</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>You can choose among the following options</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacy policy</value>
+  </data>
+  <data name="Recording" xml:space="preserve">
+    <value>Recording</value>
+  </data>
+  <data name="Resolution" xml:space="preserve">
+    <value>Resolution</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SaveAs" xml:space="preserve">
+    <value>Save as</value>
+  </data>
+  <data name="SaveConfirm" xml:space="preserve">
+    <value>Do you want to save your file?</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="SourceSizeToggle" xml:space="preserve">
+    <value>Use source size as video resolution</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="VideoPreview" xml:space="preserve">
+    <value>Video Preview</value>
+  </data>
+  <data name="Whatsnew" xml:space="preserve">
+    <value>What's translated?</value>
+  </data>
+</root>

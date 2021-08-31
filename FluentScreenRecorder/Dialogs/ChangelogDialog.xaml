@@ -5,20 +5,24 @@
     xmlns:local="using:FluentScreenRecorder"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:strings="using:FluentScreenRecorder.Strings"
     mc:Ignorable="d"
     Title="{x:Bind displayedVersion}"
-    CloseButtonText="Ok">
+    CloseButtonText="{x:Bind strings:Resources.Ok}"
+    CloseButtonStyle="{ThemeResource ButtonRevealStyle}">
 
     <ScrollViewer>
         <StackPanel>
-            <TextBlock Text="What's new?" FontWeight="Bold" Margin="0,0,0,5"/>
+            <TextBlock Text="{x:Bind strings:Resources.Whatsnew}" FontWeight="Bold" Margin="0,0,0,5"/>
             <RichTextBlock>
-                <Paragraph>- Now you can see a preview of the recorded video (can be disabled)</Paragraph>
-                <Paragraph>- Share the recorded video to other UWP apps in one click</Paragraph>
-                <Paragraph>- More bug fixes and improvements</Paragraph>
+                <Paragraph>- Now you can record the internal audio and the one coming from the microphone</Paragraph>
+                <Paragraph>- Bult-in gallery and videoplayer to see your saved recordings</Paragraph>
+                <Paragraph>- Overlay mode to see a small windows of the app on top of others (can be used as default mode)</Paragraph>
+                <Paragraph>- New updated icons for Windows 10 and Windows 11</Paragraph>
+                <Paragraph>- New ui with Windows 11 style</Paragraph>                
                 <Paragraph>- We now have a Discord server if you want to join us :)</Paragraph>                
             </RichTextBlock>
-            <HyperlinkButton Content="Join Discord server" NavigateUri="https://discord.com/invite/v4EXAwXPHw"/>
+            <HyperlinkButton Content="{x:Bind strings:Resources.Discord}" NavigateUri="https://discord.com/invite/v4EXAwXPHw"/>
         </StackPanel>        
     </ScrollViewer>
 </ContentDialog>
