@@ -15,9 +15,11 @@
         <StackPanel>
             <TextBlock Text="{x:Bind strings:Resources.Whatsnew}" FontWeight="Bold" Margin="0,0,0,5"/>
             <RichTextBlock>
-                <Paragraph>- Now you can see a preview of the recorded video (can be disabled)</Paragraph>
-                <Paragraph>- Share the recorded video to other UWP apps in one click</Paragraph>
-                <Paragraph>- More bug fixes and improvements</Paragraph>
+                <Paragraph>- Now you can record the internal audio and the one coming from the microphone</Paragraph>
+                <Paragraph>- Bult-in gallery and videoplayer to see your saved recordings</Paragraph>
+                <Paragraph>- Overlay mode to see a small windows of the app on top of others (can be used as default mode)</Paragraph>
+                <Paragraph>- New updated icons for Windows 10 and Windows 11</Paragraph>
+                <Paragraph>- New ui with Windows 11 style</Paragraph>                
                 <Paragraph>- We now have a Discord server if you want to join us :)</Paragraph>                
             </RichTextBlock>
             <HyperlinkButton Content="{x:Bind strings:Resources.Discord}" NavigateUri="https://discord.com/invite/v4EXAwXPHw"/>
