@@ -1,11 +1,20 @@
 # Fluent Screen Recorder
 
-A fork of [Simple Screen Recorder](https://github.com/robmikh/SimpleRecorder) with Fluent Design and other improvements.
+Record your screen or an in a simple UWP app featuring Fluent Design
 
-![](https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/848392b1631170b3c7deed9f1ffe35fd60d72a41/Screenshot.jpg?raw=true)
+![](https://i.postimg.cc/D0tRCCKZ/1.png)
 
 
 <a href='https://www.microsoft.com/en-us/p/fluent-screen-recorder/9mwv79xlfqh7'><img src='https://developer.microsoft.com/en-us/store/badges/images/English_get-it-from-MS.png' alt='Store Link' height="50px"/></a> <a href='https://discord.gg/UZgbJP2'><img src='https://media.moddb.com/images/members/1/454/453186/profile/news-discord-join.jpg' alt='Discord Link' height="50px"/></a>
+
+### Features
+
+- Change resolution, framerate, bitrate
+- Record optionally internal audio or microphone audio
+- See a preview of the video you have just recorded
+- Overlay mode to have the app on top of other windows
+- Share your recordings to other UWP apps with Windows Share
+- Built-in video player to see all the videos recorded from the app
 
 ### Supported platforms
 
@@ -30,5 +39,8 @@ The best way to report a bug is opening a ticket in this repo. In order to be he
 Also for requesting features the best way is opening a ticket in this repo, providing as much information as possible. 
 
 ### Credits
-- [Robert Mikhayelyan](https://github.com/robmikh) for the core of the app and the encoder; 
+- [Robert Mikhayelyan](https://github.com/robmikh) for the core of the app and the encoder;
+- [Ryken100](https://github.com/Ryken100) for internal audio library;
+- [Ahmed Walid](https://github.com/ahmed605) for help in implementing internal and external audio recording;
+- [Mark Ivan Basto](https://github.com/MarkIvanDev), [Yair Aichenbaum](https://github.com/yaichenbaum), [Sebastian Kassai](https://github.com/xezrunner), [FireCubeStudios](https://github.com/FireCubeStudios) for [direct code contributions](https://github.com/MarcAnt01/Fluent-Screen-Recorder/graphs/contributors);
 - [UWP Community Discord Server](https://aka.ms/winui/discord) for helping me during the making of the app.
