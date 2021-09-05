@@ -82,7 +82,7 @@
                 </Button>
                 <Button x:Name="SaveAsButton" Click="SaveAsButton_Click" Margin="5" AutomationProperties.Name="{x:Bind strings:Resources.SaveAs}">
                     <StackPanel Orientation="Horizontal">
-                        <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF681;" Margin="0,0,5,0" FontSize="16"/>
+                        <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular"  Glyph="&#xFC52;" Margin="0,0,5,0" FontSize="16"/>
                         <TextBlock Text="{x:Bind strings:Resources.SaveAs}"/>
                     </StackPanel>                    
                 </Button>
