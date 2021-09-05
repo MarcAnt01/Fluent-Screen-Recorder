@@ -139,7 +139,7 @@
                         <ToggleSwitch x:Name="PreviewToggleSwitch" Header="{x:Bind strings:Resources.VideoPreview}" Margin="8" MaxWidth="150" HorizontalAlignment="Center"/>
                         <ToggleSwitch x:Name="AudioToggleSwitch" Header="{x:Bind strings:Resources.InternalAudio}" Margin="8" MaxWidth="150" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=ExtAudioToggleSwitch, Path=IsOn, Converter={StaticResource InvertBoolConv}}"/>
                         <ToggleSwitch x:Name="ExtAudioToggleSwitch" Header="{x:Bind strings:Resources.ExternalAudio}" Margin="8" MaxWidth="150" HorizontalAlignment="Center" IsEnabled="{Binding ElementName=AudioToggleSwitch, Path=IsOn, Converter={StaticResource InvertBoolConv}}"/>
-                        <muxc:Expander>
+                        <muxc:Expander AutomationProperties.Name="{x:Bind strings:Resources.Settings}">
                             <muxc:Expander.Header>                                
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF6A9;"/>
@@ -148,7 +148,7 @@
                             </muxc:Expander.Header>
                             <muxc:Expander.Content>
                                 <StackPanel Orientation="Vertical">
-                                    <Button x:Name="MicSettingsButton" Click="MicSettingsButton_Click" HorizontalContentAlignment="Stretch" HorizontalAlignment="Center">
+                                    <Button x:Name="MicSettingsButton" Click="MicSettingsButton_Click" HorizontalContentAlignment="Stretch" HorizontalAlignment="Center" AutomationProperties.Name="{x:Bind strings:Resources.MicSettings}" >
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition  Width="20"/>
@@ -161,13 +161,13 @@
                                     <ToggleSwitch x:Name="GalleryToggleSwitch" Header="{x:Bind strings:Resources.GalleryView}" Margin="8" MaxWidth="150"/>
                                     <ToggleSwitch x:Name="SystemPlayerToggleSwitch" Header="{x:Bind strings:Resources.SystemVideoPlayerOption}" Margin="8" MaxWidth="150"/>
                                     <ToggleSwitch x:Name="OverlayToggleSwitch" Header="{x:Bind strings:Resources.OverlayMode}" Margin="8" MaxWidth="150"/>
-                                    <Button x:Name="DonateButton" Width="144" HorizontalAlignment="Center" Margin="8" Style="{StaticResource ButtonRevealStyle}" Click="DonateButton_Click"> 
+                                    <Button x:Name="DonateButton" Width="144" HorizontalAlignment="Center" Margin="8" Style="{StaticResource ButtonRevealStyle}" Click="DonateButton_Click" AutomationProperties.Name="{x:Bind strings:Resources.Donate}"> 
                                         <StackPanel Orientation="Horizontal">
                                             <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF479;" Margin="0,0,8,0"/>
                                             <TextBlock Text="{x:Bind strings:Resources.Donate}"/>
                                         </StackPanel>
                                     </Button>
-                                    <Button x:Name="AboutButton" Width="144" HorizontalAlignment="Center" Margin="8" Style="{StaticResource ButtonRevealStyle}" Click="AboutButton_Click">
+                                    <Button x:Name="AboutButton" Width="144" HorizontalAlignment="Center" Margin="8" Style="{StaticResource ButtonRevealStyle}" Click="AboutButton_Click" AutomationProperties.Name="{x:Bind strings:Resources.About}">
                                         <StackPanel Orientation="Horizontal">
                                             <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF4A3;" Margin="0,0,8,0"/>
                                             <TextBlock Text="{x:Bind strings:Resources.About}"/>
