@@ -13,78 +13,120 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>About the app</value>
+    <value>Info sull'app</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Torna indietro</value>
   </data>
   <data name="Bitrate" xml:space="preserve">
     <value>Bitrate</value>
   </data>
   <data name="BugReport" xml:space="preserve">
-    <value>Report a bug</value>
+    <value>Segnala un problema</value>
   </data>
   <data name="Copyright" xml:space="preserve">
     <value>Copyright</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Cancella</value>
   </data>
   <data name="Discord" xml:space="preserve">
-    <value>Join our Discord server</value>
+    <value>Entra nel nostro server su Discord</value>
+  </data>
+  <data name="Donate" xml:space="preserve">
+    <value>Fai una donazione</value>
+  </data>
+  <data name="ExitOverlay" xml:space="preserve">
+    <value>Torna alla finestra normale</value>
   </data>
   <data name="ExternalAudio" xml:space="preserve">
-    <value>External Audio Recording</value>
+    <value>Registrazione microfono</value>
   </data>
   <data name="Failure" xml:space="preserve">
-    <value>Failure</value>
+    <value>Errore</value>
   </data>
   <data name="Framerate" xml:space="preserve">
     <value>Framerate</value>
   </data>
   <data name="GalleryView" xml:space="preserve">
-    <value>Gallery View</value>
+    <value>Vista galleria</value>
   </data>
   <data name="GitHub" xml:space="preserve">
-    <value>View GitHub repository</value>
+    <value>Vedi il repository su GitHub</value>
+  </data>
+  <data name="GoToOverlay" xml:space="preserve">
+    <value>Vai in modalità always on top</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info sul file</value>
   </data>
   <data name="InternalAudio" xml:space="preserve">
-    <value>Internal Audio Recording</value>
+    <value>Registrazione audio</value>
+  </data>
+  <data name="MicSettings" xml:space="preserve">
+    <value>System microphone settings</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
+  <data name="OpenFolder" xml:space="preserve">
+    <value>Apri la cartella dove è stata salvata la registrazione</value>
+  </data>
   <data name="Options" xml:space="preserve">
-    <value>You can choose among the following options</value>
+    <value>Puoi scegliere tra le seguenti opzioni</value>
+  </data>
+  <data name="OverlayMode" xml:space="preserve">
+    <value>Apri la modalità overlay di default</value>
   </data>
   <data name="Privacy" xml:space="preserve">
-    <value>Privacy policy</value>
+    <value>Politica della privacy</value>
   </data>
   <data name="Recording" xml:space="preserve">
-    <value>Recording</value>
+    <value>Registrando</value>
+  </data>
+  <data name="RecordingStart" xml:space="preserve">
+    <value>Inizia a registrare</value>
+  </data>
+  <data name="RecordingStop" xml:space="preserve">
+    <value>Interrompi la registrazione</value>
   </data>
   <data name="Resolution" xml:space="preserve">
     <value>Resolution</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Salva</value>
   </data>
   <data name="SaveAs" xml:space="preserve">
-    <value>Save as</value>
+    <value>Salva come</value>
   </data>
   <data name="SaveConfirm" xml:space="preserve">
-    <value>Do you want to save your file?</value>
+    <value>Vuoi salvare la registrazione?</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>Salvando...</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Impostazioni</value>
   </data>
   <data name="Share" xml:space="preserve">
-    <value>Share</value>
+    <value>Condividi</value>
   </data>
   <data name="SourceSizeToggle" xml:space="preserve">
-    <value>Use source size as video resolution</value>
+    <value>Usa le dimensioni dello schermo come risoluzione</value>
+  </data>
+  <data name="SystemVideoPlayerOption" xml:space="preserve">
+    <value>Usa il player di sistema per aprire i video</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>Version</value>
+    <value>Versione</value>
   </data>
   <data name="VideoPreview" xml:space="preserve">
-    <value>Video Preview</value>
+    <value>Preview della registrazione</value>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>Volume</value>
   </data>
   <data name="Whatsnew" xml:space="preserve">
-    <value>What's translated?</value>
+    <value>Cosa c'è di nuovo?</value>
   </data>
 </root>
