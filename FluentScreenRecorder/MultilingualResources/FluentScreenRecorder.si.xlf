@@ -8,7 +8,7 @@
 			<group id="FLUENTSCREENRECORDER/STRINGS/EN-US/RESOURCES.RESW" datatype="resx">
 				<trans-unit id="About" translate="yes" xml:space="preserve">
           <source>About the app</source>
-          <target state="final">මෘදුකාංගය ගැන</target>
+          <target state="translated">මෘදුකාංගය ගැන</target>
         </trans-unit>
 				<trans-unit id="Back" translate="yes" xml:space="preserve">
           <source>Go back</source>
