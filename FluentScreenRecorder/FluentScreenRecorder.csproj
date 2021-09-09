@@ -241,6 +241,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <PRIResource Include="Strings\it\Resources.resw" />
     <PRIResource Include="Strings\en-US\Resources.resw">
+    <PRIResource Include="Strings\pt-PT\Resources.resw" />
       <Generator>ReswPlusAdvancedGenerator</Generator>
       <LastGenOutput>Resources.generated.cs</LastGenOutput>
     </PRIResource>
@@ -320,6 +321,7 @@
   </ItemGroup>
   <ItemGroup>
     <XliffResource Include="MultilingualResources\FluentScreenRecorder.it.xlf" />
+    <XliffResource Include="MultilingualResources\FluentScreenRecorder.pt-PT.xlf" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
