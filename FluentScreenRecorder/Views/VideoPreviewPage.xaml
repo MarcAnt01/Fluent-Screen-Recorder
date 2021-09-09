@@ -74,25 +74,25 @@
 
         <Grid Grid.Row="2" Margin="0,5">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="SaveButton" Style="{ThemeResource AccentButtonStyle}" Click="SaveButton_Click" Margin="5">
+                <Button x:Name="SaveButton" Style="{ThemeResource AccentButtonStyle}" Click="SaveButton_Click" Margin="5" AutomationProperties.Name="{x:Bind strings:Resources.Save}">
                     <StackPanel Orientation="Horizontal">
                         <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF67F;" Margin="0,0,5,0" FontSize="16"/>
                         <TextBlock Text="{x:Bind strings:Resources.Save}"/>
                     </StackPanel>                    
                 </Button>
-                <Button x:Name="SaveAsButton" Click="SaveAsButton_Click" Margin="5">
+                <Button x:Name="SaveAsButton" Click="SaveAsButton_Click" Margin="5" AutomationProperties.Name="{x:Bind strings:Resources.SaveAs}">
                     <StackPanel Orientation="Horizontal">
-                        <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF681;" Margin="0,0,5,0" FontSize="16"/>
+                        <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular"  Glyph="&#xFC52;" Margin="0,0,5,0" FontSize="16"/>
                         <TextBlock Text="{x:Bind strings:Resources.SaveAs}"/>
                     </StackPanel>                    
                 </Button>
-                <Button x:Name="Share" Click="Share_Click" Margin="5">
+                <Button x:Name="Share" Click="Share_Click" Margin="5" AutomationProperties.Name="{x:Bind strings:Resources.Share}">
                     <StackPanel Orientation="Horizontal">
                         <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF6AF;" Margin="0,0,5,0" FontSize="16"/>
                         <TextBlock Text="{x:Bind strings:Resources.Share}"/>
                     </StackPanel>
                 </Button>
-                <Button x:Name="Cancel" Click="Cancel_Click" Margin="5">
+                <Button x:Name="Cancel" Click="Cancel_Click" Margin="5" AutomationProperties.Name="{x:Bind strings:Resources.Delete}">
                     <StackPanel Orientation="Horizontal">
                         <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF34C;" Margin="0,0,5,0" FontSize="16"/>
                         <TextBlock Text="{x:Bind strings:Resources.Delete}"/>

@@ -13,120 +13,117 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>Info sull'app</value>
+    <value>このアプリについて</value>
   </data>
   <data name="Back" xml:space="preserve">
-    <value>Torna indietro</value>
+    <value>戻る</value>
   </data>
   <data name="Bitrate" xml:space="preserve">
-    <value>Bitrate</value>
+    <value>ビットレート</value>
   </data>
   <data name="BugReport" xml:space="preserve">
-    <value>Segnala un problema</value>
+    <value>バグを報告する</value>
   </data>
   <data name="Copyright" xml:space="preserve">
-    <value>Copyright</value>
+    <value>著作権</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Cancella</value>
+    <value>削除</value>
   </data>
   <data name="Discord" xml:space="preserve">
-    <value>Entra nel nostro server su Discord</value>
+    <value>Discord サーバーに参加する</value>
   </data>
   <data name="Donate" xml:space="preserve">
-    <value>Fai una donazione</value>
+    <value>寄付する</value>
   </data>
   <data name="ExitOverlay" xml:space="preserve">
-    <value>Torna alla finestra normale</value>
+    <value>フルビューに戻る</value>
   </data>
   <data name="ExternalAudio" xml:space="preserve">
-    <value>Registrazione microfono</value>
+    <value>マイク録音</value>
   </data>
   <data name="Failure" xml:space="preserve">
-    <value>Errore</value>
+    <value>失敗</value>
   </data>
   <data name="Framerate" xml:space="preserve">
-    <value>Framerate</value>
+    <value>フレームレート</value>
   </data>
   <data name="GalleryView" xml:space="preserve">
-    <value>Vista galleria</value>
+    <value>ギャラリー ビュー</value>
   </data>
   <data name="GitHub" xml:space="preserve">
-    <value>Vedi il repository su GitHub</value>
+    <value>GitHub レポジトリ</value>
   </data>
   <data name="GoToOverlay" xml:space="preserve">
-    <value>Vai in modalità always on top</value>
+    <value>常に上に表示に切り替える</value>
   </data>
   <data name="Info" xml:space="preserve">
-    <value>Info sul file</value>
+    <value>ファイル情報</value>
   </data>
   <data name="InternalAudio" xml:space="preserve">
-    <value>Registrazione audio</value>
+    <value>オーディオ録音</value>
   </data>
   <data name="MicSettings" xml:space="preserve">
-    <value>System microphone settings</value>
+    <value>システムのマイク設定</value>
   </data>
   <data name="Ok" xml:space="preserve">
-    <value>Ok</value>
+    <value>OK</value>
   </data>
   <data name="OpenFolder" xml:space="preserve">
-    <value>Apri la cartella dove è stata salvata la registrazione</value>
+    <value>ビデオが保存されているフォルダを開く</value>
   </data>
   <data name="Options" xml:space="preserve">
-    <value>Puoi scegliere tra le seguenti opzioni</value>
+    <value>次のオプションから選択できます</value>
   </data>
   <data name="OverlayMode" xml:space="preserve">
-    <value>Apri la modalità overlay di default</value>
+    <value>デフォルトでオーバーレイモードを開く</value>
   </data>
   <data name="Privacy" xml:space="preserve">
-    <value>Politica della privacy</value>
+    <value>プライバシー ポリシー</value>
   </data>
   <data name="Recording" xml:space="preserve">
-    <value>Registrando</value>
+    <value>レコーディング</value>
   </data>
   <data name="RecordingStart" xml:space="preserve">
-    <value>Inizia a registrare</value>
+    <value>録音の開始</value>
   </data>
   <data name="RecordingStop" xml:space="preserve">
-    <value>Interrompi la registrazione</value>
+    <value>録音を停止</value>
   </data>
   <data name="Resolution" xml:space="preserve">
-    <value>Resolution</value>
+    <value>解像度</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Salva</value>
+    <value>保存</value>
   </data>
   <data name="SaveAs" xml:space="preserve">
-    <value>Salva come</value>
+    <value>名前を付けて保存...</value>
   </data>
   <data name="SaveConfirm" xml:space="preserve">
-    <value>Vuoi salvare la registrazione?</value>
+    <value>ファイルを保存しますか？</value>
   </data>
   <data name="Saving" xml:space="preserve">
-    <value>Salvando...</value>
+    <value>保存中…</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Impostazioni</value>
+    <value>設定</value>
   </data>
   <data name="Share" xml:space="preserve">
-    <value>Condividi</value>
+    <value>共有</value>
   </data>
   <data name="SourceSizeToggle" xml:space="preserve">
-    <value>Usa le dimensioni dello schermo come risoluzione</value>
+    <value>ビデオ解像度としてソースサイズを使用する</value>
   </data>
   <data name="SystemVideoPlayerOption" xml:space="preserve">
-    <value>Usa il player di sistema per aprire i video</value>
+    <value>システムプレーヤーを使用してビデオを開く</value>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>Versione</value>
+    <value>バージョン</value>
   </data>
   <data name="VideoPreview" xml:space="preserve">
-    <value>Preview della registrazione</value>
+    <value>ビデオのプレビュー</value>
   </data>
   <data name="Volume" xml:space="preserve">
-    <value>Volume</value>
-  </data>
-  <data name="Whatsnew" xml:space="preserve">
-    <value>Cosa c'è di nuovo?</value>
+    <value>ボリューム</value>
   </data>
 </root>

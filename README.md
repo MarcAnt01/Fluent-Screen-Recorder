@@ -36,7 +36,11 @@ The best way to report a bug is opening a ticket in this repo. In order to be he
 
 ### Feature requests
 
-Also for requesting features the best way is opening a ticket in this repo, providing as much information as possible. 
+Also for requesting features the best way is opening a ticket in this repo, providing as much information as possible.
+
+### Translations
+
+You can translate Fluent Screen Recorder for you language or improve the current translations. Just follow the guide [here](https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/translations.md)
 
 ### Credits
 - [Robert Mikhayelyan](https://github.com/robmikh) for the core of the app and the encoder;
