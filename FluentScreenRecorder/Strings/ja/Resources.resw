@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>このアプリについて</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>戻る</value>
+  </data>
+  <data name="Bitrate" xml:space="preserve">
+    <value>ビットレート</value>
+  </data>
+  <data name="BugReport" xml:space="preserve">
+    <value>バグを報告する</value>
+  </data>
+  <data name="Copyright" xml:space="preserve">
+    <value>著作権</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>削除</value>
+  </data>
+  <data name="Discord" xml:space="preserve">
+    <value>Discord サーバーに参加する</value>
+  </data>
+  <data name="Donate" xml:space="preserve">
+    <value>寄付する</value>
+  </data>
+  <data name="ExitOverlay" xml:space="preserve">
+    <value>フルビューに戻る</value>
+  </data>
+  <data name="ExternalAudio" xml:space="preserve">
+    <value>マイク録音</value>
+  </data>
+  <data name="Failure" xml:space="preserve">
+    <value>失敗</value>
+  </data>
+  <data name="Framerate" xml:space="preserve">
+    <value>フレームレート</value>
+  </data>
+  <data name="GalleryView" xml:space="preserve">
+    <value>ギャラリー ビュー</value>
+  </data>
+  <data name="GitHub" xml:space="preserve">
+    <value>GitHub レポジトリ</value>
+  </data>
+  <data name="GoToOverlay" xml:space="preserve">
+    <value>常に上に表示に切り替える</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>ファイル情報</value>
+  </data>
+  <data name="InternalAudio" xml:space="preserve">
+    <value>オーディオ録音</value>
+  </data>
+  <data name="MicSettings" xml:space="preserve">
+    <value>システムのマイク設定</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="OpenFolder" xml:space="preserve">
+    <value>ビデオが保存されているフォルダを開く</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>次のオプションから選択できます</value>
+  </data>
+  <data name="OverlayMode" xml:space="preserve">
+    <value>デフォルトでオーバーレイモードを開く</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>プライバシー ポリシー</value>
+  </data>
+  <data name="Recording" xml:space="preserve">
+    <value>レコーディング</value>
+  </data>
+  <data name="RecordingStart" xml:space="preserve">
+    <value>録音の開始</value>
+  </data>
+  <data name="RecordingStop" xml:space="preserve">
+    <value>録音を停止</value>
+  </data>
+  <data name="Resolution" xml:space="preserve">
+    <value>解像度</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="SaveAs" xml:space="preserve">
+    <value>名前を付けて保存...</value>
+  </data>
+  <data name="SaveConfirm" xml:space="preserve">
+    <value>ファイルを保存しますか？</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>保存中…</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>共有</value>
+  </data>
+  <data name="SourceSizeToggle" xml:space="preserve">
+    <value>ビデオ解像度としてソースサイズを使用する</value>
+  </data>
+  <data name="SystemVideoPlayerOption" xml:space="preserve">
+    <value>システムプレーヤーを使用してビデオを開く</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>バージョン</value>
+  </data>
+  <data name="VideoPreview" xml:space="preserve">
+    <value>ビデオのプレビュー</value>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>ボリューム</value>
+  </data>
+</root>
