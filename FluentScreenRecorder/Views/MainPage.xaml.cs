@@ -552,64 +552,91 @@ namespace FluentScreenRecorder
 
             StorageFile internalAudioFile = await GetAudioTempFileAsync(audioBuffer);
 
-            var backgroundTrack = await BackgroundAudioTrack.CreateFromFileAsync(internalAudioFile);
-            composition.BackgroundAudioTracks.Add(backgroundTrack);
-
-            var videoFile = _tempFile;
-
-            var newFile = await GetTempFileAsync();
-
-            MainTextBlock.Text = Strings.Resources.Saving;
-            MergingProgressRing.Visibility = Visibility.Visible;
-            MainButton.Visibility = Visibility.Collapsed;
-
-            var merge = composition.RenderToFileAsync(newFile, MediaTrimmingPreference.Fast);
-            merge.Progress = new AsyncOperationProgressHandler<TranscodeFailureReason, double>(async (info, progress) =>
+            if (internalAudioFile != null)
             {
-                await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+                var backgroundTrack = await BackgroundAudioTrack.CreateFromFileAsync(internalAudioFile);
+                composition.BackgroundAudioTracks.Add(backgroundTrack);
+
+                var videoFile = _tempFile;
+
+                var newFile = await GetTempFileAsync();
+
+                MainTextBlock.Text = Strings.Resources.Saving;
+                MergingProgressRing.Visibility = Visibility.Visible;
+                MainButton.Visibility = Visibility.Collapsed;
+
+                var merge = composition.RenderToFileAsync(newFile, MediaTrimmingPreference.Fast);
+                merge.Progress = new AsyncOperationProgressHandler<TranscodeFailureReason, double>(async (info, progress) =>
                 {
-                    MergingProgressRing.Value = progress;
-                }));
-            });
-            merge.Completed = new AsyncOperationWithProgressCompletedHandler<TranscodeFailureReason, double>(async (info, status) =>
+                    await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+                    {
+                        MergingProgressRing.Value = progress;
+                    }));
+                });
+                merge.Completed = new AsyncOperationWithProgressCompletedHandler<TranscodeFailureReason, double>(async (info, status) =>
+                {
+                    await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(async () =>
+
+                    {
+                        MergingProgressRing.Value = 0;
+                        MergingProgressRing.Visibility = Visibility.Collapsed;
+                        _tempFile = newFile;
+
+                        MainButton.IsChecked = false;
+                        MainTextBlock.Text = "";
+                        visual.StopAnimation("Opacity");
+                        Ellipse.Visibility = Visibility.Collapsed;
+                        RecordIcon.Visibility = Visibility.Visible;
+                        StopIcon.Visibility = Visibility.Collapsed;
+                        ToolTip newtoolTip = new ToolTip();
+                        toolTip.Content = Strings.Resources.RecordingStart;
+                        ToolTipService.SetToolTip(MainButton, toolTip);
+                        AutomationProperties.SetName(MainButton, Strings.Resources.RecordingStart);
+
+                        if (PreviewToggleSwitch.IsOn)
+                        {
+                            this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
+                        }
+                        else
+                        {
+                            ContentDialog dialog = new SaveDialog(_tempFile);
+                            await dialog.ShowAsync();
+                        }
+
+                        var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
+
+                        MainButton.Visibility = Visibility.Visible;
+                        await videoFile.DeleteAsync();
+                        await internalAudioFile.DeleteAsync();
+                    }));
+                });
+                
+
+            }
+            else
             {
-                await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(async () =>
+                MainButton.IsChecked = false;
+                MainTextBlock.Text = "";
+                visual.StopAnimation("Opacity");
+                Ellipse.Visibility = Visibility.Collapsed;
+                RecordIcon.Visibility = Visibility.Visible;
+                StopIcon.Visibility = Visibility.Collapsed;
+                ToolTip newtoolTip = new ToolTip();
+                toolTip.Content = Strings.Resources.RecordingStart;
+                ToolTipService.SetToolTip(MainButton, Strings.Resources.RecordingStart);
+                AutomationProperties.SetName(MainButton, "Start recording");
 
+                if (PreviewToggleSwitch.IsOn)
                 {
-                    MergingProgressRing.Value = 0;
-                    MergingProgressRing.Visibility = Visibility.Collapsed;
-                    _tempFile = newFile;
-
-                    MainButton.IsChecked = false;
-                    MainTextBlock.Text = "";
-                    visual.StopAnimation("Opacity");
-                    Ellipse.Visibility = Visibility.Collapsed;
-                    RecordIcon.Visibility = Visibility.Visible;
-                    StopIcon.Visibility = Visibility.Collapsed;
-                    ToolTip newtoolTip = new ToolTip();
-                    toolTip.Content = Strings.Resources.RecordingStart;
-                    ToolTipService.SetToolTip(MainButton, toolTip);
-                    AutomationProperties.SetName(MainButton, Strings.Resources.RecordingStart);
-
-                    if (PreviewToggleSwitch.IsOn)
-                    {
-                        this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
-                    }
-                    else
-                    {
-                        ContentDialog dialog = new SaveDialog(_tempFile);
-                        await dialog.ShowAsync();
-                    }
-
-                    var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
-
-                    MainButton.Visibility = Visibility.Visible;
-                    await videoFile.DeleteAsync();
-                    await internalAudioFile.DeleteAsync();
-                }));
-            });
-
-
+                    this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
+                }
+                else
+                {
+                    ContentDialog dialog = new SaveDialog(_tempFile);
+                    await dialog.ShowAsync();
+                }
+            }         
+      
         }
 
         public static async Task<bool> Save(StorageFile file)
@@ -677,28 +704,37 @@ namespace FluentScreenRecorder
 
         private async Task<StorageFile> GetAudioTempFileAsync(byte[] Audiobuffer)
         {
-            var folder = ApplicationData.Current.TemporaryFolder;
-            var name = DateTime.Now.ToString("yyyy-MM-dd-HHmmss");
-            var file = await folder.CreateFileAsync($"{name}.wav");
-            var s = new RawSourceWaveStream(new MemoryStream(Audiobuffer), WaveFormat.CreateIeeeFloatWaveFormat((int)audioEncodingProperties.SampleRate, (int)audioEncodingProperties.ChannelCount));
-            using (var writer = new WaveFileWriterRT(await file.OpenStreamForWriteAsync(), s.WaveFormat))
+            if (audioEncodingProperties != null)
             {
-                long outputLength = 0;
-                var buffer = new byte[s.WaveFormat.AverageBytesPerSecond * 4];
-                while (true)
+                var folder = ApplicationData.Current.TemporaryFolder;
+                var name = DateTime.Now.ToString("yyyy-MM-dd-HHmmss");
+                var file = await folder.CreateFileAsync($"{name}.wav");
+                var s = new RawSourceWaveStream(new MemoryStream(Audiobuffer), WaveFormat.CreateIeeeFloatWaveFormat((int)audioEncodingProperties.SampleRate, (int)audioEncodingProperties.ChannelCount));
+                using (var writer = new WaveFileWriterRT(await file.OpenStreamForWriteAsync(), s.WaveFormat))
                 {
-                    int bytesRead = s.Read(buffer, 0, buffer.Length);
-                    if (bytesRead == 0)
+                    long outputLength = 0;
+                    var buffer = new byte[s.WaveFormat.AverageBytesPerSecond * 4];
+                    while (true)
                     {
-                        // end of source provider
-                        break;
+                        int bytesRead = s.Read(buffer, 0, buffer.Length);
+                        if (bytesRead == 0)
+                        {
+                            // end of source provider
+                            break;
+                        }
+                        outputLength += bytesRead;
+                        // Write will throw exception if WAV file becomes too large
+                        writer.Write(buffer, 0, bytesRead);
                     }
-                    outputLength += bytesRead;
-                    // Write will throw exception if WAV file becomes too large
-                    writer.Write(buffer, 0, bytesRead);
                 }
+                return file;
             }
-            return file;
+            else
+            {
+                StorageFile file = null;
+                return file;
+            }
+
         }
 
         private uint EnsureEven(uint number)
