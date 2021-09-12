@@ -240,7 +240,11 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <PRIResource Include="Strings\pt-PT\Resources.resw" />
-    <PRIResource Include="Strings\en-US\Resources.resw">
+    <PRIResource Include="Strings\it\Resources.resw" />
+    <PRIResource Include="Strings\es-ES\Resources.resw" />
+    <PRIResource Include="Strings\ja\Resources.resw" />
+    <PRIResource Include="Strings\si\Resources.resw" />
+    <PRIResource Include="Strings\en-US\Resources.resw">    
       <Generator>ReswPlusAdvancedGenerator</Generator>
       <LastGenOutput>Resources.generated.cs</LastGenOutput>
     </PRIResource>
