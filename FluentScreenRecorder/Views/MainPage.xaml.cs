@@ -40,6 +40,7 @@ using Windows.UI.Popups;
 using System.Linq;
 using Windows.Media.Capture;
 using Windows.Storage.Streams;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace FluentScreenRecorder
 {
@@ -80,6 +81,7 @@ namespace FluentScreenRecorder
         private AudioEncodingProperties audioEncodingProperties;
         private StorageFile micFile;
         public MediaCapture mediaCapture;
+        public StorageFile recordedVideoFile = null;
 
         public MainPage()
         {
@@ -1052,6 +1054,48 @@ namespace FluentScreenRecorder
             string uriToLaunch = @"https://paypal.me/pools/c/8Bxl3GiJqn";
             var uri = new Uri(uriToLaunch);
             await Launcher.LaunchUriAsync(uri);
+        }
+
+        private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            await recordedVideoFile.DeleteAsync();
+
+        }
+
+        private void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            DataTransferManager.ShowShareUI();
+            DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
+            dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(DataRequested);
+
+
+        }
+
+        private void DataRequested(DataTransferManager sender, DataRequestedEventArgs e)
+        {
+            
+            DataRequest request = e.Request;
+            request.Data.Properties.Title = recordedVideoFile.Name;
+            request.Data.SetStorageItems(new StorageFile[] { recordedVideoFile });
+            
+            
+        }
+
+        private async void MenuFlyoutItem_Click_2(object sender, RoutedEventArgs e)
+        {           
+            
+            var frameRate = await recordedVideoFile.Properties.RetrievePropertiesAsync(new string[] { "System.Video.FrameRate" });
+            var width = await recordedVideoFile.Properties.RetrievePropertiesAsync(new string[] { "System.Video.FrameWidth" });
+            var height = await recordedVideoFile.Properties.RetrievePropertiesAsync(new string[] { "System.Video.FrameHeight" });
+            ContentDialog dialog = new VideoInfoDialog(frameRate, width, height);
+            await dialog.ShowAsync();
+        }
+
+        public async void Image_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+        {
+            ThumbItem item = (sender as Image).DataContext as ThumbItem;
+            recordedVideoFile = await(await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder")).GetFileAsync(item.fileN);
+
         }
     }
 }
