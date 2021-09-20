@@ -1,6 +1,7 @@
 ﻿using FluentScreenRecorder.Dialogs;
 using System;
 using Windows.ApplicationModel.Core;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Media.Core;
 using Windows.Storage;
@@ -93,6 +94,21 @@ namespace FluentScreenRecorder.Views
             var height = await videoFile.Properties.RetrievePropertiesAsync(new string[] { "System.Video.FrameHeight" });
             ContentDialog dialog = new VideoInfoDialog(frameRate, width, height);
             await dialog.ShowAsync();
+        }
+
+        private  void CustomMediaTransportControls_Shared(object sender, EventArgs e)
+        {
+            DataTransferManager.ShowShareUI();
+            DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
+            dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(DataRequested);
+        }
+
+        private void DataRequested(DataTransferManager sender, DataRequestedEventArgs e)
+        {
+
+            DataRequest request = e.Request;
+            request.Data.Properties.Title = videoFile.Name;
+            request.Data.SetStorageItems(new StorageFile[] { videoFile });
         }
 
         private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
