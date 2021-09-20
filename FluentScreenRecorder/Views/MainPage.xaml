@@ -159,8 +159,7 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" Header="{x:Bind strings:Resources.SourceSizeToggle}" Margin="8" MaxWidth="150" HorizontalAlignment="Center"/>
-                        <ToggleSwitch x:Name="PreviewToggleSwitch" Header="{x:Bind strings:Resources.VideoPreview}" Margin="8" MaxWidth="150" HorizontalAlignment="Center"/>
+                        <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" Header="{x:Bind strings:Resources.SourceSizeToggle}" Margin="8" MaxWidth="150" HorizontalAlignment="Center"/>                        
                         <ToggleSwitch x:Name="AudioToggleSwitch" Header="{x:Bind strings:Resources.InternalAudio}" Margin="8" MaxWidth="150" HorizontalAlignment="Center" IsEnabled="{x:Bind ExtAudioToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}"/>
                         <ToggleSwitch x:Name="ExtAudioToggleSwitch" Header="{x:Bind strings:Resources.ExternalAudio}" Margin="8" MaxWidth="150" HorizontalAlignment="Center" IsEnabled="{x:Bind AudioToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}"/>
                         <muxc:Expander AutomationProperties.Name="{x:Bind strings:Resources.Settings}">

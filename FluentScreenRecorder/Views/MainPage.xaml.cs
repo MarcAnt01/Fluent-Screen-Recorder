@@ -150,8 +150,7 @@ namespace FluentScreenRecorder
             }
             FrameRateComboBox.ItemsSource = _frameRates;
             FrameRateComboBox.SelectedIndex = GetFrameRateIndex(settings.FrameRate);
-            UseCaptureItemToggleSwitch.IsOn = settings.UseSourceSize;
-            PreviewToggleSwitch.IsOn = settings.Preview;
+            UseCaptureItemToggleSwitch.IsOn = settings.UseSourceSize;            
             AudioToggleSwitch.IsOn = settings.IntAudio;
             ExtAudioToggleSwitch.IsOn = settings.ExtAudio;
             GalleryToggleSwitch.IsOn = settings.Gallery;        
@@ -442,17 +441,8 @@ namespace FluentScreenRecorder
                         toolTip.Content = Strings.Resources.RecordingStart;
                         ToolTipService.SetToolTip(MainButton, toolTip);
                         AutomationProperties.SetName(MainButton, Strings.Resources.RecordingStart);
-
-                        if (PreviewToggleSwitch.IsOn)
-                        {
-                            this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
-                        }
-                        else
-                        {
-                            ContentDialog dialog = new SaveDialog(_tempFile);
-                            await dialog.ShowAsync();
-                        }
-
+                        this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);                       
+                       
                         var videofolder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
                         MainButton.Visibility = Visibility.Visible;
@@ -472,17 +462,9 @@ namespace FluentScreenRecorder
                 ToolTip newtoolTip = new ToolTip();
                 toolTip.Content = Strings.Resources.RecordingStart;
                 ToolTipService.SetToolTip(MainButton, Strings.Resources.RecordingStart);
-                AutomationProperties.SetName(MainButton, "Start recording");
-
-                if (PreviewToggleSwitch.IsOn)
-                {
-                    this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
-                }
-                else
-                {
-                    ContentDialog dialog = new SaveDialog(_tempFile);
-                    await dialog.ShowAsync();
-                }
+                AutomationProperties.SetName(MainButton, "Start recording");                
+                this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
+                               
             }
         }
 
@@ -595,16 +577,7 @@ namespace FluentScreenRecorder
                         ToolTipService.SetToolTip(MainButton, toolTip);
                         AutomationProperties.SetName(MainButton, Strings.Resources.RecordingStart);
 
-                        if (PreviewToggleSwitch.IsOn)
-                        {
-                            this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
-                        }
-                        else
-                        {
-                            ContentDialog dialog = new SaveDialog(_tempFile);
-                            await dialog.ShowAsync();
-                        }
-
+                        this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);                        
                         var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
                         MainButton.Visibility = Visibility.Visible;
@@ -627,16 +600,7 @@ namespace FluentScreenRecorder
                 toolTip.Content = Strings.Resources.RecordingStart;
                 ToolTipService.SetToolTip(MainButton, Strings.Resources.RecordingStart);
                 AutomationProperties.SetName(MainButton, "Start recording");
-
-                if (PreviewToggleSwitch.IsOn)
-                {
-                    this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
-                }
-                else
-                {
-                    ContentDialog dialog = new SaveDialog(_tempFile);
-                    await dialog.ShowAsync();
-                }
+                this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);                               
             }         
       
         }
@@ -776,14 +740,13 @@ namespace FluentScreenRecorder
             var bitrate = bitrateItem.Bitrate;
             var frameRateItem = (FrameRateItem)FrameRateComboBox.SelectedItem;
             var frameRate = frameRateItem.FrameRate;
-            var useSourceSize = UseCaptureItemToggleSwitch.IsOn;
-            var preview = PreviewToggleSwitch.IsOn;
+            var useSourceSize = UseCaptureItemToggleSwitch.IsOn;            
             var intAudio = AudioToggleSwitch.IsOn;
             var extAudio = ExtAudioToggleSwitch.IsOn;
             var gallery = GalleryToggleSwitch.IsOn;            
             var systemPlayer = SystemPlayerToggleSwitch.IsOn;
             var showOnTop = OverlayToggleSwitch.IsOn;
-            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize, Preview = preview, IntAudio = intAudio, ExtAudio = extAudio, Gallery = gallery, SystemPlayer = systemPlayer, ShowOnTop = showOnTop };
+            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize, IntAudio = intAudio, ExtAudio = extAudio, Gallery = gallery, SystemPlayer = systemPlayer, ShowOnTop = showOnTop };
 
         }
 
@@ -796,8 +759,7 @@ namespace FluentScreenRecorder
                 Height = 1080,
                 Bitrate = 18000000,
                 FrameRate = 60,
-                UseSourceSize = true,
-                Preview = true,
+                UseSourceSize = true,                
                 IntAudio = true,
                 ExtAudio = false,
                 Gallery = true,                
@@ -829,11 +791,6 @@ namespace FluentScreenRecorder
             if (localSettings.Values.TryGetValue(nameof(AppSettings.UseSourceSize), out var useSourceSize))
             {
                 result.UseSourceSize = (bool)useSourceSize;
-            }
-
-            if (localSettings.Values.TryGetValue(nameof(AppSettings.Preview), out var preview))
-            {
-                result.Preview = (bool)preview;
             }
 
             if (localSettings.Values.TryGetValue(nameof(AppSettings.IntAudio), out var intAudio))
@@ -875,8 +832,7 @@ namespace FluentScreenRecorder
             localSettings.Values[nameof(AppSettings.Height)] = settings.Height;
             localSettings.Values[nameof(AppSettings.Bitrate)] = settings.Bitrate;
             localSettings.Values[nameof(AppSettings.FrameRate)] = settings.FrameRate;
-            localSettings.Values[nameof(AppSettings.UseSourceSize)] = settings.UseSourceSize;
-            localSettings.Values[nameof(AppSettings.Preview)] = settings.Preview;
+            localSettings.Values[nameof(AppSettings.UseSourceSize)] = settings.UseSourceSize;            
             localSettings.Values[nameof(AppSettings.IntAudio)] = settings.IntAudio;
             localSettings.Values[nameof(AppSettings.ExtAudio)] = settings.ExtAudio;
             localSettings.Values[nameof(AppSettings.Gallery)] = settings.Gallery;
@@ -933,8 +889,7 @@ namespace FluentScreenRecorder
             public uint Height;
             public uint Bitrate;
             public uint FrameRate;
-            public bool UseSourceSize;
-            public bool Preview;
+            public bool UseSourceSize;            
             public bool IntAudio;
             public bool ExtAudio;
             public bool Gallery;            

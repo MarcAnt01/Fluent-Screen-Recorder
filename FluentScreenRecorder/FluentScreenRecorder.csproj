@@ -155,9 +155,6 @@
       <DependentUpon>ChangelogDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\InvertBoolConverter.cs" />
-    <Compile Include="Dialogs\SaveDialog.xaml.cs">
-      <DependentUpon>SaveDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Dialogs\VideoInfoDialog.xaml.cs">
       <DependentUpon>VideoInfoDialog.xaml</DependentUpon>
     </Compile>
@@ -244,7 +241,7 @@
     <PRIResource Include="Strings\es-ES\Resources.resw" />
     <PRIResource Include="Strings\ja\Resources.resw" />
     <PRIResource Include="Strings\si\Resources.resw" />
-    <PRIResource Include="Strings\en-US\Resources.resw">    
+    <PRIResource Include="Strings\en-US\Resources.resw">
       <Generator>ReswPlusAdvancedGenerator</Generator>
       <LastGenOutput>Resources.generated.cs</LastGenOutput>
     </PRIResource>
@@ -259,10 +256,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dialogs\ChangelogDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Dialogs\SaveDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -329,12 +322,7 @@
     <XliffResource Include="MultilingualResources\FluentScreenRecorder.ja.xlf" />
     <XliffResource Include="MultilingualResources\FluentScreenRecorder.pt-PT.xlf" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Strings\es-ES\" />
-    <Folder Include="Strings\it\" />
-    <Folder Include="Strings\ja\" />
-    <Folder Include="Strings\si\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
