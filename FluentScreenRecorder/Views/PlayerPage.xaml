@@ -79,8 +79,7 @@
             <MediaPlayerElement x:Name="VideoPlayer"
                             AreTransportControlsEnabled="True">
                 <MediaPlayerElement.TransportControls>
-                    <local:CustomMediaTransportControls IsZoomButtonVisible="False" IsFullWindowButtonVisible="False" Deleted="CustomMediaTransportControls_Deleted" InfoTap="CustomMediaTransportControls_InfoTap" Shared="CustomMediaTransportControls_Shared"/>
-
+                    <local:CustomMediaTransportControls IsZoomButtonVisible="False" IsFullWindowButtonVisible="False" Deleted="CustomMediaTransportControls_Deleted" InfoTap="CustomMediaTransportControls_InfoTap" Shared="CustomMediaTransportControls_Shared" Style="{StaticResource CustomMediaTransportControlsStyle}"/>
                 </MediaPlayerElement.TransportControls>
             </MediaPlayerElement>
         </Grid>
