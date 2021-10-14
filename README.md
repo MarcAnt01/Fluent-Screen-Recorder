@@ -1,6 +1,6 @@
 # Fluent Screen Recorder
 
-Record your screen or an in a simple UWP app featuring Fluent Design
+Record your screen or an app in a simple UWP app featuring Fluent Design
 
 ![](https://i.postimg.cc/D0tRCCKZ/1.png)
 
@@ -18,21 +18,21 @@ Record your screen or an in a simple UWP app featuring Fluent Design
 
 ### Supported platforms
 
-The app supports Windows 10 1809+ . It is a uwp app that can run on Windows 10 for PCs and Surface Hub.
+The app supports Windows 10 1809+ and Windows 11. It is a uwp app that can run on Windows 10 for PCs and Surface Hub.
 
 ### Contributions
 
 Contributions are appreciated, anyway you should open an issue explaining what you want to implement and why first, in order to avoid spending time on something that couldn't be merged.
 
 #### Device requirements:
-- [Windows 10 version 1809 or later](http://windows.com)
+- [Windows 10 version 1809+ or Windows 11](http://windows.com)
 - [Visual Studio 2019 or later with Universal Windows Platform development workload](https://visualstudio.microsoft.com/vs/features/universal-windows-platform/)
 - [Multilingual App Toolkit](https://developer.microsoft.com/en-us/windows/downloads/multilingual-app-toolkit/)
 - [ReswPlus extension](https://marketplace.visualstudio.com/items?itemName=rudyhuyn.ReswPlus)
 
 ### Bug reports
 
-The best way to report a bug is opening a ticket in this repo. In order to be helpful, you should specify the app version (without using the word latest), your Windows 10 version, what is happening in detail and the repro-steps.
+The best way to report a bug is opening a ticket in this repo. In order to be helpful, you should specify the app version (without using the word latest), your Windows version, what is happening in detail and the repro-steps.
 
 ### Feature requests
 
