@@ -8,8 +8,7 @@
     xmlns:strings="using:FluentScreenRecorder.Strings"
     mc:Ignorable="d"
     Title="{x:Bind displayedVersion}"
-    CloseButtonText="{x:Bind strings:Resources.Ok}"
-    CloseButtonStyle="{ThemeResource ButtonRevealStyle}">
+    CloseButtonText="{x:Bind strings:Resources.Ok}">
 
     <ScrollViewer>
         <StackPanel>

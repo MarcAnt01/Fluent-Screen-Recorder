@@ -8,14 +8,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:media="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     mc:Ignorable="d"
-    Background="{ThemeResource SystemControlAcrylicWindowBrush}"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
     SizeChanged="Page_SizeChanged">
 
     <Page.Resources>
-        <local:InvertBoolConverter x:Key="InvertBoolConv"/>      
-         
-        <media:AcrylicBrush x:Key="CustomAcrylicBackgroundBrushStrong" TintColor="{StaticResource SystemChromeAltHighColor}" BackgroundSource="HostBackdrop" FallbackColor="{StaticResource SystemChromeMediumColor}" TintOpacity="0.7"/>
-        <media:AcrylicBrush x:Key="CustomAcrylicBackgroundBrushWeak" TintColor="{StaticResource SystemChromeAltHighColor}" BackgroundSource="HostBackdrop" FallbackColor="{StaticResource SystemChromeMediumColor}" TintOpacity="0.5"/>
+        <local:InvertBoolConverter x:Key="InvertBoolConv"/>
         <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="{ThemeResource SystemAccentColor}"/>
         <SolidColorBrush x:Key="ToggleSwitchFillOn" Color="{ThemeResource SystemAccentColor}"/>
         <SolidColorBrush x:Key="ToggleSwitchStrokeOn" Color="{ThemeResource SystemAccentColor}"/>        
@@ -30,7 +27,7 @@
         </Grid.RowDefinitions>
 
         
-        <Grid x:Name="TopBar" Grid.Row="0" Height="32" >
+        <Grid x:Name="TopBar" Grid.Row="0" Height="32">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="LeftPaddingColumn"
                                   Width="0" />
@@ -79,130 +76,151 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition x:Name="FirstColumn"/>
-                <ColumnDefinition Width="4*" x:Name="SecondColumn"/>
-                <ColumnDefinition Width="2*" x:Name="ThirdColumn"/>
-            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="55" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-            <Grid Grid.Column="0" Background="{ThemeResource CustomAcrylicBackgroundBrushWeak}">
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">                    
-                    <StackPanel Orientation="Horizontal">
-                        <Ellipse x:Name="Ellipse" HorizontalAlignment="Center" Fill="Red" Width="15" Height="15" Margin="0,0,5,-10"/>
-                        <TextBlock x:Name="MainTextBlock" HorizontalTextAlignment="Center" FontSize="30"/>
-                    </StackPanel>
-                    <ToggleButton  x:Name="MainButton" HorizontalAlignment="Center" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Width="100" Height="100" Background="{ThemeResource SystemAccentColor}" CornerRadius="99">
-                        <StackPanel HorizontalAlignment="Center">
-                            <FontIcon x:Name="RecordIcon" FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF84E;" FontSize="70" Foreground="White"/>
-                            <FontIcon x:Name="StopIcon"  FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF72B;" FontSize="50" Foreground="White"/>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="8" Padding="8,0,0,0" VerticalAlignment="Center">
+                <ToggleButton  x:Name="MainButton" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Height="40">
+                    <StackPanel HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" x:Name="RecordIcon">
+                            <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF84E;" FontSize="20" Foreground="White"/>
+                            <TextBlock Text="New" Height="20" Margin="8,0,0,0" />
                         </StackPanel>
-                    </ToggleButton>
-                    <muxc:ProgressRing x:Name="MergingProgressRing" Value="0" IsIndeterminate="False" Margin="10" Width="70" Height="70"/>
-                </StackPanel>
-            </Grid>
-
-            <Grid Grid.Column="1" Background="{ThemeResource CustomAcrylicBackgroundBrushStrong}">
-                <GridView x:Name="BasicGridView" SelectionMode="Single" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,32,0,0">
-                    <GridView.ItemTemplate>
-                        <DataTemplate x:DataType="local:ThumbItem">
-                            <StackPanel>
-                                <StackPanel.ContextFlyout>
-                                    <MenuFlyout>
-                                        <MenuFlyoutItem Text="{x:Bind strings:Resources.Delete}" Click="MenuFlyoutItem_Click">
-                                            <MenuFlyoutItem.Icon>
-                                                <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF34D;"/>
-                                            </MenuFlyoutItem.Icon>
-                                        </MenuFlyoutItem>
-                                        <MenuFlyoutItem Text="{x:Bind strings:Resources.Share}" Click="MenuFlyoutItem_Click_1">
-                                            <MenuFlyoutItem.Icon>
-                                                <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF6B0;"/>
-                                            </MenuFlyoutItem.Icon>
-                                        </MenuFlyoutItem>
-                                        <MenuFlyoutItem Text="{x:Bind strings:Resources.Info}" Click="MenuFlyoutItem_Click_2">
-                                            <MenuFlyoutItem.Icon>
-                                                <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF4A4;"/>
-                                            </MenuFlyoutItem.Icon>
-                                        </MenuFlyoutItem>
-                                    </MenuFlyout>
-                                </StackPanel.ContextFlyout>
-                                <TextBlock Text="{x:Bind fileN}" HorizontalAlignment="Center" Margin="0,0,0,-16"/>
-                                <Image Stretch="UniformToFill" Source="{x:Bind img}" Width="190" Height="130" Margin="20" Tapped="Image_Tapped" RightTapped="Image_RightTapped" />
-                            </StackPanel>
-                        </DataTemplate>
-                        
-                    </GridView.ItemTemplate>
-                </GridView>
-            </Grid>
-
-            <Grid Grid.Column="2" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                <ScrollViewer>
-                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="150">
-
-                        <ComboBox x:Name="ResolutionComboBox" Header="{x:Bind strings:Resources.Resolution}" Margin="8" MinWidth="150" HorizontalAlignment="Center" IsEnabled="{x:Bind UseCaptureItemToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate x:DataType="local:ResolutionItem">
-                                    <TextBlock Text="{x:Bind DisplayName}"/>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <ComboBox x:Name="FrameRateComboBox" Header="{x:Bind strings:Resources.Framerate}"  Margin="8" MinWidth="150" HorizontalAlignment="Center">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate x:DataType="local:FrameRateItem">
-                                    <TextBlock Text="{x:Bind DisplayName}"/>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <ComboBox x:Name="BitrateComboBox" Header="{x:Bind strings:Resources.Bitrate}" Margin="8" MinWidth="150" HorizontalAlignment="Center">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate x:DataType="local:BitrateItem">
-                                    <TextBlock Text="{x:Bind DisplayName}"/>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" Header="{x:Bind strings:Resources.SourceSizeToggle}" Margin="8" MaxWidth="150" HorizontalAlignment="Center"/>                        
-                        <ToggleSwitch x:Name="AudioToggleSwitch" Header="{x:Bind strings:Resources.InternalAudio}" Margin="8" MaxWidth="150" HorizontalAlignment="Center" IsEnabled="{x:Bind ExtAudioToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}"/>
-                        <ToggleSwitch x:Name="ExtAudioToggleSwitch" Header="{x:Bind strings:Resources.ExternalAudio}" Margin="8" MaxWidth="150" HorizontalAlignment="Center" IsEnabled="{x:Bind AudioToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}"/>
-                        <muxc:Expander AutomationProperties.Name="{x:Bind strings:Resources.Settings}">
-                            <muxc:Expander.Header>                                
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF6A9;"/>
-                                    <TextBlock Text="{x:Bind strings:Resources.Settings}" Margin="4,0,0,0"/>
-                                </StackPanel>
-                            </muxc:Expander.Header>
-                            <muxc:Expander.Content>
-                                <StackPanel Orientation="Vertical">
-                                    <Button x:Name="MicSettingsButton" Click="MicSettingsButton_Click" HorizontalContentAlignment="Stretch" HorizontalAlignment="Center" AutomationProperties.Name="{x:Bind strings:Resources.MicSettings}" >
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition  Width="20"/>
-                                                <ColumnDefinition  Width="*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF548;"/>
-                                            <TextBlock Grid.Column="1" Text="{x:Bind strings:Resources.MicSettings}" Margin="8,0,0,0" TextWrapping="WrapWholeWords"/>
-                                        </Grid>
-                                    </Button>
-                                    <ToggleSwitch x:Name="GalleryToggleSwitch" Header="{x:Bind strings:Resources.GalleryView}" Margin="8" MaxWidth="150"/>
-                                    <ToggleSwitch x:Name="SystemPlayerToggleSwitch" Header="{x:Bind strings:Resources.SystemVideoPlayerOption}" Margin="8" MaxWidth="150"/>
-                                    <ToggleSwitch x:Name="OverlayToggleSwitch" Header="{x:Bind strings:Resources.OverlayMode}" Margin="8" MaxWidth="150"/>
-                                    <Button x:Name="DonateButton" Width="144" HorizontalAlignment="Center" Margin="8" Style="{StaticResource ButtonRevealStyle}" Click="DonateButton_Click" AutomationProperties.Name="{x:Bind strings:Resources.Donate}"> 
-                                        <StackPanel Orientation="Horizontal">
-                                            <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF479;" Margin="0,0,8,0"/>
-                                            <TextBlock Text="{x:Bind strings:Resources.Donate}"/>
-                                        </StackPanel>
-                                    </Button>
-                                    <Button x:Name="AboutButton" Width="144" HorizontalAlignment="Center" Margin="8" Style="{StaticResource ButtonRevealStyle}" Click="AboutButton_Click" AutomationProperties.Name="{x:Bind strings:Resources.About}">
-                                        <StackPanel Orientation="Horizontal">
-                                            <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF4A3;" Margin="0,0,8,0"/>
-                                            <TextBlock Text="{x:Bind strings:Resources.About}"/>
-                                        </StackPanel>
-                                    </Button>                                    
-
-                                </StackPanel>
-                            </muxc:Expander.Content>                                 
-                        </muxc:Expander>                        
+                        <StackPanel Orientation="Horizontal" Visibility="Collapsed" x:Name="StopIcon">
+                            <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF72B;" FontSize="20" Foreground="White"/>
+                            <TextBlock Text="Stop" Foreground="White" Height="20" Margin="8,0,0,0" />
+                        </StackPanel>
                     </StackPanel>
-                </ScrollViewer>
+                </ToggleButton>
+
+                <AppBarSeparator />
+
+                <ComboBox x:Name="FrameRateComboBox" VerticalAlignment="Center">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="local:FrameRateItem">
+                            <TextBlock Text="{x:Bind DisplayName}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <ComboBox x:Name="BitrateComboBox" VerticalAlignment="Center">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="local:BitrateItem">
+                            <TextBlock Text="{x:Bind DisplayName}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="FirstColumn"/>
+                    <ColumnDefinition Width="4*" x:Name="SecondColumn"/>
+                    <ColumnDefinition Width="2*" x:Name="ThirdColumn"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0" Grid.Row="1">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <Ellipse x:Name="Ellipse" HorizontalAlignment="Center" Fill="Red" Width="15" Height="15" Margin="0,0,5,-10"/>
+                            <TextBlock x:Name="MainTextBlock" HorizontalTextAlignment="Center" FontSize="30"/>
+                        </StackPanel>
+                         <muxc:ProgressRing x:Name="MergingProgressRing" Value="0" IsIndeterminate="False" Margin="10" Width="70" Height="70"/>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <GridView x:Name="BasicGridView" SelectionMode="Single" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,32,0,0">
+                        <GridView.ItemTemplate>
+                            <DataTemplate x:DataType="local:ThumbItem">
+                                <StackPanel>
+                                    <StackPanel.ContextFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="{x:Bind strings:Resources.Delete}" Click="MenuFlyoutItem_Click">
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF34D;"/>
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem Text="{x:Bind strings:Resources.Share}" Click="MenuFlyoutItem_Click_1">
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF6B0;"/>
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+                                            <MenuFlyoutItem Text="{x:Bind strings:Resources.Info}" Click="MenuFlyoutItem_Click_2">
+                                                <MenuFlyoutItem.Icon>
+                                                    <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF4A4;"/>
+                                                </MenuFlyoutItem.Icon>
+                                            </MenuFlyoutItem>
+                                        </MenuFlyout>
+                                    </StackPanel.ContextFlyout>
+                                    <Image Stretch="UniformToFill" Source="{x:Bind img}" Width="190" Height="130" Margin="20" Tapped="Image_Tapped" RightTapped="Image_RightTapped" />
+                                    <TextBlock Text="{x:Bind fileN}" HorizontalAlignment="Center" Margin="0,0,0,-16"/>
+                                </StackPanel>
+                            </DataTemplate>
+
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </Grid>
+
+                <Grid Grid.Column="2">
+                    <ScrollViewer>
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="150">
+
+                            <ComboBox x:Name="ResolutionComboBox" Header="{x:Bind strings:Resources.Resolution}" Margin="8" MinWidth="150" HorizontalAlignment="Center" IsEnabled="{x:Bind UseCaptureItemToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate x:DataType="local:ResolutionItem">
+                                        <TextBlock Text="{x:Bind DisplayName}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" Header="{x:Bind strings:Resources.SourceSizeToggle}" Margin="8" MaxWidth="150" HorizontalAlignment="Center"/>
+                            <ToggleSwitch x:Name="AudioToggleSwitch" Header="{x:Bind strings:Resources.InternalAudio}" Margin="8" MaxWidth="150" HorizontalAlignment="Center" IsEnabled="{x:Bind ExtAudioToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}"/>
+                            <ToggleSwitch x:Name="ExtAudioToggleSwitch" Header="{x:Bind strings:Resources.ExternalAudio}" Margin="8" MaxWidth="150" HorizontalAlignment="Center" IsEnabled="{x:Bind AudioToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}"/>
+                            <muxc:Expander AutomationProperties.Name="{x:Bind strings:Resources.Settings}">
+                                <muxc:Expander.Header>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF6A9;"/>
+                                        <TextBlock Text="{x:Bind strings:Resources.Settings}" Margin="4,0,0,0"/>
+                                    </StackPanel>
+                                </muxc:Expander.Header>
+                                <muxc:Expander.Content>
+                                    <StackPanel Orientation="Vertical">
+                                        <Button x:Name="MicSettingsButton" Click="MicSettingsButton_Click" HorizontalContentAlignment="Stretch" HorizontalAlignment="Center" AutomationProperties.Name="{x:Bind strings:Resources.MicSettings}" >
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition  Width="20"/>
+                                                    <ColumnDefinition  Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF548;"/>
+                                                <TextBlock Grid.Column="1" Text="{x:Bind strings:Resources.MicSettings}" Margin="8,0,0,0" TextWrapping="WrapWholeWords"/>
+                                            </Grid>
+                                        </Button>
+                                        <ToggleSwitch x:Name="GalleryToggleSwitch" Header="{x:Bind strings:Resources.GalleryView}" Margin="8" MaxWidth="150"/>
+                                        <ToggleSwitch x:Name="SystemPlayerToggleSwitch" Header="{x:Bind strings:Resources.SystemVideoPlayerOption}" Margin="8" MaxWidth="150"/>
+                                        <ToggleSwitch x:Name="OverlayToggleSwitch" Header="{x:Bind strings:Resources.OverlayMode}" Margin="8" MaxWidth="150"/>
+                                        <Button x:Name="DonateButton" Width="144" HorizontalAlignment="Center" Margin="8" Style="{StaticResource ButtonRevealStyle}" Click="DonateButton_Click" AutomationProperties.Name="{x:Bind strings:Resources.Donate}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF479;" Margin="0,0,8,0"/>
+                                                <TextBlock Text="{x:Bind strings:Resources.Donate}"/>
+                                            </StackPanel>
+                                        </Button>
+                                        <Button x:Name="AboutButton" Width="144" HorizontalAlignment="Center" Margin="8" Style="{StaticResource ButtonRevealStyle}" Click="AboutButton_Click" AutomationProperties.Name="{x:Bind strings:Resources.About}">
+                                            <StackPanel Orientation="Horizontal">
+                                                <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF4A3;" Margin="0,0,8,0"/>
+                                                <TextBlock Text="{x:Bind strings:Resources.About}"/>
+                                            </StackPanel>
+                                        </Button>
+
+                                    </StackPanel>
+                                </muxc:Expander.Content>
+                            </muxc:Expander>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
             </Grid>
+
         </Grid>
     </Grid>
 </Page>

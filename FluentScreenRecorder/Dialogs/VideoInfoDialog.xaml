@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Title="Info" 
     CloseButtonText="Ok"
-    CloseButtonStyle="{ThemeResource ButtonRevealStyle}">
+    CornerRadius="7">
 
     <StackPanel>
         <TextBlock x:Name="Frameblock"/>
