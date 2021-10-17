@@ -93,13 +93,13 @@
                                 <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" 
                                           Glyph="&#xF84E;" 
                                           FontSize="20" 
-                                          Foreground="White"/>
+                                          Foreground="{StaticResource SystemAccentColorLight1}"/>
                                 <TextBlock Text="New" Height="20" Margin="8,0,0,0" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" 
                                         Visibility="Collapsed" 
                                         x:Name="StopIcon">
-                                <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF72B;" FontSize="20" Foreground="White"/>
+                                <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF72B;" FontSize="20" Foreground="{StaticResource SystemAccentColorLight1}"/>
                                 <TextBlock Text="Stop" Foreground="White" Height="20" Margin="8,0,0,0" />
                             </StackPanel>
                         </StackPanel>
