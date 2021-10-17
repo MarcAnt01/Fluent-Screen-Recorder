@@ -88,12 +88,13 @@ namespace FluentScreenRecorder
             InitializeComponent();
             this.Loaded += LoadedHandler;
 
+            ApplicationView.GetForCurrentView().TryResizeView(new Size(600, 400));
+
             MergingProgressRing.Visibility = Visibility.Collapsed;
 
             SilentPlayer = new MediaPlayer() { IsLoopingEnabled = true };
             SilentPlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/Silence.ogg"));
             SilentPlayer.Play();
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(400, 260));
 
             //hide titlebar
             SetupTitleBar();
@@ -103,7 +104,7 @@ namespace FluentScreenRecorder
             //Record icon
             RecordIcon.Visibility = Visibility.Visible;
             StopIcon.Visibility = Visibility.Collapsed;
-            Ellipse.Visibility = Visibility.Collapsed;
+
             ToolTip toolTip = new ToolTip();
             toolTip.Content = Strings.Resources.RecordingStart;
             ToolTipService.SetToolTip(MainButton, toolTip);
@@ -293,13 +294,7 @@ namespace FluentScreenRecorder
             // Put videos in the temp folder
             var tempFile = await GetTempFileAsync();
             _tempFile = tempFile;
-
-            // Tell the user we've started recording            
-            SecondColumn.Width = new GridLength(0);
-            ThirdColumn.Width = new GridLength(0);
-
-
-
+                        
             visual = ElementCompositionPreview.GetElementVisual(Ellipse);
             var animation = visual.Compositor.CreateScalarKeyFrameAnimation();
             animation.InsertKeyFrame(0, 1);
@@ -310,7 +305,9 @@ namespace FluentScreenRecorder
 
             RecordIcon.Visibility = Visibility.Collapsed;
             StopIcon.Visibility = Visibility.Visible;
-            Ellipse.Visibility = Visibility.Visible;
+            RecordingContentContainer.Visibility = Visibility.Visible;
+            itemsToHideInRecord.Visibility = Visibility.Collapsed;
+            SettingsPageButton.Visibility = Visibility.Collapsed;
             toolTip = new ToolTip();
             toolTip.Content = Strings.Resources.RecordingStop;
             ToolTipService.SetToolTip(MainButton, toolTip);
@@ -372,12 +369,14 @@ namespace FluentScreenRecorder
                 button.IsChecked = false;
                 visual.StopAnimation("Opacity");
 
-                Ellipse.Visibility = Visibility.Collapsed;
+                RecordingContentContainer.Visibility = Visibility.Collapsed;
 
 
                 MainTextBlock.Foreground = originalBrush;
                 RecordIcon.Visibility = Visibility.Visible;
                 StopIcon.Visibility = Visibility.Collapsed;
+                itemsToHideInRecord.Visibility = Visibility.Visible;
+                SettingsPageButton.Visibility = Visibility.Visible;
                 toolTip.Content = Strings.Resources.RecordingStart;
                 ToolTipService.SetToolTip(MainButton, toolTip);
                 AutomationProperties.SetName(MainButton, Strings.Resources.RecordingStart);
@@ -434,9 +433,11 @@ namespace FluentScreenRecorder
                         MainButton.IsChecked = false;
                         MainTextBlock.Text = "";
                         visual.StopAnimation("Opacity");
-                        Ellipse.Visibility = Visibility.Collapsed;
+                        RecordingContentContainer.Visibility = Visibility.Collapsed;
                         RecordIcon.Visibility = Visibility.Visible;
                         StopIcon.Visibility = Visibility.Collapsed;
+                        itemsToHideInRecord.Visibility = Visibility.Visible;
+                        SettingsPageButton.Visibility = Visibility.Visible;
                         ToolTip newtoolTip = new ToolTip();
                         toolTip.Content = Strings.Resources.RecordingStart;
                         ToolTipService.SetToolTip(MainButton, toolTip);
@@ -456,13 +457,15 @@ namespace FluentScreenRecorder
                 MainButton.IsChecked = false;
                 MainTextBlock.Text = "";
                 visual.StopAnimation("Opacity");
-                Ellipse.Visibility = Visibility.Collapsed;
+                RecordingContentContainer.Visibility = Visibility.Collapsed;
                 RecordIcon.Visibility = Visibility.Visible;
                 StopIcon.Visibility = Visibility.Collapsed;
+                itemsToHideInRecord.Visibility = Visibility.Collapsed;
+                SettingsPageButton.Visibility = Visibility.Collapsed;
                 ToolTip newtoolTip = new ToolTip();
                 toolTip.Content = Strings.Resources.RecordingStart;
                 ToolTipService.SetToolTip(MainButton, Strings.Resources.RecordingStart);
-                AutomationProperties.SetName(MainButton, "Start recording");                
+                AutomationProperties.SetName(MainButton, "Record");                
                 this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
                                
             }
@@ -569,7 +572,7 @@ namespace FluentScreenRecorder
                         MainButton.IsChecked = false;
                         MainTextBlock.Text = "";
                         visual.StopAnimation("Opacity");
-                        Ellipse.Visibility = Visibility.Collapsed;
+                        RecordingContentContainer.Visibility = Visibility.Collapsed;
                         RecordIcon.Visibility = Visibility.Visible;
                         StopIcon.Visibility = Visibility.Collapsed;
                         ToolTip newtoolTip = new ToolTip();
@@ -593,7 +596,7 @@ namespace FluentScreenRecorder
                 MainButton.IsChecked = false;
                 MainTextBlock.Text = "";
                 visual.StopAnimation("Opacity");
-                Ellipse.Visibility = Visibility.Collapsed;
+                RecordingContentContainer.Visibility = Visibility.Collapsed;
                 RecordIcon.Visibility = Visibility.Visible;
                 StopIcon.Visibility = Visibility.Collapsed;
                 ToolTip newtoolTip = new ToolTip();
@@ -923,6 +926,10 @@ namespace FluentScreenRecorder
             }
         }
 
+        private void SettingsPageButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(SettingsPage));
+        }
 
         private async void OverlayButton_Click(object sender, RoutedEventArgs e)
         {
@@ -959,17 +966,19 @@ namespace FluentScreenRecorder
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
         {
 
-
-            if (filesInFolder = true && GalleryToggleSwitch.IsOn && e.NewSize.Width > 680)
+            if (filesInFolder = true && GalleryToggleSwitch.IsOn)
             {
-                SecondColumn.Width = new GridLength(4, GridUnitType.Star);
-                ThirdColumn.Width = new GridLength(2, GridUnitType.Star);
+                GridContainer.Visibility = Visibility.Visible;
             }
             else
             {
-                FirstColumn.Width = new GridLength(1, GridUnitType.Star);
-                SecondColumn.Width = new GridLength(0);
-                ThirdColumn.Width = new GridLength(1, GridUnitType.Star);
+                GridContainer.Visibility = Visibility.Collapsed;
+            }
+
+            if (ApplicationView.GetForCurrentView().ViewMode == ApplicationViewMode.CompactOverlay && Window.Current.Bounds.Width < 370)
+            {
+                var size = new Size(370, Window.Current.Bounds.Height);
+                ApplicationView.GetForCurrentView().TryResizeView(size);
             }
 
         }

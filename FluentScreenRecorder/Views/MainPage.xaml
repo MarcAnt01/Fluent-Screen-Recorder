@@ -81,58 +81,68 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="8" Padding="8,0,0,0" VerticalAlignment="Center">
-                <ToggleButton  x:Name="MainButton" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Height="40">
-                    <StackPanel HorizontalAlignment="Center">
-                        <StackPanel Orientation="Horizontal" x:Name="RecordIcon">
-                            <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF84E;" FontSize="20" Foreground="White"/>
-                            <TextBlock Text="New" Height="20" Margin="8,0,0,0" />
+            <RelativePanel Grid.Row="0" Padding="8,0,8,0" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal" 
+                            Spacing="8">
+                    <ToggleButton x:Name="MainButton" 
+                                  Checked="ToggleButton_Checked" 
+                                  Unchecked="ToggleButton_Unchecked" 
+                                  Height="40">
+                        <StackPanel HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" x:Name="RecordIcon">
+                                <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" 
+                                          Glyph="&#xF84E;" 
+                                          FontSize="20" 
+                                          Foreground="White"/>
+                                <TextBlock Text="New" Height="20" Margin="8,0,0,0" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" 
+                                        Visibility="Collapsed" 
+                                        x:Name="StopIcon">
+                                <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF72B;" FontSize="20" Foreground="White"/>
+                                <TextBlock Text="Stop" Foreground="White" Height="20" Margin="8,0,0,0" />
+                            </StackPanel>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" Visibility="Collapsed" x:Name="StopIcon">
-                            <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF72B;" FontSize="20" Foreground="White"/>
-                            <TextBlock Text="Stop" Foreground="White" Height="20" Margin="8,0,0,0" />
-                        </StackPanel>
+                    </ToggleButton>
+
+                    <StackPanel x:Name="itemsToHideInRecord" Orientation="Horizontal" Spacing="8">
+                        <AppBarSeparator />
+
+                        <ComboBox x:Name="FrameRateComboBox" VerticalAlignment="Center">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="local:FrameRateItem">
+                                    <TextBlock Text="{x:Bind DisplayName}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+
+                        <ComboBox x:Name="BitrateComboBox" VerticalAlignment="Center">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="local:BitrateItem">
+                                    <TextBlock Text="{x:Bind DisplayName}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
                     </StackPanel>
-                </ToggleButton>
+                </StackPanel>
+                
+                <Button
+                        RelativePanel.AlignRightWithPanel="True" 
+                        RelativePanel.AlignVerticalCenterWithPanel="True"
+                        ToolTipService.ToolTip="{x:Bind strings:Resources.Settings}"
+                        Click="SettingsPageButton_Click"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        x:Name="SettingsPageButton">
+                    <Viewbox Width="18" Height="18">
+                        <SymbolIcon Symbol="Setting" />
+                    </Viewbox>
+                </Button>
+            </RelativePanel>
 
-                <AppBarSeparator />
-
-                <ComboBox x:Name="FrameRateComboBox" VerticalAlignment="Center">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate x:DataType="local:FrameRateItem">
-                            <TextBlock Text="{x:Bind DisplayName}"/>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-
-                <ComboBox x:Name="BitrateComboBox" VerticalAlignment="Center">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate x:DataType="local:BitrateItem">
-                            <TextBlock Text="{x:Bind DisplayName}"/>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            </StackPanel>
-
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition x:Name="FirstColumn"/>
-                    <ColumnDefinition Width="4*" x:Name="SecondColumn"/>
-                    <ColumnDefinition Width="2*" x:Name="ThirdColumn"/>
-                </Grid.ColumnDefinitions>
-
-                <Grid Grid.Column="0" Grid.Row="1">
-                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <StackPanel Orientation="Horizontal">
-                            <Ellipse x:Name="Ellipse" HorizontalAlignment="Center" Fill="Red" Width="15" Height="15" Margin="0,0,5,-10"/>
-                            <TextBlock x:Name="MainTextBlock" HorizontalTextAlignment="Center" FontSize="30"/>
-                        </StackPanel>
-                         <muxc:ProgressRing x:Name="MergingProgressRing" Value="0" IsIndeterminate="False" Margin="10" Width="70" Height="70"/>
-                    </StackPanel>
-                </Grid>
-
-                <Grid Grid.Column="1">
-                    <GridView x:Name="BasicGridView" SelectionMode="Single" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,32,0,0">
+            <Grid x:Name="GridContainer" Grid.Row="1" Background="{ThemeResource LayerFillColorDefaultBrush}">
+                <ScrollViewer>
+                    <GridView x:Name="BasicGridView" SelectionMode="Single" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,3,0,0">
                         <GridView.ItemTemplate>
                             <DataTemplate x:DataType="local:ThumbItem">
                                 <StackPanel>
@@ -155,16 +165,18 @@
                                             </MenuFlyoutItem>
                                         </MenuFlyout>
                                     </StackPanel.ContextFlyout>
-                                    <Image Stretch="UniformToFill" Source="{x:Bind img}" Width="190" Height="130" Margin="20" Tapped="Image_Tapped" RightTapped="Image_RightTapped" />
-                                    <TextBlock Text="{x:Bind fileN}" HorizontalAlignment="Center" Margin="0,0,0,-16"/>
+
+                                    <Image Stretch="UniformToFill" Source="{x:Bind img}" Width="190" Height="130" Margin="10" Tapped="Image_Tapped" RightTapped="Image_RightTapped" />
+                                    <TextBlock Text="{x:Bind fileN}" HorizontalAlignment="Center" Margin="0,-8,0,8"/>
                                 </StackPanel>
                             </DataTemplate>
 
                         </GridView.ItemTemplate>
                     </GridView>
-                </Grid>
 
-                <Grid Grid.Column="2">
+                </ScrollViewer>    
+
+                <Grid Grid.Column="0" Visibility="Collapsed">
                     <ScrollViewer>
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="150">
 
@@ -220,7 +232,22 @@
                     </ScrollViewer>
                 </Grid>
             </Grid>
-
+            <RelativePanel Grid.Row="2"
+                           Background="{StaticResource ApplicationPageBackgroundThemeBrush}"
+                           x:Name="RecordingContentContainer"
+                           Visibility="Collapsed">
+                <StackPanel Orientation="Vertical"
+                            RelativePanel.AlignVerticalCenterWithPanel="True"
+                            RelativePanel.AlignHorizontalCenterWithPanel="True"
+                            Height="100">
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse x:Name="Ellipse" HorizontalAlignment="Center" Fill="Red" Width="15" Height="15" Margin="0,0,5,-10"/>
+                        <TextBlock x:Name="MainTextBlock" HorizontalTextAlignment="Center" FontSize="30" />
+                    </StackPanel>                    
+                    <muxc:ProgressRing HorizontalAlignment="Center" x:Name="MergingProgressRing" Value="0" IsIndeterminate="False" Margin="-10,10,0,0" Width="40" Height="40"/>
+                </StackPanel>
+            </RelativePanel>
         </Grid>
+
     </Grid>
 </Page>

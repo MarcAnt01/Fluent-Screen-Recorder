@@ -30,17 +30,17 @@ namespace FluentScreenRecorder.Dialogs
             
             if (frameRate.TryGetValue("System.Video.FrameRate", out object frameRateValue) && frameRateValue is UInt32 framerate)
             {
-                Frameblock.Text = $"Framerate {framerate / 1000d}";
+                Frameblock.Text = $"Framerate: {framerate / 1000d}";
             }
 
             if (width.TryGetValue("System.Video.FrameWidth", out object frameWidthValue) && frameWidthValue is UInt32 widthvalue)
             {
-                Widthblock.Text = $"Width {widthvalue}";
+                Widthblock.Text = $"Width: {widthvalue}";
             }
 
             if (height.TryGetValue("System.Video.FrameHeight", out object frameHeightValue) && frameHeightValue is UInt32 heightvalue)
             {
-                Heightblock.Text = $"Height {heightvalue}";
+                Heightblock.Text = $"Height: {heightvalue}";
             }
 
 
