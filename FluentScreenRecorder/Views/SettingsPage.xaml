@@ -140,17 +140,6 @@
                         </Button>
 
                     </StackPanel>
-                    <!--<muxc:Expander AutomationProperties.Name="{x:Bind strings:Resources.Settings}">
-                        <muxc:Expander.Header>
-                            <StackPanel Orientation="Horizontal">
-                                <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF6A9;"/>
-                                <TextBlock Text="{x:Bind strings:Resources.Settings}" Margin="4,0,0,0"/>
-                            </StackPanel>
-                        </muxc:Expander.Header>
-                        <muxc:Expander.Content>
-                            
-                        </muxc:Expander.Content>
-                    </muxc:Expander>-->
                 </StackPanel>
             </ScrollViewer>
         </Grid>
