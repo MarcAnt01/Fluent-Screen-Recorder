@@ -63,27 +63,6 @@
             <ScrollViewer Grid.Row="1">
                 <StackPanel Orientation="Vertical">
 
-                    <!-- 
-            
-                            <Grid Grid.Column="0" Visibility="Collapsed">
-                    <ScrollViewer>
-                        <StackPanel VerticalAlignment="Center" MinWidth="150">
-
-                            <ComboBox x:Name="ResolutionComboBox" Header="{x:Bind strings:Resources.Resolution}" Margin="8" MinWidth="150" IsEnabled="{x:Bind UseCaptureItemToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate x:DataType="local:ResolutionItem">
-                                        <TextBlock Text="{x:Bind DisplayName}"/>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                            
-                        </StackPanel>
-                    </ScrollViewer>
-                </Grid>
-
-            
-            -->
-
                     <ComboBox x:Name="ResolutionComboBox" Header="{x:Bind strings:Resources.Resolution}" MinWidth="150" IsEnabled="{x:Bind UseCaptureItemToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="local1:ResolutionItem">
