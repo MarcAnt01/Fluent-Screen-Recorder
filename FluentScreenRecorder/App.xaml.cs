@@ -14,6 +14,8 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Windows.ApplicationModel.ExtendedExecution.Foreground;
 using FluentScreenRecorder.Views;
+using Windows.Foundation;
+using Windows.UI.ViewManagement;
 
 namespace FluentScreenRecorder
 {
@@ -90,6 +92,9 @@ namespace FluentScreenRecorder
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active 
+
+            ApplicationView.GetForCurrentView().TryResizeView(new Size(600, 400));
+
             if (rootFrame == null)
             {
                 // Create a Frame to act as the navigation context and navigate to the first page

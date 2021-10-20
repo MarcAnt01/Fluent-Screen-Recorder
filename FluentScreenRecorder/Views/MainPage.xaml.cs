@@ -137,13 +137,6 @@ namespace FluentScreenRecorder
             }
             FrameRateComboBox.ItemsSource = _frameRates;
             FrameRateComboBox.SelectedIndex = GetFrameRateIndex(settings.FrameRate);
-
-            if (settings.Gallery)
-            {
-                ApplicationView.GetForCurrentView().TryResizeView(new Size(600, 400));
-            }
-            else ApplicationView.GetForCurrentView().TryResizeView(new Size(300, 400));
-
         }
 
 
