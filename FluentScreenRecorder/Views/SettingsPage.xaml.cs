@@ -2,30 +2,19 @@
 using FluentScreenRecorder.Dialogs;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Graphics.DirectX.Direct3D11;
 using Windows.Media.MediaProperties;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI;
-using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace FluentScreenRecorder.Views
 {
-    
+
     public sealed partial class SettingsPage : Page
     {
 
@@ -295,9 +284,6 @@ namespace FluentScreenRecorder.Views
             public bool SystemPlayer;
             public bool ShowOnTop;
         }
-
-        private IDirect3DDevice _device;
-        private Encoder _encoder;
         private List<ResolutionItem> _resolutions;
         private List<BitrateItem> _bitrates;
         private List<FrameRateItem> _frameRates;

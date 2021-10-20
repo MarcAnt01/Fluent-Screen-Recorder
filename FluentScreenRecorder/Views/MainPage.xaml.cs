@@ -36,7 +36,6 @@ using Windows.Storage.FileProperties;
 using Windows.Storage.Search;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.System;
-using Windows.UI.Popups;
 using System.Linq;
 using Windows.Media.Capture;
 using Windows.Storage.Streams;
