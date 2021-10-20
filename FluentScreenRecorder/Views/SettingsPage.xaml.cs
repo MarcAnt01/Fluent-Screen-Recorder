@@ -302,4 +302,6 @@ namespace FluentScreenRecorder.Views
         private List<BitrateItem> _bitrates;
         private List<FrameRateItem> _frameRates;
     }
+
+
 }

@@ -2,15 +2,15 @@
     x:Class="FluentScreenRecorder.Views.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:FluentScreenRecorder.Views"
+    xmlns:local="using:FluentScreenRecorder"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:strings="using:FluentScreenRecorder.Strings" xmlns:local1="using:FluentScreenRecorder"
-    Background="{ThemeResource LayerFillColorDefaultBrush}">
+    Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
-        <local1:InvertBoolConverter x:Key="InvertBoolConv"/>
+        <local:InvertBoolConverter x:Key="InvertBoolConv"/>
         <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="{ThemeResource SystemAccentColor}"/>
     </Page.Resources>
 
@@ -52,7 +52,7 @@
         </Grid>
 
 
-        <Grid Grid.Row="1" Padding="10">
+        <Grid Grid.Row="1" Padding="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
                 <RowDefinition />
@@ -60,12 +60,23 @@
             <TextBlock Style="{StaticResource NavigationViewItemHeaderTextStyle}" 
                        AutomationProperties.Name="{x:Bind strings:Resources.Settings}" 
                        FontSize="25">Settings</TextBlock>
-            <ScrollViewer Grid.Row="1">
+            <ScrollViewer Grid.Row="1" Padding="0,0,20,0">
                 <StackPanel Orientation="Vertical">
+
+                    <Border Height="200" Background="{ThemeResource LayerFillColorDefaultBrush}"
+                                VerticalAlignment="Top" 
+                                HorizontalAlignment="Stretch" 
+                                CornerRadius="8"
+                                BorderThickness="1"
+                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}">
+                        <StackPanel Padding="10">
+                            <TextBlock Text="Sample lorem ipsum dolor sit amet" />
+                        </StackPanel>
+                    </Border>
 
                     <ComboBox x:Name="ResolutionComboBox" Header="{x:Bind strings:Resources.Resolution}" MinWidth="150" IsEnabled="{x:Bind UseCaptureItemToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}">
                         <ComboBox.ItemTemplate>
-                            <DataTemplate x:DataType="local1:ResolutionItem">
+                            <DataTemplate x:DataType="local:ResolutionItem">
                                 <TextBlock Text="{x:Bind DisplayName}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
@@ -73,7 +84,7 @@
 
                     <ComboBox x:Name="FrameRateComboBox" Margin="0,10,0,0" Header="{x:Bind strings:Resources.Framerate}" VerticalAlignment="Center">
                         <ComboBox.ItemTemplate>
-                            <DataTemplate x:DataType="local1:FrameRateItem">
+                            <DataTemplate x:DataType="local:FrameRateItem">
                                 <TextBlock Text="{x:Bind DisplayName}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
@@ -81,7 +92,7 @@
 
                     <ComboBox x:Name="BitrateComboBox" Margin="0,10,0,0" Header="{x:Bind strings:Resources.Bitrate}" VerticalAlignment="Center">
                         <ComboBox.ItemTemplate>
-                            <DataTemplate x:DataType="local1:BitrateItem">
+                            <DataTemplate x:DataType="local:BitrateItem">
                                 <TextBlock Text="{x:Bind DisplayName}"/>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>

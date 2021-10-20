@@ -13,6 +13,7 @@ using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Windows.ApplicationModel.ExtendedExecution.Foreground;
+using FluentScreenRecorder.Views;
 
 namespace FluentScreenRecorder
 {
@@ -157,7 +158,7 @@ namespace FluentScreenRecorder
             var rootFrame = Window.Current.Content as Frame;
             if (rootFrame != null)
             {
-                var page = rootFrame.Content as MainPage;
+                var page = rootFrame.Content as SettingsPage;
 
                 if (page != null && GraphicsCaptureSession.IsSupported())
                 {

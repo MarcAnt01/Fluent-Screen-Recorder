@@ -88,8 +88,6 @@ namespace FluentScreenRecorder
             InitializeComponent();
             this.Loaded += LoadedHandler;
 
-            ApplicationView.GetForCurrentView().TryResizeView(new Size(600, 400));
-
             MergingProgressRing.Visibility = Visibility.Collapsed;
 
             SilentPlayer = new MediaPlayer() { IsLoopingEnabled = true };
@@ -115,18 +113,6 @@ namespace FluentScreenRecorder
 
             var settings = GetCachedSettings();
 
-            _resolutions = new List<ResolutionItem>();
-            foreach (var resolution in EncoderPresets.Resolutions)
-            {
-                _resolutions.Add(new ResolutionItem()
-                {
-                    DisplayName = $"{resolution.Width} x {resolution.Height}",
-                    Resolution = resolution,
-                });
-            }
-            ResolutionComboBox.ItemsSource = _resolutions;
-            ResolutionComboBox.SelectedIndex = GetResolutionIndex(settings.Width, settings.Height);
-
             _bitrates = new List<BitrateItem>();
             foreach (var bitrate in EncoderPresets.Bitrates)
             {
@@ -151,12 +137,13 @@ namespace FluentScreenRecorder
             }
             FrameRateComboBox.ItemsSource = _frameRates;
             FrameRateComboBox.SelectedIndex = GetFrameRateIndex(settings.FrameRate);
-            UseCaptureItemToggleSwitch.IsOn = settings.UseSourceSize;            
-            AudioToggleSwitch.IsOn = settings.IntAudio;
-            ExtAudioToggleSwitch.IsOn = settings.ExtAudio;
-            GalleryToggleSwitch.IsOn = settings.Gallery;        
-            SystemPlayerToggleSwitch.IsOn = settings.SystemPlayer;
-            OverlayToggleSwitch.IsOn = settings.ShowOnTop;
+
+            if (settings.Gallery)
+            {
+                ApplicationView.GetForCurrentView().TryResizeView(new Size(600, 400));
+            }
+            else ApplicationView.GetForCurrentView().TryResizeView(new Size(300, 400));
+
         }
 
 
@@ -165,7 +152,7 @@ namespace FluentScreenRecorder
         private async void LoadedHandler(object sender, RoutedEventArgs e)
         {
             this.Loaded -= LoadedHandler;
-            if (OverlayToggleSwitch.IsOn)
+            if (GetCachedSettings().ShowOnTop)
             {
                 var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
                 preferences.CustomSize = new Size(400, 260);
@@ -217,23 +204,23 @@ namespace FluentScreenRecorder
 
             // Get our encoder properties
             var frameRateItem = (FrameRateItem)FrameRateComboBox.SelectedItem;
-            var resolutionItem = (ResolutionItem)ResolutionComboBox.SelectedItem;
+            var resolutionItem = _resolutions[GetResolutionIndex(GetCachedSettings().Width, GetCachedSettings().Height)];
             var bitrateItem = (BitrateItem)BitrateComboBox.SelectedItem;
 
-            if (UseCaptureItemToggleSwitch.IsOn)
+            if (GetCachedSettings().UseSourceSize)
             {
                 resolutionItem.IsZero();
             }
 
             MediaCapture mediaCapture = null;
 
-            if (AudioToggleSwitch.IsOn)
+            if (GetCachedSettings().IntAudio)
             {
                 loopbackAudioCapture = new LoopbackAudioCapture(MediaDevice.GetDefaultAudioRenderId(AudioDeviceRole.Default));
                 loopbackAudioCapture.BufferReadyDelegate = LoopbackBufferReady;
                 BufferList.Clear();
             }
-            else if (ExtAudioToggleSwitch.IsOn)
+            else if (GetCachedSettings().ExtAudio)
             {
                 if (await IsMicAllowed())
                 {
@@ -264,7 +251,7 @@ namespace FluentScreenRecorder
             var height = resolutionItem.Resolution.Height;
             var bitrate = bitrateItem.Bitrate;
             var frameRate = frameRateItem.FrameRate;
-            if (UseCaptureItemToggleSwitch.IsOn)
+            if (GetCachedSettings().UseSourceSize)
             {
                 resolutionItem.IsZero();
             }
@@ -279,7 +266,7 @@ namespace FluentScreenRecorder
             }
 
             // Use the capture item's size for the encoding if desired
-            if (UseCaptureItemToggleSwitch.IsOn)
+            if (GetCachedSettings().UseSourceSize)
             {
                 width = (uint)item.Size.Width;
                 height = (uint)item.Size.Height;
@@ -388,11 +375,11 @@ namespace FluentScreenRecorder
             // At this point the encoding has finished,
             // tell the user we're now saving
 
-            if (AudioToggleSwitch.IsOn)
+            if (GetCachedSettings().IntAudio)
             {
                 CompleteRecording(BufferList.ToArray(), width, height, bitrate, frameRate);
             }
-            else if (ExtAudioToggleSwitch.IsOn)
+            else if (GetCachedSettings().ExtAudio)
             {
                 var clip = await MediaClip.CreateFromFileAsync(_tempFile);
                 var composition = new MediaComposition();
@@ -503,7 +490,7 @@ namespace FluentScreenRecorder
         {
             //Collecting some info before being lost
 
-            if (AudioToggleSwitch.IsOn && loopbackAudioCapture.Started)
+            if (GetCachedSettings().IntAudio && loopbackAudioCapture.Started)
             {
                 audioEncodingProperties = loopbackAudioCapture.EncodingProperties;
                 await loopbackAudioCapture.Stop();
@@ -734,25 +721,6 @@ namespace FluentScreenRecorder
             }
         }
 
-        private AppSettings GetCurrentSettings()
-        {
-            var resolutionItem = (ResolutionItem)ResolutionComboBox.SelectedItem;
-            var width = resolutionItem.Resolution.Width;
-            var height = resolutionItem.Resolution.Height;
-            var bitrateItem = (BitrateItem)BitrateComboBox.SelectedItem;
-            var bitrate = bitrateItem.Bitrate;
-            var frameRateItem = (FrameRateItem)FrameRateComboBox.SelectedItem;
-            var frameRate = frameRateItem.FrameRate;
-            var useSourceSize = UseCaptureItemToggleSwitch.IsOn;            
-            var intAudio = AudioToggleSwitch.IsOn;
-            var extAudio = ExtAudioToggleSwitch.IsOn;
-            var gallery = GalleryToggleSwitch.IsOn;            
-            var systemPlayer = SystemPlayerToggleSwitch.IsOn;
-            var showOnTop = OverlayToggleSwitch.IsOn;
-            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize, IntAudio = intAudio, ExtAudio = extAudio, Gallery = gallery, SystemPlayer = systemPlayer, ShowOnTop = showOnTop };
-
-        }
-
         private AppSettings GetCachedSettings()
         {
             var localSettings = ApplicationData.Current.LocalSettings;
@@ -824,7 +792,7 @@ namespace FluentScreenRecorder
         }
         public void CacheCurrentSettings()
         {
-            var settings = GetCurrentSettings();
+            var settings = GetCachedSettings();
             CacheSettings(settings);
         }
 
@@ -916,7 +884,7 @@ namespace FluentScreenRecorder
         {
             ThumbItem item = (sender as Image).DataContext as ThumbItem;
             var videoFile = await (await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder")).GetFileAsync(item.fileN);
-            if (SystemPlayerToggleSwitch.IsOn)
+            if (GetCachedSettings().SystemPlayer)
             {
                 await Launcher.LaunchFileAsync(videoFile);
             }
@@ -966,7 +934,7 @@ namespace FluentScreenRecorder
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
         {
 
-            if (filesInFolder = true && GalleryToggleSwitch.IsOn)
+            if (filesInFolder = true && GetCachedSettings().Gallery)
             {
                 GridContainer.Visibility = Visibility.Visible;
             }
