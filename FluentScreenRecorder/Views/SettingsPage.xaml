@@ -52,14 +52,14 @@
         </Grid>
 
 
-        <Grid Grid.Row="1" Padding="20">
+        <Grid Grid.Row="1" Padding="20,20,20,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="60" />
+                <RowDefinition Height="50" />
                 <RowDefinition />
             </Grid.RowDefinitions>
             <TextBlock Style="{StaticResource NavigationViewItemHeaderTextStyle}" 
                        AutomationProperties.Name="{x:Bind strings:Resources.Settings}" 
-                       FontSize="40">Settings</TextBlock>
+                       FontSize="35">Settings</TextBlock>
             
             <ScrollViewer Grid.Row="1" Padding="0,0,20,0">
                 <StackPanel Orientation="Vertical">
