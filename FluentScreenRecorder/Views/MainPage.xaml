@@ -108,7 +108,7 @@
                     <StackPanel x:Name="itemsToHideInRecord" Orientation="Horizontal" Spacing="8">
                         <AppBarSeparator />
 
-                        <ComboBox x:Name="FrameRateComboBox" VerticalAlignment="Center">
+                        <ComboBox x:Name="FrameRateComboBox" SelectionChanged="FrameRateComboBox_SelectionChanged" VerticalAlignment="Center">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="local:FrameRateItem">
                                     <TextBlock Text="{x:Bind DisplayName}"/>
@@ -116,7 +116,7 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
 
-                        <ComboBox x:Name="BitrateComboBox" VerticalAlignment="Center">
+                        <ComboBox x:Name="BitrateComboBox" SelectionChanged="BitrateComboBox_SelectionChanged" VerticalAlignment="Center">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="local:BitrateItem">
                                     <TextBlock Text="{x:Bind DisplayName}"/>
@@ -178,7 +178,7 @@
 
             </Grid>
             <RelativePanel Grid.Row="2"
-                           Background="{ThemeResource LayerFillColorDefaultBrush}"
+                           Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
                            x:Name="RecordingContentContainer"
                            Visibility="Collapsed">
                 <StackPanel Orientation="Vertical"

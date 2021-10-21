@@ -112,6 +112,16 @@ namespace FluentScreenRecorder
 
             var settings = GetCachedSettings();
 
+            _resolutions = new List<ResolutionItem>();
+            foreach (var resolution in EncoderPresets.Resolutions)
+            {
+                _resolutions.Add(new ResolutionItem()
+                {
+                    DisplayName = $"{resolution.Width} x {resolution.Height}",
+                    Resolution = resolution,
+                });
+            }
+
             _bitrates = new List<BitrateItem>();
             foreach (var bitrate in EncoderPresets.Bitrates)
             {
@@ -349,7 +359,6 @@ namespace FluentScreenRecorder
                 visual.StopAnimation("Opacity");
 
                 RecordingContentContainer.Visibility = Visibility.Collapsed;
-
 
                 MainTextBlock.Foreground = originalBrush;
                 RecordIcon.Visibility = Visibility.Visible;
@@ -1020,6 +1029,16 @@ namespace FluentScreenRecorder
             ThumbItem item = (sender as Image).DataContext as ThumbItem;
             recordedVideoFile = await(await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder")).GetFileAsync(item.fileN);
 
+        }
+
+        private void FrameRateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender != null) CacheCurrentSettings();
+        }
+
+        private void BitrateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender != null) CacheCurrentSettings();
         }
     }
 }

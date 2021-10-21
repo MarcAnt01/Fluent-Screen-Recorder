@@ -93,16 +93,6 @@
 
                     <TextBlock Text="Advanced"
                                Margin="0,10,0,10"/>
-                    <local:SettingsBlockControl Title="{x:Bind strings:Resources.Framerate}" 
-                                                Description="The framerate used for the video.">
-                        <ComboBox x:Name="FrameRateComboBox" VerticalAlignment="Center">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate x:DataType="local:FrameRateItem">
-                                    <TextBlock Text="{x:Bind DisplayName}"/>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </local:SettingsBlockControl>
 
                     <local:SettingsBlockControl Margin="0,10,0,0" Title="{x:Bind strings:Resources.Resolution}" Description="The resolution used for the video (for example: 1920x1080).">
                         <ComboBox x:Name="ResolutionComboBox" 
@@ -110,16 +100,6 @@
                                   IsEnabled="{x:Bind UseCaptureItemToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="local:ResolutionItem">
-                                    <TextBlock Text="{x:Bind DisplayName}"/>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </local:SettingsBlockControl>
-
-                    <local:SettingsBlockControl Margin="0,10,0,0" Title="{x:Bind strings:Resources.Bitrate}" Description="The bitrate used for the video.">
-                        <ComboBox x:Name="BitrateComboBox" VerticalAlignment="Center">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate x:DataType="local:BitrateItem">
                                     <TextBlock Text="{x:Bind DisplayName}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>

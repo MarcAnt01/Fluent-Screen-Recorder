@@ -49,8 +49,6 @@ namespace FluentScreenRecorder.Views
                     Bitrate = bitrate,
                 });
             }
-            BitrateComboBox.ItemsSource = _bitrates;
-            BitrateComboBox.SelectedIndex = GetBitrateIndex(settings.Bitrate);
 
             _frameRates = new List<FrameRateItem>();
             foreach (var frameRate in EncoderPresets.FrameRates)
@@ -61,8 +59,7 @@ namespace FluentScreenRecorder.Views
                     FrameRate = frameRate,
                 });
             }
-            FrameRateComboBox.ItemsSource = _frameRates;
-            FrameRateComboBox.SelectedIndex = GetFrameRateIndex(settings.FrameRate);
+
             UseCaptureItemToggleSwitch.IsOn = settings.UseSourceSize;
             AudioToggleSwitch.IsOn = settings.IntAudio;
             ExtAudioToggleSwitch.IsOn = settings.ExtAudio;
@@ -76,9 +73,9 @@ namespace FluentScreenRecorder.Views
             var resolutionItem = (ResolutionItem)ResolutionComboBox.SelectedItem;
             var width = resolutionItem.Resolution.Width;
             var height = resolutionItem.Resolution.Height;
-            var bitrateItem = (BitrateItem)BitrateComboBox.SelectedItem;
+            var bitrateItem = _bitrates[GetBitrateIndex(GetCachedSettings().Bitrate)];
             var bitrate = bitrateItem.Bitrate;
-            var frameRateItem = (FrameRateItem)FrameRateComboBox.SelectedItem;
+            var frameRateItem = _frameRates[GetFrameRateIndex(GetCachedSettings().FrameRate)];
             var frameRate = frameRateItem.FrameRate;
             var useSourceSize = UseCaptureItemToggleSwitch.IsOn;
             var intAudio = AudioToggleSwitch.IsOn;
@@ -205,6 +202,7 @@ namespace FluentScreenRecorder.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            CacheCurrentSettings();
             this.Frame.Navigate(typeof(MainPage));
         }
 
