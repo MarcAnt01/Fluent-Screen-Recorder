@@ -54,68 +54,90 @@
 
         <Grid Grid.Row="1" Padding="20">
             <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
+                <RowDefinition Height="60" />
                 <RowDefinition />
             </Grid.RowDefinitions>
             <TextBlock Style="{StaticResource NavigationViewItemHeaderTextStyle}" 
                        AutomationProperties.Name="{x:Bind strings:Resources.Settings}" 
-                       FontSize="25">Settings</TextBlock>
+                       FontSize="40">Settings</TextBlock>
+            
             <ScrollViewer Grid.Row="1" Padding="0,0,20,0">
                 <StackPanel Orientation="Vertical">
 
-                    <Border Height="200" Background="{ThemeResource LayerFillColorDefaultBrush}"
-                                VerticalAlignment="Top" 
-                                HorizontalAlignment="Stretch" 
-                                CornerRadius="8"
-                                BorderThickness="1"
-                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}">
-                        <StackPanel Padding="10">
-                            <TextBlock Text="Sample lorem ipsum dolor sit amet" />
-                        </StackPanel>
-                    </Border>
+                    <TextBlock Text="General"
+                               Margin="0,10,0,5"/>
 
-                    <ComboBox x:Name="ResolutionComboBox" Header="{x:Bind strings:Resources.Resolution}" MinWidth="150" IsEnabled="{x:Bind UseCaptureItemToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate x:DataType="local:ResolutionItem">
-                                <TextBlock Text="{x:Bind DisplayName}"/>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                    <local:SettingsBlockControl Margin="0,10,0,0" Title="{x:Bind strings:Resources.GalleryView}" Description="Show recent videos you have recorded.">
+                        <ToggleSwitch x:Name="GalleryToggleSwitch" />
+                    </local:SettingsBlockControl>
 
-                    <ComboBox x:Name="FrameRateComboBox" Margin="0,10,0,0" Header="{x:Bind strings:Resources.Framerate}" VerticalAlignment="Center">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate x:DataType="local:FrameRateItem">
-                                <TextBlock Text="{x:Bind DisplayName}"/>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                    <local:SettingsBlockControl Margin="0,10,0,0" Title="Source size" Description="{x:Bind strings:Resources.SourceSizeToggle}">
+                        <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" />
+                    </local:SettingsBlockControl>
 
-                    <ComboBox x:Name="BitrateComboBox" Margin="0,10,0,0" Header="{x:Bind strings:Resources.Bitrate}" VerticalAlignment="Center">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate x:DataType="local:BitrateItem">
-                                <TextBlock Text="{x:Bind DisplayName}"/>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                    <local:SettingsBlockControl Margin="0,10,0,0" Title="{x:Bind strings:Resources.InternalAudio}" Description="Record internal audio with the video.">
+                        <ToggleSwitch x:Name="AudioToggleSwitch" IsEnabled="{x:Bind ExtAudioToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}"/>
+                    </local:SettingsBlockControl>
 
-                    <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" Header="{x:Bind strings:Resources.SourceSizeToggle}" Margin="8" />
-                    <ToggleSwitch x:Name="AudioToggleSwitch" Header="{x:Bind strings:Resources.InternalAudio}" Margin="8"  IsEnabled="{x:Bind ExtAudioToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}"/>
-                    <ToggleSwitch x:Name="ExtAudioToggleSwitch" Header="{x:Bind strings:Resources.ExternalAudio}" Margin="8"  IsEnabled="{x:Bind AudioToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}"/>
+                    <local:SettingsBlockControl Margin="0,10,0,0" Title="{x:Bind strings:Resources.ExternalAudio}" Description="Record microphone with the video.">
+                        <ToggleSwitch x:Name="ExtAudioToggleSwitch" IsEnabled="{x:Bind AudioToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}"/>
+                    </local:SettingsBlockControl>
+
+                    <local:SettingsBlockControl Margin="0,10,0,0" Title="System player" Description="{x:Bind strings:Resources.SystemVideoPlayerOption}">
+                        <ToggleSwitch x:Name="SystemPlayerToggleSwitch" />
+                    </local:SettingsBlockControl>
+
+                    <local:SettingsBlockControl Margin="0,10,0,0" Title="Overlay mode" Description="{x:Bind strings:Resources.OverlayMode}">
+                        <ToggleSwitch x:Name="OverlayToggleSwitch" />
+                    </local:SettingsBlockControl>
+
+                    <TextBlock Text="Advanced"
+                               Margin="0,10,0,10"/>
+                    <local:SettingsBlockControl Title="{x:Bind strings:Resources.Framerate}" 
+                                                Description="The framerate used for the video.">
+                        <ComboBox x:Name="FrameRateComboBox" VerticalAlignment="Center">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="local:FrameRateItem">
+                                    <TextBlock Text="{x:Bind DisplayName}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </local:SettingsBlockControl>
+
+                    <local:SettingsBlockControl Margin="0,10,0,0" Title="{x:Bind strings:Resources.Resolution}" Description="The resolution used for the video (for example: 1920x1080).">
+                        <ComboBox x:Name="ResolutionComboBox" 
+                                  MinWidth="150" 
+                                  IsEnabled="{x:Bind UseCaptureItemToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="local:ResolutionItem">
+                                    <TextBlock Text="{x:Bind DisplayName}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </local:SettingsBlockControl>
+
+                    <local:SettingsBlockControl Margin="0,10,0,0" Title="{x:Bind strings:Resources.Bitrate}" Description="The bitrate used for the video.">
+                        <ComboBox x:Name="BitrateComboBox" VerticalAlignment="Center">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="local:BitrateItem">
+                                    <TextBlock Text="{x:Bind DisplayName}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </local:SettingsBlockControl>
+
                     <StackPanel Orientation="Vertical">
-                        <Button x:Name="MicSettingsButton" Click="MicSettingsButton_Click" HorizontalContentAlignment="Stretch" AutomationProperties.Name="{x:Bind strings:Resources.MicSettings}" >
+                        <Button x:Name="MicSettingsButton" Margin="0,10,0,0" Padding="0,20" Click="MicSettingsButton_Click" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" AutomationProperties.Name="{x:Bind strings:Resources.MicSettings}" >
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition  Width="20"/>
                                     <ColumnDefinition  Width="*"/>
+                                    <ColumnDefinition  Width="20"/>
                                 </Grid.ColumnDefinitions>
-                                <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF548;"/>
-                                <TextBlock Grid.Column="1" Text="{x:Bind strings:Resources.MicSettings}" Margin="8,0,0,0" TextWrapping="WrapWholeWords"/>
+                                <TextBlock Margin="10,0,0,0" Grid.Column="0" Text="{x:Bind strings:Resources.MicSettings}" TextWrapping="WrapWholeWords"/>
+                                <SymbolIcon Margin="-30,0,0,0" Symbol="Go" Grid.Column="1" />
                             </Grid>
                         </Button>
-                        <ToggleSwitch x:Name="GalleryToggleSwitch" Header="{x:Bind strings:Resources.GalleryView}" Margin="8" />
-                        <ToggleSwitch x:Name="SystemPlayerToggleSwitch" Header="{x:Bind strings:Resources.SystemVideoPlayerOption}" Margin="8" />
-                        <ToggleSwitch x:Name="OverlayToggleSwitch" Header="{x:Bind strings:Resources.OverlayMode}" Margin="8" />
-
+                        
                         <Button x:Name="DonateButton" Width="144" Margin="8" Click="DonateButton_Click" AutomationProperties.Name="{x:Bind strings:Resources.Donate}">
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF479;" Margin="0,0,8,0"/>
