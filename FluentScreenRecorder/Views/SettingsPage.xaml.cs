@@ -221,22 +221,11 @@ namespace FluentScreenRecorder.Views
             await Launcher.LaunchUriAsync(uri);
         }
 
-        private async void AboutButton_Click(object sender, RoutedEventArgs e)
-        {
-            ContentDialog dialog = new AboutDialog();
-            await dialog.ShowAsync();
-        }
         private async void DonateButton1_Click(object sender, RoutedEventArgs e)
         {
             string uriToLaunch = @"https://paypal.me/pools/c/8Bxl3GiJqn";
             var uri = new Uri(uriToLaunch);
             await Launcher.LaunchUriAsync(uri);
-        }
-
-        private async void AboutButton1_Click(object sender, RoutedEventArgs e)
-        {
-            ContentDialog dialog = new AboutDialog();
-            await dialog.ShowAsync();
         }
 
         private int GetBitrateIndex(uint bitrate)
@@ -306,13 +295,6 @@ namespace FluentScreenRecorder.Views
             PackageVersion version = packageId.Version;
 
             return string.Format(" {0}.{1}.{2}", version.Major, version.Minor, version.Build);
-        }
-
-        private async void IssueOpen_Click(object sender, RoutedEventArgs args)
-        {
-            string gitHubIssue = @"https://github.com/MarcAnt01/Fluent-Screen-Recorder/issues/new";
-            var uri = new Uri(gitHubIssue);
-            var uriOpened = await Windows.System.Launcher.LaunchUriAsync(uri);
         }
 
     }
