@@ -1,10 +1,8 @@
 ﻿using CaptureEncoder;
-using FluentScreenRecorder.Dialogs;
 using System;
 using System.Collections.Generic;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
-using Windows.Graphics.DirectX.Direct3D11;
 using Windows.Media.MediaProperties;
 using Windows.Storage;
 using Windows.System;
