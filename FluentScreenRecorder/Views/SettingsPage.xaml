@@ -60,80 +60,88 @@
             <TextBlock Style="{StaticResource NavigationViewItemHeaderTextStyle}" 
                        AutomationProperties.Name="{x:Bind strings:Resources.Settings}" 
                        FontSize="35">Settings</TextBlock>
-            
-            <ScrollViewer Grid.Row="1" Padding="0,0,20,0">
-                <StackPanel Orientation="Vertical">
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="180" x:Name="SidebarAbout" />
+                </Grid.ColumnDefinitions>
+                <ScrollViewer Grid.Column="0" Padding="0,0,20,0" Margin="0,0,8,0">
+                    <StackPanel Orientation="Vertical">
 
-                    <TextBlock Text="General"
+                        <TextBlock Text="General"
                                Margin="0,10,0,5"/>
 
-                    <local:SettingsBlockControl Margin="0,10,0,0" Title="{x:Bind strings:Resources.GalleryView}" Description="Show recent videos you have recorded.">
-                        <ToggleSwitch x:Name="GalleryToggleSwitch" />
-                    </local:SettingsBlockControl>
+                        <local:SettingsBlockControl Margin="0,10,0,0" Title="{x:Bind strings:Resources.GalleryView}" Description="Show recent videos you have recorded.">
+                            <ToggleSwitch x:Name="GalleryToggleSwitch" />
+                        </local:SettingsBlockControl>
 
-                    <local:SettingsBlockControl Margin="0,10,0,0" Title="Source size" Description="{x:Bind strings:Resources.SourceSizeToggle}">
-                        <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" />
-                    </local:SettingsBlockControl>
+                        <local:SettingsBlockControl Margin="0,10,0,0" Title="Source size" Description="{x:Bind strings:Resources.SourceSizeToggle}">
+                            <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" />
+                        </local:SettingsBlockControl>
 
-                    <local:SettingsBlockControl Margin="0,10,0,0" Title="{x:Bind strings:Resources.InternalAudio}" Description="Record internal audio with the video.">
-                        <ToggleSwitch x:Name="AudioToggleSwitch" IsEnabled="{x:Bind ExtAudioToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}"/>
-                    </local:SettingsBlockControl>
+                        <local:SettingsBlockControl Margin="0,10,0,0" Title="System player" Description="{x:Bind strings:Resources.SystemVideoPlayerOption}">
+                            <ToggleSwitch x:Name="SystemPlayerToggleSwitch" />
+                        </local:SettingsBlockControl>
 
-                    <local:SettingsBlockControl Margin="0,10,0,0" Title="{x:Bind strings:Resources.ExternalAudio}" Description="Record microphone with the video.">
-                        <ToggleSwitch x:Name="ExtAudioToggleSwitch" IsEnabled="{x:Bind AudioToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}"/>
-                    </local:SettingsBlockControl>
+                        <local:SettingsBlockControl Margin="0,10,0,0" Title="Overlay mode" Description="{x:Bind strings:Resources.OverlayMode}">
+                            <ToggleSwitch x:Name="OverlayToggleSwitch" />
+                        </local:SettingsBlockControl>
 
-                    <local:SettingsBlockControl Margin="0,10,0,0" Title="System player" Description="{x:Bind strings:Resources.SystemVideoPlayerOption}">
-                        <ToggleSwitch x:Name="SystemPlayerToggleSwitch" />
-                    </local:SettingsBlockControl>
-
-                    <local:SettingsBlockControl Margin="0,10,0,0" Title="Overlay mode" Description="{x:Bind strings:Resources.OverlayMode}">
-                        <ToggleSwitch x:Name="OverlayToggleSwitch" />
-                    </local:SettingsBlockControl>
-
-                    <TextBlock Text="Advanced"
+                        <TextBlock Text="Advanced"
                                Margin="0,10,0,10"/>
 
-                    <local:SettingsBlockControl Margin="0,10,0,0" Title="{x:Bind strings:Resources.Resolution}" Description="The resolution used for the video (for example: 1920x1080).">
-                        <ComboBox x:Name="ResolutionComboBox" 
+                        <local:SettingsBlockControl Margin="0,10,0,0" Title="{x:Bind strings:Resources.Resolution}" Description="The resolution used for the video (for example: 1920x1080).">
+                            <ComboBox x:Name="ResolutionComboBox" 
                                   MinWidth="150" 
                                   IsEnabled="{x:Bind UseCaptureItemToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate x:DataType="local:ResolutionItem">
-                                    <TextBlock Text="{x:Bind DisplayName}"/>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </local:SettingsBlockControl>
-
-                    <StackPanel Orientation="Vertical">
-                        <Button x:Name="MicSettingsButton" Margin="0,10,0,0" Padding="0,20" Click="MicSettingsButton_Click" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" AutomationProperties.Name="{x:Bind strings:Resources.MicSettings}" >
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition  Width="*"/>
-                                    <ColumnDefinition  Width="20"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Margin="10,0,0,0" Grid.Column="0" Text="{x:Bind strings:Resources.MicSettings}" TextWrapping="WrapWholeWords"/>
-                                <SymbolIcon Margin="-30,0,0,0" Symbol="Go" Grid.Column="1" />
-                            </Grid>
-                        </Button>
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate x:DataType="local:ResolutionItem">
+                                        <TextBlock Text="{x:Bind DisplayName}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </local:SettingsBlockControl>
                         
-                        <Button x:Name="DonateButton" Width="144" Margin="8" Click="DonateButton_Click" AutomationProperties.Name="{x:Bind strings:Resources.Donate}">
-                            <StackPanel Orientation="Horizontal">
-                                <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF479;" Margin="0,0,8,0"/>
-                                <TextBlock Text="{x:Bind strings:Resources.Donate}"/>
-                            </StackPanel>
-                        </Button>
-                        <Button x:Name="AboutButton" Width="144" Margin="8" Click="AboutButton_Click" AutomationProperties.Name="{x:Bind strings:Resources.About}">
-                            <StackPanel Orientation="Horizontal">
-                                <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF4A3;" Margin="0,0,8,0"/>
-                                <TextBlock Text="{x:Bind strings:Resources.About}"/>
-                            </StackPanel>
-                        </Button>
+                        <StackPanel Orientation="Vertical">
+                            <Button x:Name="MicSettingsButton" Margin="0,10,0,0" Padding="0,20" Click="MicSettingsButton_Click" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" AutomationProperties.Name="{x:Bind strings:Resources.MicSettings}" >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition  Width="*"/>
+                                        <ColumnDefinition  Width="20"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Margin="10,0,0,0" Grid.Column="0" Text="{x:Bind strings:Resources.MicSettings}" TextWrapping="WrapWholeWords"/>
+                                    <SymbolIcon Margin="-30,0,0,0" Symbol="Go" Grid.Column="1" />
+                                </Grid>
+                            </Button>
+                        </StackPanel>
+                        
+                        <local:SettingsBlockControl Margin="0,10,0,0" Title="{x:Bind strings:Resources.InternalAudio}" Description="Record internal audio with the video.">
+                            <ToggleSwitch x:Name="AudioToggleSwitch" IsEnabled="{x:Bind ExtAudioToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}"/>
+                        </local:SettingsBlockControl>
 
+                        <local:SettingsBlockControl Margin="0,10,0,10" Title="{x:Bind strings:Resources.ExternalAudio}" Description="Record microphone with the video.">
+                            <ToggleSwitch x:Name="ExtAudioToggleSwitch" IsEnabled="{x:Bind AudioToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}"/>
+                        </local:SettingsBlockControl>
                     </StackPanel>
+                    
+                </ScrollViewer>
+
+                <StackPanel Orientation="Vertical" Grid.Column="1">
+                    <TextBlock Text="Fluent Screen Recorder" />
+
+                    <HyperlinkButton Margin="0,8,0,0" Content="{x:Bind strings:Resources.GitHub}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder"/>
+                    <HyperlinkButton Content="{x:Bind strings:Resources.Discord}" NavigateUri="https://discord.gg/v4EXAwXPHw"/>
+                    <HyperlinkButton Content="{x:Bind strings:Resources.Privacy}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/PRIVACY.md"/>
+                    <HyperlinkButton Content="{x:Bind strings:Resources.Copyright}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/LICENSE"/>
+                    <Button x:Name="DonateButton" Width="144" Margin="8" Click="DonateButton_Click" AutomationProperties.Name="{x:Bind strings:Resources.Donate}">
+                        <StackPanel Orientation="Horizontal">
+                            <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF479;" Margin="0,0,8,0"/>
+                            <TextBlock Text="{x:Bind strings:Resources.Donate}"/>
+                        </StackPanel>
+                    </Button>
+                    <TextBlock x:Name="AppVersionText" />
                 </StackPanel>
-            </ScrollViewer>
+            </Grid>
         </Grid>
     </Grid>
 </Page>

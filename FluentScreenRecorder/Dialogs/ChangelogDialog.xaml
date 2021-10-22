@@ -9,7 +9,8 @@
     mc:Ignorable="d"
     Title="{x:Bind displayedVersion}"
     CloseButtonText="{x:Bind strings:Resources.Ok}"
-    CornerRadius="7">
+    CornerRadius="7"
+    CloseButtonStyle="{ThemeResource DefaultButtonStyle}">
 
     <ScrollViewer>
         <StackPanel>

@@ -157,7 +157,7 @@ namespace FluentScreenRecorder
             if (GetCachedSettings().ShowOnTop)
             {
                 var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
-                preferences.CustomSize = new Size(400, 260);
+                preferences.CustomSize = new Size(400, 600);
                 bool modeSwitched = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
                 GoToOverlayIcon.Visibility = Visibility.Collapsed;
                 ExitOverlayIcon.Visibility = Visibility.Visible;
@@ -875,12 +875,6 @@ namespace FluentScreenRecorder
         private List<BitrateItem> _bitrates;
         private List<FrameRateItem> _frameRates;
 
-        private async void AboutButton_Click(object sender, RoutedEventArgs e)
-        {
-            ContentDialog dialog = new AboutDialog();
-            await dialog.ShowAsync();
-        }
-
         public async void Image_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             ThumbItem item = (sender as Image).DataContext as ThumbItem;
@@ -905,7 +899,7 @@ namespace FluentScreenRecorder
             if (ApplicationView.GetForCurrentView().ViewMode == ApplicationViewMode.Default)
             {
                 var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
-                preferences.CustomSize = new Size(400, 260);
+                preferences.CustomSize = new Size(400, 600);
                 bool modeSwitched = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
                 if (modeSwitched)
                 {

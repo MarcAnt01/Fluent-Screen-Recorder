@@ -8,7 +8,8 @@
     mc:Ignorable="d"
     Title="Info" 
     CloseButtonText="{x:Bind strings:Resources.Ok}"
-    CornerRadius="7">
+    CornerRadius="7"
+    CloseButtonStyle="{ThemeResource DefaultButtonStyle}">
 
     <StackPanel>
         <TextBlock x:Name="Frameblock"/>

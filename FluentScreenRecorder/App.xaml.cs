@@ -93,6 +93,7 @@ namespace FluentScreenRecorder
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active 
 
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(500, 400));
             ApplicationView.GetForCurrentView().TryResizeView(new Size(600, 400));
 
             if (rootFrame == null)

@@ -2,6 +2,7 @@
 using FluentScreenRecorder.Dialogs;
 using System;
 using System.Collections.Generic;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Graphics.DirectX.Direct3D11;
 using Windows.Media.MediaProperties;
@@ -66,6 +67,8 @@ namespace FluentScreenRecorder.Views
             GalleryToggleSwitch.IsOn = settings.Gallery;
             SystemPlayerToggleSwitch.IsOn = settings.SystemPlayer;
             OverlayToggleSwitch.IsOn = settings.ShowOnTop;
+
+            AppVersionText.Text = $"Version: {GetAppVersion()}";
         }
 
         private AppSettings GetCurrentSettings()
@@ -225,6 +228,18 @@ namespace FluentScreenRecorder.Views
             ContentDialog dialog = new AboutDialog();
             await dialog.ShowAsync();
         }
+        private async void DonateButton1_Click(object sender, RoutedEventArgs e)
+        {
+            string uriToLaunch = @"https://paypal.me/pools/c/8Bxl3GiJqn";
+            var uri = new Uri(uriToLaunch);
+            await Launcher.LaunchUriAsync(uri);
+        }
+
+        private async void AboutButton1_Click(object sender, RoutedEventArgs e)
+        {
+            ContentDialog dialog = new AboutDialog();
+            await dialog.ShowAsync();
+        }
 
         private int GetBitrateIndex(uint bitrate)
         {
@@ -285,7 +300,23 @@ namespace FluentScreenRecorder.Views
         private List<ResolutionItem> _resolutions;
         private List<BitrateItem> _bitrates;
         private List<FrameRateItem> _frameRates;
-    }
 
+        private string GetAppVersion()
+        {
+            Package package = Package.Current;
+            PackageId packageId = package.Id;
+            PackageVersion version = packageId.Version;
+
+            return string.Format(" {0}.{1}.{2}", version.Major, version.Minor, version.Build);
+        }
+
+        private async void IssueOpen_Click(object sender, RoutedEventArgs args)
+        {
+            string gitHubIssue = @"https://github.com/MarcAnt01/Fluent-Screen-Recorder/issues/new";
+            var uri = new Uri(gitHubIssue);
+            var uriOpened = await Windows.System.Launcher.LaunchUriAsync(uri);
+        }
+
+    }
 
 }
