@@ -19,11 +19,11 @@
             <RowDefinition Height="32" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Grid x:Name="TopBar" Grid.Row="0" Height="32" >
+
+        <Grid x:Name="TopBar" Grid.Row="0" Height="32">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="LeftPaddingColumn"
                                   Width="0" />
-                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition x:Name="RightPaddingColumn"
@@ -36,35 +36,62 @@
                     BorderThickness="0"
                     ToolTipService.ToolTip="{x:Bind strings:Resources.Back}"
                     AutomationProperties.AutomationId="{x:Bind strings:Resources.Back}"
-                    Grid.Column="1">
+                    Grid.Column="1"
+                    Canvas.ZIndex="1"
+                    Margin="0,1,0,0">
                 <FontIcon Glyph="&#xE72B;"
                           FontSize="12"
-                          Margin="0,4,-4,0"/>
+                          Margin="0,3,-3,0"/>
             </Button>
             <Grid x:Name="UserLayout"
                   Background="Transparent"
-                  Grid.Column="2">
+                  Grid.Column="1">
                 <TextBlock Text="Fluent Screen Recorder"
+                           VerticalAlignment="Center"
+                           Grid.Column="1"
                            Style="{StaticResource CaptionTextBlockStyle}"
-                           Margin="4,4,4,8"
-                           VerticalAlignment="Center" />
+                           Margin="35,4,4,4" />
             </Grid>
+            <Button  x:Name="OverlayButton"
+                     Click="OverlayButton_Click"
+                     VerticalAlignment="Stretch"
+                     Grid.Column="2"
+                     Background="Transparent"
+                     BorderBrush="Transparent"
+                     BorderThickness="0">
+                <StackPanel>
+                    <Path
+                        x:Name="GoToOverlayIcon"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Height="16"
+                        Width="16"
+                        Fill="{ThemeResource ApplicationForegroundThemeBrush}"
+                        Stretch="Uniform"                       
+                        Data="F1 M 16.298828 1.25 C 16.624348 1.25 16.935221 1.316732 17.231445 1.450195 C 17.527668 1.58366 17.788086 1.762695 18.012695 1.987305 C 18.237305 2.211914 18.41634 2.472332 18.549805 2.768555 C 18.683268 3.064779 18.75 3.375652 18.75 3.701172 L 18.75 16.298828 C 18.75 16.62435 18.683268 16.935221 18.549805 17.231445 C 18.41634 17.52767 18.237305 17.788086 18.012695 18.012695 C 17.788086 18.237305 17.527668 18.416342 17.231445 18.549805 C 16.935221 18.683268 16.624348 18.75 16.298828 18.75 L 11.875 18.75 C 11.705729 18.75 11.559244 18.68815 11.435547 18.564453 C 11.311849 18.440756 11.25 18.294271 11.25 18.125 C 11.25 17.955729 11.311849 17.809244 11.435547 17.685547 C 11.559244 17.56185 11.705729 17.5 11.875 17.5 L 16.25 17.5 C 16.425781 17.5 16.588541 17.467447 16.738281 17.402344 C 16.88802 17.33724 17.019855 17.247721 17.133789 17.133789 C 17.247721 17.019857 17.337238 16.888021 17.402344 16.738281 C 17.467447 16.588543 17.5 16.425781 17.5 16.25 L 17.5 10 L 12.451172 10 C 12.11263 10 11.795247 9.931641 11.499023 9.794922 C 11.202799 9.658203 10.94401 9.475912 10.722656 9.248047 C 10.501302 9.020183 10.325521 8.754883 10.195312 8.452148 C 10.065104 8.149414 10 7.832031 10 7.5 L 10 2.5 L 3.75 2.5 C 3.574219 2.5 3.411458 2.532553 3.261719 2.597656 C 3.111979 2.662762 2.980143 2.752279 2.866211 2.866211 C 2.752279 2.980145 2.66276 3.11198 2.597656 3.261719 C 2.532552 3.411459 2.5 3.574219 2.5 3.75 L 2.5 8.125 C 2.5 8.294271 2.438151 8.440756 2.314453 8.564453 C 2.190755 8.688151 2.044271 8.75 1.875 8.75 C 1.705729 8.75 1.559245 8.688151 1.435547 8.564453 C 1.311849 8.440756 1.25 8.294271 1.25 8.125 L 1.25 3.701172 C 1.25 3.375652 1.316732 3.064779 1.450195 2.768555 C 1.583659 2.472332 1.762695 2.211914 1.987305 1.987305 C 2.211914 1.762695 2.472331 1.58366 2.768555 1.450195 C 3.064779 1.316732 3.375651 1.25 3.701172 1.25 Z M 17.5 8.75 L 17.5 3.75 C 17.5 3.58073 17.467447 3.419598 17.402344 3.266602 C 17.337238 3.113607 17.247721 2.980145 17.133789 2.866211 C 17.019855 2.752279 16.886393 2.662762 16.733398 2.597656 C 16.580402 2.532553 16.41927 2.5 16.25 2.5 L 11.25 2.5 L 11.25 7.5 C 11.25 7.675781 11.282552 7.84017 11.347656 7.993164 C 11.41276 8.146159 11.50065 8.277995 11.611328 8.388672 C 11.722005 8.49935 11.853841 8.58724 12.006836 8.652344 C 12.15983 8.717448 12.324219 8.75 12.5 8.75 Z M 8.125 11.25 C 8.294271 11.25 8.440755 11.31185 8.564453 11.435547 C 8.68815 11.559245 8.75 11.705729 8.75 11.875 L 8.75 18.125 C 8.75 18.294271 8.68815 18.440756 8.564453 18.564453 C 8.440755 18.68815 8.294271 18.75 8.125 18.75 C 7.955729 18.75 7.809245 18.68815 7.685547 18.564453 C 7.561849 18.440756 7.5 18.294271 7.5 18.125 L 7.5 13.378906 L 2.314453 18.564453 C 2.190755 18.68815 2.044271 18.75 1.875 18.75 C 1.705729 18.75 1.559245 18.68815 1.435547 18.564453 C 1.311849 18.440756 1.25 18.294271 1.25 18.125 C 1.25 17.955729 1.311849 17.809244 1.435547 17.685547 L 6.621094 12.5 L 1.875 12.5 C 1.705729 12.5 1.559245 12.438151 1.435547 12.314453 C 1.311849 12.190756 1.25 12.044271 1.25 11.875 C 1.25 11.705729 1.311849 11.559245 1.435547 11.435547 C 1.559245 11.31185 1.705729 11.25 1.875 11.25 Z " />
+                    <Path
+                        x:Name="ExitOverlayIcon"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Height="16"
+                        Width="16"
+                        Fill="{ThemeResource ApplicationForegroundThemeBrush}"
+                        Stretch="Uniform"                        
+                        Data="F1 M 16.298828 1.25 C 16.624348 1.25 16.935221 1.316732 17.231445 1.450195 C 17.527668 1.58366 17.788086 1.762695 18.012695 1.987305 C 18.237305 2.211914 18.41634 2.472332 18.549805 2.768555 C 18.683268 3.064779 18.75 3.375652 18.75 3.701172 L 18.75 16.298828 C 18.75 16.62435 18.683268 16.935221 18.549805 17.231445 C 18.41634 17.52767 18.237305 17.788086 18.012695 18.012695 C 17.788086 18.237305 17.527668 18.416342 17.231445 18.549805 C 16.935221 18.683268 16.624348 18.75 16.298828 18.75 L 11.875 18.75 C 11.705729 18.75 11.559244 18.68815 11.435547 18.564453 C 11.311849 18.440756 11.25 18.294271 11.25 18.125 C 11.25 17.955729 11.311849 17.809244 11.435547 17.685547 C 11.559244 17.56185 11.705729 17.5 11.875 17.5 L 16.25 17.5 C 16.425781 17.5 16.588541 17.467447 16.738281 17.402344 C 16.88802 17.33724 17.019855 17.247721 17.133789 17.133789 C 17.247721 17.019857 17.337238 16.888021 17.402344 16.738281 C 17.467447 16.588543 17.5 16.425781 17.5 16.25 L 17.5 10 L 12.451172 10 C 12.11263 10 11.795247 9.931641 11.499023 9.794922 C 11.202799 9.658203 10.94401 9.475912 10.722656 9.248047 C 10.501302 9.020183 10.325521 8.754883 10.195312 8.452148 C 10.065104 8.149414 10 7.832031 10 7.5 L 10 2.5 L 3.75 2.5 C 3.574219 2.5 3.411458 2.532553 3.261719 2.597656 C 3.111979 2.662762 2.980143 2.752279 2.866211 2.866211 C 2.752279 2.980145 2.66276 3.11198 2.597656 3.261719 C 2.532552 3.411459 2.5 3.574219 2.5 3.75 L 2.5 8.125 C 2.5 8.294271 2.438151 8.440756 2.314453 8.564453 C 2.190755 8.688151 2.044271 8.75 1.875 8.75 C 1.705729 8.75 1.559245 8.688151 1.435547 8.564453 C 1.311849 8.440756 1.25 8.294271 1.25 8.125 L 1.25 3.701172 C 1.25 3.375652 1.316732 3.064779 1.450195 2.768555 C 1.583659 2.472332 1.762695 2.211914 1.987305 1.987305 C 2.211914 1.762695 2.472331 1.58366 2.768555 1.450195 C 3.064779 1.316732 3.375651 1.25 3.701172 1.25 Z M 17.5 8.75 L 17.5 3.75 C 17.5 3.58073 17.467447 3.419598 17.402344 3.266602 C 17.337238 3.113607 17.247721 2.980145 17.133789 2.866211 C 17.019855 2.752279 16.886393 2.662762 16.733398 2.597656 C 16.580402 2.532553 16.41927 2.5 16.25 2.5 L 11.25 2.5 L 11.25 7.5 C 11.25 7.675781 11.282552 7.84017 11.347656 7.993164 C 11.41276 8.146159 11.50065 8.277995 11.611328 8.388672 C 11.722005 8.49935 11.853841 8.58724 12.006836 8.652344 C 12.15983 8.717448 12.324219 8.75 12.5 8.75 Z M 8.75 18.125 C 8.75 18.294271 8.68815 18.440756 8.564453 18.564453 C 8.440755 18.68815 8.294271 18.75 8.125 18.75 L 1.875 18.75 C 1.705729 18.75 1.559245 18.68815 1.435547 18.564453 C 1.311849 18.440756 1.25 18.294271 1.25 18.125 L 1.25 11.875 C 1.25 11.705729 1.311849 11.559245 1.435547 11.435547 C 1.559245 11.31185 1.705729 11.25 1.875 11.25 C 2.044271 11.25 2.190755 11.31185 2.314453 11.435547 C 2.438151 11.559245 2.5 11.705729 2.5 11.875 L 2.5 16.621094 L 7.685547 11.435547 C 7.809245 11.31185 7.955729 11.25 8.125 11.25 C 8.294271 11.25 8.440755 11.31185 8.564453 11.435547 C 8.68815 11.559245 8.75 11.705729 8.75 11.875 C 8.75 12.044271 8.68815 12.190756 8.564453 12.314453 L 3.378906 17.5 L 8.125 17.5 C 8.294271 17.5 8.440755 17.56185 8.564453 17.685547 C 8.68815 17.809244 8.75 17.955729 8.75 18.125 Z " />
+                </StackPanel>
+            </Button>
         </Grid>
 
 
-        <Grid Grid.Row="1" Padding="20,20,20,0">
+        <Grid Grid.Row="1" Padding="20,8,10,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
+                <RowDefinition Height="53" />
                 <RowDefinition />
             </Grid.RowDefinitions>
             <TextBlock Style="{StaticResource NavigationViewItemHeaderTextStyle}" 
                        AutomationProperties.Name="{x:Bind strings:Resources.Settings}" 
-                       FontSize="35">Settings</TextBlock>
+                       FontSize="33">Settings</TextBlock>
             <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="180" x:Name="SidebarAbout" />
-                </Grid.ColumnDefinitions>
                 <ScrollViewer Grid.Column="0" Padding="0,0,20,0" Margin="0,0,8,0">
                     <StackPanel Orientation="Vertical">
 
@@ -72,25 +99,39 @@
                                Margin="0,10,0,5"/>
 
                         <local:SettingsBlockControl Margin="0,10,0,0" Title="{x:Bind strings:Resources.GalleryView}" Description="Show recent videos you have recorded.">
-                            <ToggleSwitch x:Name="GalleryToggleSwitch" />
-                        </local:SettingsBlockControl>
-
-                        <local:SettingsBlockControl Margin="0,10,0,0" Title="Source size" Description="{x:Bind strings:Resources.SourceSizeToggle}">
-                            <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="80" />
+                                </Grid.ColumnDefinitions>
+                                <ToggleSwitch x:Name="GalleryToggleSwitch" Grid.Column="1" />
+                            </Grid>
                         </local:SettingsBlockControl>
 
                         <local:SettingsBlockControl Margin="0,10,0,0" Title="System player" Description="{x:Bind strings:Resources.SystemVideoPlayerOption}">
-                            <ToggleSwitch x:Name="SystemPlayerToggleSwitch" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="80" />
+                                </Grid.ColumnDefinitions>
+                                <ToggleSwitch x:Name="SystemPlayerToggleSwitch" Grid.Column="1" />
+                            </Grid>
                         </local:SettingsBlockControl>
 
                         <local:SettingsBlockControl Margin="0,10,0,0" Title="Overlay mode" Description="{x:Bind strings:Resources.OverlayMode}">
-                            <ToggleSwitch x:Name="OverlayToggleSwitch" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="80" />
+                                </Grid.ColumnDefinitions>
+                                <ToggleSwitch x:Name="OverlayToggleSwitch" Grid.Column="1" />
+                            </Grid>
                         </local:SettingsBlockControl>
 
                         <TextBlock Text="Advanced"
                                Margin="0,10,0,10"/>
 
-                        <local:SettingsBlockControl Margin="0,10,0,0" Title="{x:Bind strings:Resources.Resolution}" Description="The resolution used for the video (for example: 1920x1080).">
+                        <local:SettingsBlockControl Margin="0,10,0,0" Title="Resolution" Description="The resolution used for the video (for example: 1920x1080).">
                             <ComboBox x:Name="ResolutionComboBox" 
                                   MinWidth="150" 
                                   IsEnabled="{x:Bind UseCaptureItemToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}">
@@ -101,7 +142,17 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
                         </local:SettingsBlockControl>
-                        
+
+                        <local:SettingsBlockControl Margin="0,10,0,0" Title="Source size" Description="{x:Bind strings:Resources.SourceSizeToggle}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="80" />
+                                </Grid.ColumnDefinitions>
+                                <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" Grid.Column="1" />
+                            </Grid>
+                        </local:SettingsBlockControl>
+
                         <StackPanel Orientation="Vertical">
                             <Button x:Name="MicSettingsButton" Margin="0,10,0,0" Padding="0,20" Click="MicSettingsButton_Click" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" AutomationProperties.Name="{x:Bind strings:Resources.MicSettings}" >
                                 <Grid>
@@ -110,37 +161,50 @@
                                         <ColumnDefinition  Width="20"/>
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Margin="10,0,0,0" Grid.Column="0" Text="{x:Bind strings:Resources.MicSettings}" TextWrapping="WrapWholeWords"/>
-                                    <SymbolIcon Margin="-30,0,0,0" Symbol="Go" Grid.Column="1" />
+                                    <Viewbox Margin="-40,0,0,0" Grid.Column="1" MaxWidth="15" MaxHeight="15">
+                                        <SymbolIcon Symbol="Go" />
+                                    </Viewbox>
                                 </Grid>
                             </Button>
                         </StackPanel>
                         
                         <local:SettingsBlockControl Margin="0,10,0,0" Title="{x:Bind strings:Resources.InternalAudio}" Description="Record internal audio with the video.">
-                            <ToggleSwitch x:Name="AudioToggleSwitch" IsEnabled="{x:Bind ExtAudioToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="80" />
+                                </Grid.ColumnDefinitions>
+                                <ToggleSwitch x:Name="AudioToggleSwitch" IsEnabled="{x:Bind ExtAudioToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}" Grid.Column="1"/>
+                            </Grid>
                         </local:SettingsBlockControl>
 
                         <local:SettingsBlockControl Margin="0,10,0,10" Title="{x:Bind strings:Resources.ExternalAudio}" Description="Record microphone with the video.">
-                            <ToggleSwitch x:Name="ExtAudioToggleSwitch" IsEnabled="{x:Bind AudioToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="80" />
+                                </Grid.ColumnDefinitions>
+                                <ToggleSwitch x:Name="ExtAudioToggleSwitch" IsEnabled="{x:Bind AudioToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}" Grid.Column="1"/>
+                            </Grid>
                         </local:SettingsBlockControl>
-                    </StackPanel>
-                    
-                </ScrollViewer>
 
-                <StackPanel Orientation="Vertical" Grid.Column="1">
-                    <TextBlock Text="Fluent Screen Recorder" />
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="Fluent Screen Recorder" />
 
-                    <HyperlinkButton Margin="0,8,0,0" Content="{x:Bind strings:Resources.GitHub}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder"/>
-                    <HyperlinkButton Content="{x:Bind strings:Resources.Discord}" NavigateUri="https://discord.gg/v4EXAwXPHw"/>
-                    <HyperlinkButton Content="{x:Bind strings:Resources.Privacy}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/PRIVACY.md"/>
-                    <HyperlinkButton Content="{x:Bind strings:Resources.Copyright}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/LICENSE"/>
-                    <Button x:Name="DonateButton" Width="144" Margin="8" Click="DonateButton_Click" AutomationProperties.Name="{x:Bind strings:Resources.Donate}">
-                        <StackPanel Orientation="Horizontal">
-                            <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF479;" Margin="0,0,8,0"/>
-                            <TextBlock Text="{x:Bind strings:Resources.Donate}"/>
+                            <HyperlinkButton Margin="0,8,0,0" Content="{x:Bind strings:Resources.GitHub}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder"/>
+                            <HyperlinkButton Content="{x:Bind strings:Resources.Discord}" NavigateUri="https://discord.gg/v4EXAwXPHw"/>
+                            <HyperlinkButton Content="{x:Bind strings:Resources.Privacy}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/PRIVACY.md"/>
+                            <HyperlinkButton Content="{x:Bind strings:Resources.Copyright}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/LICENSE"/>
+                            <Button x:Name="DonateButton" Width="144" Margin="8" Click="DonateButton_Click" AutomationProperties.Name="{x:Bind strings:Resources.Donate}">
+                                <StackPanel Orientation="Horizontal">
+                                    <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF479;" Margin="0,0,8,0"/>
+                                    <TextBlock Text="{x:Bind strings:Resources.Donate}"/>
+                                </StackPanel>
+                            </Button>
+                            <TextBlock x:Name="AppVersionText" Margin="0,0,0,20" />
                         </StackPanel>
-                    </Button>
-                    <TextBlock x:Name="AppVersionText" />
-                </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
             </Grid>
         </Grid>
     </Grid>

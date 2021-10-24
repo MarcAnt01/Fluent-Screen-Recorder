@@ -3,12 +3,14 @@ using System;
 using System.Collections.Generic;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
+using Windows.Foundation;
 using Windows.Media.MediaProperties;
 using Windows.Storage;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 
 namespace FluentScreenRecorder.Views
@@ -23,6 +25,8 @@ namespace FluentScreenRecorder.Views
             SetupTitleBar();
             ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
             formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+
+            this.Loaded += LoadedHandler;
 
             var settings = GetCachedSettings();
 
@@ -163,6 +167,32 @@ namespace FluentScreenRecorder.Views
             CacheSettings(settings);
         }
 
+        private async void LoadedHandler(object sender, RoutedEventArgs e)
+        {
+            this.Loaded -= LoadedHandler;
+            if (GetCachedSettings().ShowOnTop)
+            {
+                var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
+                preferences.CustomSize = new Size(400, 600);
+                bool modeSwitched = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
+                GoToOverlayIcon.Visibility = Visibility.Collapsed;
+                ExitOverlayIcon.Visibility = Visibility.Visible;
+                ToolTip toolTip = new ToolTip();
+                toolTip.Content = Strings.Resources.ExitOverlay;
+                ToolTipService.SetToolTip(OverlayButton, toolTip);
+                AutomationProperties.SetName(OverlayButton, Strings.Resources.ExitOverlay);
+            }
+            else
+            {
+                ExitOverlayIcon.Visibility = Visibility.Collapsed;
+                GoToOverlayIcon.Visibility = Visibility.Visible;
+                ToolTip toolTip = new ToolTip();
+                toolTip.Content = Strings.Resources.GoToOverlay;
+                ToolTipService.SetToolTip(OverlayButton, toolTip);
+                AutomationProperties.SetName(OverlayButton, Strings.Resources.GoToOverlay);
+            }
+        }
+
         private static void CacheSettings(AppSettings settings)
         {
             var localSettings = ApplicationData.Current.LocalSettings;
@@ -221,11 +251,36 @@ namespace FluentScreenRecorder.Views
             await Launcher.LaunchUriAsync(uri);
         }
 
-        private async void DonateButton1_Click(object sender, RoutedEventArgs e)
+        private async void OverlayButton_Click(object sender, RoutedEventArgs e)
         {
-            string uriToLaunch = @"https://paypal.me/pools/c/8Bxl3GiJqn";
-            var uri = new Uri(uriToLaunch);
-            await Launcher.LaunchUriAsync(uri);
+            if (ApplicationView.GetForCurrentView().ViewMode == ApplicationViewMode.Default)
+            {
+                var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
+                preferences.CustomSize = new Size(400, 600);
+                bool modeSwitched = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
+                if (modeSwitched)
+                {
+                    GoToOverlayIcon.Visibility = Visibility.Collapsed;
+                    ExitOverlayIcon.Visibility = Visibility.Visible;
+                    ToolTip toolTip = new ToolTip();
+                    toolTip.Content = Strings.Resources.ExitOverlay;
+                    ToolTipService.SetToolTip(OverlayButton, toolTip);
+                    AutomationProperties.SetName(OverlayButton, Strings.Resources.ExitOverlay);
+                }
+            }
+            else
+            {
+                bool modeSwitched = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.Default);
+                if (modeSwitched)
+                {
+                    ExitOverlayIcon.Visibility = Visibility.Collapsed;
+                    GoToOverlayIcon.Visibility = Visibility.Visible;
+                    ToolTip toolTip = new ToolTip();
+                    toolTip.Content = Strings.Resources.GoToOverlay;
+                    ToolTipService.SetToolTip(OverlayButton, toolTip);
+                    AutomationProperties.SetName(OverlayButton, Strings.Resources.GoToOverlay);
+                }
+            }
         }
 
         private int GetBitrateIndex(uint bitrate)
