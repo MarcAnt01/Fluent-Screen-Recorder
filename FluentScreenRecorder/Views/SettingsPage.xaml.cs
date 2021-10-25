@@ -21,7 +21,7 @@ namespace FluentScreenRecorder.Views
 
         public SettingsPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             SetupTitleBar();
             ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
             formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
