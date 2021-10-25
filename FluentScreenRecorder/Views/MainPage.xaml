@@ -108,15 +108,15 @@
                     <StackPanel x:Name="itemsToHideInRecord" Orientation="Horizontal" Spacing="8">
                         <AppBarSeparator />
 
-                        <ComboBox x:Name="FrameRateComboBox" SelectionChanged="FrameRateComboBox_SelectionChanged" VerticalAlignment="Center">
+                        <ComboBox x:Name="ResolutionComboBox" AutomationProperties.Name="{x:Bind strings:Resources.Resolution}" ToolTipService.ToolTip="{x:Bind strings:Resources.Resolution}" VerticalAlignment="Center" MinWidth="150" HorizontalAlignment="Center">
                             <ComboBox.ItemTemplate>
-                                <DataTemplate x:DataType="local:FrameRateItem">
+                                <DataTemplate x:DataType="local:ResolutionItem">
                                     <TextBlock Text="{x:Bind DisplayName}"/>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
 
-                        <ComboBox x:Name="BitrateComboBox" SelectionChanged="BitrateComboBox_SelectionChanged" VerticalAlignment="Center">
+                        <ComboBox x:Name="BitrateComboBox" AutomationProperties.Name="{x:Bind strings:Resources.Bitrate}" ToolTipService.ToolTip="{x:Bind strings:Resources.Bitrate}" SelectionChanged="BitrateComboBox_SelectionChanged" VerticalAlignment="Center">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="local:BitrateItem">
                                     <TextBlock Text="{x:Bind DisplayName}"/>

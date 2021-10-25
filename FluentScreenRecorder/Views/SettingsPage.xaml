@@ -136,7 +136,29 @@
                             <TextBlock Text="Advanced"
                                Margin="0,10,0,10"/>
 
-                            <local:SettingsBlockControl Margin="0,10,0,0" Title="Resolution" Description="The resolution used for the video (for example: 1920x1080).">
+                            <local:SettingsBlockControl Margin="0,10,0,0" Title="Source size" Description="{x:Bind strings:Resources.SourceSizeToggle}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="80" />
+                                    </Grid.ColumnDefinitions>
+                                    <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" Grid.Column="1" />
+                                </Grid>
+                            </local:SettingsBlockControl>
+
+                            <local:SettingsBlockControl Title="{x:Bind strings:Resources.Framerate}" 
+                                                Description="The framerate used for the video."
+                                                Margin="0,10,0,0">
+                                <ComboBox x:Name="FrameRateComboBox" VerticalAlignment="Center">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate x:DataType="local:FrameRateItem">
+                                            <TextBlock Text="{x:Bind DisplayName}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </local:SettingsBlockControl>
+
+                            <local:SettingsBlockControl Margin="0,10,0,0" Title="Default resolution" Description="The resolution that's set by default every time (for example: 1920x1080).">
                                 <ComboBox x:Name="ResolutionComboBox" 
                                   MinWidth="150" 
                                   IsEnabled="{x:Bind UseCaptureItemToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}">
@@ -146,16 +168,6 @@
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                            </local:SettingsBlockControl>
-
-                            <local:SettingsBlockControl Margin="0,10,0,0" Title="Source size" Description="{x:Bind strings:Resources.SourceSizeToggle}">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition Width="80" />
-                                    </Grid.ColumnDefinitions>
-                                    <ToggleSwitch x:Name="UseCaptureItemToggleSwitch" Grid.Column="1" />
-                                </Grid>
                             </local:SettingsBlockControl>
 
                             <StackPanel Orientation="Vertical">

@@ -62,6 +62,8 @@ namespace FluentScreenRecorder.Views
                     FrameRate = frameRate,
                 });
             }
+            FrameRateComboBox.ItemsSource = _frameRates;
+            FrameRateComboBox.SelectedIndex = GetFrameRateIndex(settings.FrameRate);
 
             UseCaptureItemToggleSwitch.IsOn = settings.UseSourceSize;
             AudioToggleSwitch.IsOn = settings.IntAudio;

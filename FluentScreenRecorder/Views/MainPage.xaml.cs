@@ -121,6 +121,14 @@ namespace FluentScreenRecorder
                     Resolution = resolution,
                 });
             }
+            ResolutionComboBox.ItemsSource = _resolutions;
+            ResolutionComboBox.SelectedIndex = GetResolutionIndex(settings.Width, settings.Height);
+
+            if (settings.UseSourceSize)
+            {
+                ResolutionComboBox.IsEnabled = false;
+            }
+            else ResolutionComboBox.IsEnabled = true;
 
             _bitrates = new List<BitrateItem>();
             foreach (var bitrate in EncoderPresets.Bitrates)
@@ -144,8 +152,6 @@ namespace FluentScreenRecorder
                     FrameRate = frameRate,
                 });
             }
-            FrameRateComboBox.ItemsSource = _frameRates;
-            FrameRateComboBox.SelectedIndex = GetFrameRateIndex(settings.FrameRate);
         }
 
 
@@ -205,8 +211,8 @@ namespace FluentScreenRecorder
             var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
             // Get our encoder properties
-            var frameRateItem = (FrameRateItem)FrameRateComboBox.SelectedItem;
-            var resolutionItem = _resolutions[GetResolutionIndex(GetCachedSettings().Width, GetCachedSettings().Height)];
+            var frameRateItem = _frameRates[GetFrameRateIndex(GetCachedSettings().FrameRate)];
+            var resolutionItem = (ResolutionItem)ResolutionComboBox.SelectedItem;
             var bitrateItem = (BitrateItem)BitrateComboBox.SelectedItem;
 
             if (GetCachedSettings().UseSourceSize)
