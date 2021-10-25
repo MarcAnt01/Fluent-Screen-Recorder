@@ -71,6 +71,7 @@ namespace FluentScreenRecorder.Views
             OverlayToggleSwitch.IsOn = settings.ShowOnTop;
 
             AppVersionText.Text = $"Version: {GetAppVersion()}";
+            AppVersionText1.Text = $"Version: {GetAppVersion()}";
         }
 
         private AppSettings GetCurrentSettings()
@@ -352,6 +353,10 @@ namespace FluentScreenRecorder.Views
             return string.Format(" {0}.{1}.{2}", version.Major, version.Minor, version.Build);
         }
 
+        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+
+        }
     }
 
 }
