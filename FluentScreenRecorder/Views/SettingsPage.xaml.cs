@@ -352,11 +352,6 @@ namespace FluentScreenRecorder.Views
 
             return string.Format(" {0}.{1}.{2}", version.Major, version.Minor, version.Build);
         }
-
-        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-
-        }
     }
 
 }
