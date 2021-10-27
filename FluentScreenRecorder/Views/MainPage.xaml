@@ -108,7 +108,7 @@
                     <StackPanel x:Name="itemsToHideInRecord" Orientation="Horizontal" Spacing="8">
                         <AppBarSeparator />
 
-                        <ComboBox x:Name="ResolutionComboBox" AutomationProperties.Name="{x:Bind strings:Resources.Resolution}" ToolTipService.ToolTip="{x:Bind strings:Resources.Resolution}" VerticalAlignment="Center" MinWidth="150" HorizontalAlignment="Center">
+                        <ComboBox x:Name="ResolutionComboBox" AutomationProperties.Name="{x:Bind strings:Resources.Resolution}" ToolTipService.ToolTip="{x:Bind strings:Resources.Resolution}" VerticalAlignment="Center" HorizontalAlignment="Center">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="local:ResolutionItem">
                                     <TextBlock Text="{x:Bind DisplayName}"/>

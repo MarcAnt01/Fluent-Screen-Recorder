@@ -90,7 +90,7 @@
             </Grid.RowDefinitions>
             <TextBlock Style="{StaticResource NavigationViewItemHeaderTextStyle}" 
                        AutomationProperties.Name="{x:Bind strings:Resources.Settings}" 
-                       FontSize="25">Settings</TextBlock>
+                       FontSize="21">Settings</TextBlock>
             <UserControl Grid.Row="1" x:Name="Container">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -158,7 +158,7 @@
                                 </ComboBox>
                             </local:SettingsBlockControl>
 
-                            <local:SettingsBlockControl Margin="0,10,0,0" Title="Default resolution" Description="The resolution that's set by default every time (for example: 1920x1080).">
+                            <local:SettingsBlockControl Margin="0,10,0,0" Title="Default resolution" Description="The resolution that's set by default every time (for example: 1920x1080)." Visibility="Collapsed">
                                 <ComboBox x:Name="ResolutionComboBox" 
                                   MinWidth="150" 
                                   IsEnabled="{x:Bind UseCaptureItemToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}">

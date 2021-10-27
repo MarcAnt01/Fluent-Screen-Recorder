@@ -797,6 +797,7 @@ namespace FluentScreenRecorder
             }
             return result;
         }
+
         public void CacheCurrentSettings()
         {
             var settings = GetCachedSettings();
@@ -944,9 +945,9 @@ namespace FluentScreenRecorder
                 GridContainer.Visibility = Visibility.Collapsed;
             }
 
-            if (ApplicationView.GetForCurrentView().ViewMode == ApplicationViewMode.CompactOverlay && Window.Current.Bounds.Width < 370)
+            if (ApplicationView.GetForCurrentView().ViewMode == ApplicationViewMode.CompactOverlay && Window.Current.Bounds.Width < 400)
             {
-                var size = new Size(370, Window.Current.Bounds.Height);
+                var size = new Size(400, Window.Current.Bounds.Height);
                 ApplicationView.GetForCurrentView().TryResizeView(size);
             }
 
