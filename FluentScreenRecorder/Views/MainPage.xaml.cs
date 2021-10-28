@@ -112,6 +112,16 @@ namespace FluentScreenRecorder
 
             var settings = GetCachedSettings();
 
+            _frameRates = new List<FrameRateItem>();
+            foreach (var frameRate in EncoderPresets.FrameRates)
+            {
+                _frameRates.Add(new FrameRateItem()
+                {
+                    DisplayName = $"{frameRate}fps",
+                    FrameRate = frameRate,
+                });
+            }
+
             _resolutions = new List<ResolutionItem>();
             foreach (var resolution in EncoderPresets.Resolutions)
             {
@@ -121,14 +131,9 @@ namespace FluentScreenRecorder
                     Resolution = resolution,
                 });
             }
+
             ResolutionComboBox.ItemsSource = _resolutions;
             ResolutionComboBox.SelectedIndex = GetResolutionIndex(settings.Width, settings.Height);
-
-            if (settings.UseSourceSize)
-            {
-                ResolutionComboBox.IsEnabled = false;
-            }
-            else ResolutionComboBox.IsEnabled = true;
 
             _bitrates = new List<BitrateItem>();
             foreach (var bitrate in EncoderPresets.Bitrates)
@@ -143,15 +148,12 @@ namespace FluentScreenRecorder
             BitrateComboBox.ItemsSource = _bitrates;
             BitrateComboBox.SelectedIndex = GetBitrateIndex(settings.Bitrate);
 
-            _frameRates = new List<FrameRateItem>();
-            foreach (var frameRate in EncoderPresets.FrameRates)
+            if (settings.UseSourceSize)
             {
-                _frameRates.Add(new FrameRateItem()
-                {
-                    DisplayName = $"{frameRate}fps",
-                    FrameRate = frameRate,
-                });
+                ResolutionComboBox.IsEnabled = false;
             }
+            else ResolutionComboBox.IsEnabled = true;
+
         }
 
 
@@ -798,9 +800,26 @@ namespace FluentScreenRecorder
             return result;
         }
 
+        private AppSettings GetCurrentSettings()
+        {
+            var resolutionItem = (ResolutionItem)ResolutionComboBox.SelectedItem;
+            var width = resolutionItem.Resolution.Width;
+            var height = resolutionItem.Resolution.Height;
+            var bitrateItem = (BitrateItem)BitrateComboBox.SelectedItem;
+            var frameRateItem = _frameRates[GetFrameRateIndex(GetCachedSettings().FrameRate)];
+            var frameRate = frameRateItem.FrameRate;
+            var useSourceSize = GetCachedSettings().UseSourceSize;
+            var intAudio = GetCachedSettings().IntAudio;
+            var extAudio = GetCachedSettings().ExtAudio;
+            var gallery = GetCachedSettings().Gallery;
+            var systemPlayer = GetCachedSettings().SystemPlayer;
+            var showOnTop = GetCachedSettings().ShowOnTop;
+            return new AppSettings { Width = width, Height = height, Bitrate = bitrateItem.Bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize, IntAudio = intAudio, ExtAudio = extAudio, Gallery = gallery, SystemPlayer = systemPlayer, ShowOnTop = showOnTop };
+        }
+
         public void CacheCurrentSettings()
         {
-            var settings = GetCachedSettings();
+            var settings = GetCurrentSettings();
             CacheSettings(settings);
         }
 
@@ -898,6 +917,7 @@ namespace FluentScreenRecorder
 
         private void SettingsPageButton_Click(object sender, RoutedEventArgs e)
         {
+            CacheCurrentSettings();
             this.Frame.Navigate(typeof(SettingsPage));
         }
 
@@ -976,20 +996,6 @@ namespace FluentScreenRecorder
             SetupTitleBar(sender);
         }
 
-        private async void MicSettingsButton_Click(object sender, RoutedEventArgs e)
-        {
-            string uriToLaunch = @"ms-settings:sound";
-            var uri = new Uri(uriToLaunch);
-            await Launcher.LaunchUriAsync(uri);
-        }
-
-        private async void DonateButton_Click(object sender, RoutedEventArgs e)
-        {
-            string uriToLaunch = @"https://paypal.me/pools/c/8Bxl3GiJqn";
-            var uri = new Uri(uriToLaunch);
-            await Launcher.LaunchUriAsync(uri);
-        }
-
         private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             await recordedVideoFile.DeleteAsync();
@@ -1030,16 +1036,6 @@ namespace FluentScreenRecorder
             ThumbItem item = (sender as Image).DataContext as ThumbItem;
             recordedVideoFile = await(await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder")).GetFileAsync(item.fileN);
 
-        }
-
-        private void FrameRateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (sender != null) CacheCurrentSettings();
-        }
-
-        private void BitrateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (sender != null) CacheCurrentSettings();
         }
     }
 }

@@ -116,7 +116,7 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
 
-                        <ComboBox x:Name="BitrateComboBox" AutomationProperties.Name="{x:Bind strings:Resources.Bitrate}" ToolTipService.ToolTip="{x:Bind strings:Resources.Bitrate}" SelectionChanged="BitrateComboBox_SelectionChanged" VerticalAlignment="Center">
+                        <ComboBox x:Name="BitrateComboBox" AutomationProperties.Name="{x:Bind strings:Resources.Bitrate}" ToolTipService.ToolTip="{x:Bind strings:Resources.Bitrate}" VerticalAlignment="Center">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="local:BitrateItem">
                                     <TextBlock Text="{x:Bind DisplayName}"/>
