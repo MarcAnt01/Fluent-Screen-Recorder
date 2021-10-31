@@ -123,6 +123,11 @@ namespace FluentScreenRecorder
                     Resolution = resolution,
                 });
             }
+            _resolutions.Add(new ResolutionItem()
+            {
+                DisplayName = Strings.Resources.SourceSizeToggle,
+                Resolution = new SizeUInt32() { Width = 0, Height = 0 },
+            });
             ResolutionComboBox.ItemsSource = _resolutions;
             ResolutionComboBox.SelectedIndex = GetResolutionIndex(settings.Width, settings.Height);
 
@@ -149,8 +154,7 @@ namespace FluentScreenRecorder
                 });
             }
             FrameRateComboBox.ItemsSource = _frameRates;
-            FrameRateComboBox.SelectedIndex = GetFrameRateIndex(settings.FrameRate);
-            UseCaptureItemToggleSwitch.IsOn = settings.UseSourceSize;            
+            FrameRateComboBox.SelectedIndex = GetFrameRateIndex(settings.FrameRate);                       
             AudioToggleSwitch.IsOn = settings.IntAudio;
             ExtAudioToggleSwitch.IsOn = settings.ExtAudio;
             GalleryToggleSwitch.IsOn = settings.Gallery;        
@@ -218,11 +222,7 @@ namespace FluentScreenRecorder
             var frameRateItem = (FrameRateItem)FrameRateComboBox.SelectedItem;
             var resolutionItem = (ResolutionItem)ResolutionComboBox.SelectedItem;
             var bitrateItem = (BitrateItem)BitrateComboBox.SelectedItem;
-
-            if (UseCaptureItemToggleSwitch.IsOn)
-            {
-                resolutionItem.IsZero();
-            }
+            
 
             MediaCapture mediaCapture = null;
 
@@ -263,12 +263,7 @@ namespace FluentScreenRecorder
             var height = resolutionItem.Resolution.Height;
             var bitrate = bitrateItem.Bitrate;
             var frameRate = frameRateItem.FrameRate;
-            if (UseCaptureItemToggleSwitch.IsOn)
-            {
-                resolutionItem.IsZero();
-            }
-
-            // Get our capture item
+            var useSourceSize = resolutionItem.IsZero();
             var picker = new GraphicsCapturePicker();
             var item = await picker.PickSingleItemAsync();
             if (item == null)
@@ -276,10 +271,9 @@ namespace FluentScreenRecorder
                 button.IsChecked = false;
                 return;
             }
-
-            // Use the capture item's size for the encoding if desired
-            if (UseCaptureItemToggleSwitch.IsOn)
+            if (useSourceSize)
             {
+                resolutionItem.IsZero();
                 width = (uint)item.Size.Width;
                 height = (uint)item.Size.Height;
 
@@ -290,6 +284,7 @@ namespace FluentScreenRecorder
                 height = EnsureEven(height);
             }
 
+            
             // Put videos in the temp folder
             var tempFile = await GetTempFileAsync();
             _tempFile = tempFile;
@@ -739,14 +734,13 @@ namespace FluentScreenRecorder
             var bitrateItem = (BitrateItem)BitrateComboBox.SelectedItem;
             var bitrate = bitrateItem.Bitrate;
             var frameRateItem = (FrameRateItem)FrameRateComboBox.SelectedItem;
-            var frameRate = frameRateItem.FrameRate;
-            var useSourceSize = UseCaptureItemToggleSwitch.IsOn;            
+            var frameRate = frameRateItem.FrameRate;                    
             var intAudio = AudioToggleSwitch.IsOn;
             var extAudio = ExtAudioToggleSwitch.IsOn;
             var gallery = GalleryToggleSwitch.IsOn;            
             var systemPlayer = SystemPlayerToggleSwitch.IsOn;
             var showOnTop = OverlayToggleSwitch.IsOn;
-            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize, IntAudio = intAudio, ExtAudio = extAudio, Gallery = gallery, SystemPlayer = systemPlayer, ShowOnTop = showOnTop };
+            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, IntAudio = intAudio, ExtAudio = extAudio, Gallery = gallery, SystemPlayer = systemPlayer, ShowOnTop = showOnTop };
 
         }
 
@@ -758,8 +752,7 @@ namespace FluentScreenRecorder
                 Width = 1920,
                 Height = 1080,
                 Bitrate = 18000000,
-                FrameRate = 60,
-                UseSourceSize = true,                
+                FrameRate = 60,                            
                 IntAudio = true,
                 ExtAudio = false,
                 Gallery = true,                
@@ -786,11 +779,6 @@ namespace FluentScreenRecorder
             if (localSettings.Values.TryGetValue(nameof(AppSettings.FrameRate), out var frameRate))
             {
                 result.FrameRate = (uint)frameRate;
-            }
-
-            if (localSettings.Values.TryGetValue(nameof(AppSettings.UseSourceSize), out var useSourceSize))
-            {
-                result.UseSourceSize = (bool)useSourceSize;
             }
 
             if (localSettings.Values.TryGetValue(nameof(AppSettings.IntAudio), out var intAudio))
@@ -831,8 +819,7 @@ namespace FluentScreenRecorder
             localSettings.Values[nameof(AppSettings.Width)] = settings.Width;
             localSettings.Values[nameof(AppSettings.Height)] = settings.Height;
             localSettings.Values[nameof(AppSettings.Bitrate)] = settings.Bitrate;
-            localSettings.Values[nameof(AppSettings.FrameRate)] = settings.FrameRate;
-            localSettings.Values[nameof(AppSettings.UseSourceSize)] = settings.UseSourceSize;            
+            localSettings.Values[nameof(AppSettings.FrameRate)] = settings.FrameRate;                     
             localSettings.Values[nameof(AppSettings.IntAudio)] = settings.IntAudio;
             localSettings.Values[nameof(AppSettings.ExtAudio)] = settings.ExtAudio;
             localSettings.Values[nameof(AppSettings.Gallery)] = settings.Gallery;
@@ -888,8 +875,7 @@ namespace FluentScreenRecorder
             public uint Width;
             public uint Height;
             public uint Bitrate;
-            public uint FrameRate;
-            public bool UseSourceSize;            
+            public uint FrameRate;                      
             public bool IntAudio;
             public bool ExtAudio;
             public bool Gallery;            
