@@ -267,7 +267,7 @@ namespace FluentScreenRecorder
                 return;
             }
             // Use the capture item's size for the encoding if desired
-            if (GetCachedSettings().UseSourceSize)
+            if (useSourceSize)
             {
                 resolutionItem.IsZero();
                 width = (uint)item.Size.Width;
