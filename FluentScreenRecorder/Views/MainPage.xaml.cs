@@ -131,7 +131,11 @@ namespace FluentScreenRecorder
                     Resolution = resolution,
                 });
             }
-
+            _resolutions.Add(new ResolutionItem()
+            {
+                DisplayName = Strings.Resources.SourceSizeToggle,
+                Resolution = new SizeUInt32() { Width = 0, Height = 0 },
+            });
             ResolutionComboBox.ItemsSource = _resolutions;
             ResolutionComboBox.SelectedIndex = GetResolutionIndex(settings.Width, settings.Height);
 
@@ -153,7 +157,6 @@ namespace FluentScreenRecorder
                 ResolutionComboBox.IsEnabled = false;
             }
             else ResolutionComboBox.IsEnabled = true;
-
         }
 
 
@@ -216,12 +219,6 @@ namespace FluentScreenRecorder
             var frameRateItem = _frameRates[GetFrameRateIndex(GetCachedSettings().FrameRate)];
             var resolutionItem = (ResolutionItem)ResolutionComboBox.SelectedItem;
             var bitrateItem = (BitrateItem)BitrateComboBox.SelectedItem;
-
-            if (GetCachedSettings().UseSourceSize)
-            {
-                resolutionItem.IsZero();
-            }
-
             MediaCapture mediaCapture = null;
 
             if (GetCachedSettings().IntAudio)
@@ -261,12 +258,7 @@ namespace FluentScreenRecorder
             var height = resolutionItem.Resolution.Height;
             var bitrate = bitrateItem.Bitrate;
             var frameRate = frameRateItem.FrameRate;
-            if (GetCachedSettings().UseSourceSize)
-            {
-                resolutionItem.IsZero();
-            }
-
-            // Get our capture item
+            var useSourceSize = resolutionItem.IsZero();
             var picker = new GraphicsCapturePicker();
             var item = await picker.PickSingleItemAsync();
             if (item == null)
@@ -274,10 +266,10 @@ namespace FluentScreenRecorder
                 button.IsChecked = false;
                 return;
             }
-
             // Use the capture item's size for the encoding if desired
             if (GetCachedSettings().UseSourceSize)
             {
+                resolutionItem.IsZero();
                 width = (uint)item.Size.Width;
                 height = (uint)item.Size.Height;
 
@@ -288,6 +280,7 @@ namespace FluentScreenRecorder
                 height = EnsureEven(height);
             }
 
+            
             // Put videos in the temp folder
             var tempFile = await GetTempFileAsync();
             _tempFile = tempFile;
@@ -730,6 +723,23 @@ namespace FluentScreenRecorder
             }
         }
 
+        private AppSettings GetCurrentSettings()
+        {
+            var resolutionItem = (ResolutionItem)ResolutionComboBox.SelectedItem;
+            var width = resolutionItem.Resolution.Width;
+            var height = resolutionItem.Resolution.Height;
+            var bitrateItem = (BitrateItem)BitrateComboBox.SelectedItem;
+            var bitrate = bitrateItem.Bitrate;
+            var frameRateItem = (FrameRateItem)FrameRateComboBox.SelectedItem;
+            var frameRate = frameRateItem.FrameRate;                    
+            var intAudio = AudioToggleSwitch.IsOn;
+            var extAudio = ExtAudioToggleSwitch.IsOn;
+            var gallery = GalleryToggleSwitch.IsOn;            
+            var systemPlayer = SystemPlayerToggleSwitch.IsOn;
+            var showOnTop = OverlayToggleSwitch.IsOn;
+            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, IntAudio = intAudio, ExtAudio = extAudio, Gallery = gallery, SystemPlayer = systemPlayer, ShowOnTop = showOnTop };
+
+        }
         private AppSettings GetCachedSettings()
         {
             var localSettings = ApplicationData.Current.LocalSettings;
@@ -738,8 +748,7 @@ namespace FluentScreenRecorder
                 Width = 1920,
                 Height = 1080,
                 Bitrate = 18000000,
-                FrameRate = 60,
-                UseSourceSize = true,                
+                FrameRate = 60,                            
                 IntAudio = true,
                 ExtAudio = false,
                 Gallery = true,                
@@ -766,11 +775,6 @@ namespace FluentScreenRecorder
             if (localSettings.Values.TryGetValue(nameof(AppSettings.FrameRate), out var frameRate))
             {
                 result.FrameRate = (uint)frameRate;
-            }
-
-            if (localSettings.Values.TryGetValue(nameof(AppSettings.UseSourceSize), out var useSourceSize))
-            {
-                result.UseSourceSize = (bool)useSourceSize;
             }
 
             if (localSettings.Values.TryGetValue(nameof(AppSettings.IntAudio), out var intAudio))
@@ -800,23 +804,6 @@ namespace FluentScreenRecorder
             return result;
         }
 
-        private AppSettings GetCurrentSettings()
-        {
-            var resolutionItem = (ResolutionItem)ResolutionComboBox.SelectedItem;
-            var width = resolutionItem.Resolution.Width;
-            var height = resolutionItem.Resolution.Height;
-            var bitrateItem = (BitrateItem)BitrateComboBox.SelectedItem;
-            var frameRateItem = _frameRates[GetFrameRateIndex(GetCachedSettings().FrameRate)];
-            var frameRate = frameRateItem.FrameRate;
-            var useSourceSize = GetCachedSettings().UseSourceSize;
-            var intAudio = GetCachedSettings().IntAudio;
-            var extAudio = GetCachedSettings().ExtAudio;
-            var gallery = GetCachedSettings().Gallery;
-            var systemPlayer = GetCachedSettings().SystemPlayer;
-            var showOnTop = GetCachedSettings().ShowOnTop;
-            return new AppSettings { Width = width, Height = height, Bitrate = bitrateItem.Bitrate, FrameRate = frameRate, UseSourceSize = useSourceSize, IntAudio = intAudio, ExtAudio = extAudio, Gallery = gallery, SystemPlayer = systemPlayer, ShowOnTop = showOnTop };
-        }
-
         public void CacheCurrentSettings()
         {
             var settings = GetCurrentSettings();
@@ -829,8 +816,7 @@ namespace FluentScreenRecorder
             localSettings.Values[nameof(AppSettings.Width)] = settings.Width;
             localSettings.Values[nameof(AppSettings.Height)] = settings.Height;
             localSettings.Values[nameof(AppSettings.Bitrate)] = settings.Bitrate;
-            localSettings.Values[nameof(AppSettings.FrameRate)] = settings.FrameRate;
-            localSettings.Values[nameof(AppSettings.UseSourceSize)] = settings.UseSourceSize;            
+            localSettings.Values[nameof(AppSettings.FrameRate)] = settings.FrameRate;                     
             localSettings.Values[nameof(AppSettings.IntAudio)] = settings.IntAudio;
             localSettings.Values[nameof(AppSettings.ExtAudio)] = settings.ExtAudio;
             localSettings.Values[nameof(AppSettings.Gallery)] = settings.Gallery;
@@ -886,8 +872,7 @@ namespace FluentScreenRecorder
             public uint Width;
             public uint Height;
             public uint Bitrate;
-            public uint FrameRate;
-            public bool UseSourceSize;            
+            public uint FrameRate;                      
             public bool IntAudio;
             public bool ExtAudio;
             public bool Gallery;            
