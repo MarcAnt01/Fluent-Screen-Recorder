@@ -83,8 +83,8 @@ namespace FluentScreenRecorder.Views
 
         private async void CustomMediaTransportControls_Deleted(object sender, EventArgs e)
         {
-            this.Frame.Navigate(typeof(MainPage));
             await videoFile.DeleteAsync();
+            this.Frame.Navigate(typeof(MainPage));            
         }
 
         private async void CustomMediaTransportControls_InfoTap(object sender, EventArgs e)

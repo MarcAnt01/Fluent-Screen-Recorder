@@ -193,20 +193,23 @@ namespace FluentScreenRecorder
             // We don't have to create the video folder at startup - just ignore populating the folder view if the folder doesn't exist (yet).
             // Saving a recording will automatically create the folder if missing.
             StorageFolder videoFolder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder") as StorageFolder;
-            if (videoFolder != null && (await videoFolder.GetFilesAsync()).Count() != 0)
+            if (videoFolder != null)
             {
-                IReadOnlyList<StorageFile> sortedItems = await videoFolder.GetFilesAsync(CommonFileQuery.OrderByDate);
-                List<ThumbItem> thumbnailsList = new List<ThumbItem>();
-                foreach (StorageFile file in sortedItems)
+                IReadOnlyList<StorageFile> storageItems = await videoFolder.GetFilesAsync();
+                if (storageItems.Count > 0)
                 {
-                    StorageItemThumbnail thumbnail = await file.GetThumbnailAsync(ThumbnailMode.SingleItem);
-                    BitmapImage bitmap = new BitmapImage();
-                    bitmap.SetSource(thumbnail);
-                    thumbnailsList.Add(new ThumbItem() { img = bitmap, fileN = file.Name });
-
-                }
-                BasicGridView.ItemsSource = thumbnailsList;
-                filesInFolder = true;
+                    List<ThumbItem> thumbnailsList = new List<ThumbItem>();
+                    foreach (StorageFile file in storageItems)
+                    {
+                        StorageItemThumbnail thumbnail = await file.GetThumbnailAsync(ThumbnailMode.SingleItem);
+                        BitmapImage bitmap = new BitmapImage();
+                        bitmap.SetSource(thumbnail);
+                        thumbnailsList.Add(new ThumbItem() { img = bitmap, fileN = file.Name });
+                    }
+                    thumbnailsList.Reverse();
+                    BasicGridView.ItemsSource = thumbnailsList;
+                    filesInFolder = true;
+                }                
             }
         }
 
