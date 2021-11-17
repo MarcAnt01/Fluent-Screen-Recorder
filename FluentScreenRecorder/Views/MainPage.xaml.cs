@@ -188,10 +188,16 @@ namespace FluentScreenRecorder
                 toolTip.Content = Strings.Resources.GoToOverlay;
                 ToolTipService.SetToolTip(OverlayButton, toolTip);
                 AutomationProperties.SetName(OverlayButton, Strings.Resources.GoToOverlay);
+                await LoadThumbanails();
             }
 
             // We don't have to create the video folder at startup - just ignore populating the folder view if the folder doesn't exist (yet).
             // Saving a recording will automatically create the folder if missing.
+            
+        }
+
+        private async Task LoadThumbanails()
+        {
             StorageFolder videoFolder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder") as StorageFolder;
             if (videoFolder != null)
             {
@@ -209,10 +215,10 @@ namespace FluentScreenRecorder
                     thumbnailsList.Reverse();
                     BasicGridView.ItemsSource = thumbnailsList;
                     filesInFolder = true;
-                }                
+                }
             }
-        }
 
+        }
 
         public StorageFile _tempFile;
 
@@ -1003,6 +1009,7 @@ namespace FluentScreenRecorder
         private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             await recordedVideoFile.DeleteAsync();
+            await LoadThumbanails();
 
         }
 
