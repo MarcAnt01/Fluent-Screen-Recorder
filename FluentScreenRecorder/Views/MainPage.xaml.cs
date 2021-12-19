@@ -81,8 +81,8 @@ namespace FluentScreenRecorder
         private AudioEncodingProperties audioEncodingProperties;
         private StorageFile micFile;
         public MediaCapture mediaCapture;
-        public StorageFile recordedVideoFile = null;
-
+        public StorageFile recordedVideoFile = null;     
+        
         public MainPage()
         {
             InitializeComponent();
@@ -154,10 +154,10 @@ namespace FluentScreenRecorder
                 });
             }
             FrameRateComboBox.ItemsSource = _frameRates;
-            FrameRateComboBox.SelectedIndex = GetFrameRateIndex(settings.FrameRate);                       
+            FrameRateComboBox.SelectedIndex = GetFrameRateIndex(settings.FrameRate);            
             AudioToggleSwitch.IsOn = settings.IntAudio;
             ExtAudioToggleSwitch.IsOn = settings.ExtAudio;
-            GalleryToggleSwitch.IsOn = settings.Gallery;        
+            GalleryToggleSwitch.IsOn = settings.Gallery;
             SystemPlayerToggleSwitch.IsOn = settings.SystemPlayer;
             OverlayToggleSwitch.IsOn = settings.ShowOnTop;
             InternalAudioCheck();
@@ -461,7 +461,8 @@ namespace FluentScreenRecorder
                         toolTip.Content = Strings.Resources.RecordingStart;
                         ToolTipService.SetToolTip(MainButton, toolTip);
                         AutomationProperties.SetName(MainButton, Strings.Resources.RecordingStart);
-                        this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);                       
+                        this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
+                        CacheCurrentSettings();
                        
                         var videofolder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
@@ -484,6 +485,7 @@ namespace FluentScreenRecorder
                 ToolTipService.SetToolTip(MainButton, Strings.Resources.RecordingStart);
                 AutomationProperties.SetName(MainButton, "Start recording");                
                 this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
+                CacheCurrentSettings();
                                
             }
         }
@@ -597,7 +599,8 @@ namespace FluentScreenRecorder
                         ToolTipService.SetToolTip(MainButton, toolTip);
                         AutomationProperties.SetName(MainButton, Strings.Resources.RecordingStart);
 
-                        this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);                        
+                        this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
+                        CacheCurrentSettings();
                         var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
                         MainButton.Visibility = Visibility.Visible;
@@ -620,7 +623,8 @@ namespace FluentScreenRecorder
                 toolTip.Content = Strings.Resources.RecordingStart;
                 ToolTipService.SetToolTip(MainButton, Strings.Resources.RecordingStart);
                 AutomationProperties.SetName(MainButton, "Start recording");
-                this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);                               
+                this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
+                CacheCurrentSettings();
             }         
       
         }
@@ -931,6 +935,7 @@ namespace FluentScreenRecorder
             else
             {
                 this.Frame.Navigate(typeof(PlayerPage), videoFile);
+                CacheCurrentSettings();
             }
         }
 
