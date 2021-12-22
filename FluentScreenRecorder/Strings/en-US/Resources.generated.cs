@@ -447,7 +447,7 @@ namespace FluentScreenRecorder.Strings{
 
         #region SourceSizeToggle
         /// <summary>
-        ///   Looks up a localized string similar to: Use source size as video resolution
+        ///   Looks up a localized string similar to: Source size
         /// </summary>
         public static string SourceSizeToggle
         {

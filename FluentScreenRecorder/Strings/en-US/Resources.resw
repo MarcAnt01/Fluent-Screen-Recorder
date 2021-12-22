@@ -217,7 +217,7 @@
     <value>Share</value>
   </data>
   <data name="SourceSizeToggle" xml:space="preserve">
-    <value>Use source size as video resolution</value>
+    <value>Source size</value>
   </data>
   <data name="SystemVideoPlayerOption" xml:space="preserve">
     <value>Use system player to open videos</value>

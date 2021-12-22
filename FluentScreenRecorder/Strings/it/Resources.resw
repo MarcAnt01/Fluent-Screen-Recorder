@@ -112,7 +112,7 @@
     <value>Condividi</value>
   </data>
   <data name="SourceSizeToggle" xml:space="preserve">
-    <value>Usa le dimensioni dello schermo come risoluzione</value>
+    <value>Risoluzione dello schermo</value>
   </data>
   <data name="SystemVideoPlayerOption" xml:space="preserve">
     <value>Usa il player di sistema per aprire i video</value>
