@@ -160,7 +160,10 @@ namespace FluentScreenRecorder
             GalleryToggleSwitch.IsOn = settings.Gallery;
             SystemPlayerToggleSwitch.IsOn = settings.SystemPlayer;
             OverlayToggleSwitch.IsOn = settings.ShowOnTop;
-            InternalAudioCheck();
+            if (AudioToggleSwitch.IsOn)
+            {
+                InternalAudioCheck();
+            }            
         }
 
         private async void InternalAudioCheck()
