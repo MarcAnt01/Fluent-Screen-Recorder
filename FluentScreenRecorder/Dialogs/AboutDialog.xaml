@@ -19,7 +19,7 @@
         <HyperlinkButton Content="{x:Bind strings:Resources.Privacy}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/PRIVACY.md"/>
         <HyperlinkButton Content="{x:Bind strings:Resources.Copyright}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/LICENSE"/>
         <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
-            <TextBlock Text="Version"/>
+            <TextBlock Text="{x:Bind strings:Resources.Version}"/>
             <TextBlock x:Name="VersionNumberTextBlock" FontWeight="Bold"/>          
         </StackPanel> 
     </StackPanel>  

@@ -239,6 +239,7 @@
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <PRIResource Include="Strings\tr-TR\Resources.resw" />
     <PRIResource Include="Strings\pt-PT\Resources.resw" />
     <PRIResource Include="Strings\it\Resources.resw" />
     <PRIResource Include="Strings\es-ES\Resources.resw" />
@@ -324,6 +325,7 @@
     <XliffResource Include="MultilingualResources\FluentScreenRecorder.si.xlf" />
     <XliffResource Include="MultilingualResources\FluentScreenRecorder.ja.xlf" />
     <XliffResource Include="MultilingualResources\FluentScreenRecorder.pt-PT.xlf" />
+    <XliffResource Include="MultilingualResources\FluentScreenRecorder.tr-TR.xlf" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
