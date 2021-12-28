@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>O aplikaci</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Zpět</value>
+  </data>
+  <data name="Bitrate" xml:space="preserve">
+    <value>Datový tok</value>
+  </data>
+  <data name="BugReport" xml:space="preserve">
+    <value>Nahlásit chybu</value>
+  </data>
+  <data name="Copyright" xml:space="preserve">
+    <value>Autorská práva</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Smazat</value>
+  </data>
+  <data name="Discord" xml:space="preserve">
+    <value>Připojte se na náš Discord server</value>
+  </data>
+  <data name="Donate" xml:space="preserve">
+    <value>Přispět</value>
+  </data>
+  <data name="ExitOverlay" xml:space="preserve">
+    <value>Zpět na plné zobrazení</value>
+  </data>
+  <data name="ExternalAudio" xml:space="preserve">
+    <value>Nahrávání mikrofonem</value>
+  </data>
+  <data name="Failure" xml:space="preserve">
+    <value>Nastala porucha</value>
+  </data>
+  <data name="Framerate" xml:space="preserve">
+    <value>Snímková frekvence</value>
+  </data>
+  <data name="GalleryView" xml:space="preserve">
+    <value>Zobrazení galerie</value>
+  </data>
+  <data name="GitHub" xml:space="preserve">
+    <value>Zobrazit GitHub repozitář</value>
+  </data>
+  <data name="GoToOverlay" xml:space="preserve">
+    <value>Vždy nad ostatními</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Informace o souboru</value>
+  </data>
+  <data name="InternalAudio" xml:space="preserve">
+    <value>Nahrávání zvuku</value>
+  </data>
+  <data name="MicSettings" xml:space="preserve">
+    <value>Systémová nastavení mikrofonu</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="OpenFolder" xml:space="preserve">
+    <value>Otevřít složku, do které bylo video uloženo</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Vyber z následujících možností</value>
+  </data>
+  <data name="OverlayMode" xml:space="preserve">
+    <value>Otevřít režim překrytí jako výchozí</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Zásady ochrany osobních údajů</value>
+  </data>
+  <data name="Recording" xml:space="preserve">
+    <value>Nahrávání</value>
+  </data>
+  <data name="RecordingStart" xml:space="preserve">
+    <value>Začít nahrávat</value>
+  </data>
+  <data name="RecordingStop" xml:space="preserve">
+    <value>Zastavit nahrávání</value>
+  </data>
+  <data name="Resolution" xml:space="preserve">
+    <value>Rozlišení</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Uložit</value>
+  </data>
+  <data name="SaveAs" xml:space="preserve">
+    <value>Uložit jako</value>
+  </data>
+  <data name="SaveConfirm" xml:space="preserve">
+    <value>Uložit soubor?</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>Ukládání...</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Nastavení</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Sdílet</value>
+  </data>
+  <data name="SourceSizeToggle" xml:space="preserve">
+    <value>Použití velikosti zdroje pro rozlišení videa</value>
+  </data>
+  <data name="SystemVideoPlayerOption" xml:space="preserve">
+    <value>Použít systémový přehrávač pro otevření videí</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Verze</value>
+  </data>
+  <data name="VideoPreview" xml:space="preserve">
+    <value>Náhled videa</value>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>Hlasitost</value>
+  </data>
+  <data name="Whatsnew" xml:space="preserve">
+    <value>Co je nového?</value>
+  </data>
+</root>
