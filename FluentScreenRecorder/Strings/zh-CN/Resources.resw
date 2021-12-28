@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>关于此应用</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>返回</value>
+  </data>
+  <data name="Bitrate" xml:space="preserve">
+    <value>码率</value>
+  </data>
+  <data name="BugReport" xml:space="preserve">
+    <value>反馈问题</value>
+  </data>
+  <data name="Copyright" xml:space="preserve">
+    <value>版权</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="Discord" xml:space="preserve">
+    <value>加入我们的 Discord 服务器</value>
+  </data>
+  <data name="Donate" xml:space="preserve">
+    <value>捐赠</value>
+  </data>
+  <data name="ExitOverlay" xml:space="preserve">
+    <value>返回完整视图</value>
+  </data>
+  <data name="ExternalAudio" xml:space="preserve">
+    <value>麦克风录音</value>
+  </data>
+  <data name="Failure" xml:space="preserve">
+    <value>失败</value>
+  </data>
+  <data name="Framerate" xml:space="preserve">
+    <value>帧率</value>
+  </data>
+  <data name="GalleryView" xml:space="preserve">
+    <value>相册视图</value>
+  </data>
+  <data name="GitHub" xml:space="preserve">
+    <value>查看 GitHub 仓库</value>
+  </data>
+  <data name="GoToOverlay" xml:space="preserve">
+    <value>置于顶层</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>文件信息</value>
+  </data>
+  <data name="InternalAudio" xml:space="preserve">
+    <value>录音</value>
+  </data>
+  <data name="MicSettings" xml:space="preserve">
+    <value>系统麦克风设置</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>确定</value>
+  </data>
+  <data name="OpenFolder" xml:space="preserve">
+    <value>打开保存视频的文件夹</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>您可以在以下选项中进行选择</value>
+  </data>
+  <data name="OverlayMode" xml:space="preserve">
+    <value>默认打开覆盖模式</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>隐私政策</value>
+  </data>
+  <data name="Recording" xml:space="preserve">
+    <value>录屏</value>
+  </data>
+  <data name="RecordingStart" xml:space="preserve">
+    <value>开始录屏</value>
+  </data>
+  <data name="RecordingStop" xml:space="preserve">
+    <value>停止录屏</value>
+  </data>
+  <data name="Resolution" xml:space="preserve">
+    <value>分辨率</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="SaveAs" xml:space="preserve">
+    <value>另存为</value>
+  </data>
+  <data name="SaveConfirm" xml:space="preserve">
+    <value>您要保存文件吗?</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>正在保存</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>共享</value>
+  </data>
+  <data name="SourceSizeToggle" xml:space="preserve">
+    <value>源文件大小</value>
+  </data>
+  <data name="SystemVideoPlayerOption" xml:space="preserve">
+    <value>使用系统播放器打开视频</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>版本</value>
+  </data>
+  <data name="VideoPreview" xml:space="preserve">
+    <value>视频预览</value>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>音量</value>
+  </data>
+  <data name="Whatsnew" xml:space="preserve">
+    <value>新增功能</value>
+  </data>
+</root>
