@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en-US" target-language="zh-CN" original="FLUENTSCREENRECORDER/STRINGS/EN-US/RESOURCES.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6921.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="FLUENTSCREENRECORDER/STRINGS/EN-US/RESOURCES.RESW" datatype="resx">
+        <trans-unit id="About" translate="yes" xml:space="preserve">
+          <source>About the app</source>
+          <target state="translated">关于此应用</target>
+        </trans-unit>
+        <trans-unit id="Back" translate="yes" xml:space="preserve">
+          <source>Go back</source>
+          <target state="translated" state-qualifier="tm-suggestion">返回</target>
+        </trans-unit>
+        <trans-unit id="Bitrate" translate="yes" xml:space="preserve">
+          <source>Bitrate</source>
+          <target state="translated" state-qualifier="tm-suggestion">码率</target>
+        </trans-unit>
+        <trans-unit id="BugReport" translate="yes" xml:space="preserve">
+          <source>Report a bug</source>
+          <target state="translated" state-qualifier="tm-suggestion">反馈问题</target>
+        </trans-unit>
+        <trans-unit id="Copyright" translate="yes" xml:space="preserve">
+          <source>Copyright</source>
+          <target state="translated" state-qualifier="tm-suggestion">版权</target>
+        </trans-unit>
+        <trans-unit id="Delete" translate="yes" xml:space="preserve">
+          <source>Delete</source>
+          <target state="translated" state-qualifier="tm-suggestion">删除</target>
+        </trans-unit>
+        <trans-unit id="Discord" translate="yes" xml:space="preserve">
+          <source>Join our Discord server</source>
+          <target state="translated">加入我们的 Discord 语音聊天</target>
+        </trans-unit>
+        <trans-unit id="Donate" translate="yes" xml:space="preserve">
+          <source>Donate</source>
+          <target state="translated">捐赠</target>
+        </trans-unit>
+        <trans-unit id="ExitOverlay" translate="yes" xml:space="preserve">
+          <source>Back to full view</source>
+          <target state="translated">返回完整视图</target>
+        </trans-unit>
+        <trans-unit id="ExternalAudio" translate="yes" xml:space="preserve">
+          <source>Microphone recording</source>
+          <target state="translated">麦克风录音</target>
+        </trans-unit>
+        <trans-unit id="Failure" translate="yes" xml:space="preserve">
+          <source>Failure</source>
+          <target state="translated" state-qualifier="tm-suggestion">失败</target>
+        </trans-unit>
+        <trans-unit id="Framerate" translate="yes" xml:space="preserve">
+          <source>Framerate</source>
+          <target state="translated">帧率</target>
+        </trans-unit>
+        <trans-unit id="GalleryView" translate="yes" xml:space="preserve">
+          <source>Gallery View</source>
+          <target state="translated" state-qualifier="tm-suggestion">相册视图</target>
+        </trans-unit>
+        <trans-unit id="GitHub" translate="yes" xml:space="preserve">
+          <source>View GitHub repository</source>
+          <target state="translated">查看 GitHub 仓库</target>
+        </trans-unit>
+        <trans-unit id="GoToOverlay" translate="yes" xml:space="preserve">
+          <source>Switch to always on top</source>
+          <target state="translated">置于顶层</target>
+        </trans-unit>
+        <trans-unit id="Info" translate="yes" xml:space="preserve">
+          <source>File info</source>
+          <target state="translated" state-qualifier="tm-suggestion">文件信息</target>
+        </trans-unit>
+        <trans-unit id="InternalAudio" translate="yes" xml:space="preserve">
+          <source>Audio Recording</source>
+          <target state="translated" state-qualifier="tm-suggestion">录音</target>
+        </trans-unit>
+        <trans-unit id="MicSettings" translate="yes" xml:space="preserve">
+          <source>System microphone settings</source>
+          <target state="translated">系统麦克风设置</target>
+        </trans-unit>
+        <trans-unit id="Ok" translate="yes" xml:space="preserve">
+          <source>Ok</source>
+          <target state="translated" state-qualifier="tm-suggestion">确定</target>
+        </trans-unit>
+        <trans-unit id="OpenFolder" translate="yes" xml:space="preserve">
+          <source>Open the folder where the video has been saved</source>
+          <target state="translated">打开保存视频的文件夹</target>
+        </trans-unit>
+        <trans-unit id="Options" translate="yes" xml:space="preserve">
+          <source>You can choose among the following options</source>
+          <target state="translated">您可以在以下选项中进行选择</target>
+        </trans-unit>
+        <trans-unit id="OverlayMode" translate="yes" xml:space="preserve">
+          <source>Open overlay mode by default</source>
+          <target state="translated">默认打开覆盖模式</target>
+        </trans-unit>
+        <trans-unit id="Privacy" translate="yes" xml:space="preserve">
+          <source>Privacy policy</source>
+          <target state="translated" state-qualifier="tm-suggestion">隐私政策</target>
+        </trans-unit>
+        <trans-unit id="Recording" translate="yes" xml:space="preserve">
+          <source>Recording</source>
+          <target state="translated" state-qualifier="tm-suggestion">录屏</target>
+        </trans-unit>
+        <trans-unit id="RecordingStart" translate="yes" xml:space="preserve">
+          <source>Start Recording</source>
+          <target state="translated" state-qualifier="tm-suggestion">开始录屏</target>
+        </trans-unit>
+        <trans-unit id="RecordingStop" translate="yes" xml:space="preserve">
+          <source>Stop Recording</source>
+          <target state="translated" state-qualifier="tm-suggestion">停止录屏</target>
+        </trans-unit>
+        <trans-unit id="Resolution" translate="yes" xml:space="preserve">
+          <source>Resolution</source>
+          <target state="translated" state-qualifier="tm-suggestion">分辨率</target>
+        </trans-unit>
+        <trans-unit id="Save" translate="yes" xml:space="preserve">
+          <source>Save</source>
+          <target state="translated" state-qualifier="tm-suggestion">保存</target>
+        </trans-unit>
+        <trans-unit id="SaveAs" translate="yes" xml:space="preserve">
+          <source>Save as</source>
+          <target state="translated" state-qualifier="tm-suggestion">另存为</target>
+        </trans-unit>
+        <trans-unit id="SaveConfirm" translate="yes" xml:space="preserve">
+          <source>Do you want to save your file?</source>
+          <target state="translated">您要保存文件吗?</target>
+        </trans-unit>
+        <trans-unit id="Saving" translate="yes" xml:space="preserve">
+          <source>Saving...</source>
+          <target state="translated" state-qualifier="tm-suggestion">正在保存</target>
+        </trans-unit>
+        <trans-unit id="Settings" translate="yes" xml:space="preserve">
+          <source>Settings</source>
+          <target state="translated" state-qualifier="tm-suggestion">设置</target>
+        </trans-unit>
+        <trans-unit id="Share" translate="yes" xml:space="preserve">
+          <source>Share</source>
+          <target state="translated" state-qualifier="tm-suggestion">共享</target>
+        </trans-unit>
+        <trans-unit id="SourceSizeToggle" translate="yes" xml:space="preserve">
+          <source>Source size</source>
+          <target state="translated">源文件大小</target>
+        </trans-unit>
+        <trans-unit id="SystemVideoPlayerOption" translate="yes" xml:space="preserve">
+          <source>Use system player to open videos</source>
+          <target state="translated">使用系统播放器打开视频</target>
+        </trans-unit>
+        <trans-unit id="Version" translate="yes" xml:space="preserve">
+          <source>Version</source>
+          <target state="translated" state-qualifier="tm-suggestion">版本</target>
+        </trans-unit>
+        <trans-unit id="VideoPreview" translate="yes" xml:space="preserve">
+          <source>Video Preview</source>
+          <target state="translated" state-qualifier="tm-suggestion">视频预览</target>
+        </trans-unit>
+        <trans-unit id="Volume" translate="yes" xml:space="preserve">
+          <source>Volume</source>
+          <target state="translated" state-qualifier="tm-suggestion">音量</target>
+        </trans-unit>
+        <trans-unit id="Whatsnew" translate="yes" xml:space="preserve">
+          <source>What's new?</source>
+          <target state="translated" state-qualifier="tm-suggestion">新增功能</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>
