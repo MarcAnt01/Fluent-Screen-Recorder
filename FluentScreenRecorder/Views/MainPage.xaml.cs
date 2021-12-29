@@ -81,7 +81,8 @@ namespace FluentScreenRecorder
         private AudioEncodingProperties audioEncodingProperties;
         private StorageFile micFile;
         public MediaCapture mediaCapture;
-        public StorageFile recordedVideoFile = null;     
+        public StorageFile recordedVideoFile = null;
+        private bool isRecording;
         
         public MainPage()
         {
@@ -341,6 +342,7 @@ namespace FluentScreenRecorder
             MainTextBlock.Text = Strings.Resources.Recording;
             var originalBrush = MainTextBlock.Foreground;
             MainTextBlock.Foreground = new SolidColorBrush(Colors.Red);
+            isRecording = true;
 
             // Kick off the encoding
             try
@@ -409,6 +411,7 @@ namespace FluentScreenRecorder
                 return;
             }
 
+            isRecording = false;
             // At this point the encoding has finished,
             // tell the user we're now saving
 
@@ -977,20 +980,21 @@ namespace FluentScreenRecorder
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-
-
-            if (filesInFolder = true && GalleryToggleSwitch.IsOn && e.NewSize.Width > 680)
+            if (!isRecording)
             {
-                SecondColumn.Width = new GridLength(4, GridUnitType.Star);
-                ThirdColumn.Width = new GridLength(2, GridUnitType.Star);
-            }
-            else
-            {
-                FirstColumn.Width = new GridLength(1, GridUnitType.Star);
-                SecondColumn.Width = new GridLength(0);
-                ThirdColumn.Width = new GridLength(1, GridUnitType.Star);
-            }
+                if (filesInFolder = true && GalleryToggleSwitch.IsOn && e.NewSize.Width > 680)
+                {
+                    SecondColumn.Width = new GridLength(4, GridUnitType.Star);
+                    ThirdColumn.Width = new GridLength(2, GridUnitType.Star);
+                }
+                else
+                {
+                    FirstColumn.Width = new GridLength(1, GridUnitType.Star);
+                    SecondColumn.Width = new GridLength(0);
+                    ThirdColumn.Width = new GridLength(1, GridUnitType.Star);
+                }
 
+            } 
         }
 
         private void SetupTitleBar(CoreApplicationViewTitleBar coreAppTitleBar = null)
