@@ -83,27 +83,28 @@
         </Grid>
 
 
-        <Grid Grid.Row="1" Padding="20,8,10,0">
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="43" />
                 <RowDefinition />
             </Grid.RowDefinitions>
             <TextBlock Style="{StaticResource NavigationViewItemHeaderTextStyle}" 
                        AutomationProperties.Name="{x:Bind strings:Resources.Settings}" 
-                       FontSize="21">Settings</TextBlock>
+                       FontSize="21"
+                       Padding="24,8,10,0">Settings</TextBlock>
             <UserControl Grid.Row="1" x:Name="Container">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition Width="270" x:Name="AboutColumn2" />
                     </Grid.ColumnDefinitions>
-                    <ScrollViewer Grid.Column="0" Padding="0,0,15,0" Margin="0,0,8,0">
-                        <StackPanel Orientation="Vertical">
+                    <ScrollViewer Grid.Column="0" Padding="0,8,32,0">
+                        <StackPanel Orientation="Vertical" Margin="24,0,0,0">
 
                             <TextBlock Text="General"
                                Margin="0,10,0,5"/>
 
-                            <local:SettingsBlockControl Margin="0,10,0,0" Title="{x:Bind strings:Resources.GalleryView}" Description="Show recent videos you have recorded.">
+                            <local:SettingsBlockControl Margin="0,3,0,0" Title="{x:Bind strings:Resources.GalleryView}" Description="Show recent videos you have recorded.">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
@@ -113,7 +114,7 @@
                                 </Grid>
                             </local:SettingsBlockControl>
 
-                            <local:SettingsBlockControl Margin="0,10,0,0" Title="System player" Description="{x:Bind strings:Resources.SystemVideoPlayerOption}">
+                            <local:SettingsBlockControl Margin="0,3,0,0" Title="System player" Description="{x:Bind strings:Resources.SystemVideoPlayerOption}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
@@ -123,7 +124,7 @@
                                 </Grid>
                             </local:SettingsBlockControl>
 
-                            <local:SettingsBlockControl Margin="0,10,0,0" Title="Overlay mode" Description="{x:Bind strings:Resources.OverlayMode}">
+                            <local:SettingsBlockControl Margin="0,3,0,0" Title="Overlay mode" Description="{x:Bind strings:Resources.OverlayMode}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
@@ -134,9 +135,9 @@
                             </local:SettingsBlockControl>
 
                             <TextBlock Text="Advanced"
-                               Margin="0,10,0,10"/>
+                               Margin="0,24,0,5"/>
 
-                            <local:SettingsBlockControl Margin="0,10,0,0" Title="Source size" Description="{x:Bind strings:Resources.SourceSizeToggle}">
+                            <local:SettingsBlockControl Margin="0,3,0,0" Title="Source size" Description="{x:Bind strings:Resources.SourceSizeToggle}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
@@ -148,7 +149,7 @@
 
                             <local:SettingsBlockControl Title="{x:Bind strings:Resources.Framerate}" 
                                                 Description="The framerate used for the video."
-                                                Margin="0,10,0,0">
+                                                Margin="0,3,0,0">
                                 <ComboBox x:Name="FrameRateComboBox" VerticalAlignment="Center">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate x:DataType="local:FrameRateItem">
@@ -158,7 +159,7 @@
                                 </ComboBox>
                             </local:SettingsBlockControl>
 
-                            <local:SettingsBlockControl Margin="0,10,0,0" Title="Default resolution" Description="The resolution that's set by default every time (for example: 1920x1080)." Visibility="Collapsed">
+                            <local:SettingsBlockControl Margin="0,3,0,0" Title="Default resolution" Description="The resolution that's set by default every time (for example: 1920x1080)." Visibility="Collapsed">
                                 <ComboBox x:Name="ResolutionComboBox" 
                                   MinWidth="150" 
                                   IsEnabled="{x:Bind UseCaptureItemToggleSwitch.IsOn, Converter={StaticResource InvertBoolConv}, Mode=OneWay}">
@@ -171,7 +172,7 @@
                             </local:SettingsBlockControl>
 
                             <StackPanel Orientation="Vertical">
-                                <Button x:Name="MicSettingsButton" Margin="0,10,0,0" Padding="0,20" Click="MicSettingsButton_Click" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" AutomationProperties.Name="{x:Bind strings:Resources.MicSettings}" >
+                                <Button x:Name="MicSettingsButton" Margin="0,3,0,0" Padding="0,20" Click="MicSettingsButton_Click" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch" AutomationProperties.Name="{x:Bind strings:Resources.MicSettings}" >
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition  Width="*"/>
@@ -185,7 +186,7 @@
                                 </Button>
                             </StackPanel>
 
-                            <local:SettingsBlockControl Margin="0,10,0,0" Title="{x:Bind strings:Resources.InternalAudio}" Description="Record internal audio with the video.">
+                            <local:SettingsBlockControl Margin="0,3,0,0" Title="{x:Bind strings:Resources.InternalAudio}" Description="Record internal audio with the video.">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
@@ -195,7 +196,7 @@
                                 </Grid>
                             </local:SettingsBlockControl>
 
-                            <local:SettingsBlockControl Margin="0,10,0,10" Title="{x:Bind strings:Resources.ExternalAudio}" Description="Record microphone with the video.">
+                            <local:SettingsBlockControl Margin="0,3,0,24" Title="{x:Bind strings:Resources.ExternalAudio}" Description="Record microphone with the video.">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
@@ -205,37 +206,37 @@
                                 </Grid>
                             </local:SettingsBlockControl>
 
-                            <StackPanel Orientation="Vertical" x:Name="About">
+                            <StackPanel Orientation="Vertical" x:Name="About" Margin="0,0,0,0">
                                 <TextBlock Text="Fluent Screen Recorder" />
+                                <TextBlock x:Name="AppVersionText" Margin="0,8,0,8" />
 
-                                <HyperlinkButton Margin="0,8,0,0" Content="{x:Bind strings:Resources.GitHub}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder"/>
-                                <HyperlinkButton Content="{x:Bind strings:Resources.Discord}" NavigateUri="https://discord.gg/v4EXAwXPHw"/>
-                                <HyperlinkButton Content="{x:Bind strings:Resources.Privacy}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/PRIVACY.md"/>
-                                <HyperlinkButton Content="{x:Bind strings:Resources.Copyright}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/LICENSE"/>
-                                <Button x:Name="DonateButton" Width="144" Margin="8" Click="DonateButton_Click" AutomationProperties.Name="{x:Bind strings:Resources.Donate}">
+                                <HyperlinkButton Margin="-12,4,0,0" Content="{x:Bind strings:Resources.GitHub}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder"/>
+                                <HyperlinkButton Margin="-12,4,0,0" Content="{x:Bind strings:Resources.Discord}" NavigateUri="https://discord.gg/v4EXAwXPHw"/>
+                                <HyperlinkButton Margin="-12,4,0,0" Content="{x:Bind strings:Resources.Privacy}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/PRIVACY.md"/>
+                                <HyperlinkButton Margin="-12,4,0,0" Content="{x:Bind strings:Resources.Copyright}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/LICENSE"/>
+                                <Button x:Name="DonateButton" Width="144" Margin="0,8,0,24" Click="DonateButton_Click" AutomationProperties.Name="{x:Bind strings:Resources.Donate}">
                                     <StackPanel Orientation="Horizontal">
                                         <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF479;" Margin="0,0,8,0"/>
                                         <TextBlock Text="{x:Bind strings:Resources.Donate}"/>
                                     </StackPanel>
                                 </Button>
-                                <TextBlock x:Name="AppVersionText" Margin="0,0,0,20" />
                             </StackPanel>
                         </StackPanel>
                     </ScrollViewer>
-                    <StackPanel x:Name="SidebarAbout" Orientation="Vertical" Grid.Column="1" Margin="10,0,0,0">
+                    <StackPanel x:Name="SidebarAbout" Orientation="Vertical" Grid.Column="1" Margin="24,0,0,0">
                         <TextBlock Text="Fluent Screen Recorder" />
+                        <TextBlock x:Name="AppVersionText1" Margin="0,8,0,8" />
 
-                        <HyperlinkButton Margin="0,8,0,0" Content="{x:Bind strings:Resources.GitHub}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder"/>
-                        <HyperlinkButton Content="{x:Bind strings:Resources.Discord}" NavigateUri="https://discord.gg/v4EXAwXPHw"/>
-                        <HyperlinkButton Content="{x:Bind strings:Resources.Privacy}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/PRIVACY.md"/>
-                        <HyperlinkButton Content="{x:Bind strings:Resources.Copyright}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/LICENSE"/>
-                        <Button Width="144" Margin="8" Click="DonateButton_Click" AutomationProperties.Name="{x:Bind strings:Resources.Donate}">
+                        <HyperlinkButton Margin="-12,4,0,0" Content="{x:Bind strings:Resources.GitHub}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder"/>
+                        <HyperlinkButton Margin="-12,4,0,0" Content="{x:Bind strings:Resources.Discord}" NavigateUri="https://discord.gg/v4EXAwXPHw"/>
+                        <HyperlinkButton Margin="-12,4,0,0" Content="{x:Bind strings:Resources.Privacy}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/PRIVACY.md"/>
+                        <HyperlinkButton Margin="-12,4,0,0" Content="{x:Bind strings:Resources.Copyright}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/LICENSE"/>
+                        <Button Width="144" Margin="0,8" Click="DonateButton_Click" AutomationProperties.Name="{x:Bind strings:Resources.Donate}">
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF479;" Margin="0,0,8,0"/>
                                 <TextBlock Text="{x:Bind strings:Resources.Donate}"/>
                             </StackPanel>
                         </Button>
-                        <TextBlock x:Name="AppVersionText1" Margin="0,0,0,20" />
                     </StackPanel>
                     <VisualStateManager.VisualStateGroups>
                         <VisualStateGroup>
