@@ -36,7 +36,7 @@
         </trans-unit>
         <trans-unit id="Donate" translate="yes" xml:space="preserve">
           <source>Donate</source>
-          <target state="translated">Fai una donazione</target>
+          <target state="translated">Supportaci</target>
         </trans-unit>
         <trans-unit id="ExitOverlay" translate="yes" xml:space="preserve">
           <source>Back to full view</source>
@@ -60,7 +60,7 @@
         </trans-unit>
         <trans-unit id="GitHub" translate="yes" xml:space="preserve">
           <source>View GitHub repository</source>
-          <target state="translated">Vedi il repository su GitHub</target>
+          <target state="translated">Vedi la repository su GitHub</target>
         </trans-unit>
         <trans-unit id="GoToOverlay" translate="yes" xml:space="preserve">
           <source>Switch to always on top</source>
@@ -104,15 +104,15 @@
         </trans-unit>
         <trans-unit id="RecordingStart" translate="yes" xml:space="preserve">
           <source>Start Recording</source>
-          <target state="translated">Inizia a registrare</target>
+          <target state="translated">Inizia registrazione</target>
         </trans-unit>
         <trans-unit id="RecordingStop" translate="yes" xml:space="preserve">
           <source>Stop Recording</source>
-          <target state="translated">Interrompi la registrazione</target>
+          <target state="translated">Interrompi registrazione</target>
         </trans-unit>
         <trans-unit id="Resolution" translate="yes" xml:space="preserve">
           <source>Resolution</source>
-          <target state="translated">Resolution</target>
+          <target state="translated">Risoluzione</target>
         </trans-unit>
         <trans-unit id="Save" translate="yes" xml:space="preserve">
           <source>Save</source>
