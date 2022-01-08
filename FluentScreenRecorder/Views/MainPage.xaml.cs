@@ -82,7 +82,7 @@ namespace FluentScreenRecorder
         private StorageFile micFile;
         public MediaCapture mediaCapture;
         public StorageFile recordedVideoFile = null;
-        private bool isRecording;
+        private bool lockAdaptiveUI;
         
         public MainPage()
         {
@@ -342,7 +342,7 @@ namespace FluentScreenRecorder
             MainTextBlock.Text = Strings.Resources.Recording;
             var originalBrush = MainTextBlock.Foreground;
             MainTextBlock.Foreground = new SolidColorBrush(Colors.Red);
-            isRecording = true;
+            lockAdaptiveUI = true;
 
             // Kick off the encoding
             try
@@ -411,13 +411,13 @@ namespace FluentScreenRecorder
                 return;
             }
 
-            isRecording = false;
+            
             // At this point the encoding has finished,
             // tell the user we're now saving
 
             if (AudioToggleSwitch.IsOn)
             {
-                CompleteRecording(BufferList.ToArray(), width, height, bitrate, frameRate);
+                CompleteRecording(BufferList.ToArray(), width, height, bitrate, frameRate);                
             }
             else if (ExtAudioToggleSwitch.IsOn)
             {
@@ -477,6 +477,7 @@ namespace FluentScreenRecorder
                         await internalAudioFile.DeleteAsync();
                     }));
                 });
+                lockAdaptiveUI = false;
             }
             else
             {
@@ -492,7 +493,7 @@ namespace FluentScreenRecorder
                 AutomationProperties.SetName(MainButton, "Start recording");                
                 this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
                 CacheCurrentSettings();
-                               
+                lockAdaptiveUI = false;                               
             }
         }
 
@@ -613,6 +614,7 @@ namespace FluentScreenRecorder
                         await videoFile.DeleteAsync();
                         await internalAudioFile.DeleteAsync();
                     }));
+                    lockAdaptiveUI = false;
                 });
                 
 
@@ -980,7 +982,7 @@ namespace FluentScreenRecorder
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (!isRecording)
+            if (!lockAdaptiveUI)
             {
                 if (filesInFolder = true && GalleryToggleSwitch.IsOn && e.NewSize.Width > 680)
                 {
