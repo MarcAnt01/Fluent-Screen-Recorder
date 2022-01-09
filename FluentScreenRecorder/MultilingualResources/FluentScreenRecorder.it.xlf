@@ -60,7 +60,7 @@
         </trans-unit>
         <trans-unit id="GitHub" translate="yes" xml:space="preserve">
           <source>View GitHub repository</source>
-          <target state="translated">Vedi la repository su GitHub</target>
+          <target state="translated">Repository su GitHub</target>
         </trans-unit>
         <trans-unit id="GoToOverlay" translate="yes" xml:space="preserve">
           <source>Switch to always on top</source>
@@ -104,11 +104,11 @@
         </trans-unit>
         <trans-unit id="RecordingStart" translate="yes" xml:space="preserve">
           <source>Start Recording</source>
-          <target state="translated">Inizia registrazione</target>
+          <target state="translated">Inizia la registrazione</target>
         </trans-unit>
         <trans-unit id="RecordingStop" translate="yes" xml:space="preserve">
           <source>Stop Recording</source>
-          <target state="translated">Interrompi registrazione</target>
+          <target state="translated">Interrompi la registrazione</target>
         </trans-unit>
         <trans-unit id="Resolution" translate="yes" xml:space="preserve">
           <source>Resolution</source>
