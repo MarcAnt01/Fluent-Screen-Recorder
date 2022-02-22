@@ -818,6 +818,11 @@ namespace FluentScreenRecorder
                 result.FrameRate = (uint)frameRate;
             }
 
+            if (localSettings.Values.TryGetValue(nameof(AppSettings.Bitrate), out var bitrate))
+            {
+                result.Bitrate = (uint)bitrate;
+            }
+
             if (localSettings.Values.TryGetValue(nameof(AppSettings.IntAudio), out var intAudio))
             {
                 result.IntAudio = (bool)intAudio;
