@@ -34,7 +34,7 @@
     <value>Entra nel nostro server su Discord</value>
   </data>
   <data name="Donate" xml:space="preserve">
-    <value>Fai una donazione</value>
+    <value>Supportaci</value>
   </data>
   <data name="ExitOverlay" xml:space="preserve">
     <value>Torna alla finestra normale</value>
@@ -52,7 +52,7 @@
     <value>Vista galleria</value>
   </data>
   <data name="GitHub" xml:space="preserve">
-    <value>Vedi il repository su GitHub</value>
+    <value>Repository su GitHub</value>
   </data>
   <data name="GoToOverlay" xml:space="preserve">
     <value>Vai in modalità always on top</value>
@@ -85,13 +85,13 @@
     <value>Registrando</value>
   </data>
   <data name="RecordingStart" xml:space="preserve">
-    <value>Inizia a registrare</value>
+    <value>Inizia la registrazione</value>
   </data>
   <data name="RecordingStop" xml:space="preserve">
     <value>Interrompi la registrazione</value>
   </data>
   <data name="Resolution" xml:space="preserve">
-    <value>Resolution</value>
+    <value>Risoluzione</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Salva</value>
