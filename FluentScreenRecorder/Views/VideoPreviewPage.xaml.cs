@@ -176,6 +176,11 @@ namespace FluentScreenRecorder.Views
                 }
             }
         }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            PreviewPlayer.Source = null;
+        }
     }
        
 }

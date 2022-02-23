@@ -6,6 +6,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d"
       xmlns:strings="using:FluentScreenRecorder.Strings"
+      Unloaded="Page_Unloaded"
       Background="{ThemeResource AppBarBackgroundThemeBrush}">
 
     <Grid>
