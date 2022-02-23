@@ -989,7 +989,7 @@ namespace FluentScreenRecorder
         {
             if (!lockAdaptiveUI)
             {
-                if (filesInFolder = true && GalleryToggleSwitch.IsOn && e.NewSize.Width > 680)
+                if (filesInFolder && GalleryToggleSwitch.IsOn && e.NewSize.Width > 680)
                 {
                     SecondColumn.Width = new GridLength(4, GridUnitType.Star);
                     ThirdColumn.Width = new GridLength(2, GridUnitType.Star);
