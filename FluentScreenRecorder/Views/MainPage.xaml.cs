@@ -83,7 +83,7 @@ namespace FluentScreenRecorder
         public MediaCapture mediaCapture;
         public StorageFile recordedVideoFile = null;
         private bool lockAdaptiveUI;
-        
+
         public MainPage()
         {
             InitializeComponent();
@@ -155,7 +155,7 @@ namespace FluentScreenRecorder
                 });
             }
             FrameRateComboBox.ItemsSource = _frameRates;
-            FrameRateComboBox.SelectedIndex = GetFrameRateIndex(settings.FrameRate);            
+            FrameRateComboBox.SelectedIndex = GetFrameRateIndex(settings.FrameRate);
             AudioToggleSwitch.IsOn = settings.IntAudio;
             ExtAudioToggleSwitch.IsOn = settings.ExtAudio;
             GalleryToggleSwitch.IsOn = settings.Gallery;
@@ -164,7 +164,7 @@ namespace FluentScreenRecorder
             if (AudioToggleSwitch.IsOn)
             {
                 InternalAudioCheck();
-            }            
+            }
         }
 
         private async void InternalAudioCheck()
@@ -178,7 +178,7 @@ namespace FluentScreenRecorder
             }
             catch (Exception)
             {
-                AudioToggleSwitch.IsOn = false;               
+                AudioToggleSwitch.IsOn = false;
             }
         }
 
@@ -208,12 +208,24 @@ namespace FluentScreenRecorder
                 toolTip.Content = Strings.Resources.GoToOverlay;
                 ToolTipService.SetToolTip(OverlayButton, toolTip);
                 AutomationProperties.SetName(OverlayButton, Strings.Resources.GoToOverlay);
-                await LoadThumbanails();
+            }
+            await LoadThumbanails();
+
+            if (filesInFolder && GalleryToggleSwitch.IsOn && ((Frame)Window.Current.Content).ActualWidth > 680)
+            {
+                SecondColumn.Width = new GridLength(4, GridUnitType.Star);
+                ThirdColumn.Width = new GridLength(2, GridUnitType.Star);
+            }
+            else
+            {
+                FirstColumn.Width = new GridLength(1, GridUnitType.Star);
+                SecondColumn.Width = new GridLength(0);
+                ThirdColumn.Width = new GridLength(1, GridUnitType.Star);
             }
 
             // We don't have to create the video folder at startup - just ignore populating the folder view if the folder doesn't exist (yet).
             // Saving a recording will automatically create the folder if missing.
-            
+
         }
 
         private async Task LoadThumbanails()
@@ -251,7 +263,7 @@ namespace FluentScreenRecorder
             var frameRateItem = (FrameRateItem)FrameRateComboBox.SelectedItem;
             var resolutionItem = (ResolutionItem)ResolutionComboBox.SelectedItem;
             var bitrateItem = (BitrateItem)BitrateComboBox.SelectedItem;
-            
+
 
             MediaCapture mediaCapture = null;
 
@@ -273,7 +285,7 @@ namespace FluentScreenRecorder
                     await mediaCapture.InitializeAsync(settings);
                     var tempfolder = ApplicationData.Current.TemporaryFolder;
                     var name = DateTime.Now.ToString("yyyy-MM-dd-HHmmss");
-                     micFile = await tempfolder.CreateFileAsync($"{name}.mp3");
+                    micFile = await tempfolder.CreateFileAsync($"{name}.mp3");
                 }
                 else
                 {
@@ -313,7 +325,7 @@ namespace FluentScreenRecorder
                 height = EnsureEven(height);
             }
 
-            
+
             // Put videos in the temp folder
             var tempFile = await GetTempFileAsync();
             _tempFile = tempFile;
@@ -411,13 +423,13 @@ namespace FluentScreenRecorder
                 return;
             }
 
-            
+
             // At this point the encoding has finished,
             // tell the user we're now saving
 
             if (AudioToggleSwitch.IsOn)
             {
-                CompleteRecording(BufferList.ToArray(), width, height, bitrate, frameRate);                
+                CompleteRecording(BufferList.ToArray(), width, height, bitrate, frameRate);
             }
             else if (ExtAudioToggleSwitch.IsOn)
             {
@@ -469,7 +481,7 @@ namespace FluentScreenRecorder
                         AutomationProperties.SetName(MainButton, Strings.Resources.RecordingStart);
                         this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
                         CacheCurrentSettings();
-                       
+
                         var videofolder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
                         MainButton.Visibility = Visibility.Visible;
@@ -490,10 +502,10 @@ namespace FluentScreenRecorder
                 ToolTip newtoolTip = new ToolTip();
                 toolTip.Content = Strings.Resources.RecordingStart;
                 ToolTipService.SetToolTip(MainButton, Strings.Resources.RecordingStart);
-                AutomationProperties.SetName(MainButton, "Start recording");                
+                AutomationProperties.SetName(MainButton, "Start recording");
                 this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
                 CacheCurrentSettings();
-                lockAdaptiveUI = false;                               
+                lockAdaptiveUI = false;
             }
         }
 
@@ -616,7 +628,7 @@ namespace FluentScreenRecorder
                     }));
                     lockAdaptiveUI = false;
                 });
-                
+
 
             }
             else
@@ -633,8 +645,8 @@ namespace FluentScreenRecorder
                 AutomationProperties.SetName(MainButton, "Start recording");
                 this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
                 CacheCurrentSettings();
-            }         
-      
+            }
+
         }
 
         public static async Task<bool> Save(StorageFile file)
@@ -771,10 +783,10 @@ namespace FluentScreenRecorder
             var bitrateItem = (BitrateItem)BitrateComboBox.SelectedItem;
             var bitrate = bitrateItem.Bitrate;
             var frameRateItem = (FrameRateItem)FrameRateComboBox.SelectedItem;
-            var frameRate = frameRateItem.FrameRate;                    
+            var frameRate = frameRateItem.FrameRate;
             var intAudio = AudioToggleSwitch.IsOn;
             var extAudio = ExtAudioToggleSwitch.IsOn;
-            var gallery = GalleryToggleSwitch.IsOn;            
+            var gallery = GalleryToggleSwitch.IsOn;
             var systemPlayer = SystemPlayerToggleSwitch.IsOn;
             var showOnTop = OverlayToggleSwitch.IsOn;
             return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, IntAudio = intAudio, ExtAudio = extAudio, Gallery = gallery, SystemPlayer = systemPlayer, ShowOnTop = showOnTop };
@@ -789,10 +801,10 @@ namespace FluentScreenRecorder
                 Width = 1920,
                 Height = 1080,
                 Bitrate = 18000000,
-                FrameRate = 60,                            
+                FrameRate = 60,
                 IntAudio = true,
                 ExtAudio = false,
-                Gallery = true,                
+                Gallery = true,
                 SystemPlayer = false,
                 ShowOnTop = false
             };
@@ -836,7 +848,7 @@ namespace FluentScreenRecorder
             if (localSettings.Values.TryGetValue(nameof(AppSettings.Gallery), out var gallery))
             {
                 result.Gallery = (bool)gallery;
-            }            
+            }
 
             if (localSettings.Values.TryGetValue(nameof(AppSettings.SystemPlayer), out var systemPlayer))
             {
@@ -861,7 +873,7 @@ namespace FluentScreenRecorder
             localSettings.Values[nameof(AppSettings.Width)] = settings.Width;
             localSettings.Values[nameof(AppSettings.Height)] = settings.Height;
             localSettings.Values[nameof(AppSettings.Bitrate)] = settings.Bitrate;
-            localSettings.Values[nameof(AppSettings.FrameRate)] = settings.FrameRate;                     
+            localSettings.Values[nameof(AppSettings.FrameRate)] = settings.FrameRate;
             localSettings.Values[nameof(AppSettings.IntAudio)] = settings.IntAudio;
             localSettings.Values[nameof(AppSettings.ExtAudio)] = settings.ExtAudio;
             localSettings.Values[nameof(AppSettings.Gallery)] = settings.Gallery;
@@ -917,10 +929,10 @@ namespace FluentScreenRecorder
             public uint Width;
             public uint Height;
             public uint Bitrate;
-            public uint FrameRate;                      
+            public uint FrameRate;
             public bool IntAudio;
             public bool ExtAudio;
-            public bool Gallery;            
+            public bool Gallery;
             public bool SystemPlayer;
             public bool ShowOnTop;
         }
@@ -1001,7 +1013,7 @@ namespace FluentScreenRecorder
                     ThirdColumn.Width = new GridLength(1, GridUnitType.Star);
                 }
 
-            } 
+            }
         }
 
         private void SetupTitleBar(CoreApplicationViewTitleBar coreAppTitleBar = null)
@@ -1059,17 +1071,17 @@ namespace FluentScreenRecorder
 
         private void DataRequested(DataTransferManager sender, DataRequestedEventArgs e)
         {
-            
+
             DataRequest request = e.Request;
             request.Data.Properties.Title = recordedVideoFile.Name;
             request.Data.SetStorageItems(new StorageFile[] { recordedVideoFile });
-            
-            
+
+
         }
 
         private async void MenuFlyoutItem_Click_2(object sender, RoutedEventArgs e)
-        {           
-            
+        {
+
             var frameRate = await recordedVideoFile.Properties.RetrievePropertiesAsync(new string[] { "System.Video.FrameRate" });
             var width = await recordedVideoFile.Properties.RetrievePropertiesAsync(new string[] { "System.Video.FrameWidth" });
             var height = await recordedVideoFile.Properties.RetrievePropertiesAsync(new string[] { "System.Video.FrameHeight" });
@@ -1080,7 +1092,7 @@ namespace FluentScreenRecorder
         public async void Image_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
         {
             ThumbItem item = (sender as Image).DataContext as ThumbItem;
-            recordedVideoFile = await(await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder")).GetFileAsync(item.fileN);
+            recordedVideoFile = await (await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder")).GetFileAsync(item.fileN);
 
         }
     }
