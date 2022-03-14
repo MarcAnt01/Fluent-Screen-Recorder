@@ -78,6 +78,8 @@ namespace FluentScreenRecorder
             //Record icon
             RecordIcon.Visibility = Visibility.Visible;
             StopIcon.Visibility = Visibility.Collapsed;
+            RecordingContainer.Visibility = Visibility.Collapsed;
+            MainContent.Visibility = Visibility.Visible;
             Ellipse.Visibility = Visibility.Collapsed;
             ToolTip toolTip = new ToolTip();
             toolTip.Content = Strings.Resources.RecordingStart;
@@ -314,6 +316,10 @@ namespace FluentScreenRecorder
 
             RecordIcon.Visibility = Visibility.Collapsed;
             StopIcon.Visibility = Visibility.Visible;
+            RecordName.Text = "Stop";
+            StopRecIcon.Glyph = "\uE15B";
+            RecordingContainer.Visibility = Visibility.Visible;
+            MainContent.Visibility = Visibility.Collapsed;
             Ellipse.Visibility = Visibility.Visible;
             toolTip = new ToolTip();
             toolTip.Content = Strings.Resources.RecordingStop;
@@ -380,6 +386,10 @@ namespace FluentScreenRecorder
                 MainTextBlock.Foreground = originalBrush;
                 RecordIcon.Visibility = Visibility.Visible;
                 StopIcon.Visibility = Visibility.Collapsed;
+                RecordName.Text = "Record";
+                StopRecIcon.Glyph = "\uE7C8";
+                RecordingContainer.Visibility = Visibility.Collapsed;
+                MainContent.Visibility = Visibility.Visible;
                 toolTip.Content = Strings.Resources.RecordingStart;
                 ToolTipService.SetToolTip(MainButton, toolTip);
                 AutomationProperties.SetName(MainButton, Strings.Resources.RecordingStart);
@@ -440,6 +450,10 @@ namespace FluentScreenRecorder
                         Ellipse.Visibility = Visibility.Collapsed;
                         RecordIcon.Visibility = Visibility.Visible;
                         StopIcon.Visibility = Visibility.Collapsed;
+                        RecordName.Text = "Record";
+                        StopRecIcon.Glyph = "\uE7C8";
+                        RecordingContainer.Visibility = Visibility.Collapsed;
+                        MainContent.Visibility = Visibility.Visible;
                         ToolTip newtoolTip = new ToolTip();
                         toolTip.Content = Strings.Resources.RecordingStart;
                         ToolTipService.SetToolTip(MainButton, toolTip);
@@ -464,6 +478,10 @@ namespace FluentScreenRecorder
                 Ellipse.Visibility = Visibility.Collapsed;
                 RecordIcon.Visibility = Visibility.Visible;
                 StopIcon.Visibility = Visibility.Collapsed;
+                RecordName.Text = "Record";
+                StopRecIcon.Glyph = "\uE7C8";
+                RecordingContainer.Visibility = Visibility.Collapsed;
+                MainContent.Visibility = Visibility.Visible;
                 ToolTip newtoolTip = new ToolTip();
                 toolTip.Content = Strings.Resources.RecordingStart;
                 ToolTipService.SetToolTip(MainButton, Strings.Resources.RecordingStart);
@@ -578,6 +596,10 @@ namespace FluentScreenRecorder
                         Ellipse.Visibility = Visibility.Collapsed;
                         RecordIcon.Visibility = Visibility.Visible;
                         StopIcon.Visibility = Visibility.Collapsed;
+                        RecordName.Text = "Record";
+                        StopRecIcon.Glyph = "\uE7C8";
+                        RecordingContainer.Visibility = Visibility.Collapsed;
+                        MainContent.Visibility = Visibility.Visible;
                         ToolTip newtoolTip = new ToolTip();
                         toolTip.Content = Strings.Resources.RecordingStart;
                         ToolTipService.SetToolTip(MainButton, toolTip);
@@ -602,6 +624,10 @@ namespace FluentScreenRecorder
                 Ellipse.Visibility = Visibility.Collapsed;
                 RecordIcon.Visibility = Visibility.Visible;
                 StopIcon.Visibility = Visibility.Collapsed;
+                RecordName.Text = "Record";
+                StopRecIcon.Glyph = "\uE7C8";
+                RecordingContainer.Visibility = Visibility.Collapsed;
+                MainContent.Visibility = Visibility.Visible;
                 ToolTip newtoolTip = new ToolTip();
                 toolTip.Content = Strings.Resources.RecordingStart;
                 ToolTipService.SetToolTip(MainButton, Strings.Resources.RecordingStart);

@@ -6,27 +6,26 @@
     xmlns:strings="using:FluentScreenRecorder.Strings"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:media="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:models="using:FluentScreenRecorder.Models"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:models="using:FluentScreenRecorder.Models" xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     mc:Ignorable="d"
-    Background="{ThemeResource SystemControlAcrylicWindowBrush}"
-    SizeChanged="Page_SizeChanged">
+    SizeChanged="Page_SizeChanged"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True">
 
     <Page.Resources>
         <local:InvertBoolConverter x:Key="InvertBoolConv"/>      
          
-        <media:AcrylicBrush x:Key="CustomAcrylicBackgroundBrushStrong" TintColor="{StaticResource SystemChromeAltHighColor}" BackgroundSource="HostBackdrop" FallbackColor="{StaticResource SystemChromeMediumColor}" TintOpacity="0.7"/>
-        <media:AcrylicBrush x:Key="CustomAcrylicBackgroundBrushWeak" TintColor="{StaticResource SystemChromeAltHighColor}" BackgroundSource="HostBackdrop" FallbackColor="{StaticResource SystemChromeMediumColor}" TintOpacity="0.5"/>
+        <AcrylicBrush x:Key="CustomAcrylicBackgroundBrushStrong" TintColor="{StaticResource SystemChromeAltHighColor}" BackgroundSource="HostBackdrop" FallbackColor="{StaticResource SystemChromeMediumColor}" TintOpacity="0.7"/>
+        <AcrylicBrush x:Key="CustomAcrylicBackgroundBrushWeak" TintColor="{StaticResource SystemChromeAltHighColor}" BackgroundSource="HostBackdrop" FallbackColor="{StaticResource SystemChromeMediumColor}" TintOpacity="0.5"/>
         <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="{ThemeResource SystemAccentColor}"/>
         <SolidColorBrush x:Key="ToggleSwitchFillOn" Color="{ThemeResource SystemAccentColor}"/>
         <SolidColorBrush x:Key="ToggleSwitchStrokeOn" Color="{ThemeResource SystemAccentColor}"/>        
     </Page.Resources>
 
-
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
+            <RowDefinition Height="60" />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         
@@ -78,14 +77,54 @@
             </Button>
         </Grid>
 
-        <Grid Grid.Row="1">
+        <RelativePanel VerticalAlignment="Center" Grid.Row="1" Padding="10,0">
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <ToggleButton Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Height="45">
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <FontIcon Glyph="&#xE7C8;" x:Name="StopRecIcon" />
+                        <TextBlock Text="Record" x:Name="RecordName" />
+                    </StackPanel>
+                </ToggleButton>
+
+                <AppBarSeparator Height="40" />
+
+                <ComboBox x:Name="ResolutionComboBox" VerticalAlignment="Center" SelectionChanged="ResolutionComboBox_SelectionChanged" ToolTipService.ToolTip="{x:Bind strings:Resources.Resolution}" HorizontalAlignment="Center">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="models:ResolutionItem">
+                            <TextBlock Text="{x:Bind DisplayName}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <ComboBox x:Name="FrameRateComboBox" VerticalAlignment="Center" SelectionChanged="FrameRateComboBox_SelectionChanged" ToolTipService.ToolTip="{x:Bind strings:Resources.Framerate}" HorizontalAlignment="Center">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate x:DataType="models:FrameRateItem">
+                            <TextBlock Text="{x:Bind DisplayName}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+
+            <Button Background="Transparent" BorderThickness="0" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
+                <muxc:AnimatedIcon Height="20">
+                    <muxc:AnimatedIcon.Source>
+                        <animatedvisuals:AnimatedSettingsVisualSource />
+                    </muxc:AnimatedIcon.Source>
+                    <muxc:AnimatedIcon.FallbackIconSource>
+                        <muxc:SymbolIconSource Symbol='Setting' />
+                    </muxc:AnimatedIcon.FallbackIconSource>
+                </muxc:AnimatedIcon>
+            </Button>
+        </RelativePanel>
+
+        <Grid x:Name="MainContent" Grid.Row="2" Background="{StaticResource LayerFillColorDefaultBrush}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="FirstColumn"/>
                 <ColumnDefinition Width="4*" x:Name="SecondColumn"/>
                 <ColumnDefinition Width="2*" x:Name="ThirdColumn"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0" Background="{ThemeResource CustomAcrylicBackgroundBrushWeak}">
+            <Grid Grid.Column="0">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">                    
                     <StackPanel Orientation="Horizontal">
                         <Ellipse x:Name="Ellipse" HorizontalAlignment="Center" Fill="Red" Width="15" Height="15" Margin="0,0,5,-10"/>
@@ -101,7 +140,7 @@
                 </StackPanel>
             </Grid>
 
-            <Grid Grid.Column="1" Background="{ThemeResource CustomAcrylicBackgroundBrushStrong}">
+            <Grid Grid.Column="1">
                 <GridView x:Name="BasicGridView" SelectionMode="Single" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,32,0,0">
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="models:ThumbItem">
@@ -134,24 +173,9 @@
                 </GridView>
             </Grid>
 
-            <Grid Grid.Column="2" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid Grid.Column="2">
                 <ScrollViewer>
                     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="150">
-
-                        <ComboBox x:Name="ResolutionComboBox" SelectionChanged="ResolutionComboBox_SelectionChanged" Header="{x:Bind strings:Resources.Resolution}" Margin="8" MinWidth="150" HorizontalAlignment="Center">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate x:DataType="models:ResolutionItem">
-                                    <TextBlock Text="{x:Bind DisplayName}"/>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <ComboBox x:Name="FrameRateComboBox" SelectionChanged="FrameRateComboBox_SelectionChanged" Header="{x:Bind strings:Resources.Framerate}" Margin="8" MinWidth="150" HorizontalAlignment="Center">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate x:DataType="models:FrameRateItem">
-                                    <TextBlock Text="{x:Bind DisplayName}"/>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
                         <ComboBox x:Name="BitrateComboBox" SelectionChanged="BitrateComboBox_SelectionChanged" Header="{x:Bind strings:Resources.Bitrate}" Margin="8" MinWidth="150" HorizontalAlignment="Center">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="models:BitrateItem">
@@ -202,6 +226,10 @@
                     </StackPanel>
                 </ScrollViewer>
             </Grid>
+        </Grid>
+
+        <Grid Visibility="Collapsed" x:Name="RecordingContainer" Grid.Row="2" Background="{StaticResource LayerFillColorDefaultBrush}">
+            <TextBlock Text="Recording..." Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" />
         </Grid>
     </Grid>
 </Page>
