@@ -166,6 +166,10 @@
     <Compile Include="Themes\generic.xaml.cs">
       <DependentUpon>generic.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\RecorderViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="Models\MainModels.cs" />
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -347,4 +351,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+<PropertyGroup>
+   <LangVersion>latest</LangVersion>
+</PropertyGroup>
 </Project>

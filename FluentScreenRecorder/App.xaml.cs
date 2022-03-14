@@ -13,6 +13,7 @@ using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Windows.ApplicationModel.ExtendedExecution.Foreground;
+using FluentScreenRecorder.ViewModels;
 
 namespace FluentScreenRecorder
 {
@@ -21,18 +22,24 @@ namespace FluentScreenRecorder
     /// </summary>
     sealed partial class App : Application
     {
+        public static RecorderViewModel RecViewModel { get; private set; }
+        public static SettingsViewModel Settings { get; private set; }
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            InitializeComponent();
+            Suspending += OnSuspending;
 #if !DEBUG
             AppCenter.Start(APPCENTER_SECRET, typeof(Analytics), typeof(Crashes));
 #endif
-            ExtendExecution();            
+            ExtendExecution();
+
+            RecViewModel = new();
+            Settings = new();
         }
 
         private ExtendedExecutionForegroundSession _extendedSession;
@@ -129,7 +136,7 @@ namespace FluentScreenRecorder
 
         private void TryEnablePrelaunch()
         {
-            Windows.ApplicationModel.Core.CoreApplication.EnablePrelaunch(true);
+            CoreApplication.EnablePrelaunch(true);
         }
 
         /// <summary>
@@ -152,18 +159,6 @@ namespace FluentScreenRecorder
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-
-            // Save our state
-            var rootFrame = Window.Current.Content as Frame;
-            if (rootFrame != null)
-            {
-                var page = rootFrame.Content as MainPage;
-
-                if (page != null && GraphicsCaptureSession.IsSupported())
-                {
-                    page.CacheCurrentSettings();
-                }
-            }
 
             deferral.Complete();
         }
