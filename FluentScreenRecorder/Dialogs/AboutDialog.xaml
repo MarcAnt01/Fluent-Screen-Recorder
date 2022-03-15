@@ -11,7 +11,7 @@
     SecondaryButtonText="{x:Bind strings:Resources.Ok}"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
-    SecondaryButtonStyle="{ThemeResource ButtonRevealStyle}">
+    Style="{StaticResource DefaultContentDialogStyle}">
 
     <StackPanel>
         <HyperlinkButton Content="{x:Bind strings:Resources.GitHub}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder"/>

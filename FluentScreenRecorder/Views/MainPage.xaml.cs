@@ -130,7 +130,7 @@ namespace FluentScreenRecorder
             FrameRateComboBox.ItemsSource = App.RecViewModel.Framerates;
             FrameRateComboBox.SelectedIndex = App.RecViewModel.GetFrameRateIndex(App.Settings.FrameRate);
 
-            if (AudioToggleSwitch.IsOn)
+            if (App.Settings.IntAudio)
             {
                 InternalAudioCheck();
             }
@@ -237,13 +237,15 @@ namespace FluentScreenRecorder
 
             MediaCapture mediaCapture = null;
 
-            if (AudioToggleSwitch.IsOn)
+            if (App.Settings.IntAudio)
             {
-                loopbackAudioCapture = new LoopbackAudioCapture(MediaDevice.GetDefaultAudioRenderId(AudioDeviceRole.Default));
-                loopbackAudioCapture.BufferReadyDelegate = LoopbackBufferReady;
+                loopbackAudioCapture = new(MediaDevice.GetDefaultAudioRenderId(AudioDeviceRole.Default))
+                {
+                    BufferReadyDelegate = LoopbackBufferReady
+                };
                 BufferList.Clear();
             }
-            else if (ExtAudioToggleSwitch.IsOn)
+            else if (App.Settings.ExtAudio)
             {
                 if (await IsMicAllowed())
                 {
@@ -369,7 +371,7 @@ namespace FluentScreenRecorder
                 {
                     message = $"Whoops, something went wrong!\n0x{ex.HResult:X8} - {ex.Message}";
                 }
-                ContentDialog errorDialog = new ContentDialog
+                ContentDialog errorDialog = new()
                 {
                     Title = "Recording failed",
                     Content = message,
@@ -402,11 +404,11 @@ namespace FluentScreenRecorder
             // At this point the encoding has finished,
             // tell the user we're now saving
 
-            if (AudioToggleSwitch.IsOn)
+            if (App.Settings.IntAudio)
             {
                 await CompleteRecording(BufferList.ToArray(), width, height, bitrate, frameRate);
             }
-            else if (ExtAudioToggleSwitch.IsOn)
+            else if (App.Settings.ExtAudio)
             {
                 var clip = await MediaClip.CreateFromFileAsync(_tempFile);
                 var composition = new MediaComposition();
@@ -526,7 +528,7 @@ namespace FluentScreenRecorder
         {
             //Collecting some info before being lost
 
-            if (AudioToggleSwitch.IsOn && loopbackAudioCapture.Started)
+            if (App.Settings.IntAudio && loopbackAudioCapture.Started)
             {
                 audioEncodingProperties = loopbackAudioCapture.EncodingProperties;
                 await loopbackAudioCapture.Stop();
@@ -924,6 +926,11 @@ namespace FluentScreenRecorder
         private void BitrateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             App.Settings.Bitrate = (e.AddedItems[0] as BitrateItem).Bitrate;
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SettingsPage));
         }
     }
 }
