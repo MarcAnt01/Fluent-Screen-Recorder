@@ -22,13 +22,12 @@ namespace FluentScreenRecorder.Dialogs
     {
         public AboutDialog()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             VersionNumberTextBlock.Text = GetAppVersion();
         }
 
         private string GetAppVersion()
         {
-
             Package package = Package.Current;
             PackageId packageId = package.Id;
             PackageVersion version = packageId.Version;

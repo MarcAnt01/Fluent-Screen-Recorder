@@ -13,8 +13,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace FluentScreenRecorder.Dialogs
 {
     public sealed partial class VideoInfoDialog : ContentDialog
@@ -26,29 +24,22 @@ namespace FluentScreenRecorder.Dialogs
 
         public VideoInfoDialog(IDictionary<string, object> frameRate, IDictionary<string, object> width, IDictionary <string, object> height)
         {
-            this.InitializeComponent();
+            InitializeComponent();
             
-            if (frameRate.TryGetValue("System.Video.FrameRate", out object frameRateValue) && frameRateValue is UInt32 framerate)
+            if (frameRate.TryGetValue("System.Video.FrameRate", out object frameRateValue) && frameRateValue is uint framerate)
             {
-                Frameblock.Text = $"Framerate {framerate / 1000d}";
+                Frameblock.Text = $"Framerate: {framerate / 1000d}fps";
             }
 
-            if (width.TryGetValue("System.Video.FrameWidth", out object frameWidthValue) && frameWidthValue is UInt32 widthvalue)
+            if (width.TryGetValue("System.Video.FrameWidth", out object frameWidthValue) && frameWidthValue is uint widthvalue)
             {
-                Widthblock.Text = $"Width {widthvalue}";
+                Widthblock.Text = $"Width: {widthvalue}";
             }
 
-            if (height.TryGetValue("System.Video.FrameHeight", out object frameHeightValue) && frameHeightValue is UInt32 heightvalue)
+            if (height.TryGetValue("System.Video.FrameHeight", out object frameHeightValue) && frameHeightValue is uint heightvalue)
             {
-                Heightblock.Text = $"Height {heightvalue}";
+                Heightblock.Text = $"Height: {heightvalue}";
             }
-
-
-
-
         }
-        
-
-       
     }
 }

@@ -1,11 +1,14 @@
-﻿using System;
+﻿using FluentScreenRecorder.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -33,6 +36,9 @@ namespace FluentScreenRecorder.Views
             SetupTitleBar();
             ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
             formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+
+            BitrateComboBox.SelectedItem = App.RecViewModel.Bitrates[App.RecViewModel.GetBitrateIndex(App.Settings.Bitrate)];
+            AudioModeComboBox.SelectedIndex = App.Settings.IntAudio ? 0 : 1;
         }
 
         private void SetupTitleBar(CoreApplicationViewTitleBar coreAppTitleBar = null)
@@ -100,9 +106,54 @@ namespace FluentScreenRecorder.Views
                 Frame.GoBack();
         }
 
-        private void SystemMic_Click(object sender, RoutedEventArgs e)
+        private async void SystemMic_Click(object sender, RoutedEventArgs e)
         {
+            string uriToLaunch = @"ms-settings:sound";
+            var uri = new Uri(uriToLaunch);
+            await Launcher.LaunchUriAsync(uri);
+        }
 
+        private void BitrateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            App.Settings.Bitrate = (e.AddedItems[0] as BitrateItem).Bitrate;
+        }
+
+        private void AudioMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (AudioModeComboBox.SelectedIndex == 0)
+            {
+                App.Settings.IntAudio = true;
+                App.Settings.ExtAudio = false;
+            } else if (AudioModeComboBox.SelectedIndex == 1)
+            {
+                App.Settings.IntAudio = false;
+                App.Settings.ExtAudio = true;
+            }
+        }
+
+        private string GetAppVersion()
+        {
+            Package package = Package.Current;
+            PackageId packageId = package.Id;
+            PackageVersion version = packageId.Version;
+
+            return string.Format(" {0}.{1}.{2}", version.Major, version.Minor, version.Build);
+        }
+
+        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (e.NewSize.Width > 650)
+            {
+                Column1.Width = new(0.4, GridUnitType.Star);
+                AboutFooter.Visibility = Visibility.Collapsed;
+                MainGrid.ColumnSpacing = 20;
+            }
+            else if (e.NewSize.Width <= 650)
+            {
+                Column1.Width = new(0);
+                AboutFooter.Visibility = Visibility.Visible;
+                MainGrid.ColumnSpacing = 0;
+            }
         }
     }
 }

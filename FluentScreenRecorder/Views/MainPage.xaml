@@ -13,12 +13,6 @@
 
     <Page.Resources>
         <local:InvertBoolConverter x:Key="InvertBoolConv"/>      
-         
-        <AcrylicBrush x:Key="CustomAcrylicBackgroundBrushStrong" TintColor="{StaticResource SystemChromeAltHighColor}" BackgroundSource="HostBackdrop" FallbackColor="{StaticResource SystemChromeMediumColor}" TintOpacity="0.7"/>
-        <AcrylicBrush x:Key="CustomAcrylicBackgroundBrushWeak" TintColor="{StaticResource SystemChromeAltHighColor}" BackgroundSource="HostBackdrop" FallbackColor="{StaticResource SystemChromeMediumColor}" TintOpacity="0.5"/>
-        <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="{ThemeResource SystemAccentColor}"/>
-        <SolidColorBrush x:Key="ToggleSwitchFillOn" Color="{ThemeResource SystemAccentColor}"/>
-        <SolidColorBrush x:Key="ToggleSwitchStrokeOn" Color="{ThemeResource SystemAccentColor}"/>        
     </Page.Resources>
 
     <Grid>
@@ -78,7 +72,7 @@
 
         <RelativePanel VerticalAlignment="Center" Grid.Row="1" Padding="10,0">
             <StackPanel Orientation="Horizontal" Spacing="10">
-                <ToggleButton Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Height="45">
+                <ToggleButton x:Name="RecordButton" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Height="45">
                     <StackPanel Orientation="Horizontal" Spacing="10">
                         <FontIcon Glyph="&#xE7C8;" x:Name="StopRecIcon" />
                         <TextBlock Text="Record" x:Name="RecordName" />
@@ -87,21 +81,23 @@
 
                 <AppBarSeparator Height="40" />
 
-                <ComboBox x:Name="ResolutionComboBox" VerticalAlignment="Center" SelectionChanged="ResolutionComboBox_SelectionChanged" ToolTipService.ToolTip="{x:Bind strings:Resources.Resolution}" HorizontalAlignment="Center">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate x:DataType="models:ResolutionItem">
-                            <TextBlock Text="{x:Bind DisplayName}"/>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
+                <StackPanel x:Name="RecordingMiniOptions" Orientation="Horizontal" Spacing="10">
+                    <ComboBox x:Name="ResolutionComboBox" VerticalAlignment="Center" SelectionChanged="ResolutionComboBox_SelectionChanged" ToolTipService.ToolTip="{x:Bind strings:Resources.Resolution}" HorizontalAlignment="Center">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="models:ResolutionItem">
+                                <TextBlock Text="{x:Bind DisplayName}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
 
-                <ComboBox x:Name="FrameRateComboBox" VerticalAlignment="Center" SelectionChanged="FrameRateComboBox_SelectionChanged" ToolTipService.ToolTip="{x:Bind strings:Resources.Framerate}" HorizontalAlignment="Center">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate x:DataType="models:FrameRateItem">
-                            <TextBlock Text="{x:Bind DisplayName}"/>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
+                    <ComboBox x:Name="FrameRateComboBox" VerticalAlignment="Center" SelectionChanged="FrameRateComboBox_SelectionChanged" ToolTipService.ToolTip="{x:Bind strings:Resources.Framerate}" HorizontalAlignment="Center">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate x:DataType="models:FrameRateItem">
+                                <TextBlock Text="{x:Bind DisplayName}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
             </StackPanel>
 
             <Button Background="Transparent" x:Name="SettingsButton" Click="SettingsButton_Click" BorderThickness="0" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
@@ -117,7 +113,17 @@
         </RelativePanel>
 
         <Grid x:Name="MainContent" Grid.Row="2" Background="{StaticResource LayerFillColorDefaultBrush}">
-            <GridView x:Name="BasicGridView" SelectionMode="Single" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,32,0,0">
+            <StackPanel
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                x:Name="NoVideosContainer">
+                
+                <TextBlock Text="This place seems blank..." Style="{StaticResource TitleTextBlockStyle}" />
+                <TextBlock Text="Record something to fill this place." Style="{StaticResource BodyTextBlockStyle}" />
+                
+            </StackPanel>
+            
+            <GridView x:Name="BasicGridView" SelectionMode="Single" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <GridView.ItemTemplate>
                     <DataTemplate x:DataType="models:ThumbItem">
                         <StackPanel>
@@ -140,17 +146,47 @@
                                     </MenuFlyoutItem>
                                 </MenuFlyout>
                             </StackPanel.ContextFlyout>
-                            <Image Stretch="UniformToFill" Source="{x:Bind img}" Width="190" Height="130" Margin="20" Tapped="Image_Tapped" RightTapped="Image_RightTapped" />
-                            <TextBlock Text="{x:Bind fileN}" HorizontalAlignment="Center" Margin="0,0,0,-16"/>
+                            <Image Stretch="UniformToFill" Source="{x:Bind img}" Width="190" Height="130" Margin="10" Tapped="Image_Tapped" RightTapped="Image_RightTapped" />
+                            <TextBlock Text="{x:Bind fileN}" HorizontalAlignment="Center" Margin="0,0,0,10"/>
                         </StackPanel>
                     </DataTemplate>
-
                 </GridView.ItemTemplate>
             </GridView>
         </Grid>
 
         <Grid Visibility="Collapsed" x:Name="RecordingContainer" Grid.Row="2" Background="{StaticResource LayerFillColorDefaultBrush}">
-            <TextBlock Text="Recording..." Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <StackPanel
+                x:Name="RecordingNotification"
+                Orientation="Horizontal"
+                Spacing="20"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                <FontIcon Glyph="&#xE7C8;" FontSize="25" />
+                
+                <TextBlock 
+                    Text="Recording..."
+                    Style="{StaticResource SubheaderTextBlockStyle}"
+                    HorizontalAlignment="Center"
+                    FontWeight="SemiBold"
+                    VerticalAlignment="Center" />
+            </StackPanel>
+
+            <StackPanel
+                x:Name="ProcessingNotification"
+                Orientation="Vertical"
+                Spacing="10"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Visibility="Collapsed">
+                <TextBlock 
+                    Text="Saving..."
+                    Style="{StaticResource SubheaderTextBlockStyle}"
+                    HorizontalAlignment="Center"
+                    FontWeight="SemiBold"
+                    VerticalAlignment="Center" />
+
+                <muxc:ProgressBar x:Name="MergingProgressRing" />
+            </StackPanel>
         </Grid>
     </Grid>
 </Page>

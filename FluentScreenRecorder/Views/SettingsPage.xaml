@@ -6,8 +6,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals" xmlns:uc="using:FluentScreenRecorder.UserControls" xmlns:local1="using:FluentScreenRecorder" xmlns:strings="using:FluentScreenRecorder.Strings"
-    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True">
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    xmlns:uc="using:FluentScreenRecorder.UserControls"
+    xmlns:local1="using:FluentScreenRecorder"
+    xmlns:strings="using:FluentScreenRecorder.Strings"
+    xmlns:models="using:FluentScreenRecorder.Models"
+    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
+    SizeChanged="Page_SizeChanged">
+
+    <Page.Resources>
+        <local1:InvertBoolConverter x:Key="InvertBoolConv" />
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -86,34 +96,88 @@
             </muxc:AnimatedIcon>
         </Button>
 
-        <ScrollViewer Padding="20,10" Background="{StaticResource LayerFillColorDefaultBrush}" Grid.Row="1">
-            <Grid>
-                <StackPanel Orientation="Vertical" Spacing="10">
-                    <TextBlock Text="Settings" FontSize="25" FontWeight="SemiBold" Margin="0,0,0,10" />
+        <Grid x:Name="MainGrid" Grid.Row="1" ColumnSpacing="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition x:Name="Column1" Width="0.4*" MaxWidth="240" />
+            </Grid.ColumnDefinitions>
 
-                    <uc:SettingsBlockControl Title="{x:Bind strings:Resources.InternalAudio}">
-                        <ToggleSwitch Margin="0,0,-70,0" HorizontalAlignment="Center" IsOn="{x:Bind local1:App.Settings.IntAudio, Mode=TwoWay}" IsEnabled="{x:Bind local1:App.Settings.ExtAudio, Converter={StaticResource InvertBoolConv}, Mode=OneWay}"/>
-                    </uc:SettingsBlockControl>
+            <ScrollViewer Padding="20,10" Background="{StaticResource LayerFillColorDefaultBrush}" CornerRadius="0,8,0,0">
+                <Grid>
+                    <StackPanel Orientation="Vertical" Spacing="10">
+                        <TextBlock Text="Settings" FontSize="25" FontWeight="SemiBold" Margin="0,0,0,10" />
 
-                    <uc:SettingsBlockControl Title="{x:Bind strings:Resources.ExternalAudio}">
-                        <ToggleSwitch Margin="0,0,-70,0" HorizontalAlignment="Center" IsOn="{x:Bind local1:App.Settings.ExtAudio, Mode=TwoWay}" IsEnabled="{x:Bind local1:App.Settings.IntAudio, Converter={StaticResource InvertBoolConv}, Mode=OneWay}"/>
-                    </uc:SettingsBlockControl>
+                        <TextBlock Text="General" />
 
-                    <uc:SettingsBlockControl Title="{x:Bind strings:Resources.GalleryView}">
-                        <ToggleSwitch Margin="0,0,-70,0" IsOn="{x:Bind local1:App.Settings.Gallery, Mode=TwoWay}" />
-                    </uc:SettingsBlockControl>
+                        <uc:SettingsBlockControl Title="{x:Bind strings:Resources.GalleryView}">
+                            <ToggleSwitch Margin="0,0,-70,0" IsOn="{x:Bind local1:App.Settings.Gallery, Mode=TwoWay}" />
+                        </uc:SettingsBlockControl>
 
-                    <uc:SettingsBlockControl Title="{x:Bind strings:Resources.SystemVideoPlayerOption}">
-                        <ToggleSwitch Margin="0,0,-70,0" IsOn="{x:Bind local1:App.Settings.SystemPlayer, Mode=TwoWay}" />
-                    </uc:SettingsBlockControl>
+                        <uc:SettingsBlockControl Title="{x:Bind strings:Resources.SystemVideoPlayerOption}">
+                            <ToggleSwitch Margin="0,0,-70,0" IsOn="{x:Bind local1:App.Settings.SystemPlayer, Mode=TwoWay}" />
+                        </uc:SettingsBlockControl>
 
-                    <uc:SettingsBlockControl Title="{x:Bind strings:Resources.OverlayMode}">
-                        <ToggleSwitch Margin="0,0,-70,0" IsOn="{x:Bind local1:App.Settings.ShowOnTop, Mode=TwoWay}" />
-                    </uc:SettingsBlockControl>
+                        <uc:SettingsBlockControl Title="{x:Bind strings:Resources.OverlayMode}">
+                            <ToggleSwitch Margin="0,0,-70,0" IsOn="{x:Bind local1:App.Settings.ShowOnTop, Mode=TwoWay}" />
+                        </uc:SettingsBlockControl>
 
-                    <uc:SettingsBlockControl IsClickable="True" Title="System microphone settings" Click="SystemMic_Click" />
+                        <TextBlock Text="Advanced" />
+
+                        <uc:SettingsBlockControl Title="{x:Bind strings:Resources.InternalAudio}">
+                            <ToggleSwitch Margin="0,0,-70,0" HorizontalAlignment="Center" IsOn="{x:Bind local1:App.Settings.IntAudio, Mode=TwoWay}" IsEnabled="{x:Bind local1:App.Settings.ExtAudio, Converter={StaticResource InvertBoolConv}, Mode=OneWay}"/>
+                        </uc:SettingsBlockControl>
+
+                        <uc:SettingsBlockControl Title="{x:Bind strings:Resources.ExternalAudio}">
+                            <ToggleSwitch Margin="0,0,-70,0" HorizontalAlignment="Center" IsOn="{x:Bind local1:App.Settings.ExtAudio, Mode=TwoWay}" IsEnabled="{x:Bind local1:App.Settings.IntAudio, Converter={StaticResource InvertBoolConv}, Mode=OneWay}"/>
+                        </uc:SettingsBlockControl>
+
+                        <uc:SettingsBlockControl Title="Audio recording mode">
+                            <ComboBox x:Name="AudioModeComboBox" SelectionChanged="AudioMode_SelectionChanged">
+                                <x:String>Internal (Speaker)</x:String>
+                                <x:String>External (Microphone)</x:String>
+                            </ComboBox>
+                        </uc:SettingsBlockControl>
+
+                        <uc:SettingsBlockControl Title="{x:Bind strings:Resources.Bitrate}">
+                            <ComboBox x:Name="BitrateComboBox" ItemsSource="{x:Bind local1:App.RecViewModel.Bitrates}" SelectionChanged="BitrateComboBox_SelectionChanged" HorizontalAlignment="Center">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate x:DataType="models:BitrateItem">
+                                        <TextBlock Text="{x:Bind DisplayName}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </uc:SettingsBlockControl>
+
+                        <uc:SettingsBlockControl IsClickable="True" Title="System microphone settings" Click="SystemMic_Click" />
+
+                        <StackPanel x:Name="AboutFooter">
+                            <TextBlock Text="About" FontWeight="SemiBold" Margin="0,0,0,5" />
+
+                            <HyperlinkButton Content="{x:Bind strings:Resources.GitHub}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder"/>
+                            <HyperlinkButton Content="{x:Bind strings:Resources.Discord}" NavigateUri="https://discord.gg/v4EXAwXPHw"/>
+                            <HyperlinkButton Content="{x:Bind strings:Resources.Privacy}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/PRIVACY.md"/>
+                            <HyperlinkButton Content="{x:Bind strings:Resources.Copyright}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/LICENSE"/>
+                            <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                <TextBlock Text="{x:Bind strings:Resources.Version}"/>
+                                <TextBlock Text="{x:Bind GetAppVersion()}" FontWeight="Bold"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+
+            <StackPanel Grid.Column="1">
+                <TextBlock Text="About" FontWeight="SemiBold" Margin="0,0,0,5" />
+
+                <HyperlinkButton Content="{x:Bind strings:Resources.GitHub}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder"/>
+                <HyperlinkButton Content="{x:Bind strings:Resources.Discord}" NavigateUri="https://discord.gg/v4EXAwXPHw"/>
+                <HyperlinkButton Content="{x:Bind strings:Resources.Privacy}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/PRIVACY.md"/>
+                <HyperlinkButton Content="{x:Bind strings:Resources.Copyright}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/LICENSE"/>
+                <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                    <TextBlock Text="{x:Bind strings:Resources.Version}"/>
+                    <TextBlock Text="{x:Bind GetAppVersion()}" FontWeight="Bold"/>
                 </StackPanel>
-            </Grid>
-        </ScrollViewer>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

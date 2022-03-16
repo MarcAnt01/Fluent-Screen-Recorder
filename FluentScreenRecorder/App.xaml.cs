@@ -14,6 +14,9 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Windows.ApplicationModel.ExtendedExecution.Foreground;
 using FluentScreenRecorder.ViewModels;
+using CaptureEncoder;
+using FluentScreenRecorder.Models;
+using System.Collections.Generic;
 
 namespace FluentScreenRecorder
 {
@@ -44,7 +47,7 @@ namespace FluentScreenRecorder
 
         private ExtendedExecutionForegroundSession _extendedSession;
 
-        private async void ExtendExecution()
+        private async Task ExtendExecution()
         {
             var session = new ExtendedExecutionForegroundSession { Reason = ExtendedExecutionForegroundReason.Unspecified };
             var result = await session.RequestExtensionAsync();
@@ -62,6 +65,7 @@ namespace FluentScreenRecorder
         private async Task StartupAsync()
         {
             await WhatsNewDisplayService.ShowIfAppropriateAsync();
+            SetupSpecs();
         }
 
         public static class WhatsNewDisplayService
@@ -131,6 +135,47 @@ namespace FluentScreenRecorder
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();
+            }
+        }
+
+        private void SetupSpecs()
+        {
+            RecViewModel.Device = Direct3D11Helpers.CreateDevice();
+
+            RecViewModel.Resolutions = new List<ResolutionItem>();
+            foreach (var resolution in EncoderPresets.Resolutions)
+            {
+                RecViewModel.Resolutions.Add(new ResolutionItem()
+                {
+                    DisplayName = $"{resolution.Width} x {resolution.Height}",
+                    Resolution = resolution,
+                });
+            }
+            RecViewModel.Resolutions.Add(new ResolutionItem()
+            {
+                DisplayName = Strings.Resources.SourceSizeToggle,
+                Resolution = new SizeUInt32() { Width = 0, Height = 0 },
+            });
+
+            RecViewModel.Bitrates = new();
+            foreach (var bitrate in EncoderPresets.Bitrates)
+            {
+                var mbps = (float)bitrate / 1000000;
+                RecViewModel.Bitrates.Add(new BitrateItem()
+                {
+                    DisplayName = $"{mbps:0.##} Mbps",
+                    Bitrate = bitrate,
+                });
+            }
+
+            RecViewModel.Framerates = new List<FrameRateItem>();
+            foreach (var frameRate in EncoderPresets.FrameRates)
+            {
+                RecViewModel.Framerates.Add(new FrameRateItem()
+                {
+                    DisplayName = $"{frameRate}fps",
+                    FrameRate = frameRate,
+                });
             }
         }
 
