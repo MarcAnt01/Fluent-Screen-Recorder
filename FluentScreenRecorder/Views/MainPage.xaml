@@ -123,7 +123,7 @@
                 
             </StackPanel>
             
-            <GridView x:Name="BasicGridView" SelectionMode="Single" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <GridView x:Name="BasicGridView" SelectionMode="Single" HorizontalAlignment="Stretch" Padding="10">
                 <GridView.ItemTemplate>
                     <DataTemplate x:DataType="models:ThumbItem">
                         <StackPanel>
@@ -161,7 +161,7 @@
                 Spacing="20"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
-                <FontIcon Glyph="&#xE7C8;" FontSize="25" />
+                <FontIcon x:Name="Ellipse" Glyph="&#xE7C8;" FontSize="25" />
                 
                 <TextBlock 
                     Text="Recording..."
@@ -185,7 +185,7 @@
                     FontWeight="SemiBold"
                     VerticalAlignment="Center" />
 
-                <muxc:ProgressBar x:Name="MergingProgressRing" />
+                <muxc:ProgressBar x:Name="MergingProgressRing" Width="300" />
             </StackPanel>
         </Grid>
     </Grid>

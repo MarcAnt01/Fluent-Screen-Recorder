@@ -101,7 +101,7 @@
                 <ColumnDefinition />
                 <ColumnDefinition x:Name="Column1" Width="0.4*" MaxWidth="240" />
             </Grid.ColumnDefinitions>
-            
+
             <ScrollViewer Padding="20,10">
                 <Grid>
                     <StackPanel Orientation="Vertical" Spacing="5">

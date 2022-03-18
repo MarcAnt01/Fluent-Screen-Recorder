@@ -106,6 +106,15 @@ namespace FluentScreenRecorder
         private async void LoadedHandler(object sender, RoutedEventArgs e)
         {
             Loaded -= LoadedHandler;
+
+            visual = ElementCompositionPreview.GetElementVisual(Ellipse);
+            var animation = visual.Compositor.CreateScalarKeyFrameAnimation();
+            animation.InsertKeyFrame(0, 1);
+            animation.InsertKeyFrame(1, 0);
+            animation.Duration = TimeSpan.FromMilliseconds(1500);
+            animation.IterationBehavior = AnimationIterationBehavior.Forever;
+            visual.StartAnimation("Opacity", animation);
+
             if (App.Settings.ShowOnTop)
             {
                 var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
@@ -189,6 +198,7 @@ namespace FluentScreenRecorder
 
         private async void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
+            ApplicationView.GetForCurrentView().TryResizeView(new(400, 300));
             var button = (ToggleButton)sender;
             var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
@@ -196,7 +206,6 @@ namespace FluentScreenRecorder
             var frameRateItem = App.RecViewModel.Framerates[App.RecViewModel.GetFrameRateIndex(App.Settings.FrameRate)];
             var resolutionItem = App.RecViewModel.Resolutions[App.RecViewModel.GetResolutionIndex(App.Settings.Width, App.Settings.Height)];
             var bitrateItem = App.RecViewModel.Bitrates[App.RecViewModel.GetBitrateIndex(App.Settings.Bitrate)];
-
 
             MediaCapture mediaCapture = null;
 
