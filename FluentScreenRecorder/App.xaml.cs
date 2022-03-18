@@ -77,7 +77,7 @@ namespace FluentScreenRecorder
                 await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
                     CoreDispatcherPriority.Normal, async () =>
                     {
-                        if (SystemInformation.IsAppUpdated && !shown)
+                        if (SystemInformation.Instance.IsAppUpdated && !shown)
                         {
                             shown = true;
                             var dialog = new ChangelogDialog();
