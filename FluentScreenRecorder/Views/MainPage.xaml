@@ -18,7 +18,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="60" />
+            <RowDefinition Height="50" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
@@ -72,17 +72,17 @@
 
         <RelativePanel VerticalAlignment="Center" Grid.Row="1" Padding="10,0">
             <StackPanel Orientation="Horizontal" Spacing="10">
-                <ToggleButton x:Name="RecordButton" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" Height="45">
+                <ToggleButton Height="40" BorderThickness="0" Background="Transparent" x:Name="RecordButton" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked">
                     <StackPanel Orientation="Horizontal" Spacing="10">
                         <FontIcon Glyph="&#xE7C8;" x:Name="StopRecIcon" />
                         <TextBlock Text="Record" x:Name="RecordName" />
                     </StackPanel>
                 </ToggleButton>
 
-                <AppBarSeparator Height="40" />
-
                 <StackPanel x:Name="RecordingMiniOptions" Orientation="Horizontal" Spacing="10">
-                    <ComboBox x:Name="ResolutionComboBox" VerticalAlignment="Center" SelectionChanged="ResolutionComboBox_SelectionChanged" ToolTipService.ToolTip="{x:Bind strings:Resources.Resolution}" HorizontalAlignment="Center">
+                    <AppBarSeparator Height="40" />
+
+                    <ComboBox Height="40" BorderThickness="0" Background="Transparent" x:Name="ResolutionComboBox" VerticalAlignment="Center" SelectionChanged="ResolutionComboBox_SelectionChanged" ToolTipService.ToolTip="{x:Bind strings:Resources.Resolution}" HorizontalAlignment="Center">
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="models:ResolutionItem">
                                 <TextBlock Text="{x:Bind DisplayName}"/>
@@ -90,7 +90,7 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
 
-                    <ComboBox x:Name="FrameRateComboBox" VerticalAlignment="Center" SelectionChanged="FrameRateComboBox_SelectionChanged" ToolTipService.ToolTip="{x:Bind strings:Resources.Framerate}" HorizontalAlignment="Center">
+                    <ComboBox Height="40" BorderThickness="0" Background="Transparent" x:Name="FrameRateComboBox" VerticalAlignment="Center" SelectionChanged="FrameRateComboBox_SelectionChanged" ToolTipService.ToolTip="{x:Bind strings:Resources.Framerate}" HorizontalAlignment="Center">
                         <ComboBox.ItemTemplate>
                             <DataTemplate x:DataType="models:FrameRateItem">
                                 <TextBlock Text="{x:Bind DisplayName}"/>

@@ -97,18 +97,18 @@
             </muxc:AnimatedIcon>
         </Button>
 
-        <Grid x:Name="MainGrid" Grid.Row="1" ColumnSpacing="20">
+        <Grid x:Name="MainGrid" Background="{StaticResource LayerFillColorDefaultBrush}" Grid.Row="1" ColumnSpacing="20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition x:Name="Column1" Width="0.4*" MaxWidth="240" />
             </Grid.ColumnDefinitions>
 
-            <ScrollViewer Padding="20,10" Background="{StaticResource LayerFillColorDefaultBrush}" CornerRadius="0,8,0,0">
+            <ScrollViewer Padding="20,10">
                 <Grid>
-                    <StackPanel Orientation="Vertical" Spacing="10">
+                    <StackPanel Orientation="Vertical" Spacing="5">
                         <TextBlock Text="Settings" FontSize="25" FontWeight="SemiBold" Margin="0,0,0,10" />
 
-                        <TextBlock Text="General" />
+                        <TextBlock Text="General" Margin="0,0,0,5" />
 
                         <uc:SettingsBlockControl Title="{x:Bind strings:Resources.GalleryView}">
                             <ToggleSwitch Margin="0,0,-70,0" IsOn="{x:Bind local1:App.Settings.Gallery, Mode=TwoWay}" />
@@ -131,7 +131,7 @@
                             </ComboBox>
                         </uc:SettingsBlockControl>
 
-                        <TextBlock Text="Advanced" />
+                        <TextBlock Text="Advanced" Margin="0,0,0,5" />
 
                         <uc:SettingsBlockControl Title="{x:Bind strings:Resources.SystemVideoPlayerOption}">
                             <ToggleSwitch Margin="0,0,-70,0" IsOn="{x:Bind local1:App.Settings.SystemPlayer, Mode=TwoWay}" />
