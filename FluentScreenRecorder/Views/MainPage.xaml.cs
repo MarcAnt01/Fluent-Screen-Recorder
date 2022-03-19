@@ -1,12 +1,10 @@
-﻿using CaptureEncoder;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.Graphics.Capture;
-using Windows.Graphics.DirectX.Direct3D11;
 using Windows.Media.MediaProperties;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -14,7 +12,6 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Media;
 using Windows.Foundation;
 using Windows.UI.ViewManagement;
 using Windows.ApplicationModel.Core;
@@ -33,11 +30,8 @@ using NAudio.Wave;
 using ScreenSenderComponent;
 using Windows.Media.Transcoding;
 using Windows.Storage.FileProperties;
-using Windows.Storage.Search;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.System;
-using Windows.UI.Popups;
-using System.Linq;
 using Windows.Media.Capture;
 using Windows.Storage.Streams;
 using Windows.ApplicationModel.DataTransfer;
@@ -120,10 +114,15 @@ namespace FluentScreenRecorder
                 var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
                 preferences.CustomSize = new Size(400, 260);
                 bool modeSwitched = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
+                
                 GoToOverlayIcon.Visibility = Visibility.Collapsed;
                 ExitOverlayIcon.Visibility = Visibility.Visible;
-                ToolTip toolTip = new();
-                toolTip.Content = Strings.Resources.ExitOverlay;
+
+                ToolTip toolTip = new()
+                {
+                    Content = Strings.Resources.ExitOverlay
+                };
+
                 ToolTipService.SetToolTip(OverlayButton, toolTip);
                 AutomationProperties.SetName(OverlayButton, Strings.Resources.ExitOverlay);
             }
@@ -354,17 +353,18 @@ namespace FluentScreenRecorder
                 var newFile = await GetTempFileAsync();
 
                 var merge = composition.RenderToFileAsync(newFile, MediaTrimmingPreference.Fast);
+
                 merge.Progress = new AsyncOperationProgressHandler<TranscodeFailureReason, double>(async (info, progress) =>
                 {
-                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
                         MergingProgressRing.Value = progress;
-                    }));
+                    });
                 });
+
                 merge.Completed = new AsyncOperationWithProgressCompletedHandler<TranscodeFailureReason, double>(async (info, status) =>
                 {
-                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(async () =>
-
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                     {
                         MergingProgressRing.Value = 0;
                         ProcessingNotification.Visibility = Visibility.Collapsed;
@@ -377,7 +377,7 @@ namespace FluentScreenRecorder
 
                         await videoFile.DeleteAsync();
                         await internalAudioFile.DeleteAsync();
-                    }));
+                    });
                 });
                 lockAdaptiveUI = false;
             }
@@ -420,7 +420,7 @@ namespace FluentScreenRecorder
 
         public async void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            //Collecting some info before being lost
+            // Collecting some info before being lost
 
             if (App.Settings.IntAudio && loopbackAudioCapture.Started)
             {
@@ -471,6 +471,7 @@ namespace FluentScreenRecorder
                 RecordButton.IsEnabled = false;
 
                 var merge = composition.RenderToFileAsync(newFile, MediaTrimmingPreference.Fast);
+
                 merge.Progress = new AsyncOperationProgressHandler<TranscodeFailureReason, double>(async (info, progress) =>
                 {
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
@@ -478,6 +479,7 @@ namespace FluentScreenRecorder
                         MergingProgressRing.Value = progress;
                     }));
                 });
+
                 merge.Completed = new AsyncOperationWithProgressCompletedHandler<TranscodeFailureReason, double>(async (info, status) =>
                 {
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(async () =>
@@ -676,14 +678,16 @@ namespace FluentScreenRecorder
             if (ApplicationView.GetForCurrentView().ViewMode == ApplicationViewMode.Default)
             {
                 var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
-                preferences.CustomSize = new Size(400, 260);
+                preferences.CustomSize = new(400, 260);
                 bool modeSwitched = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
                 if (modeSwitched)
                 {
                     GoToOverlayIcon.Visibility = Visibility.Collapsed;
                     ExitOverlayIcon.Visibility = Visibility.Visible;
-                    ToolTip toolTip = new ToolTip();
-                    toolTip.Content = Strings.Resources.ExitOverlay;
+                    ToolTip toolTip = new()
+                    {
+                        Content = Strings.Resources.ExitOverlay
+                    };
                     ToolTipService.SetToolTip(OverlayButton, toolTip);
                     AutomationProperties.SetName(OverlayButton, Strings.Resources.ExitOverlay);
                 }
@@ -695,8 +699,10 @@ namespace FluentScreenRecorder
                 {
                     ExitOverlayIcon.Visibility = Visibility.Collapsed;
                     GoToOverlayIcon.Visibility = Visibility.Visible;
-                    ToolTip toolTip = new ToolTip();
-                    toolTip.Content = Strings.Resources.GoToOverlay;
+                    ToolTip toolTip = new()
+                    {
+                        Content = Strings.Resources.GoToOverlay
+                    };
                     ToolTipService.SetToolTip(OverlayButton, toolTip);
                     AutomationProperties.SetName(OverlayButton, Strings.Resources.GoToOverlay);
                 }
