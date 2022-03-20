@@ -131,7 +131,7 @@ namespace FluentScreenRecorder.Views
             {
                 Column1.Width = new(0.4, GridUnitType.Star);
                 AboutFooter.Visibility = Visibility.Collapsed;
-                MainGrid.ColumnSpacing = 20;
+                MainGrid.ColumnSpacing = 30;
             }
             else if (e.NewSize.Width <= 650)
             {

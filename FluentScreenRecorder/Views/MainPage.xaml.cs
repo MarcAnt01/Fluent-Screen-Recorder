@@ -719,16 +719,11 @@ namespace FluentScreenRecorder
                 } else if (App.Settings.Gallery && !filesInFolder)
                 {
                     BasicGridView.Visibility = Visibility.Collapsed;
-                    ApplicationView.GetForCurrentView().TryResizeView(new(500, 400));
-                } else if (!App.Settings.Gallery)
-                {
-                    BasicGridView.Visibility = Visibility.Collapsed;
-                }
-
-                if (App.Settings.Gallery && !filesInFolder)
-                {
-                    BasicGridView.Visibility = Visibility.Collapsed;
                     NoVideosContainer.Visibility = Visibility.Visible;
+                }
+                else if (!App.Settings.Gallery)
+                {
+                    BasicGridView.Visibility = Visibility.Collapsed;
                 }
             }
         }

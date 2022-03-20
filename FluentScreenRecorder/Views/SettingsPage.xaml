@@ -24,7 +24,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <Grid x:Name="TopBar" Grid.Row="0" Height="32">
+        <Grid x:Name="TopBar">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="LeftPaddingColumn"
                                   Width="0" />
@@ -96,8 +96,8 @@
             </muxc:AnimatedIcon>
         </Button>
         
-        <ScrollViewer Background="{StaticResource LayerFillColorDefaultBrush}" Grid.Row="1" Padding="20,10,20,0">
-            <Grid x:Name="MainGrid" ColumnSpacing="20" Padding="0,0,0,10">
+        <ScrollViewer Background="{StaticResource LayerFillColorDefaultBrush}" Grid.Row="1" Padding="40,10,40,0">
+            <Grid x:Name="MainGrid" ColumnSpacing="30" Padding="0,0,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition x:Name="Column1" Width="0.4*" MaxWidth="240" />
