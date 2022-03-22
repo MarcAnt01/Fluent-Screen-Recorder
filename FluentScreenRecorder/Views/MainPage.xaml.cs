@@ -42,15 +42,26 @@ namespace FluentScreenRecorder
     public sealed partial class MainPage : Page
     {
         private LoopbackAudioCapture loopbackAudioCapture;
+
         private Visual visual;
+
         private ToolTip toolTip;
+
         private List<byte> BufferList = new();
+
         MediaPlayer SilentPlayer;
+
         private AudioEncodingProperties audioEncodingProperties;
+
         private StorageFile micFile;
+
         public MediaCapture mediaCapture;
+
         public StorageFile recordedVideoFile = null;
+
         private bool lockAdaptiveUI;
+
+        public bool filesInFolder;
 
         public MainPage()
         {
@@ -93,9 +104,6 @@ namespace FluentScreenRecorder
                 App.Settings.IntAudio = false;
             }
         }
-
-
-        public bool filesInFolder;
 
         private async void LoadedHandler(object sender, RoutedEventArgs e)
         {
@@ -186,6 +194,7 @@ namespace FluentScreenRecorder
                 }
                 else if (storageItems.Count <= 0)
                 {
+                    filesInFolder = false;
                     NoVideosContainer.Visibility = Visibility.Visible;
                     BasicGridView.Visibility = Visibility.Collapsed;
                 }
@@ -716,7 +725,9 @@ namespace FluentScreenRecorder
                 if (filesInFolder && App.Settings.Gallery && e.NewSize.Width > 680)
                 {
                     BasicGridView.Visibility = Visibility.Visible;
-                } else if (App.Settings.Gallery && !filesInFolder)
+                    NoVideosContainer.Visibility = Visibility.Collapsed;
+                }
+                else if (App.Settings.Gallery && !filesInFolder)
                 {
                     BasicGridView.Visibility = Visibility.Collapsed;
                     NoVideosContainer.Visibility = Visibility.Visible;
