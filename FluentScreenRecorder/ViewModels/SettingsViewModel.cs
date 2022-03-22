@@ -11,187 +11,100 @@ namespace FluentScreenRecorder.ViewModels
 {
     public class SettingsViewModel
     {
-        public SettingsViewModel()
-        {
-            if (!ApplicationData.Current.LocalSettings.Values.ContainsKey(nameof(Width))) 
-            {
-                Width = 1920;
-            }
-
-            if (!ApplicationData.Current.LocalSettings.Values.ContainsKey(nameof(Height)))
-            {
-                Height = 1080;
-            }
-
-            if (!ApplicationData.Current.LocalSettings.Values.ContainsKey(nameof(Bitrate)))
-            {
-                Bitrate = 18000000;
-            }
-
-            if (!ApplicationData.Current.LocalSettings.Values.ContainsKey(nameof(FrameRate)))
-            {
-                FrameRate = 60;
-            }
-
-            if (!ApplicationData.Current.LocalSettings.Values.ContainsKey(nameof(IntAudio)))
-            {
-                IntAudio = true;
-            }
-
-            if (!ApplicationData.Current.LocalSettings.Values.ContainsKey(nameof(ExtAudio)))
-            {
-                ExtAudio = false;
-            }
-
-            if (!ApplicationData.Current.LocalSettings.Values.ContainsKey(nameof(Gallery)))
-            {
-                Gallery = true;
-            }
-
-            if (!ApplicationData.Current.LocalSettings.Values.ContainsKey(nameof(SystemPlayer)))
-            {
-                SystemPlayer = false;
-            }
-
-            if (!ApplicationData.Current.LocalSettings.Values.ContainsKey(nameof(ShowOnTop)))
-            {
-                ShowOnTop = false;
-            }
-        }
-
-        private uint _width = (uint)ApplicationData.Current.LocalSettings.Values[nameof(Width)];
-
         public uint Width
         {
-            get => _width;
-            set
-            {
-                if (_width != value)
-                {
-                    _width = value;
-                }
-                ApplicationData.Current.LocalSettings.Values[nameof(Width)] = value;
-            }
+            get => Get(nameof(Width), (uint)1920);
+            set => Set(nameof(Width), value);
         }
-
-        private uint _height = (uint)ApplicationData.Current.LocalSettings.Values[nameof(Height)];
 
         public uint Height
         {
-            get => _height;
-            set
-            {
-                if (_height != value)
-                {
-                    _height = value;
-                }
-                ApplicationData.Current.LocalSettings.Values[nameof(Height)] = value;
-            }
+            get => Get(nameof(Height), (uint)1080);
+            set => Set(nameof(Height), value);
         }
-
-        private uint _bitrate = (uint)ApplicationData.Current.LocalSettings.Values[nameof(Bitrate)];
 
         public uint Bitrate
         {
-            get => _bitrate;
-            set
-            {
-                if (_bitrate != value)
-                {
-                    _bitrate = value;
-                }
-                ApplicationData.Current.LocalSettings.Values[nameof(Bitrate)] = value;
-            }
+            get => Get(nameof(Bitrate), (uint)18000000);
+            set => Set(nameof(Bitrate), value);
         }
-
-        private uint _framerate = (uint)ApplicationData.Current.LocalSettings.Values[nameof(FrameRate)];
 
         public uint FrameRate
         {
-            get => _framerate;
-            set
-            {
-                if (_framerate != value)
-                {
-                    _framerate = value;
-                }
-                ApplicationData.Current.LocalSettings.Values[nameof(FrameRate)] = value;
-            }
+            get => Get(nameof(FrameRate), (uint)60);
+            set => Set(nameof(FrameRate), value);
         }
-
-        private bool _intAudio = (bool)ApplicationData.Current.LocalSettings.Values[nameof(IntAudio)];
 
         public bool IntAudio
         {
-            get => _intAudio;
-            set
-            {
-                if (_intAudio != value)
-                {
-                    _intAudio = value;
-                }
-                ApplicationData.Current.LocalSettings.Values[nameof(IntAudio)] = value;
-            }
+            get => Get(nameof(IntAudio), true);
+            set => Set(nameof(IntAudio), value);
         }
-
-        private bool _extAudio = (bool)ApplicationData.Current.LocalSettings.Values[nameof(ExtAudio)];
 
         public bool ExtAudio
         {
-            get => _extAudio;
-            set
-            {
-                if (_extAudio != value)
-                {
-                    _extAudio = value;
-                }
-                ApplicationData.Current.LocalSettings.Values[nameof(ExtAudio)] = value;
-            }
+            get => Get(nameof(ExtAudio), false);
+            set => Set(nameof(ExtAudio), value);
         }
-
-        private bool _gallery = (bool)ApplicationData.Current.LocalSettings.Values[nameof(Gallery)];
 
         public bool Gallery
         {
-            get => _gallery;
-            set
-            {
-                if (_gallery != value)
-                {
-                    _gallery = value;
-                }
-                ApplicationData.Current.LocalSettings.Values[nameof(Gallery)] = value;
-            }
+            get => Get(nameof(Gallery), true);
+            set => Set(nameof(Gallery), value);
         }
-
-        private bool _systemPlayer = (bool)ApplicationData.Current.LocalSettings.Values[nameof(SystemPlayer)];
 
         public bool SystemPlayer
         {
-            get => _systemPlayer;
-            set
-            {
-                if (_systemPlayer != value)
-                {
-                    _systemPlayer = value;
-                }
-                ApplicationData.Current.LocalSettings.Values[nameof(SystemPlayer)] = value;
-            }
+            get => Get(nameof(SystemPlayer), false);
+            set => Set(nameof(SystemPlayer), value);
         }
-
-        private bool _showOnTop = (bool)ApplicationData.Current.LocalSettings.Values[nameof(ShowOnTop)];
 
         public bool ShowOnTop
         {
-            get => _showOnTop;
-            set
+            get => Get(nameof(ShowOnTop), false);
+            set => Set(nameof(ShowOnTop), value);
+        }
+
+        /// <summary>
+        /// Gets an app setting.
+        /// </summary>
+        /// <param name="setting">Setting name.</param>
+        /// <param name="defaultValue">Default setting value.</param>
+        /// <returns>App setting value.</returns>
+        private T Get<T>(string setting, T defaultValue)
+        {
+            // Get app settings
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+
+            // Check if the setting exists
+            if (localSettings.Values[setting] == null)
             {
-                if (_showOnTop != value)
-                {
-                    _showOnTop = value;
-                }
-                ApplicationData.Current.LocalSettings.Values[nameof(ShowOnTop)] = value;
+                localSettings.Values[setting] = defaultValue;
             }
+
+            object val = localSettings.Values[setting];
+
+            // Return the setting if type matches
+            if (val is not T)
+            {
+                throw new ArgumentException("Type mismatch for \"" + setting + "\" in local store. Got " + val.GetType());
+            }
+            return (T)val;
+        }
+
+        /// <summary>
+        /// Sets an app setting.
+        /// </summary>
+        /// <param name="setting">Setting name.</param>
+        /// <param name="newValue">New setting value.</param>
+        private void Set<T>(string setting, T newValue)
+        {
+            // Try to get the setting, if types don't match, it'll throw an exception
+            _ = Get(setting, newValue);
+
+            // Get app settings
+            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+            localSettings.Values[setting] = newValue;
         }
     }
 }
