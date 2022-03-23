@@ -18,7 +18,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="50" />
+            <RowDefinition Height="48" />
             <RowDefinition />
         </Grid.RowDefinitions>
 
@@ -70,16 +70,16 @@
             </Button>
         </Grid>
 
-        <RelativePanel VerticalAlignment="Center" Grid.Row="1" Padding="10,0">
-            <StackPanel Orientation="Horizontal" Spacing="10">
+        <RelativePanel VerticalAlignment="Center" Grid.Row="1" Padding="12,0">
+            <StackPanel Orientation="Horizontal" Spacing="12">
                 <ToggleButton Height="40" BorderThickness="0" Background="Transparent" x:Name="RecordButton" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked">
-                    <StackPanel Orientation="Horizontal" Spacing="10">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
                         <FontIcon Glyph="&#xE7C8;" x:Name="StopRecIcon" />
                         <TextBlock Text="Record" x:Name="RecordName" />
                     </StackPanel>
                 </ToggleButton>
 
-                <StackPanel x:Name="RecordingMiniOptions" Orientation="Horizontal" Spacing="10">
+                <StackPanel x:Name="RecordingMiniOptions" Orientation="Horizontal" Spacing="12">
                     <AppBarSeparator Height="40" />
 
                     <ComboBox Height="40" BorderThickness="0" Background="Transparent" x:Name="ResolutionComboBox" VerticalAlignment="Center" SelectionChanged="ResolutionComboBox_SelectionChanged" ToolTipService.ToolTip="{x:Bind strings:Resources.Resolution}" HorizontalAlignment="Center">
@@ -123,7 +123,7 @@
                 
             </StackPanel>
             
-            <GridView x:Name="BasicGridView" SelectionMode="Single" HorizontalAlignment="Stretch" Padding="10">
+            <GridView x:Name="BasicGridView" SelectionMode="Single" HorizontalAlignment="Stretch" Padding="12">
                 <GridView.ItemTemplate>
                     <DataTemplate x:DataType="models:ThumbItem">
                         <StackPanel>
@@ -146,7 +146,7 @@
                                     </MenuFlyoutItem>
                                 </MenuFlyout>
                             </StackPanel.ContextFlyout>
-                            <Image Stretch="UniformToFill" Source="{x:Bind img}" Width="190" Height="130" Margin="10" Tapped="Image_Tapped" RightTapped="Image_RightTapped" />
+                            <Image Stretch="UniformToFill" Source="{x:Bind img}" Width="192" Height="132" Margin="12" Tapped="Image_Tapped" RightTapped="Image_RightTapped" />
                             <TextBlock Text="{x:Bind fileN}" HorizontalAlignment="Center" Margin="0,0,0,10"/>
                         </StackPanel>
                     </DataTemplate>
@@ -161,7 +161,7 @@
                 Spacing="20"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center">
-                <FontIcon x:Name="Ellipse" Glyph="&#xE7C8;" FontSize="25" />
+                <FontIcon x:Name="Ellipse" Glyph="&#xE7C8;" FontSize="20" />
                 
                 <TextBlock 
                     Text="Recording..."
@@ -174,7 +174,7 @@
             <StackPanel
                 x:Name="ProcessingNotification"
                 Orientation="Vertical"
-                Spacing="10"
+                Spacing="12"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Visibility="Collapsed">
