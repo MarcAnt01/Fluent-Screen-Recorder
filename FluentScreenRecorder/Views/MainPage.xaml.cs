@@ -660,12 +660,6 @@ namespace FluentScreenRecorder
             }
         }
 
-        private async void AboutButton_Click(object sender, RoutedEventArgs e)
-        {
-            ContentDialog dialog = new AboutDialog();
-            await dialog.ShowAsync();
-        }
-
         public async void Image_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             ThumbItem item = (sender as Image).DataContext as ThumbItem;
