@@ -13,6 +13,10 @@ using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Windows.ApplicationModel.ExtendedExecution.Foreground;
+using FluentScreenRecorder.ViewModels;
+using CaptureEncoder;
+using FluentScreenRecorder.Models;
+using System.Collections.Generic;
 
 namespace FluentScreenRecorder
 {
@@ -21,23 +25,29 @@ namespace FluentScreenRecorder
     /// </summary>
     sealed partial class App : Application
     {
+        public static RecorderViewModel RecViewModel { get; private set; }
+        public static SettingsViewModel Settings { get; private set; }
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            InitializeComponent();
+            Suspending += OnSuspending;
 #if !DEBUG
             AppCenter.Start(APPCENTER_SECRET, typeof(Analytics), typeof(Crashes));
 #endif
-            ExtendExecution();            
+            ExtendExecution();
+
+            RecViewModel = new();
+            Settings = new();
         }
 
         private ExtendedExecutionForegroundSession _extendedSession;
 
-        private async void ExtendExecution()
+        private async Task ExtendExecution()
         {
             var session = new ExtendedExecutionForegroundSession { Reason = ExtendedExecutionForegroundReason.Unspecified };
             var result = await session.RequestExtensionAsync();
@@ -55,6 +65,7 @@ namespace FluentScreenRecorder
         private async Task StartupAsync()
         {
             await WhatsNewDisplayService.ShowIfAppropriateAsync();
+            SetupSpecs();
         }
 
         public static class WhatsNewDisplayService
@@ -66,7 +77,7 @@ namespace FluentScreenRecorder
                 await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
                     CoreDispatcherPriority.Normal, async () =>
                     {
-                        if (SystemInformation.IsAppUpdated && !shown)
+                        if (SystemInformation.Instance.IsAppUpdated && !shown)
                         {
                             shown = true;
                             var dialog = new ChangelogDialog();
@@ -127,9 +138,50 @@ namespace FluentScreenRecorder
             }
         }
 
+        private void SetupSpecs()
+        {
+            RecViewModel.Device = Direct3D11Helpers.CreateDevice();
+
+            RecViewModel.Resolutions = new List<ResolutionItem>();
+            foreach (var resolution in EncoderPresets.Resolutions)
+            {
+                RecViewModel.Resolutions.Add(new ResolutionItem()
+                {
+                    DisplayName = $"{resolution.Width} x {resolution.Height}",
+                    Resolution = resolution,
+                });
+            }
+            RecViewModel.Resolutions.Add(new ResolutionItem()
+            {
+                DisplayName = Strings.Resources.SourceSizeToggle,
+                Resolution = new SizeUInt32() { Width = 0, Height = 0 },
+            });
+
+            RecViewModel.Bitrates = new();
+            foreach (var bitrate in EncoderPresets.Bitrates)
+            {
+                var mbps = (float)bitrate / 1000000;
+                RecViewModel.Bitrates.Add(new BitrateItem()
+                {
+                    DisplayName = $"{mbps:0.##} Mbps",
+                    Bitrate = bitrate,
+                });
+            }
+
+            RecViewModel.Framerates = new List<FrameRateItem>();
+            foreach (var frameRate in EncoderPresets.FrameRates)
+            {
+                RecViewModel.Framerates.Add(new FrameRateItem()
+                {
+                    DisplayName = $"{frameRate}fps",
+                    FrameRate = frameRate,
+                });
+            }
+        }
+
         private void TryEnablePrelaunch()
         {
-            Windows.ApplicationModel.Core.CoreApplication.EnablePrelaunch(true);
+            CoreApplication.EnablePrelaunch(true);
         }
 
         /// <summary>
@@ -152,18 +204,6 @@ namespace FluentScreenRecorder
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
-
-            // Save our state
-            var rootFrame = Window.Current.Content as Frame;
-            if (rootFrame != null)
-            {
-                var page = rootFrame.Content as MainPage;
-
-                if (page != null && GraphicsCaptureSession.IsSupported())
-                {
-                    page.CacheCurrentSettings();
-                }
-            }
 
             deferral.Complete();
         }

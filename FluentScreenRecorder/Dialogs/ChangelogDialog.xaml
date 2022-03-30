@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     Title="{x:Bind displayedVersion}"
     CloseButtonText="{x:Bind strings:Resources.Ok}"
-    CloseButtonStyle="{ThemeResource ButtonRevealStyle}">
+    Style="{StaticResource DefaultContentDialogStyle}">
 
     <ScrollViewer>
         <StackPanel>

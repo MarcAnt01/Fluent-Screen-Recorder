@@ -1,43 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Media.Core;
 using Windows.Storage;
-using Windows.Storage.Pickers;
-using Windows.System;
 using Windows.UI.ViewManagement;
-using Windows.UI.WindowManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace FluentScreenRecorder.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class VideoPreviewPage : Page   
-    
+    public sealed partial class VideoPreviewPage : Page
     {
         private StorageFile _tempFile;
 
         public VideoPreviewPage(StorageFile file = null)
         {
-            this.InitializeComponent();
+            InitializeComponent();
             SetupTitleBar();
 
             if (file != null)
@@ -52,7 +33,7 @@ namespace FluentScreenRecorder.Views
 
         public VideoPreviewPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             SetupTitleBar();
         }
 
@@ -78,8 +59,10 @@ namespace FluentScreenRecorder.Views
             {
                 ExitOverlayIcon.Visibility = Visibility.Collapsed;
                 GoToOverlayIcon.Visibility = Visibility.Visible;
-                ToolTip toolTip = new ToolTip();
-                toolTip.Content = Strings.Resources.GoToOverlay;
+                ToolTip toolTip = new()
+                {
+                    Content = Strings.Resources.GoToOverlay
+                };
                 ToolTipService.SetToolTip(OverlayButton, toolTip);
                 AutomationProperties.SetName(OverlayButton, Strings.Resources.GoToOverlay);
             }
@@ -87,8 +70,10 @@ namespace FluentScreenRecorder.Views
             {
                 ExitOverlayIcon.Visibility = Visibility.Visible;
                 GoToOverlayIcon.Visibility = Visibility.Collapsed;
-                ToolTip toolTip = new ToolTip();
-                toolTip.Content = Strings.Resources.ExitOverlay;
+                ToolTip toolTip = new()
+                {
+                    Content = Strings.Resources.ExitOverlay
+                };
                 ToolTipService.SetToolTip(OverlayButton, toolTip);
                 AutomationProperties.SetName(OverlayButton, Strings.Resources.ExitOverlay);
             }
@@ -125,13 +110,13 @@ namespace FluentScreenRecorder.Views
         private async void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             await MainPage.Save(_tempFile);
-            this.Frame.Navigate(typeof(MainPage));
+            Frame.Navigate(typeof(MainPage));
         }
 
         private async void SaveAsButton_Click(object sender, RoutedEventArgs e)
         {
             await MainPage.SaveAs(_tempFile);
-            this.Frame.Navigate(typeof(MainPage));
+            Frame.Navigate(typeof(MainPage));
         }
 
         private void Share_Click(object sender, RoutedEventArgs e)
@@ -142,7 +127,7 @@ namespace FluentScreenRecorder.Views
         private async void Cancel_Click(object sender, RoutedEventArgs e)
         {
             await MainPage.Delete(_tempFile);
-            this.Frame.Navigate(typeof(MainPage));
+            Frame.Navigate(typeof(MainPage));
         }
 
         private async void OverlayButton_Click(object sender, RoutedEventArgs e)
@@ -156,8 +141,10 @@ namespace FluentScreenRecorder.Views
                 {
                     GoToOverlayIcon.Visibility = Visibility.Collapsed;
                     ExitOverlayIcon.Visibility = Visibility.Visible;
-                    ToolTip toolTip = new ToolTip();
-                    toolTip.Content = Strings.Resources.ExitOverlay;
+                    ToolTip toolTip = new()
+                    {
+                        Content = Strings.Resources.ExitOverlay
+                    };
                     ToolTipService.SetToolTip(OverlayButton, toolTip);
                     AutomationProperties.SetName(OverlayButton, Strings.Resources.ExitOverlay);
                 }
@@ -169,8 +156,10 @@ namespace FluentScreenRecorder.Views
                 {
                     ExitOverlayIcon.Visibility = Visibility.Collapsed;
                     GoToOverlayIcon.Visibility = Visibility.Visible;
-                    ToolTip toolTip = new ToolTip();
-                    toolTip.Content = Strings.Resources.GoToOverlay;
+                    ToolTip toolTip = new()
+                    {
+                        Content = Strings.Resources.GoToOverlay
+                    };
                     ToolTipService.SetToolTip(OverlayButton, toolTip);
                     AutomationProperties.SetName(OverlayButton, Strings.Resources.GoToOverlay);
                 }
