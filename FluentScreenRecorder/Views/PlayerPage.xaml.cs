@@ -19,13 +19,13 @@ namespace FluentScreenRecorder.Views
 
         public PlayerPage(StorageFile file = null)
         {
-            this.InitializeComponent();
+            InitializeComponent();
             SetupTitleBar();
         }
 
         public PlayerPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             SetupTitleBar();
         }
 
@@ -51,8 +51,10 @@ namespace FluentScreenRecorder.Views
             {
                 ExitOverlayIcon.Visibility = Visibility.Collapsed;
                 GoToOverlayIcon.Visibility = Visibility.Visible;
-                ToolTip toolTip = new ToolTip();
-                toolTip.Content = Strings.Resources.GoToOverlay;
+                ToolTip toolTip = new()
+                {
+                    Content = Strings.Resources.GoToOverlay
+                };
                 ToolTipService.SetToolTip(OverlayButton, toolTip);
                 AutomationProperties.SetName(OverlayButton, Strings.Resources.GoToOverlay);
             }
@@ -60,8 +62,10 @@ namespace FluentScreenRecorder.Views
             {
                 ExitOverlayIcon.Visibility = Visibility.Visible;
                 GoToOverlayIcon.Visibility = Visibility.Collapsed;
-                ToolTip toolTip = new ToolTip();
-                toolTip.Content = Strings.Resources.ExitOverlay;
+                ToolTip toolTip = new()
+                {
+                    Content = Strings.Resources.ExitOverlay
+                };
                 ToolTipService.SetToolTip(OverlayButton, toolTip);
                 AutomationProperties.SetName(OverlayButton, Strings.Resources.ExitOverlay);
             }
@@ -84,7 +88,7 @@ namespace FluentScreenRecorder.Views
         private async void CustomMediaTransportControls_Deleted(object sender, EventArgs e)
         {
             await videoFile.DeleteAsync();
-            this.Frame.Navigate(typeof(MainPage));            
+            Frame.Navigate(typeof(MainPage));            
         }
 
         private async void CustomMediaTransportControls_InfoTap(object sender, EventArgs e)
@@ -105,15 +109,14 @@ namespace FluentScreenRecorder.Views
 
         private void DataRequested(DataTransferManager sender, DataRequestedEventArgs e)
         {
-
             DataRequest request = e.Request;
             request.Data.Properties.Title = videoFile.Name;
             request.Data.SetStorageItems(new StorageFile[] { videoFile });
         }
 
-        private void Button_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(MainPage));
+            Frame.Navigate(typeof(MainPage));
         }
 
         private async void OverlayButton_Click(object sender, RoutedEventArgs e)
@@ -127,8 +130,10 @@ namespace FluentScreenRecorder.Views
                 {
                     GoToOverlayIcon.Visibility = Visibility.Collapsed;
                     ExitOverlayIcon.Visibility = Visibility.Visible;
-                    ToolTip toolTip = new ToolTip();
-                    toolTip.Content = Strings.Resources.ExitOverlay;
+                    ToolTip toolTip = new()
+                    {
+                        Content = Strings.Resources.ExitOverlay
+                    };
                     ToolTipService.SetToolTip(OverlayButton, toolTip);
                     AutomationProperties.SetName(OverlayButton, Strings.Resources.ExitOverlay);
                 }
@@ -140,8 +145,10 @@ namespace FluentScreenRecorder.Views
                 {
                     ExitOverlayIcon.Visibility = Visibility.Collapsed;
                     GoToOverlayIcon.Visibility = Visibility.Visible;
-                    ToolTip toolTip = new ToolTip();
-                    toolTip.Content = Strings.Resources.GoToOverlay;
+                    ToolTip toolTip = new()
+                    {
+                        Content = Strings.Resources.GoToOverlay
+                    };
                     ToolTipService.SetToolTip(OverlayButton, toolTip);
                     AutomationProperties.SetName(OverlayButton, Strings.Resources.GoToOverlay);
                 }

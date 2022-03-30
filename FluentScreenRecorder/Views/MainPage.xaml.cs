@@ -1,12 +1,10 @@
-﻿using CaptureEncoder;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.Graphics.Capture;
-using Windows.Graphics.DirectX.Direct3D11;
 using Windows.Media.MediaProperties;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -14,7 +12,6 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Media;
 using Windows.Foundation;
 using Windows.UI.ViewManagement;
 using Windows.ApplicationModel.Core;
@@ -33,63 +30,43 @@ using NAudio.Wave;
 using ScreenSenderComponent;
 using Windows.Media.Transcoding;
 using Windows.Storage.FileProperties;
-using Windows.Storage.Search;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.System;
-using Windows.UI.Popups;
-using System.Linq;
 using Windows.Media.Capture;
 using Windows.Storage.Streams;
 using Windows.ApplicationModel.DataTransfer;
+using FluentScreenRecorder.Models;
 
 namespace FluentScreenRecorder
 {
-    class ResolutionItem
-    {
-        public string DisplayName { get; set; }
-        public SizeUInt32 Resolution { get; set; }
-
-        public bool IsZero() { return Resolution.Width == 0 || Resolution.Height == 0; }
-    }
-
-    class BitrateItem
-    {
-        public string DisplayName { get; set; }
-        public uint Bitrate { get; set; }
-    }
-
-    class FrameRateItem
-    {
-        public string DisplayName { get; set; }
-        public uint FrameRate { get; set; }
-    }
-
-    public class ThumbItem
-    {
-        public BitmapImage img { get; set; }
-        public String fileN { get; set; }
-    }
-
-
     public sealed partial class MainPage : Page
     {
         private LoopbackAudioCapture loopbackAudioCapture;
+
         private Visual visual;
+
         private ToolTip toolTip;
-        private List<byte> BufferList = new List<byte>();
+
+        private List<byte> BufferList = new();
+
         MediaPlayer SilentPlayer;
+
         private AudioEncodingProperties audioEncodingProperties;
+
         private StorageFile micFile;
+
         public MediaCapture mediaCapture;
+
         public StorageFile recordedVideoFile = null;
+
         private bool lockAdaptiveUI;
+
+        public bool filesInFolder;
 
         public MainPage()
         {
             InitializeComponent();
-            this.Loaded += LoadedHandler;
-
-            MergingProgressRing.Visibility = Visibility.Collapsed;
+            Loaded += LoadedHandler;
 
             SilentPlayer = new MediaPlayer() { IsLoopingEnabled = true };
             SilentPlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/Silence.ogg"));
@@ -101,67 +78,13 @@ namespace FluentScreenRecorder
             ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
             formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
 
-            //Record icon
-            RecordIcon.Visibility = Visibility.Visible;
-            StopIcon.Visibility = Visibility.Collapsed;
-            Ellipse.Visibility = Visibility.Collapsed;
-            ToolTip toolTip = new ToolTip();
-            toolTip.Content = Strings.Resources.RecordingStart;
-            ToolTipService.SetToolTip(MainButton, toolTip);
-            AutomationProperties.SetName(MainButton, Strings.Resources.RecordingStart);
+            ResolutionComboBox.ItemsSource = App.RecViewModel.Resolutions;
+            ResolutionComboBox.SelectedIndex = App.RecViewModel.GetResolutionIndex(App.Settings.Width, App.Settings.Height);
 
+            FrameRateComboBox.ItemsSource = App.RecViewModel.Framerates;
+            FrameRateComboBox.SelectedIndex = App.RecViewModel.GetFrameRateIndex(App.Settings.FrameRate);
 
-            _device = Direct3D11Helpers.CreateDevice();
-
-            var settings = GetCachedSettings();
-
-            _resolutions = new List<ResolutionItem>();
-            foreach (var resolution in EncoderPresets.Resolutions)
-            {
-                _resolutions.Add(new ResolutionItem()
-                {
-                    DisplayName = $"{resolution.Width} x {resolution.Height}",
-                    Resolution = resolution,
-                });
-            }
-            _resolutions.Add(new ResolutionItem()
-            {
-                DisplayName = Strings.Resources.SourceSizeToggle,
-                Resolution = new SizeUInt32() { Width = 0, Height = 0 },
-            });
-            ResolutionComboBox.ItemsSource = _resolutions;
-            ResolutionComboBox.SelectedIndex = GetResolutionIndex(settings.Width, settings.Height);
-
-            _bitrates = new List<BitrateItem>();
-            foreach (var bitrate in EncoderPresets.Bitrates)
-            {
-                var mbps = (float)bitrate / 1000000;
-                _bitrates.Add(new BitrateItem()
-                {
-                    DisplayName = $"{mbps:0.##} Mbps",
-                    Bitrate = bitrate,
-                });
-            }
-            BitrateComboBox.ItemsSource = _bitrates;
-            BitrateComboBox.SelectedIndex = GetBitrateIndex(settings.Bitrate);
-
-            _frameRates = new List<FrameRateItem>();
-            foreach (var frameRate in EncoderPresets.FrameRates)
-            {
-                _frameRates.Add(new FrameRateItem()
-                {
-                    DisplayName = $"{frameRate}fps",
-                    FrameRate = frameRate,
-                });
-            }
-            FrameRateComboBox.ItemsSource = _frameRates;
-            FrameRateComboBox.SelectedIndex = GetFrameRateIndex(settings.FrameRate);
-            AudioToggleSwitch.IsOn = settings.IntAudio;
-            ExtAudioToggleSwitch.IsOn = settings.ExtAudio;
-            GalleryToggleSwitch.IsOn = settings.Gallery;
-            SystemPlayerToggleSwitch.IsOn = settings.SystemPlayer;
-            OverlayToggleSwitch.IsOn = settings.ShowOnTop;
-            if (AudioToggleSwitch.IsOn)
+            if (App.Settings.IntAudio)
             {
                 InternalAudioCheck();
             }
@@ -178,25 +101,36 @@ namespace FluentScreenRecorder
             }
             catch (Exception)
             {
-                AudioToggleSwitch.IsOn = false;
+                App.Settings.IntAudio = false;
             }
         }
 
-
-        public bool filesInFolder;
-
         private async void LoadedHandler(object sender, RoutedEventArgs e)
         {
-            this.Loaded -= LoadedHandler;
-            if (OverlayToggleSwitch.IsOn)
+            Loaded -= LoadedHandler;
+
+            visual = ElementCompositionPreview.GetElementVisual(Ellipse);
+            var animation = visual.Compositor.CreateScalarKeyFrameAnimation();
+            animation.InsertKeyFrame(0, 1);
+            animation.InsertKeyFrame(1, 0);
+            animation.Duration = TimeSpan.FromMilliseconds(1500);
+            animation.IterationBehavior = AnimationIterationBehavior.Forever;
+            visual.StartAnimation("Opacity", animation);
+
+            if (App.Settings.ShowOnTop)
             {
                 var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
                 preferences.CustomSize = new Size(400, 260);
                 bool modeSwitched = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
+                
                 GoToOverlayIcon.Visibility = Visibility.Collapsed;
                 ExitOverlayIcon.Visibility = Visibility.Visible;
-                ToolTip toolTip = new ToolTip();
-                toolTip.Content = Strings.Resources.ExitOverlay;
+
+                ToolTip toolTip = new()
+                {
+                    Content = Strings.Resources.ExitOverlay
+                };
+
                 ToolTipService.SetToolTip(OverlayButton, toolTip);
                 AutomationProperties.SetName(OverlayButton, Strings.Resources.ExitOverlay);
             }
@@ -204,23 +138,32 @@ namespace FluentScreenRecorder
             {
                 ExitOverlayIcon.Visibility = Visibility.Collapsed;
                 GoToOverlayIcon.Visibility = Visibility.Visible;
-                ToolTip toolTip = new ToolTip();
-                toolTip.Content = Strings.Resources.GoToOverlay;
+                ToolTip toolTip = new()
+                {
+                    Content = Strings.Resources.GoToOverlay
+                };
                 ToolTipService.SetToolTip(OverlayButton, toolTip);
                 AutomationProperties.SetName(OverlayButton, Strings.Resources.GoToOverlay);
             }
+
             await LoadThumbanails();
 
-            if (filesInFolder && GalleryToggleSwitch.IsOn && ((Frame)Window.Current.Content).ActualWidth > 680)
+            if (filesInFolder && App.Settings.Gallery && ((Frame)Window.Current.Content).ActualWidth > 680)
             {
-                SecondColumn.Width = new GridLength(4, GridUnitType.Star);
-                ThirdColumn.Width = new GridLength(2, GridUnitType.Star);
+                BasicGridView.Visibility = Visibility.Visible;
             }
-            else
+            else if (App.Settings.Gallery && !filesInFolder)
             {
-                FirstColumn.Width = new GridLength(1, GridUnitType.Star);
-                SecondColumn.Width = new GridLength(0);
-                ThirdColumn.Width = new GridLength(1, GridUnitType.Star);
+                BasicGridView.Visibility = Visibility.Collapsed;
+                NoVideosContainer.Visibility = Visibility.Visible;
+            } 
+            else if (!filesInFolder)
+            {
+                BasicGridView.Visibility = Visibility.Collapsed;
+            }
+            else if (!App.Settings.Gallery)
+            {
+                BasicGridView.Visibility = Visibility.Collapsed;
             }
 
             // We don't have to create the video folder at startup - just ignore populating the folder view if the folder doesn't exist (yet).
@@ -230,55 +173,64 @@ namespace FluentScreenRecorder
 
         private async Task LoadThumbanails()
         {
-            StorageFolder videoFolder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder") as StorageFolder;
-            if (videoFolder != null)
+            if (await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder") is StorageFolder videoFolder)
             {
                 IReadOnlyList<StorageFile> storageItems = await videoFolder.GetFilesAsync();
                 if (storageItems.Count > 0)
                 {
-                    List<ThumbItem> thumbnailsList = new List<ThumbItem>();
+                    List<ThumbItem> thumbnailsList = new();
                     foreach (StorageFile file in storageItems)
                     {
                         StorageItemThumbnail thumbnail = await file.GetThumbnailAsync(ThumbnailMode.SingleItem);
-                        BitmapImage bitmap = new BitmapImage();
+                        BitmapImage bitmap = new();
                         bitmap.SetSource(thumbnail);
-                        thumbnailsList.Add(new ThumbItem() { img = bitmap, fileN = file.Name });
+                        thumbnailsList.Add(new() { img = bitmap, fileN = file.Name });
                     }
                     thumbnailsList.Reverse();
                     BasicGridView.ItemsSource = thumbnailsList;
                     filesInFolder = true;
+                    NoVideosContainer.Visibility = Visibility.Collapsed;
+                    BasicGridView.Visibility = Visibility.Visible;
                 }
+                else if (storageItems.Count <= 0)
+                {
+                    filesInFolder = false;
+                    NoVideosContainer.Visibility = Visibility.Visible;
+                    BasicGridView.Visibility = Visibility.Collapsed;
+                }
+                ApplicationView.GetForCurrentView().TryResizeView(new(550, 500));
             }
-
         }
 
         public StorageFile _tempFile;
 
         private async void ToggleButton_Checked(object sender, RoutedEventArgs e)
         {
+            ApplicationView.GetForCurrentView().TryResizeView(new(400, 300));
             var button = (ToggleButton)sender;
             var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
             // Get our encoder properties
-            var frameRateItem = (FrameRateItem)FrameRateComboBox.SelectedItem;
-            var resolutionItem = (ResolutionItem)ResolutionComboBox.SelectedItem;
-            var bitrateItem = (BitrateItem)BitrateComboBox.SelectedItem;
-
+            var frameRateItem = App.RecViewModel.Framerates[App.RecViewModel.GetFrameRateIndex(App.Settings.FrameRate)];
+            var resolutionItem = App.RecViewModel.Resolutions[App.RecViewModel.GetResolutionIndex(App.Settings.Width, App.Settings.Height)];
+            var bitrateItem = App.RecViewModel.Bitrates[App.RecViewModel.GetBitrateIndex(App.Settings.Bitrate)];
 
             MediaCapture mediaCapture = null;
 
-            if (AudioToggleSwitch.IsOn)
+            if (App.Settings.IntAudio)
             {
-                loopbackAudioCapture = new LoopbackAudioCapture(MediaDevice.GetDefaultAudioRenderId(AudioDeviceRole.Default));
-                loopbackAudioCapture.BufferReadyDelegate = LoopbackBufferReady;
+                loopbackAudioCapture = new(MediaDevice.GetDefaultAudioRenderId(AudioDeviceRole.Default))
+                {
+                    BufferReadyDelegate = LoopbackBufferReady
+                };
                 BufferList.Clear();
             }
-            else if (ExtAudioToggleSwitch.IsOn)
+            else if (App.Settings.ExtAudio)
             {
                 if (await IsMicAllowed())
                 {
                     mediaCapture = new MediaCapture();
-                    MediaCaptureInitializationSettings settings = new MediaCaptureInitializationSettings
+                    MediaCaptureInitializationSettings settings = new()
                     {
                         StreamingCaptureMode = StreamingCaptureMode.Audio
                     };
@@ -289,7 +241,7 @@ namespace FluentScreenRecorder
                 }
                 else
                 {
-                    ContentDialog errorDialog = new ContentDialog
+                    ContentDialog errorDialog = new()
                     {
                         Title = "Recording failed",
                         Content = "Permission to use microphone was not given", //TODO: fix this non-english horror
@@ -307,6 +259,7 @@ namespace FluentScreenRecorder
             var useSourceSize = resolutionItem.IsZero();
             var picker = new GraphicsCapturePicker();
             var item = await picker.PickSingleItemAsync();
+
             if (item == null)
             {
                 button.IsChecked = false;
@@ -325,67 +278,36 @@ namespace FluentScreenRecorder
                 height = EnsureEven(height);
             }
 
-
             // Put videos in the temp folder
             var tempFile = await GetTempFileAsync();
             _tempFile = tempFile;
 
-            // Tell the user we've started recording            
-            SecondColumn.Width = new GridLength(0);
-            ThirdColumn.Width = new GridLength(0);
-
-
-
-            visual = ElementCompositionPreview.GetElementVisual(Ellipse);
-            var animation = visual.Compositor.CreateScalarKeyFrameAnimation();
-            animation.InsertKeyFrame(0, 1);
-            animation.InsertKeyFrame(1, 0);
-            animation.Duration = TimeSpan.FromMilliseconds(1500);
-            animation.IterationBehavior = AnimationIterationBehavior.Forever;
-            visual.StartAnimation("Opacity", animation);
-
-            RecordIcon.Visibility = Visibility.Collapsed;
-            StopIcon.Visibility = Visibility.Visible;
-            Ellipse.Visibility = Visibility.Visible;
-            toolTip = new ToolTip();
-            toolTip.Content = Strings.Resources.RecordingStop;
-            ToolTipService.SetToolTip(MainButton, toolTip);
-            AutomationProperties.SetName(MainButton, Strings.Resources.RecordingStop);
-            MainTextBlock.Text = Strings.Resources.Recording;
-            var originalBrush = MainTextBlock.Foreground;
-            MainTextBlock.Foreground = new SolidColorBrush(Colors.Red);
-            lockAdaptiveUI = true;
+            // Tell the user we've started recording
+            NotifyRecordingStatusChanges(true);
 
             // Kick off the encoding
             try
             {
                 using (var stream = await tempFile.OpenAsync(FileAccessMode.ReadWrite))
-                using (_encoder = new Encoder(_device, item))
+                using (App.RecViewModel.Encoder = new(App.RecViewModel.Device, item))
                 {
                     if (mediaCapture != null)
                     {
                         await mediaCapture.StartRecordToStorageFileAsync(MediaEncodingProfile.CreateMp3(AudioEncodingQuality.High), micFile);
                     }
-                    var encodesuccess = await _encoder.EncodeAsync(
-                    stream,
-                    width, height, bitrate,
-                    frameRate, loopbackAudioCapture);
+                    var encodesuccess = await App.RecViewModel.Encoder.EncodeAsync(stream, width, height, bitrate, frameRate, loopbackAudioCapture);
                     if (encodesuccess == false)
                     {
-                        ContentDialog errorDialog = new ContentDialog
+                        ContentDialog errorDialog = new()
                         {
                             Title = "Recording failed",
-                            Content = "Windows cannot encode your video",
-                            CloseButtonText = "OK"
+                            Content = "Windows cannot encode your video.",
+                            CloseButtonText = Strings.Resources.Ok
                         };
                         await errorDialog.ShowAsync();
                     }
 
                 }
-                MainTextBlock.Foreground = originalBrush;
-
-                Ellipse.Visibility = Visibility.Collapsed;
-                visual.StopAnimation("Opacity");
             }
             catch (Exception ex)
             {
@@ -398,7 +320,7 @@ namespace FluentScreenRecorder
                 {
                     message = $"Whoops, something went wrong!\n0x{ex.HResult:X8} - {ex.Message}";
                 }
-                ContentDialog errorDialog = new ContentDialog
+                ContentDialog errorDialog = new()
                 {
                     Title = "Recording failed",
                     Content = message,
@@ -407,17 +329,8 @@ namespace FluentScreenRecorder
                 await errorDialog.ShowAsync();
 
                 button.IsChecked = false;
-                visual.StopAnimation("Opacity");
 
-                Ellipse.Visibility = Visibility.Collapsed;
-
-
-                MainTextBlock.Foreground = originalBrush;
-                RecordIcon.Visibility = Visibility.Visible;
-                StopIcon.Visibility = Visibility.Collapsed;
-                toolTip.Content = Strings.Resources.RecordingStart;
-                ToolTipService.SetToolTip(MainButton, toolTip);
-                AutomationProperties.SetName(MainButton, Strings.Resources.RecordingStart);
+                NotifyRecordingStatusChanges(false);
                 await _tempFile.DeleteAsync();
 
                 return;
@@ -427,11 +340,11 @@ namespace FluentScreenRecorder
             // At this point the encoding has finished,
             // tell the user we're now saving
 
-            if (AudioToggleSwitch.IsOn)
+            if (App.Settings.IntAudio)
             {
-                CompleteRecording(BufferList.ToArray(), width, height, bitrate, frameRate);
+                await CompleteRecording(BufferList.ToArray(), width, height, bitrate, frameRate);
             }
-            else if (ExtAudioToggleSwitch.IsOn)
+            else if (App.Settings.ExtAudio)
             {
                 var clip = await MediaClip.CreateFromFileAsync(_tempFile);
                 var composition = new MediaComposition();
@@ -448,64 +361,39 @@ namespace FluentScreenRecorder
 
                 var newFile = await GetTempFileAsync();
 
-                MainTextBlock.Text = Strings.Resources.Saving;
-                MergingProgressRing.Visibility = Visibility.Visible;
-                MainButton.Visibility = Visibility.Collapsed;
-
                 var merge = composition.RenderToFileAsync(newFile, MediaTrimmingPreference.Fast);
+
                 merge.Progress = new AsyncOperationProgressHandler<TranscodeFailureReason, double>(async (info, progress) =>
                 {
-                    await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                     {
                         MergingProgressRing.Value = progress;
-                    }));
+                    });
                 });
+
                 merge.Completed = new AsyncOperationWithProgressCompletedHandler<TranscodeFailureReason, double>(async (info, status) =>
                 {
-                    await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(async () =>
-
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                     {
                         MergingProgressRing.Value = 0;
-                        MergingProgressRing.Visibility = Visibility.Collapsed;
+                        ProcessingNotification.Visibility = Visibility.Collapsed;
                         _tempFile = newFile;
 
-                        MainButton.IsChecked = false;
-                        MainTextBlock.Text = "";
-                        visual.StopAnimation("Opacity");
-                        Ellipse.Visibility = Visibility.Collapsed;
-                        RecordIcon.Visibility = Visibility.Visible;
-                        StopIcon.Visibility = Visibility.Collapsed;
-                        ToolTip newtoolTip = new ToolTip();
-                        toolTip.Content = Strings.Resources.RecordingStart;
-                        ToolTipService.SetToolTip(MainButton, toolTip);
-                        AutomationProperties.SetName(MainButton, Strings.Resources.RecordingStart);
-                        this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
-                        CacheCurrentSettings();
+                        NotifyRecordingStatusChanges(false);
+                        Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
 
                         var videofolder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
-                        MainButton.Visibility = Visibility.Visible;
                         await videoFile.DeleteAsync();
                         await internalAudioFile.DeleteAsync();
-                    }));
+                    });
                 });
                 lockAdaptiveUI = false;
             }
             else
             {
-                MainButton.IsChecked = false;
-                MainTextBlock.Text = "";
-                visual.StopAnimation("Opacity");
-                Ellipse.Visibility = Visibility.Collapsed;
-                RecordIcon.Visibility = Visibility.Visible;
-                StopIcon.Visibility = Visibility.Collapsed;
-                ToolTip newtoolTip = new ToolTip();
-                toolTip.Content = Strings.Resources.RecordingStart;
-                ToolTipService.SetToolTip(MainButton, Strings.Resources.RecordingStart);
-                AutomationProperties.SetName(MainButton, "Start recording");
-                this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
-                CacheCurrentSettings();
-                lockAdaptiveUI = false;
+                NotifyRecordingStatusChanges(false);
+                Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
             }
         }
 
@@ -523,9 +411,11 @@ namespace FluentScreenRecorder
             bool isMicAvailable = true;
             try
             {
-                MediaCapture mediaCapture = new MediaCapture();
-                var settings = new MediaCaptureInitializationSettings();
-                settings.StreamingCaptureMode = StreamingCaptureMode.Audio;
+                MediaCapture mediaCapture = new();
+                MediaCaptureInitializationSettings settings = new()
+                {
+                    StreamingCaptureMode = StreamingCaptureMode.Audio
+                };
                 await mediaCapture.InitializeAsync(settings);
                 mediaCapture.Dispose();
             }
@@ -539,9 +429,9 @@ namespace FluentScreenRecorder
 
         public async void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
         {
-            //Collecting some info before being lost
+            // Collecting some info before being lost
 
-            if (AudioToggleSwitch.IsOn && loopbackAudioCapture.Started)
+            if (App.Settings.IntAudio && loopbackAudioCapture.Started)
             {
                 audioEncodingProperties = loopbackAudioCapture.EncodingProperties;
                 await loopbackAudioCapture.Stop();
@@ -552,7 +442,7 @@ namespace FluentScreenRecorder
                 await mediaCapture.StopRecordAsync();
             }
 
-            _encoder?.Dispose();
+            App.RecViewModel.Encoder?.Dispose();
         }
 
         private unsafe void LoopbackBufferReady(AudioClientBufferDetails details, out int numSamplesRead)
@@ -565,11 +455,10 @@ namespace FluentScreenRecorder
             byte[] audioBuffer = new byte[byteLength];
             Unsafe.CopyBlock(ref audioBuffer[0], ref *buffer, byteLength);
 
-
             foreach (var b in audioBuffer) BufferList.Add(b);
         }
 
-        public async void CompleteRecording(byte[] audioBuffer, uint width, uint height, uint bitrateInBps, uint frameRate)
+        public async Task CompleteRecording(byte[] audioBuffer, uint width, uint height, uint bitrateInBps, uint frameRate)
         {
             var clip = await MediaClip.CreateFromFileAsync(_tempFile);
             var composition = new MediaComposition();
@@ -586,67 +475,44 @@ namespace FluentScreenRecorder
 
                 var newFile = await GetTempFileAsync();
 
-                MainTextBlock.Text = Strings.Resources.Saving;
-                MergingProgressRing.Visibility = Visibility.Visible;
-                MainButton.Visibility = Visibility.Collapsed;
+                ProcessingNotification.Visibility = Visibility.Visible;
+                RecordingNotification.Visibility = Visibility.Collapsed;
+                RecordButton.IsEnabled = false;
 
                 var merge = composition.RenderToFileAsync(newFile, MediaTrimmingPreference.Fast);
+
                 merge.Progress = new AsyncOperationProgressHandler<TranscodeFailureReason, double>(async (info, progress) =>
                 {
-                    await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(() =>
                     {
                         MergingProgressRing.Value = progress;
                     }));
                 });
+
                 merge.Completed = new AsyncOperationWithProgressCompletedHandler<TranscodeFailureReason, double>(async (info, status) =>
                 {
-                    await this.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(async () =>
-
+                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, new DispatchedHandler(async () =>
                     {
                         MergingProgressRing.Value = 0;
-                        MergingProgressRing.Visibility = Visibility.Collapsed;
                         _tempFile = newFile;
 
-                        MainButton.IsChecked = false;
-                        MainTextBlock.Text = "";
-                        visual.StopAnimation("Opacity");
-                        Ellipse.Visibility = Visibility.Collapsed;
-                        RecordIcon.Visibility = Visibility.Visible;
-                        StopIcon.Visibility = Visibility.Collapsed;
-                        ToolTip newtoolTip = new ToolTip();
-                        toolTip.Content = Strings.Resources.RecordingStart;
-                        ToolTipService.SetToolTip(MainButton, toolTip);
-                        AutomationProperties.SetName(MainButton, Strings.Resources.RecordingStart);
+                        RecordButton.IsEnabled = true;
+                        NotifyRecordingStatusChanges(false);
 
-                        this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
-                        CacheCurrentSettings();
+                        Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
                         var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
-                        MainButton.Visibility = Visibility.Visible;
                         await videoFile.DeleteAsync();
                         await internalAudioFile.DeleteAsync();
                     }));
                     lockAdaptiveUI = false;
                 });
-
-
             }
             else
             {
-                MainButton.IsChecked = false;
-                MainTextBlock.Text = "";
-                visual.StopAnimation("Opacity");
-                Ellipse.Visibility = Visibility.Collapsed;
-                RecordIcon.Visibility = Visibility.Visible;
-                StopIcon.Visibility = Visibility.Collapsed;
-                ToolTip newtoolTip = new ToolTip();
-                toolTip.Content = Strings.Resources.RecordingStart;
-                ToolTipService.SetToolTip(MainButton, Strings.Resources.RecordingStart);
-                AutomationProperties.SetName(MainButton, "Start recording");
-                this.Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
-                CacheCurrentSettings();
+                NotifyRecordingStatusChanges(true);
+                Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
             }
-
         }
 
         public static async Task<bool> Save(StorageFile file)
@@ -761,206 +627,51 @@ namespace FluentScreenRecorder
 
         private string GetMessageForHResult(int hresult)
         {
-            switch ((uint)hresult)
+            return (uint)hresult switch
             {
                 // MF_E_TRANSFORM_TYPE_NOT_SET
-                case 0xC00DA412:
-                    return "The combination of options you've chosen are not supported by your hardware.";
-                case 0x80070070:
-                    return "There is not enough space for recording in your device. ";
-                case 0xC00D4A44:
-                    return "The recorder wasn't able to capture enough frames";
-                default:
-                    return null;
-            }
-        }
-
-        private AppSettings GetCurrentSettings()
-        {
-            var resolutionItem = (ResolutionItem)ResolutionComboBox.SelectedItem;
-            var width = resolutionItem.Resolution.Width;
-            var height = resolutionItem.Resolution.Height;
-            var bitrateItem = (BitrateItem)BitrateComboBox.SelectedItem;
-            var bitrate = bitrateItem.Bitrate;
-            var frameRateItem = (FrameRateItem)FrameRateComboBox.SelectedItem;
-            var frameRate = frameRateItem.FrameRate;
-            var intAudio = AudioToggleSwitch.IsOn;
-            var extAudio = ExtAudioToggleSwitch.IsOn;
-            var gallery = GalleryToggleSwitch.IsOn;
-            var systemPlayer = SystemPlayerToggleSwitch.IsOn;
-            var showOnTop = OverlayToggleSwitch.IsOn;
-            return new AppSettings { Width = width, Height = height, Bitrate = bitrate, FrameRate = frameRate, IntAudio = intAudio, ExtAudio = extAudio, Gallery = gallery, SystemPlayer = systemPlayer, ShowOnTop = showOnTop };
-
-        }
-
-        private AppSettings GetCachedSettings()
-        {
-            var localSettings = ApplicationData.Current.LocalSettings;
-            var result = new AppSettings
-            {
-                Width = 1920,
-                Height = 1080,
-                Bitrate = 18000000,
-                FrameRate = 60,
-                IntAudio = true,
-                ExtAudio = false,
-                Gallery = true,
-                SystemPlayer = false,
-                ShowOnTop = false
+                0xC00DA412 => "The combination of options you've chosen are not supported by your hardware.",
+                0x80070070 => "There is not enough space for recording in your device. ",
+                0xC00D4A44 => "The recorder wasn't able to capture enough frames.",
+                _ => "An unknown error occured while recording.",
             };
-            // Resolution
-            if (localSettings.Values.TryGetValue(nameof(AppSettings.Width), out var width) &&
-                localSettings.Values.TryGetValue(nameof(AppSettings.Height), out var height))
-            {
-                result.Width = (uint)width;
-                result.Height = (uint)height;
-            }
-
-            else if (localSettings.Values.TryGetValue("Quality", out var quality))
-            {
-                var videoQuality = ParseEnumValue<VideoEncodingQuality>((string)quality);
-
-                var temp = MediaEncodingProfile.CreateMp4(videoQuality);
-                result.Width = temp.Video.Width;
-                result.Height = temp.Video.Height;
-            }
-            // Frame rate
-            if (localSettings.Values.TryGetValue(nameof(AppSettings.FrameRate), out var frameRate))
-            {
-                result.FrameRate = (uint)frameRate;
-            }
-
-            if (localSettings.Values.TryGetValue(nameof(AppSettings.Bitrate), out var bitrate))
-            {
-                result.Bitrate = (uint)bitrate;
-            }
-
-            if (localSettings.Values.TryGetValue(nameof(AppSettings.IntAudio), out var intAudio))
-            {
-                result.IntAudio = (bool)intAudio;
-            }
-
-            if (localSettings.Values.TryGetValue(nameof(AppSettings.ExtAudio), out var extAudio))
-            {
-                result.ExtAudio = (bool)extAudio;
-            }
-
-            if (localSettings.Values.TryGetValue(nameof(AppSettings.Gallery), out var gallery))
-            {
-                result.Gallery = (bool)gallery;
-            }
-
-            if (localSettings.Values.TryGetValue(nameof(AppSettings.SystemPlayer), out var systemPlayer))
-            {
-                result.SystemPlayer = (bool)systemPlayer;
-            }
-
-            if (localSettings.Values.TryGetValue(nameof(AppSettings.ShowOnTop), out var showOnTop))
-            {
-                result.ShowOnTop = (bool)showOnTop;
-            }
-            return result;
-        }
-        public void CacheCurrentSettings()
-        {
-            var settings = GetCurrentSettings();
-            CacheSettings(settings);
         }
 
-        private static void CacheSettings(AppSettings settings)
+        public void NotifyRecordingStatusChanges(bool isRecording)
         {
-            var localSettings = ApplicationData.Current.LocalSettings;
-            localSettings.Values[nameof(AppSettings.Width)] = settings.Width;
-            localSettings.Values[nameof(AppSettings.Height)] = settings.Height;
-            localSettings.Values[nameof(AppSettings.Bitrate)] = settings.Bitrate;
-            localSettings.Values[nameof(AppSettings.FrameRate)] = settings.FrameRate;
-            localSettings.Values[nameof(AppSettings.IntAudio)] = settings.IntAudio;
-            localSettings.Values[nameof(AppSettings.ExtAudio)] = settings.ExtAudio;
-            localSettings.Values[nameof(AppSettings.Gallery)] = settings.Gallery;
-            localSettings.Values[nameof(AppSettings.SystemPlayer)] = settings.SystemPlayer;
-            localSettings.Values[nameof(AppSettings.ShowOnTop)] = settings.ShowOnTop;
-        }
-
-        private int GetResolutionIndex(uint width, uint height)
-        {
-            for (var i = 0; i < _resolutions.Count; i++)
+            if (isRecording)
             {
-                var resolution = _resolutions[i];
-                if (resolution.Resolution.Width == width &&
-                    resolution.Resolution.Height == height)
-                {
-                    return i;
-                }
-            }
-            return -1;
-        }
-
-        private int GetBitrateIndex(uint bitrate)
-        {
-            for (var i = 0; i < _bitrates.Count; i++)
+                RecordingMiniOptions.Visibility = Visibility.Collapsed;
+                RecordName.Text = "Stop";
+                StopRecIcon.Glyph = "\uE15B";
+                RecordingContainer.Visibility = Visibility.Visible;
+                MainContent.Visibility = Visibility.Collapsed;
+                lockAdaptiveUI = true;
+            } else
             {
-                if (_bitrates[i].Bitrate == bitrate)
-                {
-                    return i;
-                }
+                RecordingMiniOptions.Visibility = Visibility.Visible;
+                RecordName.Text = "Record";
+                StopRecIcon.Glyph = "\uE7C8";
+                ProcessingNotification.Visibility = Visibility.Collapsed;
+                RecordingNotification.Visibility = Visibility.Visible;
+                RecordingContainer.Visibility = Visibility.Collapsed;
+                MainContent.Visibility = Visibility.Visible;
+                lockAdaptiveUI = false;
             }
-            return -1;
-        }
-
-        private int GetFrameRateIndex(uint frameRate)
-        {
-            for (var i = 0; i < _frameRates.Count; i++)
-            {
-                if (_frameRates[i].FrameRate == frameRate)
-                {
-                    return i;
-                }
-            }
-            return -1;
-        }
-
-        private static T ParseEnumValue<T>(string input)
-        {
-            return (T)Enum.Parse(typeof(T), input, false);
-        }
-
-        struct AppSettings
-        {
-            public uint Width;
-            public uint Height;
-            public uint Bitrate;
-            public uint FrameRate;
-            public bool IntAudio;
-            public bool ExtAudio;
-            public bool Gallery;
-            public bool SystemPlayer;
-            public bool ShowOnTop;
-        }
-
-        private IDirect3DDevice _device;
-        private Encoder _encoder;
-        private List<ResolutionItem> _resolutions;
-        private List<BitrateItem> _bitrates;
-        private List<FrameRateItem> _frameRates;
-
-        private async void AboutButton_Click(object sender, RoutedEventArgs e)
-        {
-            ContentDialog dialog = new AboutDialog();
-            await dialog.ShowAsync();
         }
 
         public async void Image_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             ThumbItem item = (sender as Image).DataContext as ThumbItem;
             var videoFile = await (await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder")).GetFileAsync(item.fileN);
-            if (SystemPlayerToggleSwitch.IsOn)
+
+            if (App.Settings.SystemPlayer)
             {
                 await Launcher.LaunchFileAsync(videoFile);
             }
             else
             {
-                this.Frame.Navigate(typeof(PlayerPage), videoFile);
-                CacheCurrentSettings();
+                Frame.Navigate(typeof(PlayerPage), videoFile);
             }
         }
 
@@ -970,14 +681,16 @@ namespace FluentScreenRecorder
             if (ApplicationView.GetForCurrentView().ViewMode == ApplicationViewMode.Default)
             {
                 var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
-                preferences.CustomSize = new Size(400, 260);
+                preferences.CustomSize = new(400, 260);
                 bool modeSwitched = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
                 if (modeSwitched)
                 {
                     GoToOverlayIcon.Visibility = Visibility.Collapsed;
                     ExitOverlayIcon.Visibility = Visibility.Visible;
-                    ToolTip toolTip = new ToolTip();
-                    toolTip.Content = Strings.Resources.ExitOverlay;
+                    ToolTip toolTip = new()
+                    {
+                        Content = Strings.Resources.ExitOverlay
+                    };
                     ToolTipService.SetToolTip(OverlayButton, toolTip);
                     AutomationProperties.SetName(OverlayButton, Strings.Resources.ExitOverlay);
                 }
@@ -989,8 +702,10 @@ namespace FluentScreenRecorder
                 {
                     ExitOverlayIcon.Visibility = Visibility.Collapsed;
                     GoToOverlayIcon.Visibility = Visibility.Visible;
-                    ToolTip toolTip = new ToolTip();
-                    toolTip.Content = Strings.Resources.GoToOverlay;
+                    ToolTip toolTip = new()
+                    {
+                        Content = Strings.Resources.GoToOverlay
+                    };
                     ToolTipService.SetToolTip(OverlayButton, toolTip);
                     AutomationProperties.SetName(OverlayButton, Strings.Resources.GoToOverlay);
                 }
@@ -1001,18 +716,20 @@ namespace FluentScreenRecorder
         {
             if (!lockAdaptiveUI)
             {
-                if (filesInFolder && GalleryToggleSwitch.IsOn && e.NewSize.Width > 680)
+                if (filesInFolder && App.Settings.Gallery && e.NewSize.Width > 680)
                 {
-                    SecondColumn.Width = new GridLength(4, GridUnitType.Star);
-                    ThirdColumn.Width = new GridLength(2, GridUnitType.Star);
+                    BasicGridView.Visibility = Visibility.Visible;
+                    NoVideosContainer.Visibility = Visibility.Collapsed;
                 }
-                else
+                else if (App.Settings.Gallery && !filesInFolder)
                 {
-                    FirstColumn.Width = new GridLength(1, GridUnitType.Star);
-                    SecondColumn.Width = new GridLength(0);
-                    ThirdColumn.Width = new GridLength(1, GridUnitType.Star);
+                    BasicGridView.Visibility = Visibility.Collapsed;
+                    NoVideosContainer.Visibility = Visibility.Visible;
                 }
-
+                else if (!App.Settings.Gallery)
+                {
+                    BasicGridView.Visibility = Visibility.Collapsed;
+                }
             }
         }
 
@@ -1057,7 +774,6 @@ namespace FluentScreenRecorder
         {
             await recordedVideoFile.DeleteAsync();
             await LoadThumbanails();
-
         }
 
         private void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
@@ -1065,23 +781,17 @@ namespace FluentScreenRecorder
             DataTransferManager.ShowShareUI();
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
             dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(DataRequested);
-
-
         }
 
         private void DataRequested(DataTransferManager sender, DataRequestedEventArgs e)
         {
-
             DataRequest request = e.Request;
             request.Data.Properties.Title = recordedVideoFile.Name;
             request.Data.SetStorageItems(new StorageFile[] { recordedVideoFile });
-
-
         }
 
         private async void MenuFlyoutItem_Click_2(object sender, RoutedEventArgs e)
         {
-
             var frameRate = await recordedVideoFile.Properties.RetrievePropertiesAsync(new string[] { "System.Video.FrameRate" });
             var width = await recordedVideoFile.Properties.RetrievePropertiesAsync(new string[] { "System.Video.FrameWidth" });
             var height = await recordedVideoFile.Properties.RetrievePropertiesAsync(new string[] { "System.Video.FrameHeight" });
@@ -1093,7 +803,27 @@ namespace FluentScreenRecorder
         {
             ThumbItem item = (sender as Image).DataContext as ThumbItem;
             recordedVideoFile = await (await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder")).GetFileAsync(item.fileN);
+        }
 
+        private void ResolutionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            App.Settings.Width = (e.AddedItems[0] as ResolutionItem).Resolution.Width;
+            App.Settings.Height = (e.AddedItems[0] as ResolutionItem).Resolution.Height;
+        }
+
+        private void FrameRateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            App.Settings.FrameRate = (e.AddedItems[0] as FrameRateItem).FrameRate;
+        }
+
+        private void BitrateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            App.Settings.Bitrate = (e.AddedItems[0] as BitrateItem).Bitrate;
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SettingsPage));
         }
     }
 }

@@ -1,0 +1,12 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ms-appx:///Microsoft.PowerToys.Settings.UI/Themes/Colors.xaml"/>
+        <ResourceDictionary Source="ms-appx:///Microsoft.PowerToys.Settings.UI/Themes/SettingsExpanderStyles.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Thickness x:Key="InfoBarIconMargin">6,16,16,16</Thickness>
+    <Thickness x:Key="InfoBarContentRootPadding">16,0,0,0</Thickness>
+    <x:Double x:Key="SettingActionControlMinWidth">240</x:Double>
+</ResourceDictionary>
