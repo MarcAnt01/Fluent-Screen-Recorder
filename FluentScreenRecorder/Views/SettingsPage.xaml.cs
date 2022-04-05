@@ -1,4 +1,5 @@
 ﻿using FluentScreenRecorder.Models;
+using FluentScreenRecorder.Dialogs;
 using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Core;
@@ -139,6 +140,12 @@ namespace FluentScreenRecorder.Views
                 AboutFooter.Visibility = Visibility.Visible;
                 MainGrid.ColumnSpacing = 0;
             }
+        }
+
+        private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            ContentDialog dialog = new LicensesDialog();
+            await dialog.ShowAsync();
         }
     }
 }

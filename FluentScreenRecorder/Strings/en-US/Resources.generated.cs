@@ -471,6 +471,19 @@ namespace FluentScreenRecorder.Strings{
         }
         #endregion
 
+        #region ThirdPartyLicenses
+        /// <summary>
+        ///   Looks up a localized string similar to: Third party licenses
+        /// </summary>
+        public static string ThirdPartyLicenses
+        {
+            get
+            {
+                return _resourceLoader.GetString("ThirdPartyLicenses");
+            }
+        }
+        #endregion
+
         #region Version
         /// <summary>
         ///   Looks up a localized string similar to: Version
@@ -568,6 +581,7 @@ namespace FluentScreenRecorder.Strings{
             Share,
             SourceSizeToggle,
             SystemVideoPlayerOption,
+            ThirdPartyLicenses,
             Version,
             VideoPreview,
             Volume,

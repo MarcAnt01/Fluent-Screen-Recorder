@@ -222,6 +222,9 @@
   <data name="SystemVideoPlayerOption" xml:space="preserve">
     <value>Use system player to open videos</value>
   </data>
+  <data name="ThirdPartyLicenses" xml:space="preserve">
+    <value>Third party licenses</value>
+  </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>
   </data>

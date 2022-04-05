@@ -166,11 +166,12 @@
                     <StackPanel x:Name="AboutFooter">
                         <TextBlock Text="About" FontWeight="SemiBold" Margin="0,20,0,4" />
 
-                        <HyperlinkButton Margin="-3,0,0,0" Padding="3" Content="{x:Bind strings:Resources.GitHub}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder"/>
-                        <HyperlinkButton Margin="-3,0,0,0" Padding="3" Content="{x:Bind strings:Resources.Discord}" NavigateUri="https://discord.gg/v4EXAwXPHw"/>
-                        <HyperlinkButton Margin="-3,0,0,0" Padding="3" Content="{x:Bind strings:Resources.Privacy}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/PRIVACY.md"/>
-                        <HyperlinkButton Margin="-3,0,0,0" Padding="3" Content="{x:Bind strings:Resources.Copyright}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/LICENSE"/>
-                        <HyperlinkButton Margin="-3,0,0,0" Padding="3" Content="{x:Bind strings:Resources.Donate}" NavigateUri="https://paypal.me/FilippoFedeli"/>
+                        <HyperlinkButton Margin="-4,0,0,0" Padding="4" Content="{x:Bind strings:Resources.GitHub}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder"/>
+                        <HyperlinkButton Margin="-4,0,0,0" Padding="4" Content="{x:Bind strings:Resources.Discord}" NavigateUri="https://discord.gg/v4EXAwXPHw"/>
+                        <HyperlinkButton Margin="-4,0,0,0" Padding="4" Content="{x:Bind strings:Resources.Privacy}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/PRIVACY.md"/>
+                        <HyperlinkButton Margin="-4,0,0,0" Padding="4" Content="{x:Bind strings:Resources.Copyright}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/LICENSE"/>
+                        <HyperlinkButton Margin="-4,0,0,0" Padding="4" Content="{x:Bind strings:Resources.ThirdPartyLicenses}" Click="HyperlinkButton_Click"/>
+                        <HyperlinkButton Margin="-4,0,0,0" Padding="4" Content="{x:Bind strings:Resources.Donate}" NavigateUri="https://paypal.me/FilippoFedeli"/>
                         <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
                             <TextBlock Text="{x:Bind strings:Resources.Version}"/>
                             <TextBlock Text="{x:Bind GetAppVersion()}" FontWeight="Bold"/>
@@ -185,6 +186,7 @@
                     <HyperlinkButton Margin="-4,0,0,0" Padding="4" Content="{x:Bind strings:Resources.Discord}" NavigateUri="https://discord.gg/v4EXAwXPHw"/>
                     <HyperlinkButton Margin="-4,0,0,0" Padding="4" Content="{x:Bind strings:Resources.Privacy}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/PRIVACY.md"/>
                     <HyperlinkButton Margin="-4,0,0,0" Padding="4" Content="{x:Bind strings:Resources.Copyright}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/LICENSE"/>
+                    <HyperlinkButton Margin="-4,0,0,0" Padding="4" Content="{x:Bind strings:Resources.ThirdPartyLicenses}" Click="HyperlinkButton_Click"/>
                     <HyperlinkButton Margin="-4,0,0,0" Padding="4" Content="{x:Bind strings:Resources.Donate}" NavigateUri="https://paypal.me/FilippoFedeli"/>
                     <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
                         <TextBlock Text="{x:Bind strings:Resources.Version}"/>
