@@ -1,0 +1,18 @@
+﻿<ContentDialog
+    x:Class="FluentScreenRecorder.Dialogs.LicensesDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:FluentScreenRecorder.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:strings="using:FluentScreenRecorder.Strings"
+    mc:Ignorable="d"
+    Title="{x:Bind strings:Resources.ThirdPartyLicenses}"
+    CloseButtonText="{x:Bind strings:Resources.Ok}">
+    <StackPanel>
+        <HyperlinkButton Margin="-4,0,0,0" Padding="4" Content="Simple Screen Recorder" NavigateUri="https://github.com/robmikh/SimpleRecorder/blob/master/LICENSE"/>
+        <HyperlinkButton Margin="-4,0,0,0" Padding="4" Content="Win2D" NavigateUri="https://github.com/microsoft/Win2D/blob/reunion_master/LICENSE.txt"/>
+        <HyperlinkButton Margin="-4,0,0,0" Padding="4" Content="NAudio" NavigateUri="https://github.com/naudio/NAudio/blob/master/license.txt"/>
+        <HyperlinkButton Margin="-4,0,0,0" Padding="4" Content="Microsoft PowerToys" NavigateUri="https://github.com/microsoft/PowerToys/blob/main/LICENSE"/>
+        <HyperlinkButton Margin="-4,0,0,0" Padding="4" Content="Windows Community Toolkit" NavigateUri="https://github.com/CommunityToolkit/WindowsCommunityToolkit/blob/main/License.md"/>       
+    </StackPanel>
+</ContentDialog>
