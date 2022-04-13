@@ -39,9 +39,6 @@
   <data name="ExitOverlay" xml:space="preserve">
     <value>Zpět na plné zobrazení</value>
   </data>
-  <data name="ExternalAudio" xml:space="preserve">
-    <value>Nahrávání mikrofonem</value>
-  </data>
   <data name="Failure" xml:space="preserve">
     <value>Nastala porucha</value>
   </data>
@@ -60,9 +57,6 @@
   <data name="Info" xml:space="preserve">
     <value>Informace o souboru</value>
   </data>
-  <data name="InternalAudio" xml:space="preserve">
-    <value>Nahrávání zvuku</value>
-  </data>
   <data name="MicSettings" xml:space="preserve">
     <value>Systémová nastavení mikrofonu</value>
   </data>
@@ -72,9 +66,6 @@
   <data name="OpenFolder" xml:space="preserve">
     <value>Otevřít složku, do které bylo video uloženo</value>
   </data>
-  <data name="Options" xml:space="preserve">
-    <value>Vyber z následujících možností</value>
-  </data>
   <data name="OverlayMode" xml:space="preserve">
     <value>Otevřít režim překrytí jako výchozí</value>
   </data>
@@ -83,9 +74,6 @@
   </data>
   <data name="Recording" xml:space="preserve">
     <value>Nahrávání</value>
-  </data>
-  <data name="RecordingStart" xml:space="preserve">
-    <value>Začít nahrávat</value>
   </data>
   <data name="RecordingStop" xml:space="preserve">
     <value>Zastavit nahrávání</value>
@@ -98,9 +86,6 @@
   </data>
   <data name="SaveAs" xml:space="preserve">
     <value>Uložit jako</value>
-  </data>
-  <data name="SaveConfirm" xml:space="preserve">
-    <value>Uložit soubor?</value>
   </data>
   <data name="Saving" xml:space="preserve">
     <value>Ukládání...</value>

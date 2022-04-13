@@ -75,7 +75,7 @@
                 <ToggleButton Height="40" BorderThickness="0" Background="Transparent" x:Name="RecordButton" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked">
                     <StackPanel Orientation="Horizontal" Spacing="12">
                         <FontIcon Glyph="&#xE7C8;" x:Name="StopRecIcon" />
-                        <TextBlock Text="Record" x:Name="RecordName" />
+                        <TextBlock Text="{x:Bind strings:Resources.Record}" x:Name="RecordName" />
                     </StackPanel>
                 </ToggleButton>
 
@@ -117,9 +117,9 @@
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"
                 x:Name="NoVideosContainer">
-                
-                <TextBlock Text="This place seems blank..." Style="{StaticResource TitleTextBlockStyle}" />
-                <TextBlock Text="Record something to fill this place." Style="{StaticResource BodyTextBlockStyle}" />
+
+                <TextBlock Text="{x:Bind strings:Resources.Blank}" Style="{StaticResource TitleTextBlockStyle}" />
+                <TextBlock Text="{x:Bind strings:Resources.GalleryFill}" Style="{StaticResource BodyTextBlockStyle}" />
                 
             </StackPanel>
             

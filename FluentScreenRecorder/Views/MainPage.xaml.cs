@@ -243,9 +243,9 @@ namespace FluentScreenRecorder
                 {
                     ContentDialog errorDialog = new()
                     {
-                        Title = "Recording failed",
-                        Content = "Permission to use microphone was not given", //TODO: fix this non-english horror
-                        CloseButtonText = "OK"
+                        Title = Strings.Resources.Failure,
+                        Content = Strings.Resources.MicNoPermission,
+                        CloseButtonText = Strings.Resources.Ok
                     };
                     await errorDialog.ShowAsync();
                     return;
@@ -300,7 +300,7 @@ namespace FluentScreenRecorder
                     {
                         ContentDialog errorDialog = new()
                         {
-                            Title = "Recording failed",
+                            Title = Strings.Resources.Failure,
                             Content = "Windows cannot encode your video.",
                             CloseButtonText = Strings.Resources.Ok
                         };
@@ -642,7 +642,7 @@ namespace FluentScreenRecorder
             if (isRecording)
             {
                 RecordingMiniOptions.Visibility = Visibility.Collapsed;
-                RecordName.Text = "Stop";
+                RecordName.Text = Strings.Resources.Stop;
                 StopRecIcon.Glyph = "\uE15B";
                 RecordingContainer.Visibility = Visibility.Visible;
                 MainContent.Visibility = Visibility.Collapsed;
@@ -650,7 +650,7 @@ namespace FluentScreenRecorder
             } else
             {
                 RecordingMiniOptions.Visibility = Visibility.Visible;
-                RecordName.Text = "Record";
+                RecordName.Text = Strings.Resources.Record;
                 StopRecIcon.Glyph = "\uE7C8";
                 ProcessingNotification.Visibility = Visibility.Collapsed;
                 RecordingNotification.Visibility = Visibility.Visible;

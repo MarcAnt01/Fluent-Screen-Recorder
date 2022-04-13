@@ -120,11 +120,29 @@
   <data name="About" xml:space="preserve">
     <value>About the app</value>
   </data>
+  <data name="Advanced" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="AudioRecordingExternal" xml:space="preserve">
+    <value>External (Microphone)</value>
+  </data>
+  <data name="AudioRecordingInternal" xml:space="preserve">
+    <value>Internal (Speaker)</value>
+  </data>
+  <data name="AudioRecordingMode" xml:space="preserve">
+    <value>Audio recording mode</value>
+  </data>
   <data name="Back" xml:space="preserve">
     <value>Go back</value>
   </data>
   <data name="Bitrate" xml:space="preserve">
     <value>Bitrate</value>
+  </data>
+  <data name="BitrateDescription" xml:space="preserve">
+    <value>The amount of video data per unit of time (high bitrates may cause recorded videos size to be very large)</value>
+  </data>
+  <data name="Blank" xml:space="preserve">
+    <value>This place seems blank...</value>
   </data>
   <data name="BugReport" xml:space="preserve">
     <value>Report a bug</value>
@@ -144,17 +162,23 @@
   <data name="ExitOverlay" xml:space="preserve">
     <value>Back to full view</value>
   </data>
-  <data name="ExternalAudio" xml:space="preserve">
-    <value>Microphone recording</value>
-  </data>
   <data name="Failure" xml:space="preserve">
     <value>Failure</value>
   </data>
   <data name="Framerate" xml:space="preserve">
     <value>Framerate</value>
   </data>
+  <data name="GalleryFill" xml:space="preserve">
+    <value>Record something to fill this place</value>
+  </data>
   <data name="GalleryView" xml:space="preserve">
     <value>Gallery View</value>
+  </data>
+  <data name="GalleryViewDescription" xml:space="preserve">
+    <value>Show your recorded videos</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>General</value>
   </data>
   <data name="GitHub" xml:space="preserve">
     <value>View GitHub repository</value>
@@ -162,11 +186,14 @@
   <data name="GoToOverlay" xml:space="preserve">
     <value>Switch to always on top</value>
   </data>
+  <data name="Height" xml:space="preserve">
+    <value>Height</value>
+  </data>
   <data name="Info" xml:space="preserve">
     <value>File info</value>
   </data>
-  <data name="InternalAudio" xml:space="preserve">
-    <value>Audio Recording</value>
+  <data name="MicNoPermission" xml:space="preserve">
+    <value>Microphone permission has been denied</value>
   </data>
   <data name="MicSettings" xml:space="preserve">
     <value>System microphone settings</value>
@@ -177,20 +204,20 @@
   <data name="OpenFolder" xml:space="preserve">
     <value>Open the folder where the video has been saved</value>
   </data>
-  <data name="Options" xml:space="preserve">
-    <value>You can choose among the following options</value>
-  </data>
   <data name="OverlayMode" xml:space="preserve">
     <value>Open overlay mode by default</value>
+  </data>
+  <data name="OverlayModeDescription" xml:space="preserve">
+    <value>Open by default the app on a small window displayed on top of other windows</value>
   </data>
   <data name="Privacy" xml:space="preserve">
     <value>Privacy policy</value>
   </data>
+  <data name="Record" xml:space="preserve">
+    <value>Record</value>
+  </data>
   <data name="Recording" xml:space="preserve">
     <value>Recording</value>
-  </data>
-  <data name="RecordingStart" xml:space="preserve">
-    <value>Start Recording</value>
   </data>
   <data name="RecordingStop" xml:space="preserve">
     <value>Stop Recording</value>
@@ -204,9 +231,6 @@
   <data name="SaveAs" xml:space="preserve">
     <value>Save as</value>
   </data>
-  <data name="SaveConfirm" xml:space="preserve">
-    <value>Do you want to save your file?</value>
-  </data>
   <data name="Saving" xml:space="preserve">
     <value>Saving...</value>
   </data>
@@ -218,6 +242,12 @@
   </data>
   <data name="SourceSizeToggle" xml:space="preserve">
     <value>Source size</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="SystemPlayerOptionDescription" xml:space="preserve">
+    <value>Open recorded videos in the system default video player</value>
   </data>
   <data name="SystemVideoPlayerOption" xml:space="preserve">
     <value>Use system player to open videos</value>
@@ -236,5 +266,8 @@
   </data>
   <data name="Whatsnew" xml:space="preserve">
     <value>What's new?</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>Width</value>
   </data>
 </root>

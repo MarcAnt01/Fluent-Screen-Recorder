@@ -39,9 +39,6 @@
   <data name="ExitOverlay" xml:space="preserve">
     <value>Volver a la vista completa</value>
   </data>
-  <data name="ExternalAudio" xml:space="preserve">
-    <value>Grabación de micrófono</value>
-  </data>
   <data name="Failure" xml:space="preserve">
     <value>Error</value>
   </data>
@@ -60,9 +57,6 @@
   <data name="Info" xml:space="preserve">
     <value>Información del archivo</value>
   </data>
-  <data name="InternalAudio" xml:space="preserve">
-    <value>Grabación de audio</value>
-  </data>
   <data name="MicSettings" xml:space="preserve">
     <value>Configuración del micrófono</value>
   </data>
@@ -72,9 +66,6 @@
   <data name="OpenFolder" xml:space="preserve">
     <value>Abrir la carpeta donde se guardó el video</value>
   </data>
-  <data name="Options" xml:space="preserve">
-    <value>Puedes elegir entre las siguientes opciones</value>
-  </data>
   <data name="OverlayMode" xml:space="preserve">
     <value>Abrir el modo de superposición de forma predeterminada</value>
   </data>
@@ -83,9 +74,6 @@
   </data>
   <data name="Recording" xml:space="preserve">
     <value>Grabando</value>
-  </data>
-  <data name="RecordingStart" xml:space="preserve">
-    <value>Empezar Grabación</value>
   </data>
   <data name="RecordingStop" xml:space="preserve">
     <value>Finalizar Grabación</value>
@@ -98,9 +86,6 @@
   </data>
   <data name="SaveAs" xml:space="preserve">
     <value>Guardar como</value>
-  </data>
-  <data name="SaveConfirm" xml:space="preserve">
-    <value>¿Quieres guardar tu archivo?</value>
   </data>
   <data name="Saving" xml:space="preserve">
     <value>Guardando...</value>

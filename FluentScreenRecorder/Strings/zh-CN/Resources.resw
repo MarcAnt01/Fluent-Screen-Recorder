@@ -39,9 +39,6 @@
   <data name="ExitOverlay" xml:space="preserve">
     <value>返回完整视图</value>
   </data>
-  <data name="ExternalAudio" xml:space="preserve">
-    <value>麦克风录音</value>
-  </data>
   <data name="Failure" xml:space="preserve">
     <value>失败</value>
   </data>
@@ -60,9 +57,6 @@
   <data name="Info" xml:space="preserve">
     <value>文件信息</value>
   </data>
-  <data name="InternalAudio" xml:space="preserve">
-    <value>录音</value>
-  </data>
   <data name="MicSettings" xml:space="preserve">
     <value>系统麦克风设置</value>
   </data>
@@ -72,9 +66,6 @@
   <data name="OpenFolder" xml:space="preserve">
     <value>打开保存视频的文件夹</value>
   </data>
-  <data name="Options" xml:space="preserve">
-    <value>您可以在以下选项中进行选择</value>
-  </data>
   <data name="OverlayMode" xml:space="preserve">
     <value>默认打开覆盖模式</value>
   </data>
@@ -83,9 +74,6 @@
   </data>
   <data name="Recording" xml:space="preserve">
     <value>录屏</value>
-  </data>
-  <data name="RecordingStart" xml:space="preserve">
-    <value>开始录屏</value>
   </data>
   <data name="RecordingStop" xml:space="preserve">
     <value>停止录屏</value>
@@ -98,9 +86,6 @@
   </data>
   <data name="SaveAs" xml:space="preserve">
     <value>另存为</value>
-  </data>
-  <data name="SaveConfirm" xml:space="preserve">
-    <value>您要保存文件吗?</value>
   </data>
   <data name="Saving" xml:space="preserve">
     <value>正在保存</value>

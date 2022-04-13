@@ -104,26 +104,26 @@
                 </Grid.ColumnDefinitions>
                 
                 <StackPanel Orientation="Vertical" Spacing="3">
-                    <TextBlock Text="Settings" FontSize="24" FontWeight="SemiBold" Margin="0,0,0,12" />
+                    <TextBlock Text="{x:Bind strings:Resources.Settings}" FontSize="24" FontWeight="SemiBold" Margin="0,0,0,12" />
 
-                    <TextBlock Text="General" Margin="0,8" />
+                    <TextBlock Text="{x:Bind strings:Resources.General}" Margin="0,8" />
 
-                    <settings:Setting Description="Show your recorded videos." Header="{x:Bind strings:Resources.GalleryView}">
+                    <settings:Setting Description="{x:Bind strings:Resources.GalleryViewDescription}" Header="{x:Bind strings:Resources.GalleryView}">
                         <settings:Setting.ActionContent>
                             <ToggleSwitch Margin="0,0,-70,0" IsOn="{x:Bind local1:App.Settings.Gallery, Mode=TwoWay}" />
                         </settings:Setting.ActionContent>
                     </settings:Setting>
 
-                    <settings:Setting Header="Audio recording mode">
+                    <settings:Setting Header="{x:Bind strings:Resources.AudioRecordingMode}">
                         <settings:Setting.ActionContent>
                             <ComboBox x:Name="AudioModeComboBox" SelectionChanged="AudioMode_SelectionChanged">
-                                <x:String>Internal (Speaker)</x:String>
-                                <x:String>External (Microphone)</x:String>
+                                <ComboBoxItem Content="{x:Bind strings:Resources.AudioRecordingInternal}"/>
+                                <ComboBoxItem Content="{x:Bind strings:Resources.AudioRecordingExternal}"/>
                             </ComboBox>
                         </settings:Setting.ActionContent>
                     </settings:Setting>
 
-                    <settings:Setting Description="The amount of video data transferred for a unit of time." Header="{x:Bind strings:Resources.Bitrate}">
+                    <settings:Setting Description="{x:Bind strings:Resources.BitrateDescription}" Header="{x:Bind strings:Resources.Bitrate}">
                         <settings:Setting.ActionContent>
                             <ComboBox x:Name="BitrateComboBox" ItemsSource="{x:Bind local1:App.RecViewModel.Bitrates}" SelectionChanged="BitrateComboBox_SelectionChanged" HorizontalAlignment="Center">
                                 <ComboBox.ItemTemplate>
@@ -135,17 +135,17 @@
                         </settings:Setting.ActionContent>
                     </settings:Setting>
 
-                    <TextBlock Text="Advanced" Margin="0,20,0,8" />
+                    <TextBlock Text="{x:Bind strings:Resources.Advanced}" Margin="0,20,0,8" />
 
-                    <settings:Setting Description="Open recorded videos in the system default video player." Header="{x:Bind strings:Resources.SystemVideoPlayerOption}">
+                    <settings:Setting Description="{x:Bind strings:Resources.SystemPlayerOptionDescription}" Header="{x:Bind strings:Resources.SystemVideoPlayerOption}">
                         <settings:Setting.ActionContent>
-                            <ToggleSwitch Margin="0,0,-70,0" IsOn="{x:Bind local1:App.Settings.SystemPlayer, Mode=TwoWay}" />
+                            <ToggleSwitch Margin="0,0,-72,0" IsOn="{x:Bind local1:App.Settings.SystemPlayer, Mode=TwoWay}" />
                         </settings:Setting.ActionContent>
                     </settings:Setting>
 
-                    <settings:Setting Description="Overlay on top of other windows." Header="{x:Bind strings:Resources.OverlayMode}">
+                    <settings:Setting Description="{x:Bind strings:Resources.OverlayModeDescription}" Header="{x:Bind strings:Resources.OverlayMode}">
                         <settings:Setting.ActionContent>
-                            <ToggleSwitch Margin="0,0,-70,0" IsOn="{x:Bind local1:App.Settings.ShowOnTop, Mode=TwoWay}" />
+                            <ToggleSwitch Margin="0,0,-72,0" IsOn="{x:Bind local1:App.Settings.ShowOnTop, Mode=TwoWay}" />
                         </settings:Setting.ActionContent>
                     </settings:Setting>
 
@@ -154,7 +154,7 @@
                             Padding="16"
                             Click="SystemMic_Click">
                         <RelativePanel>
-                            <TextBlock Text="System microphone settings" />
+                            <TextBlock Text="{x:Bind strings:Resources.MicSettings}" />
 
                             <FontIcon Glyph="&#xE8A7;"
                                       RelativePanel.AlignVerticalCenterWithPanel="True"
@@ -164,7 +164,7 @@
                     </Button>
 
                     <StackPanel x:Name="AboutFooter">
-                        <TextBlock Text="About" FontWeight="SemiBold" Margin="0,20,0,4" />
+                        <TextBlock Text="{x:Bind strings:Resources.About}" FontWeight="SemiBold" Margin="0,20,0,4" />
 
                         <HyperlinkButton Margin="-4,0,0,0" Padding="4" Content="{x:Bind strings:Resources.GitHub}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder"/>
                         <HyperlinkButton Margin="-4,0,0,0" Padding="4" Content="{x:Bind strings:Resources.Discord}" NavigateUri="https://discord.gg/v4EXAwXPHw"/>
@@ -180,7 +180,7 @@
                 </StackPanel>
 
                 <StackPanel Padding="0,52,0,0" Grid.Column="1">
-                    <TextBlock Text="About" FontWeight="SemiBold" Margin="0,0,0,4" />
+                    <TextBlock Text="{x:Bind strings:Resources.About}" FontWeight="SemiBold" Margin="0,0,0,4" />
 
                     <HyperlinkButton Margin="-4,0,0,0" Padding="4" Content="{x:Bind strings:Resources.GitHub}" NavigateUri="https://github.com/MarcAnt01/Fluent-Screen-Recorder"/>
                     <HyperlinkButton Margin="-4,0,0,0" Padding="4" Content="{x:Bind strings:Resources.Discord}" NavigateUri="https://discord.gg/v4EXAwXPHw"/>

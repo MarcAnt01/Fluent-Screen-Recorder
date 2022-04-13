@@ -36,9 +36,6 @@
   <data name="ExitOverlay" xml:space="preserve">
     <value>ආපසු සම්පූර්ණ දසුන වෙත</value>
   </data>
-  <data name="ExternalAudio" xml:space="preserve">
-    <value>මයික්‍රෆෝනය පටිගත කිරීම</value>
-  </data>
   <data name="Failure" xml:space="preserve">
     <value>අසමත් වීම</value>
   </data>
@@ -57,9 +54,6 @@
   <data name="Info" xml:space="preserve">
     <value>ගොනුවේ තොරතුරු</value>
   </data>
-  <data name="InternalAudio" xml:space="preserve">
-    <value>අභ්යන්තර ශබ්ද පටිගත කිරීම</value>
-  </data>
   <data name="MicSettings" xml:space="preserve">
     <value>මයික්‍රෆෝනයේ පද්ධති සැකසුම්</value>
   </data>
@@ -69,9 +63,6 @@
   <data name="OpenFolder" xml:space="preserve">
     <value>වීඩියෝව සුරකින ලද ෆෝල්ඩරය විවෘත කරන්න</value>
   </data>
-  <data name="Options" xml:space="preserve">
-    <value>පහත දැක්වෙන විකල්පයන්ගෙන් ඔබට තෝරා ගත හැකිය</value>
-  </data>
   <data name="OverlayMode" xml:space="preserve">
     <value>සෑම විටම overlay ප්‍රකාරයෙන් විවෘත කරන්න</value>
   </data>
@@ -80,9 +71,6 @@
   </data>
   <data name="Recording" xml:space="preserve">
     <value>පටිගත කරමින්</value>
-  </data>
-  <data name="RecordingStart" xml:space="preserve">
-    <value>පටිගත කිරීම ආරම්භ කරන්න</value>
   </data>
   <data name="RecordingStop" xml:space="preserve">
     <value>පටිගත කිරීම නවත්වන්න</value>
@@ -95,9 +83,6 @@
   </data>
   <data name="SaveAs" xml:space="preserve">
     <value>සුරකින ආකාරය </value>
-  </data>
-  <data name="SaveConfirm" xml:space="preserve">
-    <value>ඔබට ඔබේ ගොනුව සුරැකීමට අවශ්‍යද?</value>
   </data>
   <data name="Saving" xml:space="preserve">
     <value>සුරකිමින්...</value>
