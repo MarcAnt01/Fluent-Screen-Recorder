@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:strings="using:FluentScreenRecorder.Strings"
     mc:Ignorable="d"
-    Title="Info" 
+    Title="{x:Bind strings:Resources.Info}" 
     CloseButtonText="{x:Bind strings:Resources.Ok}"
     Style="{StaticResource DefaultContentDialogStyle}">
 

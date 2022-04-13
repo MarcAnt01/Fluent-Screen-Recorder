@@ -39,9 +39,6 @@
   <data name="ExitOverlay" xml:space="preserve">
     <value>フルビューに戻る</value>
   </data>
-  <data name="ExternalAudio" xml:space="preserve">
-    <value>マイク録音</value>
-  </data>
   <data name="Failure" xml:space="preserve">
     <value>失敗</value>
   </data>
@@ -60,9 +57,6 @@
   <data name="Info" xml:space="preserve">
     <value>ファイル情報</value>
   </data>
-  <data name="InternalAudio" xml:space="preserve">
-    <value>オーディオ録音</value>
-  </data>
   <data name="MicSettings" xml:space="preserve">
     <value>システムのマイク設定</value>
   </data>
@@ -72,9 +66,6 @@
   <data name="OpenFolder" xml:space="preserve">
     <value>ビデオが保存されているフォルダを開く</value>
   </data>
-  <data name="Options" xml:space="preserve">
-    <value>次のオプションから選択できます</value>
-  </data>
   <data name="OverlayMode" xml:space="preserve">
     <value>デフォルトでオーバーレイモードを開く</value>
   </data>
@@ -83,9 +74,6 @@
   </data>
   <data name="Recording" xml:space="preserve">
     <value>レコーディング</value>
-  </data>
-  <data name="RecordingStart" xml:space="preserve">
-    <value>録音の開始</value>
   </data>
   <data name="RecordingStop" xml:space="preserve">
     <value>録音を停止</value>
@@ -98,9 +86,6 @@
   </data>
   <data name="SaveAs" xml:space="preserve">
     <value>名前を付けて保存...</value>
-  </data>
-  <data name="SaveConfirm" xml:space="preserve">
-    <value>ファイルを保存しますか？</value>
   </data>
   <data name="Saving" xml:space="preserve">
     <value>保存中…</value>

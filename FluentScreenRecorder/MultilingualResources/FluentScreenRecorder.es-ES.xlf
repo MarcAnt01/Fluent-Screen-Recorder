@@ -42,10 +42,6 @@
           <source>Back to full view</source>
           <target state="translated">Volver a la vista completa</target>
         </trans-unit>
-        <trans-unit id="ExternalAudio" translate="yes" xml:space="preserve">
-          <source>Microphone recording</source>
-          <target state="translated">Grabación de micrófono</target>
-        </trans-unit>
         <trans-unit id="Failure" translate="yes" xml:space="preserve">
           <source>Failure</source>
           <target state="translated">Error</target>
@@ -70,10 +66,6 @@
           <source>File info</source>
           <target state="translated">Información del archivo</target>
         </trans-unit>
-        <trans-unit id="InternalAudio" translate="yes" xml:space="preserve">
-          <source>Audio Recording</source>
-          <target state="translated">Grabación de audio</target>
-        </trans-unit>
         <trans-unit id="MicSettings" translate="yes" xml:space="preserve">
           <source>System microphone settings</source>
           <target state="translated">Configuración del micrófono</target>
@@ -86,10 +78,6 @@
           <source>Open the folder where the video has been saved</source>
           <target state="translated">Abrir la carpeta donde se guardó el video</target>
         </trans-unit>
-        <trans-unit id="Options" translate="yes" xml:space="preserve">
-          <source>You can choose among the following options</source>
-          <target state="translated">Puedes elegir entre las siguientes opciones</target>
-        </trans-unit>
         <trans-unit id="OverlayMode" translate="yes" xml:space="preserve">
           <source>Open overlay mode by default</source>
           <target state="translated">Abrir el modo de superposición de forma predeterminada</target>
@@ -101,10 +89,6 @@
         <trans-unit id="Recording" translate="yes" xml:space="preserve">
           <source>Recording</source>
           <target state="translated">Grabando</target>
-        </trans-unit>
-        <trans-unit id="RecordingStart" translate="yes" xml:space="preserve">
-          <source>Start Recording</source>
-          <target state="translated">Empezar Grabación</target>
         </trans-unit>
         <trans-unit id="RecordingStop" translate="yes" xml:space="preserve">
           <source>Stop Recording</source>
@@ -121,10 +105,6 @@
         <trans-unit id="SaveAs" translate="yes" xml:space="preserve">
           <source>Save as</source>
           <target state="translated">Guardar como</target>
-        </trans-unit>
-        <trans-unit id="SaveConfirm" translate="yes" xml:space="preserve">
-          <source>Do you want to save your file?</source>
-          <target state="translated">¿Quieres guardar tu archivo?</target>
         </trans-unit>
         <trans-unit id="Saving" translate="yes" xml:space="preserve">
           <source>Saving...</source>
@@ -162,6 +142,74 @@
         <trans-unit id="Whatsnew" translate="yes" xml:space="preserve">
           <source>What's new?</source>
           <target state="translated">Novedades</target>
+        </trans-unit>
+        <trans-unit id="ThirdPartyLicenses" translate="yes" xml:space="preserve">
+          <source>Third party licenses</source>
+          <target state="new">Third party licenses</target>
+        </trans-unit>
+        <trans-unit id="Advanced" translate="yes" xml:space="preserve">
+          <source>Advanced</source>
+          <target state="new">Advanced</target>
+        </trans-unit>
+        <trans-unit id="AudioRecordingExternal" translate="yes" xml:space="preserve">
+          <source>External (Microphone)</source>
+          <target state="new">External (Microphone)</target>
+        </trans-unit>
+        <trans-unit id="AudioRecordingInternal" translate="yes" xml:space="preserve">
+          <source>Internal (Speaker)</source>
+          <target state="new">Internal (Speaker)</target>
+        </trans-unit>
+        <trans-unit id="AudioRecordingMode" translate="yes" xml:space="preserve">
+          <source>Audio recording mode</source>
+          <target state="new">Audio recording mode</target>
+        </trans-unit>
+        <trans-unit id="BitrateDescription" translate="yes" xml:space="preserve">
+          <source>The amount of video data per unit of time (high bitrates may cause recorded videos size to be very large)</source>
+          <target state="new">The amount of video data per unit of time (high bitrates may cause recorded videos size to be very large)</target>
+        </trans-unit>
+        <trans-unit id="GalleryViewDescription" translate="yes" xml:space="preserve">
+          <source>Show your recorded videos</source>
+          <target state="new">Show your recorded videos</target>
+        </trans-unit>
+        <trans-unit id="General" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <target state="new">General</target>
+        </trans-unit>
+        <trans-unit id="Height" translate="yes" xml:space="preserve">
+          <source>Height</source>
+          <target state="new">Height</target>
+        </trans-unit>
+        <trans-unit id="OverlayModeDescription" translate="yes" xml:space="preserve">
+          <source>Open by default the app on a small window displayed on top of other windows</source>
+          <target state="new">Open by default the app on a small window displayed on top of other windows</target>
+        </trans-unit>
+        <trans-unit id="Record" translate="yes" xml:space="preserve">
+          <source>Record</source>
+          <target state="new">Record</target>
+        </trans-unit>
+        <trans-unit id="Stop" translate="yes" xml:space="preserve">
+          <source>Stop</source>
+          <target state="new">Stop</target>
+        </trans-unit>
+        <trans-unit id="SystemPlayerOptionDescription" translate="yes" xml:space="preserve">
+          <source>Open recorded videos in the system default video player</source>
+          <target state="new">Open recorded videos in the system default video player</target>
+        </trans-unit>
+        <trans-unit id="Width" translate="yes" xml:space="preserve">
+          <source>Width</source>
+          <target state="new">Width</target>
+        </trans-unit>
+        <trans-unit id="Blank" translate="yes" xml:space="preserve">
+          <source>This place seems blank...</source>
+          <target state="new">This place seems blank...</target>
+        </trans-unit>
+        <trans-unit id="GalleryFill" translate="yes" xml:space="preserve">
+          <source>Record something to fill this place</source>
+          <target state="new">Record something to fill this place</target>
+        </trans-unit>
+        <trans-unit id="MicNoPermission" translate="yes" xml:space="preserve">
+          <source>Microphone permission has been denied</source>
+          <target state="new">Microphone permission has been denied</target>
         </trans-unit>
       </group>
     </body>

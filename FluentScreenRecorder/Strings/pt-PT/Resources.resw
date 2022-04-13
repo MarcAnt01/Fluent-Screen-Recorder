@@ -30,9 +30,6 @@
   <data name="Discord" xml:space="preserve">
     <value>Junte-se ao nosso servidor Discord</value>
   </data>
-  <data name="ExternalAudio" xml:space="preserve">
-    <value>Gravação do Microfone</value>
-  </data>
   <data name="Failure" xml:space="preserve">
     <value>Fracasso</value>
   </data>
@@ -45,14 +42,8 @@
   <data name="GitHub" xml:space="preserve">
     <value>Ver repositório GitHub</value>
   </data>
-  <data name="InternalAudio" xml:space="preserve">
-    <value>Gravação de Áudio</value>
-  </data>
   <data name="Ok" xml:space="preserve">
     <value>OK</value>
-  </data>
-  <data name="Options" xml:space="preserve">
-    <value>Você pode escolher entre as seguintes opções</value>
   </data>
   <data name="Privacy" xml:space="preserve">
     <value>Política de privacidade</value>
@@ -68,9 +59,6 @@
   </data>
   <data name="SaveAs" xml:space="preserve">
     <value>Guardar como</value>
-  </data>
-  <data name="SaveConfirm" xml:space="preserve">
-    <value>Você pretende guardar o seu ficheiro?</value>
   </data>
   <data name="Share" xml:space="preserve">
     <value>Partilhar</value>
@@ -113,9 +101,6 @@
   </data>
   <data name="Info" xml:space="preserve">
     <value>Informação do ficheiro</value>
-  </data>
-  <data name="RecordingStart" xml:space="preserve">
-    <value>Iniciar Gravação</value>
   </data>
   <data name="RecordingStop" xml:space="preserve">
     <value>Parar Gravação</value>

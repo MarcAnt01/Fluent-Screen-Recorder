@@ -30,9 +30,6 @@
   <data name="Discord" xml:space="preserve">
     <value>Discord sunucumuza katıl</value>
   </data>
-  <data name="ExternalAudio" xml:space="preserve">
-    <value>Mikrofon kaydı</value>
-  </data>
   <data name="Failure" xml:space="preserve">
     <value>Arıza</value>
   </data>
@@ -45,14 +42,8 @@
   <data name="GitHub" xml:space="preserve">
     <value>GitHub deposunu görüntüle</value>
   </data>
-  <data name="InternalAudio" xml:space="preserve">
-    <value>Ses Kaydı</value>
-  </data>
   <data name="Ok" xml:space="preserve">
     <value>Tamam</value>
-  </data>
-  <data name="Options" xml:space="preserve">
-    <value>Aşağıdaki seçenekler arasından seçim yapabilirsiniz</value>
   </data>
   <data name="Privacy" xml:space="preserve">
     <value>Gizlilik Politikası</value>
@@ -68,9 +59,6 @@
   </data>
   <data name="SaveAs" xml:space="preserve">
     <value>Farklı kaydet</value>
-  </data>
-  <data name="SaveConfirm" xml:space="preserve">
-    <value>Dosyanızı kaydetmek istiyor musunuz?</value>
   </data>
   <data name="Share" xml:space="preserve">
     <value>Paylaş</value>
@@ -113,9 +101,6 @@
   </data>
   <data name="Info" xml:space="preserve">
     <value>Dosya bilgisi</value>
-  </data>
-  <data name="RecordingStart" xml:space="preserve">
-    <value>Kaydı Başlat</value>
   </data>
   <data name="RecordingStop" xml:space="preserve">
     <value>Kaydi Durdur</value>

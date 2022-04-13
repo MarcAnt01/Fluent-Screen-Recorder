@@ -39,9 +39,6 @@
   <data name="ExitOverlay" xml:space="preserve">
     <value>Torna alla finestra normale</value>
   </data>
-  <data name="ExternalAudio" xml:space="preserve">
-    <value>Registrazione microfono</value>
-  </data>
   <data name="Failure" xml:space="preserve">
     <value>Errore</value>
   </data>
@@ -60,9 +57,6 @@
   <data name="Info" xml:space="preserve">
     <value>Info sul file</value>
   </data>
-  <data name="InternalAudio" xml:space="preserve">
-    <value>Registrazione audio</value>
-  </data>
   <data name="MicSettings" xml:space="preserve">
     <value>System microphone settings</value>
   </data>
@@ -72,9 +66,6 @@
   <data name="OpenFolder" xml:space="preserve">
     <value>Apri la cartella dove è stata salvata la registrazione</value>
   </data>
-  <data name="Options" xml:space="preserve">
-    <value>Puoi scegliere tra le seguenti opzioni</value>
-  </data>
   <data name="OverlayMode" xml:space="preserve">
     <value>Apri la modalità overlay di default</value>
   </data>
@@ -83,9 +74,6 @@
   </data>
   <data name="Recording" xml:space="preserve">
     <value>Registrando</value>
-  </data>
-  <data name="RecordingStart" xml:space="preserve">
-    <value>Inizia la registrazione</value>
   </data>
   <data name="RecordingStop" xml:space="preserve">
     <value>Interrompi la registrazione</value>
@@ -98,9 +86,6 @@
   </data>
   <data name="SaveAs" xml:space="preserve">
     <value>Salva come</value>
-  </data>
-  <data name="SaveConfirm" xml:space="preserve">
-    <value>Vuoi salvare la registrazione?</value>
   </data>
   <data name="Saving" xml:space="preserve">
     <value>Salvando...</value>

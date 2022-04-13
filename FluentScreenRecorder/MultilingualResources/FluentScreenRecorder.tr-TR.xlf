@@ -30,10 +30,6 @@
           <source>Join our Discord server</source>
           <target state="translated">Discord sunucumuza katıl</target>
         </trans-unit>
-        <trans-unit id="ExternalAudio" translate="yes" xml:space="preserve">
-          <source>Microphone recording</source>
-          <target state="translated">Mikrofon kaydı</target>
-        </trans-unit>
         <trans-unit id="Failure" translate="yes" xml:space="preserve">
           <source>Failure</source>
           <target state="translated">Arıza</target>
@@ -50,17 +46,9 @@
           <source>View GitHub repository</source>
           <target state="translated">GitHub deposunu görüntüle</target>
         </trans-unit>
-        <trans-unit id="InternalAudio" translate="yes" xml:space="preserve">
-          <source>Audio Recording</source>
-          <target state="translated">Ses Kaydı</target>
-        </trans-unit>
         <trans-unit id="Ok" translate="yes" xml:space="preserve">
           <source>Ok</source>
           <target state="translated">Tamam</target>
-        </trans-unit>
-        <trans-unit id="Options" translate="yes" xml:space="preserve">
-          <source>You can choose among the following options</source>
-          <target state="translated">Aşağıdaki seçenekler arasından seçim yapabilirsiniz</target>
         </trans-unit>
         <trans-unit id="Privacy" translate="yes" xml:space="preserve">
           <source>Privacy policy</source>
@@ -81,10 +69,6 @@
         <trans-unit id="SaveAs" translate="yes" xml:space="preserve">
           <source>Save as</source>
           <target state="translated">Farklı kaydet</target>
-        </trans-unit>
-        <trans-unit id="SaveConfirm" translate="yes" xml:space="preserve">
-          <source>Do you want to save your file?</source>
-          <target state="translated">Dosyanızı kaydetmek istiyor musunuz?</target>
         </trans-unit>
         <trans-unit id="Share" translate="yes" xml:space="preserve">
           <source>Share</source>
@@ -143,10 +127,6 @@
           <source>File info</source>
           <target state="translated">Dosya bilgisi</target>
         </trans-unit>
-        <trans-unit id="RecordingStart" translate="yes" xml:space="preserve">
-          <source>Start Recording</source>
-          <target state="translated">Kaydı Başlat</target>
-        </trans-unit>
         <trans-unit id="RecordingStop" translate="yes" xml:space="preserve">
           <source>Stop Recording</source>
           <target state="translated">Kaydi Durdur</target>
@@ -162,6 +142,74 @@
         <trans-unit id="Donate" translate="yes" xml:space="preserve">
           <source>Donate</source>
           <target state="translated">Bağış</target>
+        </trans-unit>
+        <trans-unit id="ThirdPartyLicenses" translate="yes" xml:space="preserve">
+          <source>Third party licenses</source>
+          <target state="new">Third party licenses</target>
+        </trans-unit>
+        <trans-unit id="Advanced" translate="yes" xml:space="preserve">
+          <source>Advanced</source>
+          <target state="new">Advanced</target>
+        </trans-unit>
+        <trans-unit id="AudioRecordingExternal" translate="yes" xml:space="preserve">
+          <source>External (Microphone)</source>
+          <target state="new">External (Microphone)</target>
+        </trans-unit>
+        <trans-unit id="AudioRecordingInternal" translate="yes" xml:space="preserve">
+          <source>Internal (Speaker)</source>
+          <target state="new">Internal (Speaker)</target>
+        </trans-unit>
+        <trans-unit id="AudioRecordingMode" translate="yes" xml:space="preserve">
+          <source>Audio recording mode</source>
+          <target state="new">Audio recording mode</target>
+        </trans-unit>
+        <trans-unit id="BitrateDescription" translate="yes" xml:space="preserve">
+          <source>The amount of video data per unit of time (high bitrates may cause recorded videos size to be very large)</source>
+          <target state="new">The amount of video data per unit of time (high bitrates may cause recorded videos size to be very large)</target>
+        </trans-unit>
+        <trans-unit id="GalleryViewDescription" translate="yes" xml:space="preserve">
+          <source>Show your recorded videos</source>
+          <target state="new">Show your recorded videos</target>
+        </trans-unit>
+        <trans-unit id="General" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <target state="new">General</target>
+        </trans-unit>
+        <trans-unit id="Height" translate="yes" xml:space="preserve">
+          <source>Height</source>
+          <target state="new">Height</target>
+        </trans-unit>
+        <trans-unit id="OverlayModeDescription" translate="yes" xml:space="preserve">
+          <source>Open by default the app on a small window displayed on top of other windows</source>
+          <target state="new">Open by default the app on a small window displayed on top of other windows</target>
+        </trans-unit>
+        <trans-unit id="Record" translate="yes" xml:space="preserve">
+          <source>Record</source>
+          <target state="new">Record</target>
+        </trans-unit>
+        <trans-unit id="Stop" translate="yes" xml:space="preserve">
+          <source>Stop</source>
+          <target state="new">Stop</target>
+        </trans-unit>
+        <trans-unit id="SystemPlayerOptionDescription" translate="yes" xml:space="preserve">
+          <source>Open recorded videos in the system default video player</source>
+          <target state="new">Open recorded videos in the system default video player</target>
+        </trans-unit>
+        <trans-unit id="Width" translate="yes" xml:space="preserve">
+          <source>Width</source>
+          <target state="new">Width</target>
+        </trans-unit>
+        <trans-unit id="Blank" translate="yes" xml:space="preserve">
+          <source>This place seems blank...</source>
+          <target state="new">This place seems blank...</target>
+        </trans-unit>
+        <trans-unit id="GalleryFill" translate="yes" xml:space="preserve">
+          <source>Record something to fill this place</source>
+          <target state="new">Record something to fill this place</target>
+        </trans-unit>
+        <trans-unit id="MicNoPermission" translate="yes" xml:space="preserve">
+          <source>Microphone permission has been denied</source>
+          <target state="new">Microphone permission has been denied</target>
         </trans-unit>
       </group>
     </body>
