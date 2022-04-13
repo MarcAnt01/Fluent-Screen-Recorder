@@ -8,8 +8,7 @@
     xmlns:strings="using:FluentScreenRecorder.Strings"
     mc:Ignorable="d"
     Title="{x:Bind strings:Resources.Info}" 
-    CloseButtonText="{x:Bind strings:Resources.Ok}"
-    Style="{StaticResource DefaultContentDialogStyle}">
+    CloseButtonText="{x:Bind strings:Resources.Ok}">
 
     <StackPanel>
         <TextBlock x:Name="Frameblock"/>

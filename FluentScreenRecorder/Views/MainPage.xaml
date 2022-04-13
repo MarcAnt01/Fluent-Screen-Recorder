@@ -72,7 +72,7 @@
 
         <RelativePanel VerticalAlignment="Center" Grid.Row="1" Padding="12,0">
             <StackPanel Orientation="Horizontal" Spacing="12">
-                <ToggleButton Height="40" BorderThickness="0" Background="Transparent" x:Name="RecordButton" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked">
+                <ToggleButton Height="40" BorderThickness="0" Background="Transparent" x:Name="RecordButton" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked" AutomationProperties.Name="{x:Bind strings:Resources.Record}">
                     <StackPanel Orientation="Horizontal" Spacing="12">
                         <FontIcon Glyph="&#xE7C8;" x:Name="StopRecIcon" />
                         <TextBlock Text="{x:Bind strings:Resources.Record}" x:Name="RecordName" />
@@ -100,7 +100,7 @@
                 </StackPanel>
             </StackPanel>
 
-            <Button Background="Transparent" x:Name="SettingsButton" Click="SettingsButton_Click" BorderThickness="0" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True">
+            <Button Background="Transparent" x:Name="SettingsButton" Click="SettingsButton_Click" BorderThickness="0" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" AutomationProperties.Name="{x:Bind strings:Resources.Settings}" ToolTipService.ToolTip="{x:Bind strings:Resources.Settings}">
                 <muxc:AnimatedIcon Height="20">
                     <muxc:AnimatedIcon.Source>
                         <animatedvisuals:AnimatedSettingsVisualSource />
