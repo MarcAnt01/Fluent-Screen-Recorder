@@ -643,6 +643,7 @@ namespace FluentScreenRecorder
             {
                 RecordingMiniOptions.Visibility = Visibility.Collapsed;
                 RecordName.Text = Strings.Resources.Stop;
+                RecordButton.SetValue(AutomationProperties.NameProperty, Strings.Resources.Stop);
                 StopRecIcon.Glyph = "\uE15B";
                 RecordingContainer.Visibility = Visibility.Visible;
                 MainContent.Visibility = Visibility.Collapsed;
@@ -651,6 +652,7 @@ namespace FluentScreenRecorder
             {
                 RecordingMiniOptions.Visibility = Visibility.Visible;
                 RecordName.Text = Strings.Resources.Record;
+                RecordButton.SetValue(AutomationProperties.NameProperty, Strings.Resources.Record);
                 StopRecIcon.Glyph = "\uE7C8";
                 ProcessingNotification.Visibility = Visibility.Collapsed;
                 RecordingNotification.Visibility = Visibility.Visible;

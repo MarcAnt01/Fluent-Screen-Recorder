@@ -110,7 +110,7 @@
 
                     <settings:Setting Description="{x:Bind strings:Resources.GalleryViewDescription}" Header="{x:Bind strings:Resources.GalleryView}">
                         <settings:Setting.ActionContent>
-                            <ToggleSwitch Margin="0,0,-70,0" IsOn="{x:Bind local1:App.Settings.Gallery, Mode=TwoWay}" />
+                            <ToggleSwitch Margin="0,0,-72,0" IsOn="{x:Bind local1:App.Settings.Gallery, Mode=TwoWay}" />
                         </settings:Setting.ActionContent>
                     </settings:Setting>
 
@@ -152,7 +152,8 @@
                     <Button HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Stretch"
                             Padding="16"
-                            Click="SystemMic_Click">
+                            Click="SystemMic_Click"
+                            AutomationProperties.Name="{x:Bind strings:Resources.MicSettings}">
                         <RelativePanel>
                             <TextBlock Text="{x:Bind strings:Resources.MicSettings}" />
 
