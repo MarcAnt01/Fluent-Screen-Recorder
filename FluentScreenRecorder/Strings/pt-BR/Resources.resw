@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>Sobre o aplicativo</value>
+  </data>
+  <data name="Bitrate" xml:space="preserve">
+    <value>Taxa de bits</value>
+  </data>
+  <data name="BugReport" xml:space="preserve">
+    <value>Reportar um problema</value>
+  </data>
+  <data name="Copyright" xml:space="preserve">
+    <value>Direito Autoral</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Excluir</value>
+  </data>
+  <data name="Discord" xml:space="preserve">
+    <value>Junte-se ao nosso servidor Discord</value>
+  </data>
+  <data name="ExternalAudio" xml:space="preserve">
+    <value>Gravação do Microfone</value>
+  </data>
+  <data name="Failure" xml:space="preserve">
+    <value>Falhou</value>
+  </data>
+  <data name="Framerate" xml:space="preserve">
+    <value>Taxa de Quadros</value>
+  </data>
+  <data name="GalleryView" xml:space="preserve">
+    <value>Visualização da Galeria</value>
+  </data>
+  <data name="GitHub" xml:space="preserve">
+    <value>Ver repositório GitHub</value>
+  </data>
+  <data name="InternalAudio" xml:space="preserve">
+    <value>Gravação de Áudio</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Você pode escolher entre as seguintes opções</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Política de privacidade</value>
+  </data>
+  <data name="Recording" xml:space="preserve">
+    <value>Gravando</value>
+  </data>
+  <data name="Resolution" xml:space="preserve">
+    <value>Resolução</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salvar</value>
+  </data>
+  <data name="SaveAs" xml:space="preserve">
+    <value>Salvar como</value>
+  </data>
+  <data name="SaveConfirm" xml:space="preserve">
+    <value>Você pretende salvar o seu arquivo?</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Compartilhar</value>
+  </data>
+  <data name="SourceSizeToggle" xml:space="preserve">
+    <value>Utilizar o tamanho da fonte como resolução de vídeo</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Versão</value>
+  </data>
+  <data name="VideoPreview" xml:space="preserve">
+    <value>Pré-visualização do Vídeo</value>
+  </data>
+  <data name="Whatsnew" xml:space="preserve">
+    <value>O que há de novo?</value>
+  </data>
+  <data name="OpenFolder" xml:space="preserve">
+    <value>Abra a pasta onde o vídeo foi salvo</value>
+  </data>
+  <data name="SystemVideoPlayerOption" xml:space="preserve">
+    <value>Use o player do sistema para abrir vídeos</value>
+  </data>
+  <data name="OverlayMode" xml:space="preserve">
+    <value>Abrir modo sobreposição como predefinição</value>
+  </data>
+  <data name="ExitOverlay" xml:space="preserve">
+    <value>Voltar para visualização completa</value>
+  </data>
+  <data name="GoToOverlay" xml:space="preserve">
+    <value>Mudar para sempre no topo</value>
+  </data>
+  <data name="MicSettings" xml:space="preserve">
+    <value>Configurações do microfone do sistema</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Configurações</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Voltar</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Informação do arquivo</value>
+  </data>
+  <data name="RecordingStart" xml:space="preserve">
+    <value>Iniciar Gravação</value>
+  </data>
+  <data name="RecordingStop" xml:space="preserve">
+    <value>Parar Gravação</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>Salvando...</value>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>Volume</value>
+  </data>
+  <data name="Donate" xml:space="preserve">
+    <value>Doar</value>
+  </data>
+</root>
