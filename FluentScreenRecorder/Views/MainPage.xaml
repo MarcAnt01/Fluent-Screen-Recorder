@@ -79,6 +79,7 @@
         <RelativePanel
             Grid.Row="1"
             Padding="12,0"
+            HorizontalAlignment="Stretch"
             VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal" Spacing="12">
                 <ToggleButton
@@ -134,6 +135,58 @@
                     </ComboBox>
                 </StackPanel>
             </StackPanel>
+
+            <Grid
+                x:Name="RecordingContainer"
+                RelativePanel.AlignHorizontalCenterWithPanel="True"
+                RelativePanel.AlignVerticalCenterWithPanel="True"
+                RelativePanel.AlignLeftWithPanel="True"
+                RelativePanel.AlignRightWithPanel="True"
+                Visibility="Collapsed">
+                <StackPanel
+                    x:Name="RecordingNotification"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal"
+                    Spacing="12">
+                    <FontIcon
+                        x:Name="Ellipse"
+                        FontSize="16"
+                        Glyph="&#xE7C8;" />
+
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        FontWeight="SemiBold"
+                        Style="{StaticResource SubheaderTextBlockStyle}"
+                        Text="Recording..." />
+                </StackPanel>
+
+                <RelativePanel
+                    x:Name="ProcessingNotification"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Visibility="Collapsed">
+                    <TextBlock
+                        x:Name="SaveTextBlock"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        FontWeight="SemiBold"
+                        RelativePanel.AlignHorizontalCenterWithPanel="True"
+                        Style="{StaticResource SubheaderTextBlockStyle}"
+                        Text="Saving..." />
+
+                    <muxc:ProgressBar
+                        x:Name="MergingProgressRing"
+                        Margin="0,12,0,0"
+                        RelativePanel.Below="SaveTextBlock"
+                        RelativePanel.AlignLeftWithPanel="True"
+                        RelativePanel.AlignRightWithPanel="True" />
+                </RelativePanel>
+            </Grid>
+
 
             <Button
                 x:Name="SettingsButton"
@@ -212,48 +265,6 @@
                     </DataTemplate>
                 </GridView.ItemTemplate>
             </GridView>
-        </Grid>
-
-        <Grid
-            x:Name="RecordingContainer"
-            Grid.Row="2"
-            Background="{StaticResource LayerFillColorDefaultBrush}"
-            Visibility="Collapsed">
-            <StackPanel
-                x:Name="RecordingNotification"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Orientation="Horizontal"
-                Spacing="20">
-                <FontIcon
-                    x:Name="Ellipse"
-                    FontSize="20"
-                    Glyph="&#xE7C8;" />
-
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontWeight="SemiBold"
-                    Style="{StaticResource SubheaderTextBlockStyle}"
-                    Text="Recording..." />
-            </StackPanel>
-
-            <StackPanel
-                x:Name="ProcessingNotification"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Orientation="Vertical"
-                Spacing="12"
-                Visibility="Collapsed">
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontWeight="SemiBold"
-                    Style="{StaticResource SubheaderTextBlockStyle}"
-                    Text="Saving..." />
-
-                <muxc:ProgressBar x:Name="MergingProgressRing" Width="300" />
-            </StackPanel>
         </Grid>
 
         <Frame x:Name="PreviewFrame" Grid.Row="2" />

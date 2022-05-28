@@ -84,7 +84,7 @@ namespace FluentScreenRecorder.Views
         private async void Cancel_Click(object sender, RoutedEventArgs e)
         {
             await MainPage.Delete(_tempFile);
-            Frame.Navigate(typeof(MainPage));
+            Frame.Visibility = Visibility.Collapsed;
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)

@@ -79,7 +79,7 @@ namespace FluentScreenRecorder
             SilentPlayer = new MediaPlayer() { IsLoopingEnabled = true };
             SilentPlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/Silence.ogg"));
             SilentPlayer.Play();
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(400, 260));
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(400, 86));
 
             //hide titlebar
             SetupTitleBar();
@@ -655,12 +655,14 @@ namespace FluentScreenRecorder
         {
             if (isRecording)
             {
+                ApplicationView.GetForCurrentView().TryResizeView(new(Window.Current.Bounds.Width, 86));
                 RecordingMiniOptions.Visibility = Visibility.Collapsed;
                 RecordName.Text = Strings.Resources.Stop;
                 RecordButton.SetValue(AutomationProperties.NameProperty, Strings.Resources.Stop);
                 StopRecIcon.Glyph = "\uE15B";
                 RecordingContainer.Visibility = Visibility.Visible;
                 MainContent.Visibility = Visibility.Collapsed;
+                SettingsButton.Visibility = Visibility.Collapsed;
                 lockAdaptiveUI = true;
             } else
             {
@@ -672,6 +674,7 @@ namespace FluentScreenRecorder
                 RecordingNotification.Visibility = Visibility.Visible;
                 RecordingContainer.Visibility = Visibility.Collapsed;
                 MainContent.Visibility = Visibility.Visible;
+                SettingsButton.Visibility = Visibility.Visible;
                 lockAdaptiveUI = false;
             }
         }
