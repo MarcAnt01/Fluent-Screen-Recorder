@@ -36,6 +36,8 @@ using Windows.Media.Capture;
 using Windows.Storage.Streams;
 using Windows.ApplicationModel.DataTransfer;
 using FluentScreenRecorder.Models;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace FluentScreenRecorder
 {
@@ -63,9 +65,15 @@ namespace FluentScreenRecorder
 
         public bool filesInFolder;
 
+        private ObservableCollection<ThumbItem> thumbnailsList = new();
+
+        public static MainPage Current;
+
         public MainPage()
         {
             InitializeComponent();
+            Current = this;
+
             Loaded += LoadedHandler;
 
             SilentPlayer = new MediaPlayer() { IsLoopingEnabled = true };
@@ -171,14 +179,14 @@ namespace FluentScreenRecorder
 
         }
 
-        private async Task LoadThumbanails()
+        public async Task LoadThumbanails()
         {
+            thumbnailsList.Clear();
             if (await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder") is StorageFolder videoFolder)
             {
                 IReadOnlyList<StorageFile> storageItems = await videoFolder.GetFilesAsync();
                 if (storageItems.Count > 0)
                 {
-                    List<ThumbItem> thumbnailsList = new();
                     foreach (StorageFile file in storageItems)
                     {
                         StorageItemThumbnail thumbnail = await file.GetThumbnailAsync(ThumbnailMode.SingleItem);
@@ -186,8 +194,7 @@ namespace FluentScreenRecorder
                         bitmap.SetSource(thumbnail);
                         thumbnailsList.Add(new() { img = bitmap, fileN = file.Name });
                     }
-                    thumbnailsList.Reverse();
-                    BasicGridView.ItemsSource = thumbnailsList;
+                    BasicGridView.ItemsSource = thumbnailsList.Reverse();
                     filesInFolder = true;
                     NoVideosContainer.Visibility = Visibility.Collapsed;
                     BasicGridView.Visibility = Visibility.Visible;
@@ -380,7 +387,9 @@ namespace FluentScreenRecorder
                         _tempFile = newFile;
 
                         NotifyRecordingStatusChanges(false);
-                        Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
+
+                        PreviewFrame.Visibility = Visibility.Visible;
+                        PreviewFrame.Navigate(typeof(VideoPreviewPage), _tempFile);
 
                         var videofolder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
@@ -393,7 +402,9 @@ namespace FluentScreenRecorder
             else
             {
                 NotifyRecordingStatusChanges(false);
-                Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
+
+                PreviewFrame.Visibility = Visibility.Visible;
+                PreviewFrame.Navigate(typeof(VideoPreviewPage), _tempFile);
             }
         }
 
@@ -499,7 +510,8 @@ namespace FluentScreenRecorder
                         RecordButton.IsEnabled = true;
                         NotifyRecordingStatusChanges(false);
 
-                        Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
+                        PreviewFrame.Visibility = Visibility.Visible;
+                        PreviewFrame.Navigate(typeof(VideoPreviewPage), _tempFile);
                         var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
                         await videoFile.DeleteAsync();
@@ -511,7 +523,9 @@ namespace FluentScreenRecorder
             else
             {
                 NotifyRecordingStatusChanges(true);
-                Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
+
+                PreviewFrame.Visibility = Visibility.Visible;
+                PreviewFrame.Navigate(typeof(VideoPreviewPage), _tempFile);
             }
         }
 
