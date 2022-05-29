@@ -22,7 +22,7 @@
     <value>Reportar um problema</value>
   </data>
   <data name="Copyright" xml:space="preserve">
-    <value>Direito Autoral</value>
+    <value>Linceça do Autor</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Excluir</value>
@@ -31,7 +31,7 @@
     <value>Junte-se ao nosso servidor Discord</value>
   </data>
   <data name="ExternalAudio" xml:space="preserve">
-    <value>Gravação do Microfone</value>
+    <value>Gravar do Microfone</value>
   </data>
   <data name="Failure" xml:space="preserve">
     <value>Falhou</value>
@@ -46,7 +46,7 @@
     <value>Ver repositório GitHub</value>
   </data>
   <data name="InternalAudio" xml:space="preserve">
-    <value>Gravação de Áudio</value>
+    <value>Gravar Áudio do Sistema</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>OK</value>
@@ -88,13 +88,13 @@
     <value>O que há de novo?</value>
   </data>
   <data name="OpenFolder" xml:space="preserve">
-    <value>Abra a pasta onde o vídeo foi salvo</value>
+    <value>Abrir a pasta onde o vídeo foi salvo</value>
   </data>
   <data name="SystemVideoPlayerOption" xml:space="preserve">
     <value>Use o player do sistema para abrir vídeos</value>
   </data>
   <data name="OverlayMode" xml:space="preserve">
-    <value>Abrir modo sobreposição como predefinição</value>
+    <value>Abrir em modo sobreposição como padrão</value>
   </data>
   <data name="ExitOverlay" xml:space="preserve">
     <value>Voltar para visualização completa</value>
