@@ -20,7 +20,7 @@
         </trans-unit>
         <trans-unit id="Copyright" translate="yes" xml:space="preserve">
           <source>Copyright</source>
-          <target state="translated">Linceça do Autor</target>
+          <target state="translated">Licença do Autor</target>
         </trans-unit>
         <trans-unit id="Delete" translate="yes" xml:space="preserve">
           <source>Delete</source>
