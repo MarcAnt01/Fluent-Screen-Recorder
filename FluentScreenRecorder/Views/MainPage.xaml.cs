@@ -383,6 +383,8 @@ namespace FluentScreenRecorder
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                     {
                         MergingProgressRing.Value = 0;
+
+                        RecordButton.Visibility = Visibility.Visible;
                         ProcessingNotification.Visibility = Visibility.Collapsed;
                         _tempFile = newFile;
 
@@ -486,6 +488,7 @@ namespace FluentScreenRecorder
 
                 var newFile = await GetTempFileAsync();
 
+                RecordButton.Visibility = Visibility.Collapsed;
                 ProcessingNotification.Visibility = Visibility.Visible;
                 RecordingNotification.Visibility = Visibility.Collapsed;
                 RecordButton.IsEnabled = false;
@@ -670,6 +673,7 @@ namespace FluentScreenRecorder
                 RecordName.Text = Strings.Resources.Record;
                 RecordButton.SetValue(AutomationProperties.NameProperty, Strings.Resources.Record);
                 StopRecIcon.Glyph = "\uE7C8";
+                RecordButton.Visibility = Visibility.Visible;
                 ProcessingNotification.Visibility = Visibility.Collapsed;
                 RecordingNotification.Visibility = Visibility.Visible;
                 RecordingContainer.Visibility = Visibility.Collapsed;
