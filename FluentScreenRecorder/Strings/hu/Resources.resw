@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>Az alkalmazásról</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Vissza</value>
+  </data>
+  <data name="Bitrate" xml:space="preserve">
+    <value>Bitráta</value>
+  </data>
+  <data name="BugReport" xml:space="preserve">
+    <value>Hiba bejelentése</value>
+  </data>
+  <data name="Copyright" xml:space="preserve">
+    <value>Copyright</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Törlés</value>
+  </data>
+  <data name="Discord" xml:space="preserve">
+    <value>Csatlakozzon a Discord szerverünkhöz</value>
+  </data>
+  <data name="Donate" xml:space="preserve">
+    <value>Adomány</value>
+  </data>
+  <data name="ExitOverlay" xml:space="preserve">
+    <value>Vissza a teljes nézethez</value>
+  </data>
+  <data name="ExternalAudio" xml:space="preserve">
+    <value>Mikrofon felvétel</value>
+  </data>
+  <data name="Failure" xml:space="preserve">
+    <value>Hiba</value>
+  </data>
+  <data name="Framerate" xml:space="preserve">
+    <value>Képkocka szám</value>
+  </data>
+  <data name="GalleryView" xml:space="preserve">
+    <value>Galéria nézet</value>
+  </data>
+  <data name="GitHub" xml:space="preserve">
+    <value>GitHub repo megtekintés</value>
+  </data>
+  <data name="GoToOverlay" xml:space="preserve">
+    <value>Váltás - mindig felül</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Fájl infó</value>
+  </data>
+  <data name="InternalAudio" xml:space="preserve">
+    <value>Hang rögzítés</value>
+  </data>
+  <data name="MicSettings" xml:space="preserve">
+    <value>A rendszer mikrofon beállításai</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="OpenFolder" xml:space="preserve">
+    <value>Nyissa meg a videó mentési mappáját</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Az alábbi lehetőségek közül választhat</value>
+  </data>
+  <data name="OverlayMode" xml:space="preserve">
+    <value>Alapesetben megnyitás átfedés módban</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Adatvédelem</value>
+  </data>
+  <data name="Recording" xml:space="preserve">
+    <value>Felvétel</value>
+  </data>
+  <data name="RecordingStart" xml:space="preserve">
+    <value>Felvétel indítás</value>
+  </data>
+  <data name="RecordingStop" xml:space="preserve">
+    <value>Felvétel leállítás</value>
+  </data>
+  <data name="Resolution" xml:space="preserve">
+    <value>Felbontás</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Ment</value>
+  </data>
+  <data name="SaveAs" xml:space="preserve">
+    <value>Ment, mint</value>
+  </data>
+  <data name="SaveConfirm" xml:space="preserve">
+    <value>Szeretné menteni a fájlt?</value>
+  </data>
+  <data name="Saving" xml:space="preserve">
+    <value>Mentés...</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Beállítások</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Megoszt</value>
+  </data>
+  <data name="SourceSizeToggle" xml:space="preserve">
+    <value>Forrás méret</value>
+  </data>
+  <data name="SystemVideoPlayerOption" xml:space="preserve">
+    <value>Használja a rendszer lejátszóját a videók megnyitásához</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Verzió</value>
+  </data>
+  <data name="VideoPreview" xml:space="preserve">
+    <value>Videó előnézet</value>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>Hangerő</value>
+  </data>
+  <data name="Whatsnew" xml:space="preserve">
+    <value>Mi újság?</value>
+  </data>
+</root>

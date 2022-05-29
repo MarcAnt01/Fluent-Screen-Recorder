@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en-US" target-language="hu" original="FLUENTSCREENRECORDER/STRINGS/EN-US/RESOURCES.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.1.12.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="FLUENTSCREENRECORDER/STRINGS/EN-US/RESOURCES.RESW" datatype="resx">
+        <trans-unit id="About" translate="yes" xml:space="preserve">
+          <source>About the app</source>
+          <target state="translated">Az alkalmazásról</target>
+        </trans-unit>
+        <trans-unit id="Back" translate="yes" xml:space="preserve">
+          <source>Go back</source>
+          <target state="translated">Vissza</target>
+        </trans-unit>
+        <trans-unit id="Bitrate" translate="yes" xml:space="preserve">
+          <source>Bitrate</source>
+          <target state="translated">Bitráta</target>
+        </trans-unit>
+        <trans-unit id="BugReport" translate="yes" xml:space="preserve">
+          <source>Report a bug</source>
+          <target state="translated">Hiba bejelentése</target>
+        </trans-unit>
+        <trans-unit id="Copyright" translate="yes" xml:space="preserve">
+          <source>Copyright</source>
+          <target state="translated">Copyright</target>
+        </trans-unit>
+        <trans-unit id="Delete" translate="yes" xml:space="preserve">
+          <source>Delete</source>
+          <target state="translated">Törlés</target>
+        </trans-unit>
+        <trans-unit id="Discord" translate="yes" xml:space="preserve">
+          <source>Join our Discord server</source>
+          <target state="translated">Csatlakozzon a Discord szerverünkhöz</target>
+        </trans-unit>
+        <trans-unit id="Donate" translate="yes" xml:space="preserve">
+          <source>Donate</source>
+          <target state="translated">Adomány</target>
+        </trans-unit>
+        <trans-unit id="ExitOverlay" translate="yes" xml:space="preserve">
+          <source>Back to full view</source>
+          <target state="translated">Vissza a teljes nézethez</target>
+        </trans-unit>
+        <trans-unit id="ExternalAudio" translate="yes" xml:space="preserve">
+          <source>Microphone recording</source>
+          <target state="translated">Mikrofon felvétel</target>
+        </trans-unit>
+        <trans-unit id="Failure" translate="yes" xml:space="preserve">
+          <source>Failure</source>
+          <target state="translated">Hiba</target>
+        </trans-unit>
+        <trans-unit id="Framerate" translate="yes" xml:space="preserve">
+          <source>Framerate</source>
+          <target state="translated">Képkocka szám</target>
+        </trans-unit>
+        <trans-unit id="GalleryView" translate="yes" xml:space="preserve">
+          <source>Gallery View</source>
+          <target state="translated">Galéria nézet</target>
+        </trans-unit>
+        <trans-unit id="GitHub" translate="yes" xml:space="preserve">
+          <source>View GitHub repository</source>
+          <target state="translated">GitHub repo megtekintés</target>
+        </trans-unit>
+        <trans-unit id="GoToOverlay" translate="yes" xml:space="preserve">
+          <source>Switch to always on top</source>
+          <target state="translated">Váltás - mindig felül</target>
+        </trans-unit>
+        <trans-unit id="Info" translate="yes" xml:space="preserve">
+          <source>File info</source>
+          <target state="translated">Fájl infó</target>
+        </trans-unit>
+        <trans-unit id="InternalAudio" translate="yes" xml:space="preserve">
+          <source>Audio Recording</source>
+          <target state="translated">Hang rögzítés</target>
+        </trans-unit>
+        <trans-unit id="MicSettings" translate="yes" xml:space="preserve">
+          <source>System microphone settings</source>
+          <target state="translated">A rendszer mikrofon beállításai</target>
+        </trans-unit>
+        <trans-unit id="Ok" translate="yes" xml:space="preserve">
+          <source>Ok</source>
+          <target state="translated">Ok</target>
+        </trans-unit>
+        <trans-unit id="OpenFolder" translate="yes" xml:space="preserve">
+          <source>Open the folder where the video has been saved</source>
+          <target state="translated">Nyissa meg a videó mentési mappáját</target>
+        </trans-unit>
+        <trans-unit id="Options" translate="yes" xml:space="preserve">
+          <source>You can choose among the following options</source>
+          <target state="translated">Az alábbi lehetőségek közül választhat</target>
+        </trans-unit>
+        <trans-unit id="OverlayMode" translate="yes" xml:space="preserve">
+          <source>Open overlay mode by default</source>
+          <target state="translated">Alapesetben megnyitás átfedés módban</target>
+        </trans-unit>
+        <trans-unit id="Privacy" translate="yes" xml:space="preserve">
+          <source>Privacy policy</source>
+          <target state="translated">Adatvédelem</target>
+        </trans-unit>
+        <trans-unit id="Recording" translate="yes" xml:space="preserve">
+          <source>Recording</source>
+          <target state="translated">Felvétel</target>
+        </trans-unit>
+        <trans-unit id="RecordingStart" translate="yes" xml:space="preserve">
+          <source>Start Recording</source>
+          <target state="translated">Felvétel indítás</target>
+        </trans-unit>
+        <trans-unit id="RecordingStop" translate="yes" xml:space="preserve">
+          <source>Stop Recording</source>
+          <target state="translated">Felvétel leállítás</target>
+        </trans-unit>
+        <trans-unit id="Resolution" translate="yes" xml:space="preserve">
+          <source>Resolution</source>
+          <target state="translated">Felbontás</target>
+        </trans-unit>
+        <trans-unit id="Save" translate="yes" xml:space="preserve">
+          <source>Save</source>
+          <target state="translated">Ment</target>
+        </trans-unit>
+        <trans-unit id="SaveAs" translate="yes" xml:space="preserve">
+          <source>Save as</source>
+          <target state="translated">Ment, mint</target>
+        </trans-unit>
+        <trans-unit id="SaveConfirm" translate="yes" xml:space="preserve">
+          <source>Do you want to save your file?</source>
+          <target state="translated">Szeretné menteni a fájlt?</target>
+        </trans-unit>
+        <trans-unit id="Saving" translate="yes" xml:space="preserve">
+          <source>Saving...</source>
+          <target state="translated">Mentés...</target>
+        </trans-unit>
+        <trans-unit id="Settings" translate="yes" xml:space="preserve">
+          <source>Settings</source>
+          <target state="translated">Beállítások</target>
+        </trans-unit>
+        <trans-unit id="Share" translate="yes" xml:space="preserve">
+          <source>Share</source>
+          <target state="translated">Megoszt</target>
+        </trans-unit>
+        <trans-unit id="SourceSizeToggle" translate="yes" xml:space="preserve">
+          <source>Source size</source>
+          <target state="translated">Forrás méret</target>
+        </trans-unit>
+        <trans-unit id="SystemVideoPlayerOption" translate="yes" xml:space="preserve">
+          <source>Use system player to open videos</source>
+          <target state="translated">Használja a rendszer lejátszóját a videók megnyitásához</target>
+        </trans-unit>
+        <trans-unit id="Version" translate="yes" xml:space="preserve">
+          <source>Version</source>
+          <target state="translated">Verzió</target>
+        </trans-unit>
+        <trans-unit id="VideoPreview" translate="yes" xml:space="preserve">
+          <source>Video Preview</source>
+          <target state="translated">Videó előnézet</target>
+        </trans-unit>
+        <trans-unit id="Volume" translate="yes" xml:space="preserve">
+          <source>Volume</source>
+          <target state="translated">Hangerő</target>
+        </trans-unit>
+        <trans-unit id="Whatsnew" translate="yes" xml:space="preserve">
+          <source>What's new?</source>
+          <target state="translated">Mi újság?</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>
