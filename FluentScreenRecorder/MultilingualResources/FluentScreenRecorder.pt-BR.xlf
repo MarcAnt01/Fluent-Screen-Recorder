@@ -20,7 +20,7 @@
         </trans-unit>
         <trans-unit id="Copyright" translate="yes" xml:space="preserve">
           <source>Copyright</source>
-          <target state="translated">Direito Autoral</target>
+          <target state="translated">Linceça do Autor</target>
         </trans-unit>
         <trans-unit id="Delete" translate="yes" xml:space="preserve">
           <source>Delete</source>
@@ -32,7 +32,7 @@
         </trans-unit>
         <trans-unit id="ExternalAudio" translate="yes" xml:space="preserve">
           <source>Microphone recording</source>
-          <target state="translated">Gravação do Microfone</target>
+          <target state="translated">Gravar do Microfone</target>
         </trans-unit>
         <trans-unit id="Failure" translate="yes" xml:space="preserve">
           <source>Failure</source>
@@ -52,7 +52,7 @@
         </trans-unit>
         <trans-unit id="InternalAudio" translate="yes" xml:space="preserve">
           <source>Audio Recording</source>
-          <target state="translated">Gravação de Áudio</target>
+          <target state="translated">Gravar Áudio do Sistema</target>
         </trans-unit>
         <trans-unit id="Ok" translate="yes" xml:space="preserve">
           <source>Ok</source>
@@ -109,7 +109,7 @@
         </trans-unit>
         <trans-unit id="OpenFolder" translate="yes" xml:space="preserve">
           <source>Open the folder where the video has been saved</source>
-          <target state="translated">Abra a pasta onde o vídeo foi salvo</target>
+          <target state="translated">Abrir a pasta onde o vídeo foi salvo</target>
         </trans-unit>
         <trans-unit id="SystemVideoPlayerOption" translate="yes" xml:space="preserve">
           <source>Use system player to open videos</source>
@@ -117,7 +117,7 @@
         </trans-unit>
         <trans-unit id="OverlayMode" translate="yes" xml:space="preserve">
           <source>Open overlay mode by default</source>
-          <target state="translated">Abrir modo sobreposição como predefinição</target>
+          <target state="translated">Abrir em modo sobreposição como padrão</target>
         </trans-unit>
         <trans-unit id="ExitOverlay" translate="yes" xml:space="preserve">
           <source>Back to full view</source>
