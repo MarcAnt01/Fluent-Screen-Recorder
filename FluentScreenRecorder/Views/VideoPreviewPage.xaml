@@ -10,7 +10,7 @@
     Unloaded="Page_Unloaded"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid Background="{ThemeResource ExpanderHeaderBackground}">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="Auto" />
