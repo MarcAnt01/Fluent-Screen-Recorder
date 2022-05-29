@@ -20,6 +20,8 @@ namespace FluentScreenRecorder.Views
         {
             InitializeComponent();
 
+            MainPage.Current.SettingsButton.Visibility = Visibility.Collapsed;
+
             if (file != null)
             {
                 _tempFile = file;
@@ -35,6 +37,8 @@ namespace FluentScreenRecorder.Views
         public VideoPreviewPage()
         {
             InitializeComponent();
+
+            MainPage.Current.SettingsButton.Visibility = Visibility.Collapsed;
 
             ApplicationView.GetForCurrentView().TryResizeView(new(500, 500));
         }
@@ -67,6 +71,7 @@ namespace FluentScreenRecorder.Views
             await MainPage.Save(_tempFile);
             await MainPage.Current.LoadThumbanails();
             Frame.Visibility = Visibility.Collapsed;
+            MainPage.Current.SettingsButton.Visibility = Visibility.Visible;
         }
 
         private async void SaveAsButton_Click(object sender, RoutedEventArgs e)
@@ -74,6 +79,7 @@ namespace FluentScreenRecorder.Views
             await MainPage.SaveAs(_tempFile);
             await MainPage.Current.LoadThumbanails();
             Frame.Visibility = Visibility.Collapsed;
+            MainPage.Current.SettingsButton.Visibility = Visibility.Visible;
         }
 
         private void Share_Click(object sender, RoutedEventArgs e)
@@ -85,6 +91,7 @@ namespace FluentScreenRecorder.Views
         {
             await MainPage.Delete(_tempFile);
             Frame.Visibility = Visibility.Collapsed;
+            MainPage.Current.SettingsButton.Visibility = Visibility.Visible;
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -92,5 +99,4 @@ namespace FluentScreenRecorder.Views
             PreviewPlayer.Source = null;
         }
     }
-       
 }

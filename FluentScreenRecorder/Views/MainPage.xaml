@@ -139,9 +139,9 @@
             <Grid
                 x:Name="RecordingContainer"
                 RelativePanel.AlignHorizontalCenterWithPanel="True"
-                RelativePanel.AlignVerticalCenterWithPanel="True"
                 RelativePanel.AlignLeftWithPanel="True"
                 RelativePanel.AlignRightWithPanel="True"
+                RelativePanel.AlignVerticalCenterWithPanel="True"
                 Visibility="Collapsed">
                 <StackPanel
                     x:Name="RecordingNotification"
@@ -181,15 +181,15 @@
                     <muxc:ProgressBar
                         x:Name="MergingProgressRing"
                         Margin="0,12,0,0"
-                        RelativePanel.Below="SaveTextBlock"
                         RelativePanel.AlignLeftWithPanel="True"
-                        RelativePanel.AlignRightWithPanel="True" />
+                        RelativePanel.AlignRightWithPanel="True"
+                        RelativePanel.Below="SaveTextBlock" />
                 </RelativePanel>
             </Grid>
 
-
             <Button
                 x:Name="SettingsButton"
+                x:FieldModifier="public"
                 AutomationProperties.Name="{x:Bind strings:Resources.Settings}"
                 Background="Transparent"
                 BorderThickness="0"
