@@ -36,6 +36,8 @@ using Windows.Media.Capture;
 using Windows.Storage.Streams;
 using Windows.ApplicationModel.DataTransfer;
 using FluentScreenRecorder.Models;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace FluentScreenRecorder
 {
@@ -63,15 +65,21 @@ namespace FluentScreenRecorder
 
         public bool filesInFolder;
 
+        private ObservableCollection<ThumbItem> thumbnailsList = new();
+
+        public static MainPage Current;
+
         public MainPage()
         {
             InitializeComponent();
+            Current = this;
+
             Loaded += LoadedHandler;
 
             SilentPlayer = new MediaPlayer() { IsLoopingEnabled = true };
             SilentPlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/Silence.ogg"));
             SilentPlayer.Play();
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(400, 260));
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(400, 88));
 
             //hide titlebar
             SetupTitleBar();
@@ -171,14 +179,14 @@ namespace FluentScreenRecorder
 
         }
 
-        private async Task LoadThumbanails()
+        public async Task LoadThumbanails()
         {
+            thumbnailsList.Clear();
             if (await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder") is StorageFolder videoFolder)
             {
                 IReadOnlyList<StorageFile> storageItems = await videoFolder.GetFilesAsync();
                 if (storageItems.Count > 0)
                 {
-                    List<ThumbItem> thumbnailsList = new();
                     foreach (StorageFile file in storageItems)
                     {
                         StorageItemThumbnail thumbnail = await file.GetThumbnailAsync(ThumbnailMode.SingleItem);
@@ -186,8 +194,7 @@ namespace FluentScreenRecorder
                         bitmap.SetSource(thumbnail);
                         thumbnailsList.Add(new() { img = bitmap, fileN = file.Name });
                     }
-                    thumbnailsList.Reverse();
-                    BasicGridView.ItemsSource = thumbnailsList;
+                    BasicGridView.ItemsSource = thumbnailsList.Reverse();
                     filesInFolder = true;
                     NoVideosContainer.Visibility = Visibility.Collapsed;
                     BasicGridView.Visibility = Visibility.Visible;
@@ -376,11 +383,15 @@ namespace FluentScreenRecorder
                     await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                     {
                         MergingProgressRing.Value = 0;
+
+                        RecordButton.Visibility = Visibility.Visible;
                         ProcessingNotification.Visibility = Visibility.Collapsed;
                         _tempFile = newFile;
 
                         NotifyRecordingStatusChanges(false);
-                        Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
+
+                        PreviewFrame.Visibility = Visibility.Visible;
+                        PreviewFrame.Navigate(typeof(VideoPreviewPage), _tempFile);
 
                         var videofolder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
@@ -393,7 +404,9 @@ namespace FluentScreenRecorder
             else
             {
                 NotifyRecordingStatusChanges(false);
-                Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
+
+                PreviewFrame.Visibility = Visibility.Visible;
+                PreviewFrame.Navigate(typeof(VideoPreviewPage), _tempFile);
             }
         }
 
@@ -475,6 +488,7 @@ namespace FluentScreenRecorder
 
                 var newFile = await GetTempFileAsync();
 
+                RecordButton.Visibility = Visibility.Collapsed;
                 ProcessingNotification.Visibility = Visibility.Visible;
                 RecordingNotification.Visibility = Visibility.Collapsed;
                 RecordButton.IsEnabled = false;
@@ -499,7 +513,8 @@ namespace FluentScreenRecorder
                         RecordButton.IsEnabled = true;
                         NotifyRecordingStatusChanges(false);
 
-                        Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
+                        PreviewFrame.Visibility = Visibility.Visible;
+                        PreviewFrame.Navigate(typeof(VideoPreviewPage), _tempFile);
                         var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
                         await videoFile.DeleteAsync();
@@ -511,7 +526,9 @@ namespace FluentScreenRecorder
             else
             {
                 NotifyRecordingStatusChanges(true);
-                Frame.Navigate(typeof(VideoPreviewPage), _tempFile);
+
+                PreviewFrame.Visibility = Visibility.Visible;
+                PreviewFrame.Navigate(typeof(VideoPreviewPage), _tempFile);
             }
         }
 
@@ -641,12 +658,14 @@ namespace FluentScreenRecorder
         {
             if (isRecording)
             {
+                ApplicationView.GetForCurrentView().TryResizeView(new(Window.Current.Bounds.Width, 88));
                 RecordingMiniOptions.Visibility = Visibility.Collapsed;
                 RecordName.Text = Strings.Resources.Stop;
                 RecordButton.SetValue(AutomationProperties.NameProperty, Strings.Resources.Stop);
                 StopRecIcon.Glyph = "\uE15B";
                 RecordingContainer.Visibility = Visibility.Visible;
                 MainContent.Visibility = Visibility.Collapsed;
+                SettingsButton.Visibility = Visibility.Collapsed;
                 lockAdaptiveUI = true;
             } else
             {
@@ -654,10 +673,12 @@ namespace FluentScreenRecorder
                 RecordName.Text = Strings.Resources.Record;
                 RecordButton.SetValue(AutomationProperties.NameProperty, Strings.Resources.Record);
                 StopRecIcon.Glyph = "\uE7C8";
+                RecordButton.Visibility = Visibility.Visible;
                 ProcessingNotification.Visibility = Visibility.Collapsed;
                 RecordingNotification.Visibility = Visibility.Visible;
                 RecordingContainer.Visibility = Visibility.Collapsed;
                 MainContent.Visibility = Visibility.Visible;
+                SettingsButton.Visibility = Visibility.Visible;
                 lockAdaptiveUI = false;
             }
         }
