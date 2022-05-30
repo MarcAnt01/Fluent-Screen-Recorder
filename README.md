@@ -7,6 +7,11 @@ Record your screen or an app in a simple UWP app featuring Fluent Design
 
 <a href='https://www.microsoft.com/en-us/p/fluent-screen-recorder/9mwv79xlfqh7'><img src='https://developer.microsoft.com/en-us/store/badges/images/English_get-it-from-MS.png' alt='Store Link' height="50px"/></a> <a href='https://discord.gg/UZgbJP2'><img src='https://media.moddb.com/images/members/1/454/453186/profile/news-discord-join.jpg' alt='Discord Link' height="50px"/></a>
 
+### Awards
+This app has got two big awards in few years:
+- 2nd place in [UWP Community Launch 2021](https://uwpcommunity.com/launch/2021/)
+- 2nd place ex aequo as utility software in [Microsoft Store App Awards](https://blogs.windows.com/windowsdeveloper/2022/05/27/announcing-the-microsoft-store-app-awards-winners/)
+
 ### Features
 
 - Change resolution, framerate, bitrate
