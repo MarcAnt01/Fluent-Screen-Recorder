@@ -79,7 +79,7 @@ namespace FluentScreenRecorder
             SilentPlayer = new MediaPlayer() { IsLoopingEnabled = true };
             SilentPlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/Silence.ogg"));
             SilentPlayer.Play();
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(400, 86));
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(400, 88));
 
             //hide titlebar
             SetupTitleBar();
@@ -658,7 +658,7 @@ namespace FluentScreenRecorder
         {
             if (isRecording)
             {
-                ApplicationView.GetForCurrentView().TryResizeView(new(Window.Current.Bounds.Width, 86));
+                ApplicationView.GetForCurrentView().TryResizeView(new(Window.Current.Bounds.Width, 88));
                 RecordingMiniOptions.Visibility = Visibility.Collapsed;
                 RecordName.Text = Strings.Resources.Stop;
                 RecordButton.SetValue(AutomationProperties.NameProperty, Strings.Resources.Stop);
