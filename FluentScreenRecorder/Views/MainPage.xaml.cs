@@ -849,5 +849,14 @@ namespace FluentScreenRecorder
         {
             Frame.Navigate(typeof(SettingsPage));
         }
+
+        private async void BasicGridView_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+        {
+            if ((e.OriginalSource as FrameworkElement).DataContext is ThumbItem item)
+            {
+                recordedVideoFile = await (await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder")).GetFileAsync(item.fileN);
+                BasicGridFlyout.ShowAt(BasicGridView, e.GetPosition(BasicGridView));
+            }
+        }
     }
 }
