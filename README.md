@@ -23,7 +23,7 @@ This app has got two big awards in few years:
 
 ### Supported platforms
 
-The app supports Windows 10 1809+ and Windows 11. It is a uwp app that can run on Windows 10 for PCs and Surface Hub.
+The app supports Windows 10 1809+ and Windows 11. It is a UWP app that can run on Windows 10 for PCs and Surface Hub.
 
 ### Contributions
 
@@ -45,7 +45,7 @@ Also for requesting features the best way is opening a ticket in this repo, prov
 
 ### Translations
 
-You can translate Fluent Screen Recorder for you language or improve the current translations. Just follow the guide [here](https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/translations.md)
+You can translate Fluent Screen Recorder for your language or improve the current translations. Just follow the guide [here](https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/translations.md)
 
 ### Credits
 - [Robert Mikhayelyan](https://github.com/robmikh) for the core of the app and the encoder;
