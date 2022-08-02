@@ -124,6 +124,7 @@
     <Compile Include="AppCenterSecret.cs" />
     <Compile Include="Converters\SettingsConverters.cs" />
     <Compile Include="CustomMediaTransportControls.cs" />
+    <Compile Include="CustomMediaTransportControls2.cs" />
     <Compile Include="Dialogs\ChangelogDialog.xaml.cs">
       <DependentUpon>ChangelogDialog.xaml</DependentUpon>
     </Compile>
@@ -141,6 +142,9 @@
     </Compile>
     <Compile Include="Themes\generic.xaml.cs">
       <DependentUpon>generic.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Themes\generic2.xaml.cs">
+      <DependentUpon>generic2.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\RecorderViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
@@ -253,6 +257,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\generic2.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

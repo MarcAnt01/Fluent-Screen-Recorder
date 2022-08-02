@@ -66,15 +66,9 @@ namespace FluentScreenRecorder.Views
             base.OnNavigatedTo(e);            
         }
 
-        private async void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            await MainPage.Save(_tempFile);
-            await MainPage.Current.LoadThumbanails();
-            Frame.Visibility = Visibility.Collapsed;
-            MainPage.Current.SettingsButton.Visibility = Visibility.Visible;
-        }
 
-        private async void SaveAsButton_Click(object sender, RoutedEventArgs e)
+
+        private async void CustomMediaTransportControls_SaveAs(object sender, EventArgs e)
         {
             await MainPage.SaveAs(_tempFile);
             await MainPage.Current.LoadThumbanails();
@@ -87,16 +81,28 @@ namespace FluentScreenRecorder.Views
             DataTransferManager.ShowShareUI();
         }
 
-        private async void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            await MainPage.Delete(_tempFile);
-            Frame.Visibility = Visibility.Collapsed;
-            MainPage.Current.SettingsButton.Visibility = Visibility.Visible;
-        }
+        
+
+      
+
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             PreviewPlayer.Source = null;
+        }
+
+        private void CustomMediaTransportControls2_Deleted(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CustomMediaTransportControls2_SaveAs(object sender, EventArgs e)
+        {
+        }
+
+        private void CustomMediaTransportControls2_Shared(object sender, EventArgs e)
+        {
+
         }
     }
 }

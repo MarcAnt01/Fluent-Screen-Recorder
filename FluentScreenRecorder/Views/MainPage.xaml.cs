@@ -390,6 +390,7 @@ namespace FluentScreenRecorder
 
                         NotifyRecordingStatusChanges(false);
 
+                        await Save(_tempFile);
                         PreviewFrame.Visibility = Visibility.Visible;
                         PreviewFrame.Navigate(typeof(VideoPreviewPage), _tempFile);
 
@@ -404,7 +405,7 @@ namespace FluentScreenRecorder
             else
             {
                 NotifyRecordingStatusChanges(false);
-
+                await Save(_tempFile);
                 PreviewFrame.Visibility = Visibility.Visible;
                 PreviewFrame.Navigate(typeof(VideoPreviewPage), _tempFile);
             }
@@ -532,7 +533,7 @@ namespace FluentScreenRecorder
             }
         }
 
-        public static async Task<bool> Save(StorageFile file)
+        private async Task<bool> Save(StorageFile file)
         {
             try
             {
