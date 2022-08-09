@@ -36,22 +36,12 @@ namespace FluentScreenRecorder.Views
 
         public VideoPreviewPage()
         {
-            InitializeComponent();
+            InitializeComponent();            
 
             MainPage.Current.SettingsButton.Visibility = Visibility.Collapsed;
 
-            ApplicationView.GetForCurrentView().TryResizeView(new(500, 500));
-        }
-
-        private void DataRequested(DataTransferManager sender, DataRequestedEventArgs e)
-        {                       
-            if (_tempFile != null)
-            {
-                DataRequest request = e.Request;
-                request.Data.Properties.Title = _tempFile.Name;
-                request.Data.SetStorageItems(new StorageFile[] { _tempFile });
-            }
-        }
+            ApplicationView.GetForCurrentView().TryResizeView(new(500, 500));            
+        }        
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -65,8 +55,7 @@ namespace FluentScreenRecorder.Views
             }
             base.OnNavigatedTo(e);            
         }
-
-
+        
 
         private async void CustomMediaTransportControls_SaveAs(object sender, EventArgs e)
         {
@@ -76,33 +65,29 @@ namespace FluentScreenRecorder.Views
             MainPage.Current.SettingsButton.Visibility = Visibility.Visible;
         }
 
-        private void Share_Click(object sender, RoutedEventArgs e)
+        private void CustomMediaTransportControls_Share(object sender, EventArgs e)
         {
             DataTransferManager.ShowShareUI();
+            DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
+            dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(DataRequested);
         }
 
-        
-
-      
+        private void DataRequested(DataTransferManager sender, DataRequestedEventArgs e)
+        {
+            DataRequest request = e.Request;
+            request.Data.Properties.Title = _tempFile.Name;
+            request.Data.SetStorageItems(new StorageFile[] { _tempFile });
+        }
 
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             PreviewPlayer.Source = null;
-        }
+        }        
 
-        private void CustomMediaTransportControls2_Deleted(object sender, EventArgs e)
+        private async void CustomMediaTransportControls_Delete(object sender, EventArgs e)
         {
-
-        }
-
-        private void CustomMediaTransportControls2_SaveAs(object sender, EventArgs e)
-        {
-        }
-
-        private void CustomMediaTransportControls2_Shared(object sender, EventArgs e)
-        {
-
+            await MainPage.Delete(_tempFile);
         }
     }
 }

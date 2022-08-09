@@ -22,13 +22,13 @@
                 AreTransportControlsEnabled="True"
                 AutoPlay="True">                
                 <MediaPlayerElement.TransportControls>
-                    <local:CustomMediaTransportControls2
+                    <local:CustomMediaTransportControls
                         IsZoomButtonVisible="False"
                         IsFullWindowButtonVisible="False"
-                        Deleted_Preview="CustomMediaTransportControls2_Deleted"
-                        SaveAs_Preview="CustomMediaTransportControls2_SaveAs"
-                        Shared_Preview="CustomMediaTransportControls2_Shared"
-                        Style="{StaticResource CustomMediaTransportControlsStyle}"
+                        Deleted2="CustomMediaTransportControls_Delete"
+                        Shared2="CustomMediaTransportControls_Share"
+                        SaveAs="CustomMediaTransportControls_SaveAs"
+                        Style="{StaticResource CustomMediaTransportControlsStyle2}"
                         IsCompact="True"/>
                 </MediaPlayerElement.TransportControls>
             </MediaPlayerElement>
