@@ -99,7 +99,7 @@ namespace FluentScreenRecorder.Views
                await MainPage.Delete(_tempFile);
             else
                await MainPage.Delete(TempFile);
-            Frame.Visibility = Visibility.Collapsed;
+            MainPage.Current.PreviewFrame.Visibility = Visibility.Collapsed;
 
             PreviewPlayer.Source = null;
 
