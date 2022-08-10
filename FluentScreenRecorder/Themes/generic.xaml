@@ -271,7 +271,7 @@
                                   RenderTransformOrigin="0.5,0.5"
                                   BorderBrush="{ThemeResource MediaTransportControlsBorderBrush}"
                                   BorderThickness="{ThemeResource MediaTransportControlsBorderThickness}"                                  
-                                  contract7NotPresent:CornerRadius="{ThemeResource OverlayCornerRadius}">
+                                  contract7NotPresent:CornerRadius="8">
                                 <Grid.RenderTransform>
                                     <TranslateTransform x:Name="TranslateVertical" />
                                 </Grid.RenderTransform>
@@ -665,7 +665,7 @@
                                   RenderTransformOrigin="0.5,0.5"
                                   BorderBrush="{ThemeResource MediaTransportControlsBorderBrush}"
                                   BorderThickness="{ThemeResource MediaTransportControlsBorderThickness}"                                  
-                                  contract7NotPresent:CornerRadius="{ThemeResource OverlayCornerRadius}">
+                                  contract7NotPresent:CornerRadius="8">
                                 <Grid.RenderTransform>
                                     <TranslateTransform x:Name="TranslateVertical" />
                                 </Grid.RenderTransform>
