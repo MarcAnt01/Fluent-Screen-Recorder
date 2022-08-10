@@ -20,7 +20,8 @@
             <MediaPlayerElement
                 x:Name="PreviewPlayer"                
                 AreTransportControlsEnabled="True"
-                AutoPlay="True">                
+                AutoPlay="True"
+                x:FieldModifier="public">                
                 <MediaPlayerElement.TransportControls>
                     <local:CustomMediaTransportControls
                         IsZoomButtonVisible="False"

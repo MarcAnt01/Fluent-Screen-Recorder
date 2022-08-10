@@ -15,6 +15,7 @@ namespace FluentScreenRecorder.Views
     public sealed partial class VideoPreviewPage : Page
     {
         public static VideoPreviewPage Current;
+        public static MediaSource Source;
         
         private StorageFile _tempFile;
 
@@ -29,6 +30,7 @@ namespace FluentScreenRecorder.Views
                 _tempFile = file;
             }                
             PreviewPlayer.Source = MediaSource.CreateFromStorageFile(file);
+            Source = (MediaSource)PreviewPlayer.Source;
 
             ApplicationView.GetForCurrentView().TryResizeView(new(500, 500));
 
@@ -51,6 +53,7 @@ namespace FluentScreenRecorder.Views
             {
                 _tempFile = file;
                 PreviewPlayer.Source = MediaSource.CreateFromStorageFile(file);
+                Source = (MediaSource)PreviewPlayer.Source;
 
                 DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
                 dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(DataRequested);

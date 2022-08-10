@@ -102,9 +102,9 @@ namespace FluentScreenRecorder.Views
             {
                 Frame.GoBack();
                 
-                if (VideoPreviewPage.Current != null)
+                if (VideoPreviewPage.Current != null && VideoPreviewPage.Source != null)
                 {
-                    MainPage.Current.PreviewFrame.Content = VideoPreviewPage.Current;
+                    VideoPreviewPage.Current.PreviewPlayer.Source = VideoPreviewPage.Source;
                 }
             }
         }
