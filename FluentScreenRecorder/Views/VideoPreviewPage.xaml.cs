@@ -67,7 +67,10 @@ namespace FluentScreenRecorder.Views
 
         private async void CustomMediaTransportControls_SaveAs(object sender, EventArgs e)
         {
-            await MainPage.SaveAs(_tempFile);
+            if (_tempFile != null)
+               await MainPage.SaveAs(_tempFile);
+            else
+               await MainPage.SaveAs(TempFile);
         }
 
         private void CustomMediaTransportControls_Share(object sender, EventArgs e)
@@ -92,7 +95,10 @@ namespace FluentScreenRecorder.Views
 
         private async void CustomMediaTransportControls_Delete(object sender, EventArgs e)
         {
-            await MainPage.Delete(_tempFile);
+            if (_tempFile != null)
+               await MainPage.Delete(_tempFile);
+            else
+               await MainPage.Delete(TempFile);
             Frame.Visibility = Visibility.Collapsed;
 
             PreviewPlayer.Source = null;
@@ -100,6 +106,7 @@ namespace FluentScreenRecorder.Views
             // To avoid re-navigating from settings page back to the
             // video preview page when we already exited it.
             Current = null;
+            TempFile = null;
         }
     }
 }
