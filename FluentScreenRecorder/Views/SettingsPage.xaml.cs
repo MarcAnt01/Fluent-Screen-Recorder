@@ -99,7 +99,15 @@ namespace FluentScreenRecorder.Views
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
             if (Frame.CanGoBack)
+            {
                 Frame.GoBack();
+                
+                if (VideoPreviewPage.Current != null && VideoPreviewPage.Source != null)
+                {
+                    VideoPreviewPage.Current.PreviewPlayer.Source = VideoPreviewPage.Source;
+                    VideoPreviewPage.Current._tempFile = VideoPreviewPage.TempFile;
+                }
+            }
         }
 
         private async void SystemMic_Click(object sender, RoutedEventArgs e)

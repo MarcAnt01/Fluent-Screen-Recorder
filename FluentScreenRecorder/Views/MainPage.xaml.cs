@@ -76,6 +76,8 @@ namespace FluentScreenRecorder
 
             Loaded += LoadedHandler;
 
+            NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Required; 
+
             SilentPlayer = new MediaPlayer() { IsLoopingEnabled = true };
             SilentPlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/Silence.ogg"));
             SilentPlayer.Play();
@@ -392,7 +394,7 @@ namespace FluentScreenRecorder
 
                         await Save(_tempFile);
                         PreviewFrame.Visibility = Visibility.Visible;
-                        PreviewFrame.Navigate(typeof(VideoPreviewPage), _tempFile);
+                        PreviewFrame.Content = new VideoPreviewPage(_tempFile);
 
                         var videofolder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
@@ -407,7 +409,7 @@ namespace FluentScreenRecorder
                 NotifyRecordingStatusChanges(false);
                 await Save(_tempFile);
                 PreviewFrame.Visibility = Visibility.Visible;
-                PreviewFrame.Navigate(typeof(VideoPreviewPage), _tempFile);
+                PreviewFrame.Content = new VideoPreviewPage(_tempFile);
             }
         }
 
@@ -516,7 +518,7 @@ namespace FluentScreenRecorder
 
                         await Save(_tempFile);
                         PreviewFrame.Visibility = Visibility.Visible;
-                        PreviewFrame.Navigate(typeof(VideoPreviewPage), _tempFile);
+                        PreviewFrame.Content = new VideoPreviewPage(_tempFile);
                         var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
                         await videoFile.DeleteAsync();
@@ -530,8 +532,8 @@ namespace FluentScreenRecorder
                 NotifyRecordingStatusChanges(true);
                 await Save(_tempFile);
                 PreviewFrame.Visibility = Visibility.Visible;
-                PreviewFrame.Navigate(typeof(VideoPreviewPage), _tempFile);
-            }            
+                PreviewFrame.Content = new VideoPreviewPage(_tempFile);
+            }
         }
 
         private async Task<bool> Save(StorageFile file)
