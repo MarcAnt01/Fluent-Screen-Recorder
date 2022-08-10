@@ -514,6 +514,7 @@ namespace FluentScreenRecorder
                         RecordButton.IsEnabled = true;
                         NotifyRecordingStatusChanges(false);
 
+                        await Save(_tempFile);
                         PreviewFrame.Visibility = Visibility.Visible;
                         PreviewFrame.Navigate(typeof(VideoPreviewPage), _tempFile);
                         var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
@@ -527,10 +528,10 @@ namespace FluentScreenRecorder
             else
             {
                 NotifyRecordingStatusChanges(true);
-
+                await Save(_tempFile);
                 PreviewFrame.Visibility = Visibility.Visible;
                 PreviewFrame.Navigate(typeof(VideoPreviewPage), _tempFile);
-            }
+            }            
         }
 
         private async Task<bool> Save(StorageFile file)
