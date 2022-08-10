@@ -137,6 +137,7 @@
                     <settings:Setting Header="{x:Bind strings:Resources.AudioRecordingMode}">
                         <settings:Setting.ActionContent>
                             <ComboBox x:Name="AudioModeComboBox" SelectionChanged="AudioMode_SelectionChanged">
+                                <ComboBoxItem Content="No audio" />
                                 <ComboBoxItem Content="{x:Bind strings:Resources.AudioRecordingInternal}" />
                                 <ComboBoxItem Content="{x:Bind strings:Resources.AudioRecordingExternal}" />
                             </ComboBox>

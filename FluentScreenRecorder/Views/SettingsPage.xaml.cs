@@ -106,14 +106,20 @@ namespace FluentScreenRecorder.Views
 
         private void AudioMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (AudioModeComboBox.SelectedIndex == 0)
+            switch (AudioModeComboBox.SelectedIndex)
             {
-                App.Settings.IntAudio = true;
-                App.Settings.ExtAudio = false;
-            } else if (AudioModeComboBox.SelectedIndex == 1)
-            {
-                App.Settings.IntAudio = false;
-                App.Settings.ExtAudio = true;
+                case 0:
+                    App.Settings.IntAudio = false;
+                    App.Settings.ExtAudio = false;
+                    break;
+                case 1:
+                    App.Settings.IntAudio = true;
+                    App.Settings.ExtAudio = false;
+                    break;
+                case 2:
+                    App.Settings.IntAudio = false;
+                    App.Settings.ExtAudio = true;
+                    break;
             }
         }
 
