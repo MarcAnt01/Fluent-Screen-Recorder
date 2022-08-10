@@ -367,6 +367,19 @@ namespace FluentScreenRecorder.Strings{
         }
         #endregion
 
+        #region NoAudio
+        /// <summary>
+        ///   Looks up a localized string similar to: No Audio
+        /// </summary>
+        public static string NoAudio
+        {
+            get
+            {
+                return _resourceLoader.GetString("NoAudio");
+            }
+        }
+        #endregion
+
         #region Ok
         /// <summary>
         ///   Looks up a localized string similar to: Ok
@@ -716,6 +729,7 @@ namespace FluentScreenRecorder.Strings{
             Info,
             MicNoPermission,
             MicSettings,
+            NoAudio,
             Ok,
             OpenFolder,
             OverlayMode,

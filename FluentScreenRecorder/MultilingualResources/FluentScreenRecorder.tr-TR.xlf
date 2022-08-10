@@ -211,6 +211,10 @@
           <source>Microphone permission has been denied</source>
           <target state="new">Microphone permission has been denied</target>
         </trans-unit>
+        <trans-unit id="NoAudio" translate="yes" xml:space="preserve">
+          <source>No Audio</source>
+          <target state="new">No Audio</target>
+        </trans-unit>
       </group>
     </body>
   </file>
