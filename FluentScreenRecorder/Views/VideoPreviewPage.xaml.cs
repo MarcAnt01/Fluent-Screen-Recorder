@@ -88,6 +88,8 @@ namespace FluentScreenRecorder.Views
         private async void CustomMediaTransportControls_Delete(object sender, EventArgs e)
         {
             await MainPage.Delete(_tempFile);
+            Frame.Visibility = Visibility.Collapsed;
+            MainPage.Current.SettingsButton.Visibility = Visibility.Visible;
         }
     }
 }
