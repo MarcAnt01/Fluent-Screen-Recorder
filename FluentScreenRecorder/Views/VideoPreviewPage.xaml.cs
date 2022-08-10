@@ -18,7 +18,7 @@ namespace FluentScreenRecorder.Views
         public static MediaSource Source;
         public static StorageFile TempFile;
         
-        private StorageFile _tempFile;
+        public StorageFile _tempFile;
 
         public VideoPreviewPage(StorageFile file = null)
         {
