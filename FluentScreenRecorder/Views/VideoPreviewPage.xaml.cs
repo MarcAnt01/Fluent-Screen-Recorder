@@ -60,9 +60,6 @@ namespace FluentScreenRecorder.Views
         private async void CustomMediaTransportControls_SaveAs(object sender, EventArgs e)
         {
             await MainPage.SaveAs(_tempFile);
-            await MainPage.Current.LoadThumbanails();
-            Frame.Visibility = Visibility.Collapsed;
-            MainPage.Current.SettingsButton.Visibility = Visibility.Visible;
         }
 
         private void CustomMediaTransportControls_Share(object sender, EventArgs e)
@@ -83,7 +80,7 @@ namespace FluentScreenRecorder.Views
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             PreviewPlayer.Source = null;
-        }        
+        }
 
         private async void CustomMediaTransportControls_Delete(object sender, EventArgs e)
         {
