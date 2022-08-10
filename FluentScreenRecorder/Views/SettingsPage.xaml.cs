@@ -105,6 +105,7 @@ namespace FluentScreenRecorder.Views
                 if (VideoPreviewPage.Current != null && VideoPreviewPage.Source != null)
                 {
                     VideoPreviewPage.Current.PreviewPlayer.Source = VideoPreviewPage.Source;
+                    VideoPreviewPage.Current._tempFile = VideoPreviewPage.TempFile;
                 }
             }
         }
