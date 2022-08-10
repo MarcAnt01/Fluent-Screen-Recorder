@@ -198,6 +198,9 @@
   <data name="MicSettings" xml:space="preserve">
     <value>System microphone settings</value>
   </data>
+  <data name="NoAudio" xml:space="preserve">
+    <value>No Audio</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
