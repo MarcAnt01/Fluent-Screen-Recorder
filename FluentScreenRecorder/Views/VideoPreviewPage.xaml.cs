@@ -14,19 +14,25 @@ namespace FluentScreenRecorder.Views
 {
     public sealed partial class VideoPreviewPage : Page
     {
-        private StorageFile _tempFile;
+        public static VideoPreviewPage Current;
+        public static MediaSource Source;
+        public static StorageFile TempFile;
+        
+        public StorageFile _tempFile;
 
         public VideoPreviewPage(StorageFile file = null)
         {
             InitializeComponent();
 
-            MainPage.Current.SettingsButton.Visibility = Visibility.Collapsed;
+            Current = this;
 
             if (file != null)
             {
                 _tempFile = file;
+                TempFile = file;
             }                
             PreviewPlayer.Source = MediaSource.CreateFromStorageFile(file);
+            Source = (MediaSource)PreviewPlayer.Source;
 
             ApplicationView.GetForCurrentView().TryResizeView(new(500, 500));
 
@@ -36,9 +42,9 @@ namespace FluentScreenRecorder.Views
 
         public VideoPreviewPage()
         {
-            InitializeComponent();            
+            InitializeComponent();
 
-            MainPage.Current.SettingsButton.Visibility = Visibility.Collapsed;
+            Current = this;
 
             ApplicationView.GetForCurrentView().TryResizeView(new(500, 500));            
         }        
@@ -48,7 +54,9 @@ namespace FluentScreenRecorder.Views
             if (e.Parameter is StorageFile file)
             {
                 _tempFile = file;
+                TempFile = file;
                 PreviewPlayer.Source = MediaSource.CreateFromStorageFile(file);
+                Source = (MediaSource)PreviewPlayer.Source;
 
                 DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
                 dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(DataRequested);
@@ -59,7 +67,10 @@ namespace FluentScreenRecorder.Views
 
         private async void CustomMediaTransportControls_SaveAs(object sender, EventArgs e)
         {
-            await MainPage.SaveAs(_tempFile);
+            if (_tempFile != null)
+               await MainPage.SaveAs(_tempFile);
+            else
+               await MainPage.SaveAs(TempFile);
         }
 
         private void CustomMediaTransportControls_Share(object sender, EventArgs e)
@@ -84,9 +95,18 @@ namespace FluentScreenRecorder.Views
 
         private async void CustomMediaTransportControls_Delete(object sender, EventArgs e)
         {
-            await MainPage.Delete(_tempFile);
-            Frame.Visibility = Visibility.Collapsed;
-            MainPage.Current.SettingsButton.Visibility = Visibility.Visible;
+            if (_tempFile != null)
+               await MainPage.Delete(_tempFile);
+            else
+               await MainPage.Delete(TempFile);
+            MainPage.Current.PreviewFrame.Visibility = Visibility.Collapsed;
+
+            PreviewPlayer.Source = null;
+
+            // To avoid re-navigating from settings page back to the
+            // video preview page when we already exited it.
+            Current = null;
+            TempFile = null;
         }
     }
 }
