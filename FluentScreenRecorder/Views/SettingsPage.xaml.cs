@@ -163,5 +163,11 @@ namespace FluentScreenRecorder.Views
             ContentDialog dialog = new LicensesDialog();
             await dialog.ShowAsync();
         }
+
+        private void OnBackAcceleratorInvoked(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        {
+            if (Frame.CanGoBack)
+                Frame.GoBack();
+        }
     }
 }
