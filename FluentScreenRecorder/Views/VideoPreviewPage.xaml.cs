@@ -14,13 +14,15 @@ namespace FluentScreenRecorder.Views
 {
     public sealed partial class VideoPreviewPage : Page
     {
+        public static VideoPreviewPage Current;
+        
         private StorageFile _tempFile;
 
         public VideoPreviewPage(StorageFile file = null)
         {
             InitializeComponent();
 
-            MainPage.Current.SettingsButton.Visibility = Visibility.Collapsed;
+            Current = this;
 
             if (file != null)
             {
@@ -36,9 +38,9 @@ namespace FluentScreenRecorder.Views
 
         public VideoPreviewPage()
         {
-            InitializeComponent();            
+            InitializeComponent();
 
-            MainPage.Current.SettingsButton.Visibility = Visibility.Collapsed;
+            Current = this;
 
             ApplicationView.GetForCurrentView().TryResizeView(new(500, 500));            
         }        
@@ -86,7 +88,6 @@ namespace FluentScreenRecorder.Views
         {
             await MainPage.Delete(_tempFile);
             Frame.Visibility = Visibility.Collapsed;
-            MainPage.Current.SettingsButton.Visibility = Visibility.Visible;
         }
     }
 }
