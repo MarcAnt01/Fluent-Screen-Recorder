@@ -88,6 +88,12 @@ namespace FluentScreenRecorder.Views
         {
             await MainPage.Delete(_tempFile);
             Frame.Visibility = Visibility.Collapsed;
+
+            PreviewPlayer.Source = null;
+
+            // To avoid re-navigating from settings page back to the
+            // video preview page when we already exited it.
+            Current = null;
         }
     }
 }
