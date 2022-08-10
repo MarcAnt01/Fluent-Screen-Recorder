@@ -16,6 +16,7 @@ namespace FluentScreenRecorder.Views
     {
         public static VideoPreviewPage Current;
         public static MediaSource Source;
+        public static StorageFile TempFile;
         
         private StorageFile _tempFile;
 
@@ -28,6 +29,7 @@ namespace FluentScreenRecorder.Views
             if (file != null)
             {
                 _tempFile = file;
+                TempFile = file;
             }                
             PreviewPlayer.Source = MediaSource.CreateFromStorageFile(file);
             Source = (MediaSource)PreviewPlayer.Source;
@@ -52,6 +54,7 @@ namespace FluentScreenRecorder.Views
             if (e.Parameter is StorageFile file)
             {
                 _tempFile = file;
+                TempFile = file;
                 PreviewPlayer.Source = MediaSource.CreateFromStorageFile(file);
                 Source = (MediaSource)PreviewPlayer.Source;
 
