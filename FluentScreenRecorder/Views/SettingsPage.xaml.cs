@@ -24,7 +24,17 @@ namespace FluentScreenRecorder.Views
             formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
 
             BitrateComboBox.SelectedItem = App.RecViewModel.Bitrates[App.RecViewModel.GetBitrateIndex(App.Settings.Bitrate)];
-            AudioModeComboBox.SelectedIndex = App.Settings.IntAudio ? 0 : 1;
+
+            if (App.Settings.IntAudio)
+            {
+                AudioModeComboBox.SelectedIndex = 1;
+            } else if (App.Settings.ExtAudio)
+            {
+                AudioModeComboBox.SelectedIndex = 2;
+            } else
+            {
+                AudioModeComboBox.SelectedIndex = 0;
+            }
         }
 
         private void SetupTitleBar(CoreApplicationViewTitleBar coreAppTitleBar = null)
