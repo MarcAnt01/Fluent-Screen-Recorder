@@ -574,7 +574,7 @@ namespace FluentScreenRecorder
             }
 
             //move the file to the location selected with the picker
-            await file.MoveAndReplaceAsync(newFile);
+            await file.CopyAndReplaceAsync(newFile);
             return true;
         }
 
