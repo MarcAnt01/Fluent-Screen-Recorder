@@ -9,6 +9,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 
 namespace FluentScreenRecorder.Views
@@ -100,7 +101,7 @@ namespace FluentScreenRecorder.Views
             await dialog.ShowAsync();
         }
 
-        private  void CustomMediaTransportControls_Shared(object sender, EventArgs e)
+        private void CustomMediaTransportControls_Shared(object sender, EventArgs e)
         {
             DataTransferManager.ShowShareUI();
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
@@ -158,6 +159,12 @@ namespace FluentScreenRecorder.Views
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             VideoPlayer.Source = null;
+        }
+
+        private void OnEscInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+        {
+            if (Frame.CanGoBack)
+                Frame.GoBack();
         }
     }
 }

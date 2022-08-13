@@ -10,6 +10,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 
 namespace FluentScreenRecorder.Views
 {
@@ -170,6 +171,12 @@ namespace FluentScreenRecorder.Views
         {
             ContentDialog dialog = new LicensesDialog();
             await dialog.ShowAsync();
+        }
+
+        private void OnEscInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+        {
+            if (Frame.CanGoBack)
+                Frame.GoBack();
         }
     }
 }
