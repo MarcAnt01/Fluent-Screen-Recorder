@@ -18,21 +18,21 @@
 
         <Grid>
             <MediaPlayerElement
-                x:Name="PreviewPlayer"                
+                x:Name="PreviewPlayer"
+                x:FieldModifier="public"
                 AreTransportControlsEnabled="True"
-                AutoPlay="True"
-                x:FieldModifier="public">                
+                AutoPlay="True">
                 <MediaPlayerElement.TransportControls>
                     <local:CustomMediaTransportControls
-                        IsZoomButtonVisible="False"
-                        IsFullWindowButtonVisible="False"
                         Deleted2="CustomMediaTransportControls_Delete"
-                        Shared2="CustomMediaTransportControls_Share"
+                        IsCompact="True"
+                        IsFullWindowButtonVisible="False"
+                        IsZoomButtonVisible="False"
                         SaveAs="CustomMediaTransportControls_SaveAs"
-                        Style="{StaticResource CustomMediaTransportControlsStyle2}"
-                        IsCompact="True"/>
+                        Shared2="CustomMediaTransportControls_Share"
+                        Style="{StaticResource CustomMediaTransportControlsStyle2}" />
                 </MediaPlayerElement.TransportControls>
             </MediaPlayerElement>
-        </Grid>        
+        </Grid>
     </Grid>
 </Page>

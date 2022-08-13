@@ -19,6 +19,10 @@
         <local1:InvertBoolConverter x:Key="InvertBoolConv" />
     </Page.Resources>
 
+    <Page.KeyboardAccelerators>
+        <KeyboardAccelerator Key="Escape" Invoked="OnEscInvoked" />
+    </Page.KeyboardAccelerators>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
