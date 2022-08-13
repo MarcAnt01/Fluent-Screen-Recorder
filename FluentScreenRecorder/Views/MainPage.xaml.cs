@@ -69,6 +69,8 @@ namespace FluentScreenRecorder
 
         public static MainPage Current;
 
+        private bool _isRecording;
+
         public MainPage()
         {
             InitializeComponent();
@@ -213,10 +215,22 @@ namespace FluentScreenRecorder
 
         public StorageFile _tempFile;
 
-        private async void ToggleButton_Checked(object sender, RoutedEventArgs e)
+        private async void OnRecordButtonClick(object sender, RoutedEventArgs e)
+        {
+            if (_isRecording)
+            {
+                _isRecording = false;
+                await StopRecordingAsync();
+            } else
+            {
+                _isRecording = true;
+                await StartRecordingAsync();
+            }
+        }
+
+        private async Task StartRecordingAsync()
         {
             ApplicationView.GetForCurrentView().TryResizeView(new(400, 300));
-            var button = (ToggleButton)sender;
             var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
             // Get our encoder properties
@@ -271,7 +285,7 @@ namespace FluentScreenRecorder
 
             if (item == null)
             {
-                button.IsChecked = false;
+                _isRecording = false;
                 return;
             }
             if (useSourceSize)
@@ -305,7 +319,7 @@ namespace FluentScreenRecorder
                         await mediaCapture.StartRecordToStorageFileAsync(MediaEncodingProfile.CreateMp3(AudioEncodingQuality.High), micFile);
                     }
                     var encodesuccess = await App.RecViewModel.Encoder.EncodeAsync(stream, width, height, bitrate, frameRate, loopbackAudioCapture);
-                    if (encodesuccess == false)
+                    if (!encodesuccess)
                     {
                         ContentDialog errorDialog = new()
                         {
@@ -337,7 +351,7 @@ namespace FluentScreenRecorder
                 };
                 await errorDialog.ShowAsync();
 
-                button.IsChecked = false;
+                _isRecording = false;
 
                 NotifyRecordingStatusChanges(false);
                 await _tempFile.DeleteAsync();
@@ -413,6 +427,24 @@ namespace FluentScreenRecorder
             }
         }
 
+        private async Task StopRecordingAsync()
+        {
+            // Collecting some info before being lost
+
+            if (App.Settings.IntAudio && loopbackAudioCapture.Started)
+            {
+                audioEncodingProperties = loopbackAudioCapture.EncodingProperties;
+                await loopbackAudioCapture.Stop();
+            }
+
+            if (mediaCapture != null)
+            {
+                await mediaCapture.StopRecordAsync();
+            }
+
+            App.RecViewModel.Encoder?.Dispose();
+        }
+
         async Task<byte[]> Convert(IRandomAccessStream s)
         {
             var dr = new DataReader(s.GetInputStreamAt(0));
@@ -441,24 +473,6 @@ namespace FluentScreenRecorder
             }
 
             return isMicAvailable;
-        }
-
-        public async void ToggleButton_Unchecked(object sender, RoutedEventArgs e)
-        {
-            // Collecting some info before being lost
-
-            if (App.Settings.IntAudio && loopbackAudioCapture.Started)
-            {
-                audioEncodingProperties = loopbackAudioCapture.EncodingProperties;
-                await loopbackAudioCapture.Stop();
-            }
-
-            if (mediaCapture != null)
-            {
-                await mediaCapture.StopRecordAsync();
-            }
-
-            App.RecViewModel.Encoder?.Dispose();
         }
 
         private unsafe void LoopbackBufferReady(AudioClientBufferDetails details, out int numSamplesRead)

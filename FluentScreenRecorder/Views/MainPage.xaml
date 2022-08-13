@@ -82,19 +82,21 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal" Spacing="12">
-                <ToggleButton
+                <Button
                     x:Name="RecordButton"
                     Height="40"
                     AutomationProperties.Name="{x:Bind strings:Resources.Record}"
                     Background="Transparent"
                     BorderThickness="0"
-                    Checked="ToggleButton_Checked"
-                    Unchecked="ToggleButton_Unchecked">
+                    Click="OnRecordButtonClick">
                     <StackPanel Orientation="Horizontal" Spacing="12">
                         <FontIcon x:Name="StopRecIcon" Glyph="&#xE7C8;" />
-                        <TextBlock x:Name="RecordName" Text="{x:Bind strings:Resources.Record}" />
+                        <TextBlock
+                            x:Name="RecordName"
+                            d:Text="Record"
+                            Text="{x:Bind strings:Resources.Record}" />
                     </StackPanel>
-                </ToggleButton>
+                </Button>
 
                 <StackPanel
                     x:Name="RecordingMiniOptions"
