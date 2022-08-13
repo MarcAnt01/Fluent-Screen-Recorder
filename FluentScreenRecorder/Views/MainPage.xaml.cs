@@ -83,7 +83,7 @@ namespace FluentScreenRecorder
             SilentPlayer = new MediaPlayer() { IsLoopingEnabled = true };
             SilentPlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/Silence.ogg"));
             SilentPlayer.Play();
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(400, 88));
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(412, 88));
 
             //hide titlebar
             SetupTitleBar();
@@ -132,7 +132,7 @@ namespace FluentScreenRecorder
             if (App.Settings.ShowOnTop)
             {
                 var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
-                preferences.CustomSize = new Size(400, 260);
+                preferences.CustomSize = new Size(412, 260);
                 bool modeSwitched = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
                 
                 GoToOverlayIcon.Visibility = Visibility.Collapsed;
@@ -230,7 +230,7 @@ namespace FluentScreenRecorder
 
         private async Task StartRecordingAsync()
         {
-            ApplicationView.GetForCurrentView().TryResizeView(new(400, 300));
+            ApplicationView.GetForCurrentView().TryResizeView(new(412, 300));
             var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
             // Get our encoder properties
@@ -722,7 +722,7 @@ namespace FluentScreenRecorder
             if (ApplicationView.GetForCurrentView().ViewMode == ApplicationViewMode.Default)
             {
                 var preferences = ViewModePreferences.CreateDefault(ApplicationViewMode.CompactOverlay);
-                preferences.CustomSize = new(400, 260);
+                preferences.CustomSize = new(412, 260);
                 bool modeSwitched = await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay, preferences);
                 if (modeSwitched)
                 {
