@@ -38,10 +38,12 @@ namespace CaptureEncoder
                     _device,
                     _captureItem,
                     _captureItem.Size,
-                    loopbackAudioCapture);
-                
+                    loopbackAudioCapture);               
+
                 using (_frameGenerator)
                 {
+                    await _frameGenerator.InitializeCapture(_captureItem.Size, loopbackAudioCapture);
+
                     var encodingProfile = new MediaEncodingProfile();
                     encodingProfile.Container.Subtype = "MPEG4";
                     encodingProfile.Video.Subtype = "H264";

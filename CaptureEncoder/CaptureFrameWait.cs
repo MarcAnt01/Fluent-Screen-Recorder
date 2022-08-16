@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Windows.Graphics;
 using Windows.Graphics.Capture;
 using Windows.Graphics.DirectX;
@@ -54,11 +55,10 @@ namespace CaptureEncoder
             _closedEvent = new ManualResetEvent(false);
             _events = new[] { _closedEvent, _frameEvent };
 
-            InitializeBlankTexture(size);
-            InitializeCapture(size, loopbackAudioCapture);
+            InitializeBlankTexture(size);            
         }
-
-        private async void InitializeCapture(SizeInt32 size, LoopbackAudioCapture loopbackAudioCapture)
+        
+        public async Task InitializeCapture(SizeInt32 size, LoopbackAudioCapture loopbackAudioCapture)
         {
             _item.Closed += OnClosed;
             _framePool = Direct3D11CaptureFramePool.CreateFreeThreaded(
