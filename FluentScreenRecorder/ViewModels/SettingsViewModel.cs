@@ -65,6 +65,12 @@ namespace FluentScreenRecorder.ViewModels
             set => Set(nameof(ShowOnTop), value);
         }
 
+        public bool Timer
+        {
+            get => Get(nameof(Timer), false);
+            set => Set(nameof(Timer), value);
+        }
+
         /// <summary>
         /// Gets an app setting.
         /// </summary>
