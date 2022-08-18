@@ -305,6 +305,11 @@ namespace FluentScreenRecorder
             var tempFile = await GetTempFileAsync();
             _tempFile = tempFile;
 
+            if (App.Settings.Timer)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(3));
+            }
+
             // Tell the user we've started recording
             NotifyRecordingStatusChanges(true);
 

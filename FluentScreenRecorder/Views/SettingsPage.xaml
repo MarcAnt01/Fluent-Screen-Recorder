@@ -164,6 +164,14 @@
                         </settings:Setting.ActionContent>
                     </settings:Setting>
 
+                    <settings:Setting Description="{x:Bind strings:Resources.TimerDescription}" Header="{x:Bind strings:Resources.Timer}">
+                        <settings:Setting.ActionContent>
+                            <ToggleSwitch Margin="0,0,-72,0" IsOn="{x:Bind local1:App.Settings.Timer, Mode=TwoWay}" />
+                        </settings:Setting.ActionContent>
+                    </settings:Setting>
+
+
+
                     <TextBlock Margin="0,20,0,8" Text="{x:Bind strings:Resources.Advanced}" />
 
                     <settings:Setting Description="{x:Bind strings:Resources.SystemPlayerOptionDescription}" Header="{x:Bind strings:Resources.SystemVideoPlayerOption}">
