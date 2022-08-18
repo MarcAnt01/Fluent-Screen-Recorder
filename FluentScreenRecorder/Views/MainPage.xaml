@@ -163,7 +163,7 @@
                         FontSize="20"
                         FontWeight="SemiBold"
                         Style="{StaticResource SubheaderTextBlockStyle}"
-                        Text="Recording..." />
+                        Text="{x:Bind strings:Resources.Recording}" />
                 </StackPanel>
 
                 <RelativePanel
