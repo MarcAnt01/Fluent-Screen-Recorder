@@ -96,10 +96,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="ScreenSenderComponent">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\libs\ScreenSenderComponent\$(Platform)\ScreenSenderComponent.winmd</HintPath>
-    </Reference>
+    <ProjectReference Include="..\ScreenSenderComponent\ScreenSenderComponent.vcxproj">
+      <Project>{9762cc81-d63d-4952-9cba-f812755c3444}</Project>
+      <Name>ScreenSenderComponent</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
