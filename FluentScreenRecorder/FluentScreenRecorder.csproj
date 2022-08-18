@@ -296,12 +296,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="ScreenSenderComponent">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\libs\ScreenSenderComponent\$(Platform)\ScreenSenderComponent.winmd</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\CaptureEncoder\CaptureEncoder.csproj">
       <Project>{7ffcaeb5-d8ba-49f4-b89f-7033e7a01447}</Project>
       <Name>CaptureEncoder</Name>
@@ -309,6 +303,10 @@
     <ProjectReference Include="..\Microsoft.PowerToys.Settings.UI\Microsoft.PowerToys.Settings.UI.csproj">
       <Project>{123d7523-1b05-4c05-a2fa-6a14314a16f3}</Project>
       <Name>Microsoft.PowerToys.Settings.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScreenSenderComponent\ScreenSenderComponent.vcxproj">
+      <Project>{9762cc81-d63d-4952-9cba-f812755c3444}</Project>
+      <Name>ScreenSenderComponent</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
