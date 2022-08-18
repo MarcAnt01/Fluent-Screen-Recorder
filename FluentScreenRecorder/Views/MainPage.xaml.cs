@@ -106,10 +106,10 @@ namespace FluentScreenRecorder
         {
             try
             {
-                loopbackAudioCapture = new LoopbackAudioCapture(MediaDevice.GetDefaultAudioRenderId(AudioDeviceRole.Default));
-                await loopbackAudioCapture.Start();
-                await loopbackAudioCapture.Stop();
-                loopbackAudioCapture = null;
+                var testCapture = new LoopbackAudioCapture(MediaDevice.GetDefaultAudioRenderId(AudioDeviceRole.Default));
+                await testCapture.Start();
+                await testCapture.Stop();
+                testCapture = null;
             }
             catch (Exception)
             {
