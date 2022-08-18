@@ -238,7 +238,7 @@ namespace FluentScreenRecorder
             var resolutionItem = App.RecViewModel.Resolutions[App.RecViewModel.GetResolutionIndex(App.Settings.Width, App.Settings.Height)];
             var bitrateItem = App.RecViewModel.Bitrates[App.RecViewModel.GetBitrateIndex(App.Settings.Bitrate)];
 
-            MediaCapture mediaCapture = null;
+            MediaCapture mediaCapture = null;   
 
             if (App.Settings.IntAudio)
             {
@@ -325,8 +325,8 @@ namespace FluentScreenRecorder
                         {
                             Title = Strings.Resources.Failure,
                             Content = "Windows cannot encode your video.",
-                            CloseButtonText = Strings.Resources.Ok
-                        };
+                            CloseButtonText = Strings.Resources.Ok                           
+                        };                      
                         await errorDialog.ShowAsync();
                     }
 
@@ -343,14 +343,18 @@ namespace FluentScreenRecorder
                 {
                     message = $"Whoops, something went wrong!\n0x{ex.HResult:X8} - {ex.Message}";
                 }
-                ContentDialog errorDialog = new()
+                ContentDialog recordingErrorDialog = new()
                 {
-                    Title = "Recording failed",
+                    Title = Strings.Resources.Failure,
                     Content = message,
-                    CloseButtonText = "OK"
-                };
-                await errorDialog.ShowAsync();
+                    CloseButtonText = Strings.Resources.Ok
+                };                
+            
+                RecordButton.Visibility = Visibility.Collapsed;
+                RecordingContainer.Visibility = Visibility.Collapsed;
+                ApplicationView.GetForCurrentView().TryResizeView(new(550, 500));
 
+                await recordingErrorDialog.ShowAsync();
                 _isRecording = false;
 
                 NotifyRecordingStatusChanges(false);
