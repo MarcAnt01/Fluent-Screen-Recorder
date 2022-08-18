@@ -163,7 +163,7 @@
     <value>Back to full view</value>
   </data>
   <data name="Failure" xml:space="preserve">
-    <value>Failure</value>
+    <value>Recording failed</value>
   </data>
   <data name="Framerate" xml:space="preserve">
     <value>Framerate</value>
@@ -257,6 +257,12 @@
   </data>
   <data name="ThirdPartyLicenses" xml:space="preserve">
     <value>Third party licenses</value>
+  </data>
+  <data name="Timer" xml:space="preserve">
+    <value>Timer</value>
+  </data>
+  <data name="TimerDescription" xml:space="preserve">
+    <value>Add a 3 seconds delay before starting the actual recording</value>
   </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>
