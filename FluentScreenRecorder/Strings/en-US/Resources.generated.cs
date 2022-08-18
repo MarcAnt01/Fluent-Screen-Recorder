@@ -213,7 +213,7 @@ namespace FluentScreenRecorder.Strings{
 
         #region Failure
         /// <summary>
-        ///   Looks up a localized string similar to: Failure
+        ///   Looks up a localized string similar to: Recording failed
         /// </summary>
         public static string Failure
         {
@@ -627,6 +627,32 @@ namespace FluentScreenRecorder.Strings{
         }
         #endregion
 
+        #region Timer
+        /// <summary>
+        ///   Looks up a localized string similar to: Timer
+        /// </summary>
+        public static string Timer
+        {
+            get
+            {
+                return _resourceLoader.GetString("Timer");
+            }
+        }
+        #endregion
+
+        #region TimerDescription
+        /// <summary>
+        ///   Looks up a localized string similar to: Add a 3 seconds delay before starting the actual recording
+        /// </summary>
+        public static string TimerDescription
+        {
+            get
+            {
+                return _resourceLoader.GetString("TimerDescription");
+            }
+        }
+        #endregion
+
         #region Version
         /// <summary>
         ///   Looks up a localized string similar to: Version
@@ -749,6 +775,8 @@ namespace FluentScreenRecorder.Strings{
             SystemPlayerOptionDescription,
             SystemVideoPlayerOption,
             ThirdPartyLicenses,
+            Timer,
+            TimerDescription,
             Version,
             VideoPreview,
             Volume,
