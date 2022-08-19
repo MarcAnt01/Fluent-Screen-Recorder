@@ -48,8 +48,19 @@ Also for requesting features the best way is opening a ticket in this repo, prov
 You can translate Fluent Screen Recorder for your language or improve the current translations. Just follow the guide [here](https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/translations.md)
 
 ### Credits
-- [Robert Mikhayelyan](https://github.com/robmikh) for the core of the app and the encoder;
-- [Ryken100](https://github.com/Ryken100) for internal audio library;
-- [Ahmed Walid](https://github.com/ahmed605) for help in implementing internal and external audio recording;
-- [Mark Ivan Basto](https://github.com/MarkIvanDev), [Yair Aichenbaum](https://github.com/yaichenbaum), [Sebastian Kassai](https://github.com/xezrunner), [FireCubeStudios](https://github.com/FireCubeStudios) for [direct code contributions](https://github.com/MarcAnt01/Fluent-Screen-Recorder/graphs/contributors);
-- [UWP Community Discord Server](https://aka.ms/winui/discord) for helping me during the making of the app.
+- [Robert Mikhayelyan](https://github.com/robmikh) for the core of the app and the encoder
+- [Ryken100](https://github.com/Ryken100) for internal audio library
+- [Ahmed Walid](https://github.com/ahmed605) for help in implementing internal and external audio recording
+- [Mark Ivan Basto](https://github.com/MarkIvanDev), [Yair Aichenbaum](https://github.com/yaichenbaum), [Sebastian Kassai](https://github.com/xezrunner), [FireCubeStudios](https://github.com/FireCubeStudios) for [direct code contributions](https://github.com/MarcAnt01/Fluent-Screen-Recorder/graphs/contributors)
+- [UWP Community Discord Server](https://aka.ms/winui/discord) for helping me during the making of the app
+- [Arlo Godfrey](https://github.com/Arlodotexe) and Lucifer Press for donations
+
+
+### [Donate](https://paypal.me/FilippoFedeli)
+
+This app is FOSS, meaning it's free and open source software, no money is made out of it, for this reason donations are really appreciated to keep me motivated to work on the app.
+
+
+### License
+
+The main app uses [MIT License](https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/master/LICENSE), but the internal audio library is licensed under [LGPL](https://github.com/MarcAnt01/Fluent-Screen-Recorder/blob/3.0/ScreenSenderComponent/LICENSE)
