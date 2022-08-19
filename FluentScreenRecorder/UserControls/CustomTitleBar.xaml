@@ -1,0 +1,25 @@
+﻿<UserControl
+    x:Class="FluentScreenRecorder.UserControls.CustomTitleBar"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="48"
+    d:DesignWidth="631"
+    mc:Ignorable="d">
+
+    <StackPanel Orientation="Horizontal">
+        <Image
+            Width="24"
+            Height="24"
+            Margin="16,0,0,0"
+            Source="ms-appx:///Assets/Square44x44Logo.png" />
+
+        <TextBlock
+            Grid.Column="1"
+            Margin="12,4,4,4"
+            VerticalAlignment="Center"
+            Style="{StaticResource CaptionTextBlockStyle}"
+            Text="Fluent Screen Recorder" />
+    </StackPanel>
+</UserControl>
