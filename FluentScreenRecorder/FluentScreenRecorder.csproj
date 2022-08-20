@@ -142,9 +142,6 @@
     <Compile Include="Themes\generic.xaml.cs">
       <DependentUpon>generic.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\CustomTitleBar.xaml.cs">
-      <DependentUpon>CustomTitleBar.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\RecorderViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Models\MainModels.cs" />
@@ -255,10 +252,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\generic.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\CustomTitleBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
