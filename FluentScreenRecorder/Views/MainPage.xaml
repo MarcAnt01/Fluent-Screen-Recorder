@@ -43,7 +43,7 @@
                     x:Name="AppFontIcon"
                     Width="24"
                     Height="24"
-                    Margin="12,0,0,0"
+                    Margin="20,0,0,0"
                     VerticalAlignment="Center"
                     Source="ms-appx:///Assets/Square44x44Logo.png" />
                 <TextBlock
