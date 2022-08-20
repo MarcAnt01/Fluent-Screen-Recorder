@@ -117,7 +117,8 @@ namespace FluentScreenRecorder.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(MainPage));
+            if (Frame.CanGoBack)
+                Frame.GoBack();
         }
 
         private async void OverlayButton_Click(object sender, RoutedEventArgs e)
