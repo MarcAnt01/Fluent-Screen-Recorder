@@ -38,6 +38,7 @@ using Windows.ApplicationModel.DataTransfer;
 using FluentScreenRecorder.Models;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Windows.UI.Xaml.Navigation;
 
 namespace FluentScreenRecorder
 {
@@ -78,17 +79,12 @@ namespace FluentScreenRecorder
 
             Loaded += LoadedHandler;
 
-            NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Required; 
+            NavigationCacheMode = NavigationCacheMode.Required; 
 
             SilentPlayer = new MediaPlayer() { IsLoopingEnabled = true };
             SilentPlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/Silence.ogg"));
             SilentPlayer.Play();
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(412, 88));
-
-            //hide titlebar
-            SetupTitleBar();
-            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
-            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
 
             ResolutionComboBox.ItemsSource = App.RecViewModel.Resolutions;
             ResolutionComboBox.SelectedIndex = App.RecViewModel.GetResolutionIndex(App.Settings.Width, App.Settings.Height);
@@ -102,6 +98,14 @@ namespace FluentScreenRecorder
             }
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            SetupTitleBar();
+            ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
+            formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
+            
+            base.OnNavigatedTo(e);
+        }
         private async void InternalAudioCheck()
         {
             try
