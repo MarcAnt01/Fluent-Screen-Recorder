@@ -106,6 +106,7 @@ namespace FluentScreenRecorder
             
             base.OnNavigatedTo(e);
         }
+        
         private async void InternalAudioCheck()
         {
             try
