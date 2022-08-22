@@ -849,6 +849,14 @@ namespace FluentScreenRecorder
             await dialog.ShowAsync();
         }
 
+        private async void MenuFlyoutItem_Click_3(object sender, RoutedEventArgs e)
+        {
+            var folderLocation = await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder");
+            var options = new FolderLauncherOptions();
+            options.ItemsToSelect.Add(recordedVideoFile);
+            await Launcher.LaunchFolderAsync(folderLocation, options);
+        }
+
         public async void Image_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
         {
             ThumbItem item = (sender as Image).DataContext as ThumbItem;
