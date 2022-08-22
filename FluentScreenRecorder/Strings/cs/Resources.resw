@@ -63,9 +63,6 @@
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
-  <data name="OpenFolder" xml:space="preserve">
-    <value>Otevřít složku, do které bylo video uloženo</value>
-  </data>
   <data name="OverlayMode" xml:space="preserve">
     <value>Otevřít režim překrytí jako výchozí</value>
   </data>

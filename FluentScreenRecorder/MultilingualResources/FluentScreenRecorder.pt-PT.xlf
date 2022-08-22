@@ -92,10 +92,6 @@
           <source>What's new?</source>
           <target state="translated">O que há de novo?</target>
         </trans-unit>
-        <trans-unit id="OpenFolder" translate="yes" xml:space="preserve">
-          <source>Open the folder where the video has been saved</source>
-          <target state="translated">Abrir a pasta onde o vídeo foi guardado</target>
-        </trans-unit>
         <trans-unit id="SystemVideoPlayerOption" translate="yes" xml:space="preserve">
           <source>Use system player to open videos</source>
           <target state="translated">Utilizar leitor do sistema para abrir vídeos</target>
@@ -223,6 +219,14 @@
         <trans-unit id="TimerDescription" translate="yes" xml:space="preserve">
           <source>Add a 3 seconds delay before starting the actual recording</source>
           <target state="new">Add a 3 seconds delay before starting the actual recording</target>
+        </trans-unit>
+        <trans-unit id="FileFolder" translate="yes" xml:space="preserve">
+          <source>Show in folder</source>
+          <target state="new">Show in folder</target>
+        </trans-unit>
+        <trans-unit id="MoreOptions" translate="yes" xml:space="preserve">
+          <source>More options</source>
+          <target state="new">More options</target>
         </trans-unit>
       </group>
     </body>

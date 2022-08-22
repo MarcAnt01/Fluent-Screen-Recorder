@@ -63,9 +63,6 @@
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
-  <data name="OpenFolder" xml:space="preserve">
-    <value>Abrir la carpeta donde se guardó el video</value>
-  </data>
   <data name="OverlayMode" xml:space="preserve">
     <value>Abrir el modo de superposición de forma predeterminada</value>
   </data>

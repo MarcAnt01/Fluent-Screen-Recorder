@@ -60,9 +60,6 @@
   <data name="Ok" xml:space="preserve">
     <value>හරි</value>
   </data>
-  <data name="OpenFolder" xml:space="preserve">
-    <value>වීඩියෝව සුරකින ලද ෆෝල්ඩරය විවෘත කරන්න</value>
-  </data>
   <data name="OverlayMode" xml:space="preserve">
     <value>සෑම විටම overlay ප්‍රකාරයෙන් විවෘත කරන්න</value>
   </data>

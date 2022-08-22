@@ -165,6 +165,9 @@
   <data name="Failure" xml:space="preserve">
     <value>Recording failed</value>
   </data>
+  <data name="FileFolder" xml:space="preserve">
+    <value>Show in folder</value>
+  </data>
   <data name="Framerate" xml:space="preserve">
     <value>Framerate</value>
   </data>
@@ -198,14 +201,14 @@
   <data name="MicSettings" xml:space="preserve">
     <value>System microphone settings</value>
   </data>
+  <data name="MoreOptions" xml:space="preserve">
+    <value>More options</value>
+  </data>
   <data name="NoAudio" xml:space="preserve">
     <value>No Audio</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
-  </data>
-  <data name="OpenFolder" xml:space="preserve">
-    <value>Open the folder where the video has been saved</value>
   </data>
   <data name="OverlayMode" xml:space="preserve">
     <value>Open overlay mode by default</value>

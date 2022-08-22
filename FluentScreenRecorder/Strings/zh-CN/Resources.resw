@@ -63,9 +63,6 @@
   <data name="Ok" xml:space="preserve">
     <value>确定</value>
   </data>
-  <data name="OpenFolder" xml:space="preserve">
-    <value>打开保存视频的文件夹</value>
-  </data>
   <data name="OverlayMode" xml:space="preserve">
     <value>默认打开覆盖模式</value>
   </data>
