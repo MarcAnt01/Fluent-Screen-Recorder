@@ -63,9 +63,6 @@
   <data name="Ok" xml:space="preserve">
     <value>OK</value>
   </data>
-  <data name="OpenFolder" xml:space="preserve">
-    <value>ビデオが保存されているフォルダを開く</value>
-  </data>
   <data name="OverlayMode" xml:space="preserve">
     <value>デフォルトでオーバーレイモードを開く</value>
   </data>

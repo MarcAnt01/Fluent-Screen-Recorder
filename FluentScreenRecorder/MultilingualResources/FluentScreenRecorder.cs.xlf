@@ -75,10 +75,6 @@
           <source>Ok</source>
           <target state="final">Ok</target>
         </trans-unit>
-        <trans-unit id="OpenFolder" translate="yes" xml:space="preserve">
-          <source>Open the folder where the video has been saved</source>
-          <target state="final">Otevřít složku, do které bylo video uloženo</target>
-        </trans-unit>
         <trans-unit id="OverlayMode" translate="yes" xml:space="preserve">
           <source>Open overlay mode by default</source>
           <target state="final">Otevřít režim překrytí jako výchozí</target>
@@ -223,6 +219,14 @@
         <trans-unit id="TimerDescription" translate="yes" xml:space="preserve">
           <source>Add a 3 seconds delay before starting the actual recording</source>
           <target state="new">Add a 3 seconds delay before starting the actual recording</target>
+        </trans-unit>
+        <trans-unit id="FileFolder" translate="yes" xml:space="preserve">
+          <source>Show in folder</source>
+          <target state="new">Show in folder</target>
+        </trans-unit>
+        <trans-unit id="MoreOptions" translate="yes" xml:space="preserve">
+          <source>More options</source>
+          <target state="new">More options</target>
         </trans-unit>
       </group>
     </body>

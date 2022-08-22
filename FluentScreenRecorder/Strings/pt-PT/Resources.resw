@@ -75,9 +75,6 @@
   <data name="Whatsnew" xml:space="preserve">
     <value>O que há de novo?</value>
   </data>
-  <data name="OpenFolder" xml:space="preserve">
-    <value>Abrir a pasta onde o vídeo foi guardado</value>
-  </data>
   <data name="SystemVideoPlayerOption" xml:space="preserve">
     <value>Utilizar leitor do sistema para abrir vídeos</value>
   </data>

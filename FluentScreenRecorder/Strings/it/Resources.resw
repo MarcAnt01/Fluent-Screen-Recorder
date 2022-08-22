@@ -63,9 +63,6 @@
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
-  <data name="OpenFolder" xml:space="preserve">
-    <value>Apri la cartella dove è stata salvata la registrazione</value>
-  </data>
   <data name="OverlayMode" xml:space="preserve">
     <value>Apri la modalità overlay di default</value>
   </data>

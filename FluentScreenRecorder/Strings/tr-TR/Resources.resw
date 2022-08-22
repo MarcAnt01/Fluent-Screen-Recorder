@@ -75,9 +75,6 @@
   <data name="Whatsnew" xml:space="preserve">
     <value>Neler yeni?</value>
   </data>
-  <data name="OpenFolder" xml:space="preserve">
-    <value>Videonun kaydedildiği klasörü açın</value>
-  </data>
   <data name="SystemVideoPlayerOption" xml:space="preserve">
     <value>Videoları açmak için sistem oynatıcısını kullan</value>
   </data>

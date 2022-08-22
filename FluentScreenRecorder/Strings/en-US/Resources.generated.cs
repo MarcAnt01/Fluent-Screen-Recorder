@@ -224,6 +224,19 @@ namespace FluentScreenRecorder.Strings{
         }
         #endregion
 
+        #region FileFolder
+        /// <summary>
+        ///   Looks up a localized string similar to: Show in folder
+        /// </summary>
+        public static string FileFolder
+        {
+            get
+            {
+                return _resourceLoader.GetString("FileFolder");
+            }
+        }
+        #endregion
+
         #region Framerate
         /// <summary>
         ///   Looks up a localized string similar to: Framerate
@@ -367,6 +380,19 @@ namespace FluentScreenRecorder.Strings{
         }
         #endregion
 
+        #region MoreOptions
+        /// <summary>
+        ///   Looks up a localized string similar to: More options
+        /// </summary>
+        public static string MoreOptions
+        {
+            get
+            {
+                return _resourceLoader.GetString("MoreOptions");
+            }
+        }
+        #endregion
+
         #region NoAudio
         /// <summary>
         ///   Looks up a localized string similar to: No Audio
@@ -389,19 +415,6 @@ namespace FluentScreenRecorder.Strings{
             get
             {
                 return _resourceLoader.GetString("Ok");
-            }
-        }
-        #endregion
-
-        #region OpenFolder
-        /// <summary>
-        ///   Looks up a localized string similar to: Open the folder where the video has been saved
-        /// </summary>
-        public static string OpenFolder
-        {
-            get
-            {
-                return _resourceLoader.GetString("OpenFolder");
             }
         }
         #endregion
@@ -744,6 +757,7 @@ namespace FluentScreenRecorder.Strings{
             Donate,
             ExitOverlay,
             Failure,
+            FileFolder,
             Framerate,
             GalleryFill,
             GalleryView,
@@ -755,9 +769,9 @@ namespace FluentScreenRecorder.Strings{
             Info,
             MicNoPermission,
             MicSettings,
+            MoreOptions,
             NoAudio,
             Ok,
-            OpenFolder,
             OverlayMode,
             OverlayModeDescription,
             Privacy,
