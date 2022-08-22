@@ -18,6 +18,8 @@ namespace FluentScreenRecorder
         public event EventHandler Deleted2;
         public event EventHandler SaveAs;
         public event EventHandler Shared2;
+        public event EventHandler OpenFolder;
+        public event EventHandler OpenFolder2;
 
         protected override void OnApplyTemplate()
         {
@@ -40,17 +42,8 @@ namespace FluentScreenRecorder
                 toolTip2.Content = Strings.Resources.Info;
                 ToolTipService.SetToolTip(InfoButton, toolTip2);
                 AutomationProperties.SetName(InfoButton, Strings.Resources.Info);
-            }
+            }            
             
-            Button ShareButton = GetTemplateChild("ShareButton") as Button;
-            if (ShareButton != null)
-            {
-                ShareButton.Click += Share_Click;
-                ToolTip toolTip3 = new ToolTip();
-                toolTip3.Content = Strings.Resources.Share;
-                ToolTipService.SetToolTip(ShareButton, toolTip3);
-                AutomationProperties.SetName(ShareButton, Strings.Resources.Share);
-            }
 
             Button DeleteButton2 = GetTemplateChild("DeleteButton2") as Button;
             if (DeleteButton2 != null)
@@ -71,17 +64,56 @@ namespace FluentScreenRecorder
                 ToolTipService.SetToolTip(SaveAsButton, toolTip2);
                 AutomationProperties.SetName(SaveAsButton, Strings.Resources.SaveAs);
             }
-            
-            Button ShareButton2 = GetTemplateChild("ShareButton2") as Button;
-            if (ShareButton2 != null)
-            {
-                ShareButton2.Click += Share2_Click;
-                ToolTip toolTip3 = new ToolTip();
-                toolTip3.Content = Strings.Resources.Share;
-                ToolTipService.SetToolTip(ShareButton2, toolTip3);
-                AutomationProperties.SetName(ShareButton2, Strings.Resources.Share);
 
-            }           
+            Button MoreButton = GetTemplateChild("MoreButton") as Button;
+            if (MoreButton != null)
+            {
+                ToolTip toolTip2 = new ToolTip();
+                toolTip2.Content = Strings.Resources.MoreOptions;
+                ToolTipService.SetToolTip(MoreButton, toolTip2);
+                AutomationProperties.SetName(MoreButton, Strings.Resources.MoreOptions);
+            }
+            
+            Button MoreButton2 = GetTemplateChild("MoreButton2") as Button;
+            if (MoreButton2 != null)
+            {
+                ToolTip toolTip2 = new ToolTip();
+                toolTip2.Content = Strings.Resources.MoreOptions;
+                ToolTipService.SetToolTip(MoreButton2, toolTip2);
+                AutomationProperties.SetName(MoreButton2, Strings.Resources.MoreOptions);
+            }
+
+
+
+            MenuFlyoutItem ShareItem = GetTemplateChild("ShareItem") as MenuFlyoutItem;            
+            if (ShareItem != null)
+            {
+                ShareItem.Click += Share_Click;
+                ShareItem.Text = Strings.Resources.Share;
+            }
+
+            MenuFlyoutItem ShareItem2 = GetTemplateChild("ShareItem2") as MenuFlyoutItem;
+            if (ShareItem2 != null)
+            {
+                ShareItem2.Click += Share2_Click;
+                ShareItem2.Text = Strings.Resources.Share;
+            }
+
+            MenuFlyoutItem OpenFolderItem = GetTemplateChild("OpenFolderItem") as MenuFlyoutItem;
+            if (OpenFolderItem != null)
+            {
+                OpenFolderItem.Click += OpenFolder_Click;
+                OpenFolderItem.Text = Strings.Resources.FileFolder;
+            }
+
+            MenuFlyoutItem OpenFolderItem2 = GetTemplateChild("OpenFolderItem2") as MenuFlyoutItem;
+            if (OpenFolderItem2 != null)
+            {
+                OpenFolderItem2.Click += OpenFolder2_Click;
+                OpenFolderItem2.Text = Strings.Resources.FileFolder;
+            }
+
+
 
             base.OnApplyTemplate();
         }
@@ -114,6 +146,17 @@ namespace FluentScreenRecorder
         {
             Shared2?.Invoke(this, EventArgs.Empty);
         }
+
+        private void OpenFolder_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFolder?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void OpenFolder2_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFolder2?.Invoke(this, EventArgs.Empty);
+        }
+
 
 
     }

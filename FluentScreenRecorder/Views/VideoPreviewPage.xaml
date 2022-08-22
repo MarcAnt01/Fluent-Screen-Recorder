@@ -30,6 +30,7 @@
                         IsZoomButtonVisible="False"
                         SaveAs="CustomMediaTransportControls_SaveAs"
                         Shared2="CustomMediaTransportControls_Share"
+                        OpenFolder2="CustomMediaTransportControls_OpenFolder2"
                         Style="{StaticResource CustomMediaTransportControlsStyle2}" />
                 </MediaPlayerElement.TransportControls>
             </MediaPlayerElement>

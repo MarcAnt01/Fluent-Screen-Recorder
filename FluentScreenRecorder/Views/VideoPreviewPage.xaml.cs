@@ -4,6 +4,7 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Media.Core;
 using Windows.Storage;
+using Windows.System;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
@@ -107,6 +108,14 @@ namespace FluentScreenRecorder.Views
             // video preview page when we already exited it.
             Current = null;
             TempFile = null;
+        }
+
+        private async void CustomMediaTransportControls_OpenFolder2(object sender, EventArgs e)
+        {
+            var folderLocation = await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder");
+            var options = new FolderLauncherOptions();
+            options.ItemsToSelect.Add(_tempFile);
+            await Launcher.LaunchFolderAsync(folderLocation, options);
         }
     }
 }

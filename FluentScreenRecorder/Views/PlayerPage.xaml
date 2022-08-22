@@ -123,6 +123,7 @@
                         IsFullWindowButtonVisible="False"
                         IsZoomButtonVisible="False"
                         Shared="CustomMediaTransportControls_Shared"
+                        OpenFolder="CustomMediaTransportControls_OpenFolder"
                         Style="{StaticResource CustomMediaTransportControlsStyle}" />
                 </MediaPlayerElement.TransportControls>
             </MediaPlayerElement>

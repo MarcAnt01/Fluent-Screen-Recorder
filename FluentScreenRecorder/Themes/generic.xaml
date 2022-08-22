@@ -213,7 +213,7 @@
                                         <Setter Target="MediaTransportControls_Command_Border.(Grid.Row)" Value="1" />
                                         <Setter Target="ControlPanelGrid.Height" Value="48" />
                                         <Setter Target="MediaControlsCommandBar.Margin" Value="0" />
-                                        <Setter Target="PlayPauseButton.Visibility" Value="Collapsed" />
+                                        <Setter Target="PlayPauseButton.Visibility" Value="Collapsed" />                                                                            
                                         <Setter Target="ProgressSlider.Margin" Value="{ThemeResource MediaTransportControlsProgressSliderCompactMargin}" />
                                         <Setter Target="ControlPanelGrid.Padding" Value="3" />
                                     </VisualState.Setters>
@@ -380,10 +380,21 @@
                                                     <FontIcon Glyph="&#xE946;" />
                                                 </AppBarButton.Icon>
                                             </AppBarButton>
-                                            <AppBarButton x:Name="ShareButton"                                                          
-                                                          Icon="Share"
-                                                          VerticalAlignment="Center"
-                                                          Style='{StaticResource AppBarButtonStyle}'/>
+                                            <AppBarButton x:Name='MoreButton'
+                                                          Icon="More"                                                        
+                                                          VerticalAlignment="Center"                                                          
+                                                          Style='{StaticResource AppBarButtonStyle}' >
+                                                <AppBarButton.Flyout>
+                                                    <MenuFlyout>
+                                                        <MenuFlyoutItem x:Name="ShareItem" Icon="Share" />
+                                                        <MenuFlyoutItem x:Name="OpenFolderItem">
+                                                            <MenuFlyoutItem.Icon>
+                                                                <FontIcon Glyph="&#xE838;"/>
+                                                            </MenuFlyoutItem.Icon>
+                                                        </MenuFlyoutItem>                                                        
+                                                    </MenuFlyout>                                                    
+                                                </AppBarButton.Flyout>
+                                            </AppBarButton>                                            
                                             <AppBarSeparator x:Name="LeftSeparator" Height="0" Width="0" Margin="0,0" />
                                             <AppBarButton x:Name="StopButton" Icon="Stop" Style="{StaticResource AppBarButtonStyle}" MediaTransportControlsHelper.DropoutOrder="7" Visibility="Collapsed" />
                                             <AppBarButton x:Name="SkipBackwardButton" Style="{StaticResource AppBarButtonStyle}" MediaTransportControlsHelper.DropoutOrder="5" Visibility="Collapsed">
@@ -436,12 +447,7 @@
                                                 <AppBarButton.Icon>
                                                     <FontIcon Glyph="&#xE799;" />
                                                 </AppBarButton.Icon>
-                                            </AppBarButton>
-                                            <AppBarButton x:Name="CastButton" Style="{StaticResource AppBarButtonStyle}" MediaTransportControlsHelper.DropoutOrder="11">
-                                                <AppBarButton.Icon>
-                                                    <FontIcon Glyph="&#xEC15;" />
-                                                </AppBarButton.Icon>
-                                            </AppBarButton>
+                                            </AppBarButton>                                            
                                             <AppBarButton x:Name="CompactOverlayButton" Style="{StaticResource AppBarButtonStyle}" MediaTransportControlsHelper.DropoutOrder="24" Visibility="Collapsed">
                                                 <AppBarButton.Icon>
                                                     <FontIcon Glyph="&#xE8B9;" />
@@ -607,7 +613,7 @@
                                         <Setter Target="MediaTransportControls_Command_Border.(Grid.Row)" Value="1" />
                                         <Setter Target="ControlPanelGrid.Height" Value="48" />
                                         <Setter Target="MediaControlsCommandBar.Margin" Value="0" />
-                                        <Setter Target="PlayPauseButton.Visibility" Value="Collapsed" />
+                                        <Setter Target="PlayPauseButton.Visibility" Value="Collapsed" />                                                                              
                                         <Setter Target="ProgressSlider.Margin" Value="{ThemeResource MediaTransportControlsProgressSliderCompactMargin}" />
                                         <Setter Target="ControlPanelGrid.Padding" Value="3" />
                                     </VisualState.Setters>
@@ -774,10 +780,21 @@
                                                     <FontIcon Glyph="&#xE792;" />
                                                 </AppBarButton.Icon>
                                             </AppBarButton>
-                                            <AppBarButton x:Name="ShareButton2"                                                          
-                                                          Icon="Share"
-                                                          VerticalAlignment="Center"
-                                                          Style='{StaticResource AppBarButtonStyle}'/>
+                                            <AppBarButton x:Name='MoreButton2'
+                                                          Icon="More"                                                        
+                                                          VerticalAlignment="Center"                                                          
+                                                          Style='{StaticResource AppBarButtonStyle}' >
+                                                <AppBarButton.Flyout>
+                                                    <MenuFlyout>
+                                                        <MenuFlyoutItem x:Name="ShareItem2" Icon="Share" />
+                                                        <MenuFlyoutItem x:Name="OpenFolderItem2">
+                                                            <MenuFlyoutItem.Icon>
+                                                                <FontIcon Glyph="&#xE838;"/>
+                                                            </MenuFlyoutItem.Icon>
+                                                        </MenuFlyoutItem>
+                                                    </MenuFlyout>
+                                                </AppBarButton.Flyout>
+                                            </AppBarButton>
                                             <AppBarSeparator x:Name="LeftSeparator" Height="0" Width="0" Margin="0,0" />
                                             <AppBarButton x:Name="StopButton" Icon="Stop" Style="{StaticResource AppBarButtonStyle}" MediaTransportControlsHelper.DropoutOrder="7" Visibility="Collapsed" />
                                             <AppBarButton x:Name="SkipBackwardButton" Style="{StaticResource AppBarButtonStyle}" MediaTransportControlsHelper.DropoutOrder="5" Visibility="Collapsed">
@@ -830,12 +847,7 @@
                                                 <AppBarButton.Icon>
                                                     <FontIcon Glyph="&#xE799;" />
                                                 </AppBarButton.Icon>
-                                            </AppBarButton>
-                                            <AppBarButton x:Name="CastButton" Style="{StaticResource AppBarButtonStyle}" MediaTransportControlsHelper.DropoutOrder="11">
-                                                <AppBarButton.Icon>
-                                                    <FontIcon Glyph="&#xEC15;" />
-                                                </AppBarButton.Icon>
-                                            </AppBarButton>
+                                            </AppBarButton>                                            
                                             <AppBarButton x:Name="CompactOverlayButton" Style="{StaticResource AppBarButtonStyle}" MediaTransportControlsHelper.DropoutOrder="24" Visibility="Collapsed">
                                                 <AppBarButton.Icon>
                                                     <FontIcon Glyph="&#xE8B9;" />

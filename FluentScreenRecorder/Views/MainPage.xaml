@@ -257,6 +257,11 @@
                                 <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF4A4;" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
+                        <MenuFlyoutItem Click="MenuFlyoutItem_Click_3" Text="{x:Bind strings:Resources.FileFolder}">
+                            <MenuFlyoutItem.Icon>
+                                <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF41A;" />
+                            </MenuFlyoutItem.Icon>
+                        </MenuFlyoutItem>
                     </MenuFlyout>
                 </GridView.Resources>
                 <GridView.ItemTemplate>
