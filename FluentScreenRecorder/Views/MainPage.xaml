@@ -234,55 +234,57 @@
 
             </StackPanel>
 
-            <GridView
-                x:Name="BasicGridView"
-                Padding="12"
-                HorizontalAlignment="Stretch"
-                RightTapped="BasicGridView_RightTapped"
-                SelectionMode="Single">
-                <GridView.Resources>
-                    <MenuFlyout x:Name="BasicGridFlyout">
-                        <MenuFlyoutItem Click="MenuFlyoutItem_Click" Text="{x:Bind strings:Resources.Delete}">
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF34D;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
-                        <MenuFlyoutItem Click="MenuFlyoutItem_Click_1" Text="{x:Bind strings:Resources.Share}">
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF6B0;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
-                        <MenuFlyoutItem Click="MenuFlyoutItem_Click_2" Text="{x:Bind strings:Resources.Info}">
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF4A4;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
-                        <MenuFlyoutItem Click="MenuFlyoutItem_Click_3" Text="{x:Bind strings:Resources.FileFolder}">
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF41A;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
-                    </MenuFlyout>
-                </GridView.Resources>
-                <GridView.ItemTemplate>
-                    <DataTemplate x:DataType="models:ThumbItem">
-                        <StackPanel>
-                            <Image
-                                Width="192"
-                                Height="132"
-                                Margin="12"
-                                RightTapped="Image_RightTapped"
-                                Source="{x:Bind img}"
-                                Stretch="UniformToFill"
-                                Tapped="Image_Tapped" />
-                            <TextBlock
-                                Margin="0,0,0,10"
-                                HorizontalAlignment="Center"
-                                Text="{x:Bind fileN}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </GridView.ItemTemplate>
-            </GridView>
+            <ScrollViewer>
+                <GridView
+                    x:Name="BasicGridView"
+                    Padding="12"
+                    HorizontalAlignment="Center"
+                    RightTapped="BasicGridView_RightTapped"
+                    SelectionMode="Single">
+                    <GridView.Resources>
+                        <MenuFlyout x:Name="BasicGridFlyout">
+                            <MenuFlyoutItem Click="MenuFlyoutItem_Click" Text="{x:Bind strings:Resources.Delete}">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF34D;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Click="MenuFlyoutItem_Click_1" Text="{x:Bind strings:Resources.Share}">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF6B0;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Click="MenuFlyoutItem_Click_2" Text="{x:Bind strings:Resources.Info}">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF4A4;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                            <MenuFlyoutItem Click="MenuFlyoutItem_Click_3" Text="{x:Bind strings:Resources.FileFolder}">
+                                <MenuFlyoutItem.Icon>
+                                    <FontIcon FontFamily="/Assets/Fonts/FluentSystemIcons-Regular.ttf#FluentSystemIcons-Regular" Glyph="&#xF41A;" />
+                                </MenuFlyoutItem.Icon>
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
+                    </GridView.Resources>
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="models:ThumbItem">
+                            <StackPanel>
+                                <Image
+                                    Width="192"
+                                    Height="132"
+                                    Margin="12"
+                                    RightTapped="Image_RightTapped"
+                                    Source="{x:Bind img}"
+                                    Stretch="UniformToFill"
+                                    Tapped="Image_Tapped" />
+                                <TextBlock
+                                    Margin="0,0,0,10"
+                                    HorizontalAlignment="Center"
+                                    Text="{x:Bind fileN}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </ScrollViewer>
         </Grid>
 
         <Frame
