@@ -19,10 +19,6 @@
         <local1:InvertBoolConverter x:Key="InvertBoolConv" />
     </Page.Resources>
 
-    <Page.KeyboardAccelerators>
-        <KeyboardAccelerator Key="Escape" Invoked="OnEscInvoked" />
-    </Page.KeyboardAccelerators>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
@@ -102,7 +98,10 @@
             BorderThickness="0"
             Canvas.ZIndex="2"
             Click="BackButton_Click"
-            CornerRadius="5">
+            CornerRadius="4">
+            <Button.KeyboardAccelerators>
+                <KeyboardAccelerator Key="Escape" Invoked="OnEscInvoked" />
+            </Button.KeyboardAccelerators>
             <muxc:AnimatedIcon
                 x:Name="BackAnimatedIcon"
                 Width="16"
