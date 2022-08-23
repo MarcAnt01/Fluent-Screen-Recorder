@@ -71,6 +71,12 @@ namespace FluentScreenRecorder.ViewModels
             set => Set(nameof(Timer), value);
         }
 
+        public bool AutoResizeWindow
+        {
+            get => Get(nameof(AutoResizeWindow), true);
+            set => Set(nameof(AutoResizeWindow), value);
+        }
+
         /// <summary>
         /// Gets an app setting.
         /// </summary>

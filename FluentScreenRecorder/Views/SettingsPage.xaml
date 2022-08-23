@@ -178,7 +178,11 @@
                         </settings:Setting.ActionContent>
                     </settings:Setting>
 
-
+                    <settings:Setting Description="Automatically resize the window based on the page you're in." Header="Auto resize">
+                        <settings:Setting.ActionContent>
+                            <ToggleSwitch Margin="0,0,-72,0" IsOn="{x:Bind local1:App.Settings.AutoResizeWindow, Mode=TwoWay}" />
+                        </settings:Setting.ActionContent>
+                    </settings:Setting>
 
                     <TextBlock Margin="0,20,0,8" Text="{x:Bind strings:Resources.Advanced}" />
 

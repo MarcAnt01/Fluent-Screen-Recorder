@@ -214,7 +214,9 @@ namespace FluentScreenRecorder
                     NoVideosContainer.Visibility = Visibility.Visible;
                     BasicGridView.Visibility = Visibility.Collapsed;
                 }
-                ApplicationView.GetForCurrentView().TryResizeView(new(550, 500));
+
+                if (App.Settings.AutoResizeWindow)
+                    ApplicationView.GetForCurrentView().TryResizeView(new(550, 500));
             }
         }
 
@@ -235,7 +237,8 @@ namespace FluentScreenRecorder
 
         private async Task StartRecordingAsync()
         {
-            ApplicationView.GetForCurrentView().TryResizeView(new(412, 300));
+            if (App.Settings.AutoResizeWindow)
+                ApplicationView.GetForCurrentView().TryResizeView(new(412, 300));
             var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
             // Get our encoder properties
@@ -362,7 +365,9 @@ namespace FluentScreenRecorder
             
                 RecordButton.Visibility = Visibility.Collapsed;
                 RecordingContainer.Visibility = Visibility.Collapsed;
-                ApplicationView.GetForCurrentView().TryResizeView(new(550, 500));
+
+                if (App.Settings.AutoResizeWindow)
+                    ApplicationView.GetForCurrentView().TryResizeView(new(550, 500));
 
                 await recordingErrorDialog.ShowAsync();
                 _isRecording = false;
@@ -690,7 +695,8 @@ namespace FluentScreenRecorder
         {
             if (isRecording)
             {
-                ApplicationView.GetForCurrentView().TryResizeView(new(Window.Current.Bounds.Width, 88));
+                if (App.Settings.AutoResizeWindow)
+                    ApplicationView.GetForCurrentView().TryResizeView(new(Window.Current.Bounds.Width, 88));
                 RecordingMiniOptions.Visibility = Visibility.Collapsed;
                 RecordName.Text = Strings.Resources.Stop;
                 RecordButton.SetValue(AutomationProperties.NameProperty, Strings.Resources.Stop);
