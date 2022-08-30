@@ -1,13 +1,14 @@
 ﻿using FluentScreenRecorder.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Windows.Foundation;
 using Windows.Graphics.DirectX.Direct3D11;
 using Windows.UI.ViewManagement;
 
 namespace FluentScreenRecorder.ViewModels
 {
-    public class RecorderViewModel
+    public class RecorderViewModel : INotifyPropertyChanged
     {
         public IDirect3DDevice Device;
         public CaptureEncoder.Encoder Encoder;
@@ -16,6 +17,8 @@ namespace FluentScreenRecorder.ViewModels
         public List<FrameRateItem> Framerates;
 
         private Size _size;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public Size Size
         {
@@ -26,6 +29,8 @@ namespace FluentScreenRecorder.ViewModels
 
                 if (ApplicationView.GetForCurrentView().TryResizeView(value))
                     _size = value;
+
+                PropertyChanged?.Invoke(this, new(nameof(Size)));
             }
         }
 
