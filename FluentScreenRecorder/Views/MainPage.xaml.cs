@@ -90,12 +90,7 @@ namespace FluentScreenRecorder
             ResolutionComboBox.SelectedIndex = App.RecViewModel.GetResolutionIndex(App.Settings.Width, App.Settings.Height);
 
             FrameRateComboBox.ItemsSource = App.RecViewModel.Framerates;
-            FrameRateComboBox.SelectedIndex = App.RecViewModel.GetFrameRateIndex(App.Settings.FrameRate);
-
-            if (App.Settings.IntAudio)
-            {
-                InternalAudioCheck();
-            }
+            FrameRateComboBox.SelectedIndex = App.RecViewModel.GetFrameRateIndex(App.Settings.FrameRate);            
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -105,22 +100,7 @@ namespace FluentScreenRecorder
             formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
             
             base.OnNavigatedTo(e);
-        }
-        
-        private async void InternalAudioCheck()
-        {
-            try
-            {
-                var testCapture = new LoopbackAudioCapture(MediaDevice.GetDefaultAudioRenderId(AudioDeviceRole.Default));
-                await testCapture.Start();
-                await testCapture.Stop();
-                testCapture = null;
-            }
-            catch (Exception)
-            {
-                App.Settings.IntAudio = false;
-            }
-        }
+        }        
 
         private async void LoadedHandler(object sender, RoutedEventArgs e)
         {
