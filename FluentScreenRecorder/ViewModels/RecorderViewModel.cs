@@ -1,10 +1,9 @@
 ﻿using FluentScreenRecorder.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Graphics.DirectX.Direct3D11;
+using Windows.UI.ViewManagement;
 
 namespace FluentScreenRecorder.ViewModels
 {
@@ -15,6 +14,20 @@ namespace FluentScreenRecorder.ViewModels
         public List<ResolutionItem> Resolutions;
         public List<BitrateItem> Bitrates;
         public List<FrameRateItem> Framerates;
+
+        private Size _size;
+
+        public Size Size
+        {
+            get => _size;
+            set
+            {
+                if (_size == value || _size.IsEmpty) return;
+
+                if (ApplicationView.GetForCurrentView().TryResizeView(value))
+                    _size = value;
+            }
+        }
 
         public int GetResolutionIndex(uint width, uint height)
         {
