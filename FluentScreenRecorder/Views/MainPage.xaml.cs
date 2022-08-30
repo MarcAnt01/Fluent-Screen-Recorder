@@ -308,7 +308,7 @@ namespace FluentScreenRecorder
                     {
                         await mediaCapture.StartRecordToStorageFileAsync(MediaEncodingProfile.CreateMp3(AudioEncodingQuality.High), micFile);
                     }
-                    var encodesuccess = await App.RecViewModel.Encoder.EncodeAsync(stream, width, height, bitrate, frameRate, loopbackAudioCapture);
+                    var encodesuccess = await App.RecViewModel.Encoder.EncodeAsync(stream, width, height, bitrate, frameRate, loopbackAudioCapture, App.Settings.ShowCursor);
                     if (!encodesuccess)
                     {
                         ContentDialog errorDialog = new()
@@ -316,7 +316,7 @@ namespace FluentScreenRecorder
                             Title = Strings.Resources.Failure,
                             Content = "Windows cannot encode your video.",
                             CloseButtonText = Strings.Resources.Ok                           
-                        };                      
+                        };
                         await errorDialog.ShowAsync();
                     }
 

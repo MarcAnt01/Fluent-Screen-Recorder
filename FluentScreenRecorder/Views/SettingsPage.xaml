@@ -178,7 +178,11 @@
                         </settings:Setting.ActionContent>
                     </settings:Setting>
 
-
+                    <settings:Setting Description="Capture your cursor in the video." Header="Cursor capture">
+                        <settings:Setting.ActionContent>
+                            <ToggleSwitch Margin="0,0,-72,0" IsOn="{x:Bind local1:App.Settings.ShowCursor, Mode=TwoWay}" />
+                        </settings:Setting.ActionContent>
+                    </settings:Setting>
 
                     <TextBlock Margin="0,20,0,8" Text="{x:Bind strings:Resources.Advanced}" />
 
