@@ -35,7 +35,7 @@ namespace FluentScreenRecorder.Views
             PreviewPlayer.Source = MediaSource.CreateFromStorageFile(file);
             Source = (MediaSource)PreviewPlayer.Source;
 
-            ApplicationView.GetForCurrentView().TryResizeView(new(500, 500));
+            App.RecViewModel.Size = new(500, 500);
 
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
             dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(DataRequested);            
@@ -47,8 +47,8 @@ namespace FluentScreenRecorder.Views
 
             Current = this;
 
-            ApplicationView.GetForCurrentView().TryResizeView(new(500, 500));            
-        }        
+            App.RecViewModel.Size = new(500, 500);
+        }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
