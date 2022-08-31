@@ -159,6 +159,32 @@ namespace FluentScreenRecorder.Strings{
         }
         #endregion
 
+        #region CursorCapture
+        /// <summary>
+        ///   Looks up a localized string similar to: Cursor capture
+        /// </summary>
+        public static string CursorCapture
+        {
+            get
+            {
+                return _resourceLoader.GetString("CursorCapture");
+            }
+        }
+        #endregion
+
+        #region CursorCaptureDescription
+        /// <summary>
+        ///   Looks up a localized string similar to: Capture your cursor in the video recording
+        /// </summary>
+        public static string CursorCaptureDescription
+        {
+            get
+            {
+                return _resourceLoader.GetString("CursorCaptureDescription");
+            }
+        }
+        #endregion
+
         #region Delete
         /// <summary>
         ///   Looks up a localized string similar to: Delete
@@ -510,19 +536,6 @@ namespace FluentScreenRecorder.Strings{
         }
         #endregion
 
-        #region Save
-        /// <summary>
-        ///   Looks up a localized string similar to: Save
-        /// </summary>
-        public static string Save
-        {
-            get
-            {
-                return _resourceLoader.GetString("Save");
-            }
-        }
-        #endregion
-
         #region SaveAs
         /// <summary>
         ///   Looks up a localized string similar to: Save as
@@ -532,6 +545,19 @@ namespace FluentScreenRecorder.Strings{
             get
             {
                 return _resourceLoader.GetString("SaveAs");
+            }
+        }
+        #endregion
+
+        #region Saved
+        /// <summary>
+        ///   Looks up a localized string similar to: Saved
+        /// </summary>
+        public static string Saved
+        {
+            get
+            {
+                return _resourceLoader.GetString("Saved");
             }
         }
         #endregion
@@ -752,6 +778,8 @@ namespace FluentScreenRecorder.Strings{
             Blank,
             BugReport,
             Copyright,
+            CursorCapture,
+            CursorCaptureDescription,
             Delete,
             Discord,
             Donate,
@@ -779,8 +807,8 @@ namespace FluentScreenRecorder.Strings{
             Recording,
             RecordingStop,
             Resolution,
-            Save,
             SaveAs,
+            Saved,
             Saving,
             Settings,
             Share,

@@ -150,6 +150,12 @@
   <data name="Copyright" xml:space="preserve">
     <value>Copyright</value>
   </data>
+  <data name="CursorCapture" xml:space="preserve">
+    <value>Cursor capture</value>
+  </data>
+  <data name="CursorCaptureDescription" xml:space="preserve">
+    <value>Capture your cursor in the video recording</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
@@ -231,11 +237,11 @@
   <data name="Resolution" xml:space="preserve">
     <value>Resolution</value>
   </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save</value>
-  </data>
   <data name="SaveAs" xml:space="preserve">
     <value>Save as</value>
+  </data>
+  <data name="Saved" xml:space="preserve">
+    <value>Saved</value>
   </data>
   <data name="Saving" xml:space="preserve">
     <value>Saving...</value>

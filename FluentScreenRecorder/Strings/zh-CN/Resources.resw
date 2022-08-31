@@ -78,9 +78,6 @@
   <data name="Resolution" xml:space="preserve">
     <value>分辨率</value>
   </data>
-  <data name="Save" xml:space="preserve">
-    <value>保存</value>
-  </data>
   <data name="SaveAs" xml:space="preserve">
     <value>另存为</value>
   </data>

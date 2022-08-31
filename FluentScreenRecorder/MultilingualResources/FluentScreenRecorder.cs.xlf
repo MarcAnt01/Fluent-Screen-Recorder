@@ -95,10 +95,6 @@
           <source>Resolution</source>
           <target state="final">Rozlišení</target>
         </trans-unit>
-        <trans-unit id="Save" translate="yes" xml:space="preserve">
-          <source>Save</source>
-          <target state="final">Uložit</target>
-        </trans-unit>
         <trans-unit id="SaveAs" translate="yes" xml:space="preserve">
           <source>Save as</source>
           <target state="final">Uložit jako</target>
@@ -227,6 +223,18 @@
         <trans-unit id="MoreOptions" translate="yes" xml:space="preserve">
           <source>More options</source>
           <target state="new">More options</target>
+        </trans-unit>
+        <trans-unit id="CursorCapture" translate="yes" xml:space="preserve">
+          <source>Cursor capture</source>
+          <target state="new">Cursor capture</target>
+        </trans-unit>
+        <trans-unit id="CursorCaptureDescription" translate="yes" xml:space="preserve">
+          <source>Capture your cursor in the video recording</source>
+          <target state="new">Capture your cursor in the video recording</target>
+        </trans-unit>
+        <trans-unit id="Saved" translate="yes" xml:space="preserve">
+          <source>Saved</source>
+          <target state="new">Saved</target>
         </trans-unit>
       </group>
     </body>

@@ -78,9 +78,6 @@
   <data name="Resolution" xml:space="preserve">
     <value>解像度</value>
   </data>
-  <data name="Save" xml:space="preserve">
-    <value>保存</value>
-  </data>
   <data name="SaveAs" xml:space="preserve">
     <value>名前を付けて保存...</value>
   </data>
