@@ -6,6 +6,7 @@ using Windows.Graphics.Capture;
 using Windows.Graphics.DirectX;
 using Windows.Graphics.DirectX.Direct3D11;
 using ScreenSenderComponent;
+using Windows.Foundation.Metadata;
 
 namespace CaptureEncoder
 {
@@ -58,7 +59,7 @@ namespace CaptureEncoder
             InitializeBlankTexture(size);            
         }
         
-        public async Task InitializeCapture(SizeInt32 size, LoopbackAudioCapture loopbackAudioCapture)
+        public async Task InitializeCapture(SizeInt32 size, LoopbackAudioCapture loopbackAudioCapture, bool withCursor = true)
         {
             _item.Closed += OnClosed;
             _framePool = Direct3D11CaptureFramePool.CreateFreeThreaded(
@@ -68,6 +69,9 @@ namespace CaptureEncoder
                 size);
             _framePool.FrameArrived += OnFrameArrived;
             _session = _framePool.CreateCaptureSession(_item);
+
+            if (ApiInformation.IsPropertyPresent("Windows.Graphics.Capture.GraphicsCaptureSession", "IsCursorCaptureEnabled"))
+                _session.IsCursorCaptureEnabled = withCursor;
 
             if (loopbackAudioCapture != null) await loopbackAudioCapture.Start();
 

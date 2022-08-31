@@ -71,6 +71,12 @@ namespace FluentScreenRecorder.ViewModels
             set => Set(nameof(Timer), value);
         }
 
+        public bool ShowCursor
+        {
+            get => Get(nameof(ShowCursor), true);
+            set => Set(nameof(ShowCursor), value);
+        }
+
         /// <summary>
         /// Gets an app setting.
         /// </summary>
