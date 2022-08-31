@@ -75,9 +75,6 @@
   <data name="Resolution" xml:space="preserve">
     <value>විභේදනය</value>
   </data>
-  <data name="Save" xml:space="preserve">
-    <value>සුරකින්න</value>
-  </data>
   <data name="SaveAs" xml:space="preserve">
     <value>සුරකින ආකාරය </value>
   </data>

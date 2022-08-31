@@ -78,9 +78,6 @@
   <data name="Resolution" xml:space="preserve">
     <value>Risoluzione</value>
   </data>
-  <data name="Save" xml:space="preserve">
-    <value>Salva</value>
-  </data>
   <data name="SaveAs" xml:space="preserve">
     <value>Salva come</value>
   </data>
