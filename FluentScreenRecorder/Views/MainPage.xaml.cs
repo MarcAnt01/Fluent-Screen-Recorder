@@ -194,7 +194,7 @@ namespace FluentScreenRecorder
                     NoVideosContainer.Visibility = Visibility.Visible;
                     BasicGridView.Visibility = Visibility.Collapsed;
                 }
-                ApplicationView.GetForCurrentView().TryResizeView(new(550, 500));
+                App.RecViewModel.Size = new(550, 500);
             }
         }
 
@@ -215,7 +215,6 @@ namespace FluentScreenRecorder
 
         private async Task StartRecordingAsync()
         {
-            ApplicationView.GetForCurrentView().TryResizeView(new(412, 300));
             var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
             // Get our encoder properties
@@ -275,7 +274,6 @@ namespace FluentScreenRecorder
             }
             if (useSourceSize)
             {
-                resolutionItem.IsZero();
                 width = (uint)item.Size.Width;
                 height = (uint)item.Size.Height;
 
@@ -291,11 +289,10 @@ namespace FluentScreenRecorder
             _tempFile = tempFile;
 
             if (App.Settings.Timer)
-            {
                 await Task.Delay(TimeSpan.FromSeconds(3));
-            }
 
             // Tell the user we've started recording
+            App.RecViewModel.Size = new(412, 300);
             NotifyRecordingStatusChanges(true);
 
             // Kick off the encoding
@@ -342,7 +339,7 @@ namespace FluentScreenRecorder
             
                 RecordButton.Visibility = Visibility.Collapsed;
                 RecordingContainer.Visibility = Visibility.Collapsed;
-                ApplicationView.GetForCurrentView().TryResizeView(new(550, 500));
+                App.RecViewModel.Size = new(550, 500);
 
                 await recordingErrorDialog.ShowAsync();
                 _isRecording = false;
@@ -670,7 +667,7 @@ namespace FluentScreenRecorder
         {
             if (isRecording)
             {
-                ApplicationView.GetForCurrentView().TryResizeView(new(Window.Current.Bounds.Width, 88));
+                App.RecViewModel.Size = new(Window.Current.Bounds.Width, 88);
                 RecordingMiniOptions.Visibility = Visibility.Collapsed;
                 RecordName.Text = Strings.Resources.Stop;
                 RecordButton.SetValue(AutomationProperties.NameProperty, Strings.Resources.Stop);
