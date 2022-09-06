@@ -239,6 +239,7 @@
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <PRIResource Include="Strings\pt-BR\Resources.resw" />
     <PRIResource Include="Strings\hu\Resources.resw" />
     <PRIResource Include="Strings\zh-CN\Resources.resw" />
     <PRIResource Include="Strings\pt-PT\Resources.resw" />
@@ -327,6 +328,7 @@
     <XliffResource Include="MultilingualResources\FluentScreenRecorder.es-ES.xlf" />
     <XliffResource Include="MultilingualResources\FluentScreenRecorder.hu.xlf" />
     <XliffResource Include="MultilingualResources\FluentScreenRecorder.it.xlf" />
+    <XliffResource Include="MultilingualResources\FluentScreenRecorder.pt-BR.xlf" />
     <XliffResource Include="MultilingualResources\FluentScreenRecorder.si.xlf" />
     <XliffResource Include="MultilingualResources\FluentScreenRecorder.ja.xlf" />
     <XliffResource Include="MultilingualResources\FluentScreenRecorder.pt-PT.xlf" />
