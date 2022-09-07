@@ -124,7 +124,7 @@
         </trans-unit>
         <trans-unit id="SaveConfirm" translate="yes" xml:space="preserve">
           <source>Do you want to save your file?</source>
-          <target state="new">Você pretende salvar o seu arquivo?</target>
+          <target state="new">Você deseja salvar o seu arquivo?</target>
         </trans-unit>
         <trans-unit id="Saving" translate="yes" xml:space="preserve">
           <source>Saving...</source>
