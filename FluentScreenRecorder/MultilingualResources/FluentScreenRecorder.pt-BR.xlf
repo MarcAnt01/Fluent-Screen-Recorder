@@ -88,7 +88,7 @@
         </trans-unit>
         <trans-unit id="Options" translate="yes" xml:space="preserve">
           <source>You can choose among the following options</source>
-          <target state="new">Você pode escolher entre as seguintes opções</target>
+          <target state="new">Você pode escolher uma das seguintes opções</target>
         </trans-unit>
         <trans-unit id="OverlayMode" translate="yes" xml:space="preserve">
           <source>Open overlay mode by default</source>
@@ -112,7 +112,7 @@
         </trans-unit>
         <trans-unit id="Resolution" translate="yes" xml:space="preserve">
           <source>Resolution</source>
-          <target state="new">Resolução</target>
+          <target state="new">Resolução do Vídeo</target>
         </trans-unit>
         <trans-unit id="Save" translate="yes" xml:space="preserve">
           <source>Save</source>
@@ -140,11 +140,11 @@
         </trans-unit>
         <trans-unit id="SourceSizeToggle" translate="yes" xml:space="preserve">
           <source>Source size</source>
-          <target state="new">Utilizar o tamanho da fonte como resolução de vídeo</target>
+          <target state="new">Utilizar o tamanho da fonte como resolução do vídeo</target>
         </trans-unit>
         <trans-unit id="SystemVideoPlayerOption" translate="yes" xml:space="preserve">
           <source>Use system player to open videos</source>
-          <target state="new">Use o player do sistema para abrir vídeos</target>
+          <target state="new">Usar o player do sistema para abrir vídeos</target>
         </trans-unit>
         <trans-unit id="Version" translate="yes" xml:space="preserve">
           <source>Version</source>
