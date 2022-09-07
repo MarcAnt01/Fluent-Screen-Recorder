@@ -8,7 +8,7 @@
       <group id="FLUENTSCREENRECORDER/STRINGS/EN-US/RESOURCES.RESW" datatype="resx">
         <trans-unit id="About" translate="yes" xml:space="preserve">
           <source>About the app</source>
-          <target state="new">Sobre o aplicativo</target>
+          <target state="new">Sobre o App</target>
         </trans-unit>
         <trans-unit id="Back" translate="yes" xml:space="preserve">
           <source>Go back</source>
@@ -76,7 +76,7 @@
         </trans-unit>
         <trans-unit id="MicSettings" translate="yes" xml:space="preserve">
           <source>System microphone settings</source>
-          <target state="new">Definições do microfone do sistema</target>
+          <target state="new">Configurações do microfone do sistema</target>
         </trans-unit>
         <trans-unit id="Ok" translate="yes" xml:space="preserve">
           <source>Ok</source>
