@@ -16,7 +16,7 @@
         </trans-unit>
         <trans-unit id="Bitrate" translate="yes" xml:space="preserve">
           <source>Bitrate</source>
-          <target state="new">Taxa de bits</target>
+          <target state="new">Taxa de Bits</target>
         </trans-unit>
         <trans-unit id="BugReport" translate="yes" xml:space="preserve">
           <source>Report a bug</source>
@@ -64,7 +64,7 @@
         </trans-unit>
         <trans-unit id="GoToOverlay" translate="yes" xml:space="preserve">
           <source>Switch to always on top</source>
-          <target state="new">Mudar para sempre no topo</target>
+          <target state="new">Alterar para sempre no topo</target>
         </trans-unit>
         <trans-unit id="Info" translate="yes" xml:space="preserve">
           <source>File info</source>
