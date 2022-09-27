@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:FluentScreenRecorder"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:strings="using:FluentScreenRecorder.Strings"
+    xmlns:strings="using:FluentScreenRecorder.Strings" xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     Unloaded="Page_Unloaded"
     mc:Ignorable="d">
@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
 
         <Grid>
-            <MediaPlayerElement
+                <MediaPlayerElement
                 x:Name="PreviewPlayer"
                 x:FieldModifier="public"
                 AreTransportControlsEnabled="True"
@@ -34,6 +34,13 @@
                         Style="{StaticResource CustomMediaTransportControlsStyle2}" />
                 </MediaPlayerElement.TransportControls>
             </MediaPlayerElement>
+            <controls:InAppNotification
+                x:Name="SavedNotif"
+                Margin="0,0,0,40">
+                <HyperlinkButton 
+                    Click="HyperlinkButton_Click" 
+                    Content="{x:Bind strings:Resources.Saved}"/>
+            </controls:InAppNotification>
         </Grid>
     </Grid>
 </Page>
