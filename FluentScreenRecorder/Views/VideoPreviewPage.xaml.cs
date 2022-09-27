@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
@@ -36,7 +37,7 @@ namespace FluentScreenRecorder.Views
             Source = (MediaSource)PreviewPlayer.Source;
 
             App.RecViewModel.Size = new(500, 500);
-
+            ShowSaved();                       
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
             dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(DataRequested);            
         }
@@ -47,7 +48,7 @@ namespace FluentScreenRecorder.Views
 
             Current = this;
 
-            App.RecViewModel.Size = new(500, 500);
+            App.RecViewModel.Size = new(500, 500);            
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -61,10 +62,15 @@ namespace FluentScreenRecorder.Views
 
                 DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
                 dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(DataRequested);
-            }
+            }            
             base.OnNavigatedTo(e);            
         }
         
+        public async Task ShowSaved()
+        {
+            await Task.Delay(TimeSpan.FromSeconds(1.5));
+            SavedNotif.Show(4000);                
+        }
 
         private async void CustomMediaTransportControls_SaveAs(object sender, EventArgs e)
         {
@@ -111,6 +117,14 @@ namespace FluentScreenRecorder.Views
         }
 
         private async void CustomMediaTransportControls_OpenFolder2(object sender, EventArgs e)
+        {
+            var folderLocation = await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder");
+            var options = new FolderLauncherOptions();
+            options.ItemsToSelect.Add(_tempFile);
+            await Launcher.LaunchFolderAsync(folderLocation, options);
+        }
+
+        private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
             var folderLocation = await KnownFolders.VideosLibrary.GetFolderAsync("Fluent Screen Recorder");
             var options = new FolderLauncherOptions();
