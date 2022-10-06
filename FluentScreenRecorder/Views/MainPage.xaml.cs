@@ -79,16 +79,16 @@ namespace FluentScreenRecorder
 
             NavigationCacheMode = NavigationCacheMode.Required; 
 
-            SilentPlayer = new MediaPlayer() { IsLoopingEnabled = true };
+            SilentPlayer = new() { IsLoopingEnabled = true };
             SilentPlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/Silence.ogg"));
             SilentPlayer.Play();
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(412, 88));
 
             ResolutionComboBox.ItemsSource = App.RecViewModel.Resolutions;
-            ResolutionComboBox.SelectedIndex = App.RecViewModel.GetResolutionIndex(App.Settings.Width, App.Settings.Height);
+            ResolutionComboBox.SelectedIndex = App.RecViewModel.Resolutions.IndexOf(App.RecViewModel.Resolutions.FirstOrDefault(r => r.Resolution.Width == App.Settings.Width && r.Resolution.Height == App.Settings.Height));
 
             FrameRateComboBox.ItemsSource = App.RecViewModel.Framerates;
-            FrameRateComboBox.SelectedIndex = App.RecViewModel.GetFrameRateIndex(App.Settings.FrameRate);            
+            FrameRateComboBox.SelectedIndex = App.RecViewModel.Framerates.IndexOf(App.RecViewModel.Framerates.FirstOrDefault(r => r.FrameRate == App.Settings.FrameRate));
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -220,9 +220,9 @@ namespace FluentScreenRecorder
             var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
             // Get our encoder properties
-            var frameRateItem = App.RecViewModel.Framerates[App.RecViewModel.GetFrameRateIndex(App.Settings.FrameRate)];
-            var resolutionItem = App.RecViewModel.Resolutions[App.RecViewModel.GetResolutionIndex(App.Settings.Width, App.Settings.Height)];
-            var bitrateItem = App.RecViewModel.Bitrates[App.RecViewModel.GetBitrateIndex(App.Settings.Bitrate)];
+            var frameRateItem = App.RecViewModel.Framerates.FirstOrDefault(f => f.FrameRate == App.Settings.FrameRate);
+            var resolutionItem = App.RecViewModel.Resolutions.FirstOrDefault(r => r.Resolution.Width > App.Settings.Width && r.Resolution.Height > App.Settings.Height);
+            var bitrateItem = App.RecViewModel.Bitrates.FirstOrDefault(b => b.Bitrate == App.Settings.Bitrate);
 
             MediaCapture mediaCapture = null;   
 
