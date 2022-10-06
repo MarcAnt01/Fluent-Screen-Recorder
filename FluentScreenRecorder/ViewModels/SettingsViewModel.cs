@@ -1,11 +1,6 @@
-﻿using FluentScreenRecorder.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.Graphics.DirectX.Direct3D11;
+using Windows.Foundation;
 using Windows.Storage;
 
 namespace FluentScreenRecorder.ViewModels
@@ -75,6 +70,12 @@ namespace FluentScreenRecorder.ViewModels
         public bool ShowCursor
         {
             get => Get(true);
+            set => Set(value);
+        }
+
+        public Size Size
+        {
+            get => Get(default(Size));
             set => Set(value);
         }
 

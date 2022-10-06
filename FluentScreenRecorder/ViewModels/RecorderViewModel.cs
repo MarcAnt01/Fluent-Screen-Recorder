@@ -1,4 +1,5 @@
 ﻿using FluentScreenRecorder.Models;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,19 +21,11 @@ namespace FluentScreenRecorder.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Size Size
-        {
-            get => _size;
-            set
-            {
-                if (_size == value || _size.IsEmpty) return;
+        public Size Size => _size;
 
-                if (ApplicationView.GetForCurrentView().TryResizeView(value))
-                    _size = value;
+        public bool Initialized { get; set; }
 
-                PropertyChanged?.Invoke(this, new(nameof(Size)));
-            }
-        }
+        public bool IsRecording { get; set; }
 
         public int GetResolutionIndex(uint width, uint height)
         {
@@ -70,6 +63,21 @@ namespace FluentScreenRecorder.ViewModels
                 }
             }
             return -1;
+        }
+
+        public void SetAppSize(Size size, bool save = true)
+        {
+            if (_size == size || _size.IsEmpty) return;
+
+            if (ApplicationView.GetForCurrentView().TryResizeView(size))
+            {
+                _size = size;
+
+                if (save)
+                    App.Settings.Size = size;
+            }
+
+            PropertyChanged?.Invoke(this, new(nameof(Size)));
         }
 
         public static T ParseEnumValue<T>(string input)

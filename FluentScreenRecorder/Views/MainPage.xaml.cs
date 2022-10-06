@@ -70,8 +70,6 @@ namespace FluentScreenRecorder
 
         public static MainPage Current;
 
-        private bool _isRecording;
-
         public MainPage()
         {
             InitializeComponent();
@@ -194,7 +192,11 @@ namespace FluentScreenRecorder
                     NoVideosContainer.Visibility = Visibility.Visible;
                     BasicGridView.Visibility = Visibility.Collapsed;
                 }
-                App.RecViewModel.Size = new(550, 500);
+
+                Size size = new(550, 500);
+
+                if (size.Width > App.Settings.Size.Width || size.Height > App.Settings.Size.Height)
+                    App.RecViewModel.SetAppSize(size);
             }
         }
 
@@ -202,13 +204,13 @@ namespace FluentScreenRecorder
 
         private async void OnRecordButtonClick(object sender, RoutedEventArgs e)
         {
-            if (_isRecording)
+            if (App.RecViewModel.IsRecording)
             {
-                _isRecording = false;
+                App.RecViewModel.IsRecording = false;
                 await StopRecordingAsync();
             } else
             {
-                _isRecording = true;
+                App.RecViewModel.IsRecording = true;
                 await StartRecordingAsync();
             }
         }
@@ -269,7 +271,7 @@ namespace FluentScreenRecorder
 
             if (item == null)
             {
-                _isRecording = false;
+                App.RecViewModel.IsRecording = false;
                 return;
             }
             if (useSourceSize)
@@ -292,7 +294,7 @@ namespace FluentScreenRecorder
                 await Task.Delay(TimeSpan.FromSeconds(3));
 
             // Tell the user we've started recording
-            App.RecViewModel.Size = new(412, 300);
+            App.RecViewModel.SetAppSize(new(412, 300), false);
             NotifyRecordingStatusChanges(true);
 
             // Kick off the encoding
@@ -316,7 +318,6 @@ namespace FluentScreenRecorder
                         };
                         await errorDialog.ShowAsync();
                     }
-
                 }
             }
             catch (Exception ex)
@@ -339,10 +340,10 @@ namespace FluentScreenRecorder
             
                 RecordButton.Visibility = Visibility.Collapsed;
                 RecordingContainer.Visibility = Visibility.Collapsed;
-                App.RecViewModel.Size = new(550, 500);
+                App.RecViewModel.SetAppSize(new(550, 500), false);
 
                 await recordingErrorDialog.ShowAsync();
-                _isRecording = false;
+                App.RecViewModel.IsRecording = false;
 
                 NotifyRecordingStatusChanges(false);
                 await _tempFile.DeleteAsync();
@@ -667,7 +668,7 @@ namespace FluentScreenRecorder
         {
             if (isRecording)
             {
-                App.RecViewModel.Size = new(Window.Current.Bounds.Width, 88);
+                App.RecViewModel.SetAppSize(new(Window.Current.Bounds.Width, 88), false);
                 RecordingMiniOptions.Visibility = Visibility.Collapsed;
                 RecordName.Text = Strings.Resources.Stop;
                 RecordButton.SetValue(AutomationProperties.NameProperty, Strings.Resources.Stop);
