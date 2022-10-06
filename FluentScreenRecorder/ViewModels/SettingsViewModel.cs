@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Graphics.DirectX.Direct3D11;
@@ -13,68 +14,68 @@ namespace FluentScreenRecorder.ViewModels
     {
         public uint Width
         {
-            get => Get(nameof(Width), (uint)1920);
-            set => Set(nameof(Width), value);
+            get => Get((uint)1920);
+            set => Set(value);
         }
 
         public uint Height
         {
-            get => Get(nameof(Height), (uint)1080);
-            set => Set(nameof(Height), value);
+            get => Get((uint)1080);
+            set => Set(value);
         }
 
         public uint Bitrate
         {
-            get => Get(nameof(Bitrate), (uint)18000000);
-            set => Set(nameof(Bitrate), value);
+            get => Get((uint)18000000);
+            set => Set(value);
         }
 
         public uint FrameRate
         {
-            get => Get(nameof(FrameRate), (uint)60);
-            set => Set(nameof(FrameRate), value);
+            get => Get((uint)60);
+            set => Set(value);
         }
 
         public bool IntAudio
         {
-            get => Get(nameof(IntAudio), true);
-            set => Set(nameof(IntAudio), value);
+            get => Get(true);
+            set => Set(value);
         }
 
         public bool ExtAudio
         {
-            get => Get(nameof(ExtAudio), false);
-            set => Set(nameof(ExtAudio), value);
+            get => Get(false);
+            set => Set(value);
         }
 
         public bool Gallery
         {
-            get => Get(nameof(Gallery), true);
-            set => Set(nameof(Gallery), value);
+            get => Get(true);
+            set => Set(value);
         }
 
         public bool SystemPlayer
         {
-            get => Get(nameof(SystemPlayer), false);
-            set => Set(nameof(SystemPlayer), value);
+            get => Get(false);
+            set => Set(value);
         }
 
         public bool ShowOnTop
         {
-            get => Get(nameof(ShowOnTop), false);
-            set => Set(nameof(ShowOnTop), value);
+            get => Get(false);
+            set => Set(value);
         }
 
         public bool Timer
         {
-            get => Get(nameof(Timer), false);
-            set => Set(nameof(Timer), value);
+            get => Get(false);
+            set => Set(value);
         }
 
         public bool ShowCursor
         {
-            get => Get(nameof(ShowCursor), true);
-            set => Set(nameof(ShowCursor), value);
+            get => Get(true);
+            set => Set(value);
         }
 
         /// <summary>
@@ -83,7 +84,7 @@ namespace FluentScreenRecorder.ViewModels
         /// <param name="setting">Setting name.</param>
         /// <param name="defaultValue">Default setting value.</param>
         /// <returns>App setting value.</returns>
-        private T Get<T>(string setting, T defaultValue)
+        private T Get<T>(T defaultValue, [CallerMemberName] string setting = null)
         {
             // Get app settings
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
@@ -109,10 +110,10 @@ namespace FluentScreenRecorder.ViewModels
         /// </summary>
         /// <param name="setting">Setting name.</param>
         /// <param name="newValue">New setting value.</param>
-        private void Set<T>(string setting, T newValue)
+        private void Set<T>(T newValue, [CallerMemberName] string setting = null)
         {
             // Try to get the setting, if types don't match, it'll throw an exception
-            _ = Get(setting, newValue);
+            _ = Get(newValue, setting);
 
             // Get app settings
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
