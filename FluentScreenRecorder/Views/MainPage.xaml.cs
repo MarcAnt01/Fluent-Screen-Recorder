@@ -52,6 +52,8 @@ namespace FluentScreenRecorder
 
         private List<byte> BufferList = new();
 
+        private bool wasInOverlayBeforeRecording;
+
         MediaPlayer SilentPlayer;
 
         private AudioEncodingProperties audioEncodingProperties;
@@ -664,10 +666,16 @@ namespace FluentScreenRecorder
             };
         }
 
-        public void NotifyRecordingStatusChanges(bool isRecording)
+        public async void NotifyRecordingStatusChanges(bool isRecording)
         {
             if (isRecording)
             {
+                if (ApplicationView.GetForCurrentView().ViewMode == ApplicationViewMode.CompactOverlay)
+                {
+                    wasInOverlayBeforeRecording = true;
+                    await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.Default);
+                }
+
                 App.RecViewModel.SetAppSize(new(Window.Current.Bounds.Width, 88), false);
                 RecordingMiniOptions.Visibility = Visibility.Collapsed;
                 RecordName.Text = Strings.Resources.Stop;
@@ -679,6 +687,14 @@ namespace FluentScreenRecorder
                 lockAdaptiveUI = true;
             } else
             {
+                if (ApplicationView.GetForCurrentView().ViewMode == ApplicationViewMode.Default && wasInOverlayBeforeRecording)
+                {
+                    wasInOverlayBeforeRecording = false;
+                    await ApplicationView.GetForCurrentView().TryEnterViewModeAsync(ApplicationViewMode.CompactOverlay);
+                }
+
+                App.RecViewModel.SetAppSize(new(App.Settings.Size.Width, App.Settings.Size.Height), true);
+
                 RecordingMiniOptions.Visibility = Visibility.Visible;
                 RecordName.Text = Strings.Resources.Record;
                 RecordButton.SetValue(AutomationProperties.NameProperty, Strings.Resources.Record);
