@@ -70,8 +70,6 @@ namespace FluentScreenRecorder
 
         public static MainPage Current;
 
-        private bool _isRecording;
-
         public MainPage()
         {
             InitializeComponent();
@@ -81,16 +79,16 @@ namespace FluentScreenRecorder
 
             NavigationCacheMode = NavigationCacheMode.Required; 
 
-            SilentPlayer = new MediaPlayer() { IsLoopingEnabled = true };
+            SilentPlayer = new() { IsLoopingEnabled = true };
             SilentPlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/Silence.ogg"));
             SilentPlayer.Play();
             ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(412, 88));
 
             ResolutionComboBox.ItemsSource = App.RecViewModel.Resolutions;
-            ResolutionComboBox.SelectedIndex = App.RecViewModel.GetResolutionIndex(App.Settings.Width, App.Settings.Height);
+            ResolutionComboBox.SelectedIndex = App.RecViewModel.Resolutions.IndexOf(App.RecViewModel.Resolutions.FirstOrDefault(r => r.Resolution.Width == App.Settings.Width && r.Resolution.Height == App.Settings.Height));
 
             FrameRateComboBox.ItemsSource = App.RecViewModel.Framerates;
-            FrameRateComboBox.SelectedIndex = App.RecViewModel.GetFrameRateIndex(App.Settings.FrameRate);            
+            FrameRateComboBox.SelectedIndex = App.RecViewModel.Framerates.IndexOf(App.RecViewModel.Framerates.FirstOrDefault(r => r.FrameRate == App.Settings.FrameRate));
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -194,7 +192,11 @@ namespace FluentScreenRecorder
                     NoVideosContainer.Visibility = Visibility.Visible;
                     BasicGridView.Visibility = Visibility.Collapsed;
                 }
-                App.RecViewModel.Size = new(550, 500);
+
+                Size size = new(550, 500);
+
+                if (size.Width > App.Settings.Size.Width || size.Height > App.Settings.Size.Height)
+                    App.RecViewModel.SetAppSize(size);
             }
         }
 
@@ -202,13 +204,13 @@ namespace FluentScreenRecorder
 
         private async void OnRecordButtonClick(object sender, RoutedEventArgs e)
         {
-            if (_isRecording)
+            if (App.RecViewModel.IsRecording)
             {
-                _isRecording = false;
+                App.RecViewModel.IsRecording = false;
                 await StopRecordingAsync();
             } else
             {
-                _isRecording = true;
+                App.RecViewModel.IsRecording = true;
                 await StartRecordingAsync();
             }
         }
@@ -218,9 +220,9 @@ namespace FluentScreenRecorder
             var folder = await KnownFolders.VideosLibrary.TryGetItemAsync("Fluent Screen Recorder");
 
             // Get our encoder properties
-            var frameRateItem = App.RecViewModel.Framerates[App.RecViewModel.GetFrameRateIndex(App.Settings.FrameRate)];
-            var resolutionItem = App.RecViewModel.Resolutions[App.RecViewModel.GetResolutionIndex(App.Settings.Width, App.Settings.Height)];
-            var bitrateItem = App.RecViewModel.Bitrates[App.RecViewModel.GetBitrateIndex(App.Settings.Bitrate)];
+            var frameRateItem = App.RecViewModel.Framerates.FirstOrDefault(f => f.FrameRate == App.Settings.FrameRate);
+            var resolutionItem = App.RecViewModel.Resolutions.FirstOrDefault(r => r.Resolution.Width > App.Settings.Width && r.Resolution.Height > App.Settings.Height);
+            var bitrateItem = App.RecViewModel.Bitrates.FirstOrDefault(b => b.Bitrate == App.Settings.Bitrate);
 
             MediaCapture mediaCapture = null;   
 
@@ -269,7 +271,7 @@ namespace FluentScreenRecorder
 
             if (item == null)
             {
-                _isRecording = false;
+                App.RecViewModel.IsRecording = false;
                 return;
             }
             if (useSourceSize)
@@ -292,7 +294,7 @@ namespace FluentScreenRecorder
                 await Task.Delay(TimeSpan.FromSeconds(3));
 
             // Tell the user we've started recording
-            App.RecViewModel.Size = new(412, 300);
+            App.RecViewModel.SetAppSize(new(412, 300), false);
             NotifyRecordingStatusChanges(true);
 
             // Kick off the encoding
@@ -316,7 +318,6 @@ namespace FluentScreenRecorder
                         };
                         await errorDialog.ShowAsync();
                     }
-
                 }
             }
             catch (Exception ex)
@@ -339,10 +340,10 @@ namespace FluentScreenRecorder
             
                 RecordButton.Visibility = Visibility.Collapsed;
                 RecordingContainer.Visibility = Visibility.Collapsed;
-                App.RecViewModel.Size = new(550, 500);
+                App.RecViewModel.SetAppSize(new(550, 500), false);
 
                 await recordingErrorDialog.ShowAsync();
-                _isRecording = false;
+                App.RecViewModel.IsRecording = false;
 
                 NotifyRecordingStatusChanges(false);
                 await _tempFile.DeleteAsync();
@@ -667,7 +668,7 @@ namespace FluentScreenRecorder
         {
             if (isRecording)
             {
-                App.RecViewModel.Size = new(Window.Current.Bounds.Width, 88);
+                App.RecViewModel.SetAppSize(new(Window.Current.Bounds.Width, 88), false);
                 RecordingMiniOptions.Visibility = Visibility.Collapsed;
                 RecordName.Text = Strings.Resources.Stop;
                 RecordButton.SetValue(AutomationProperties.NameProperty, Strings.Resources.Stop);
