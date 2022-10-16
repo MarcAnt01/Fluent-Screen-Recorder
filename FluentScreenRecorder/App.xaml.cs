@@ -62,9 +62,9 @@ namespace FluentScreenRecorder
             }
         }
 
-        private async Task StartupAsync()
+        private void InitApp()
         {
-            await WhatsNewDisplayService.ShowIfAppropriateAsync();
+            WhatsNewDisplayService.ShowIfAppropriate();
             SetupSpecs();
         }
 
@@ -72,18 +72,14 @@ namespace FluentScreenRecorder
         {
             private static bool shown = false;
 
-            internal static async Task ShowIfAppropriateAsync()
+            public static void ShowIfAppropriate()
             {
-                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(
-                    CoreDispatcherPriority.Normal, async () =>
-                    {
-                        if (SystemInformation.Instance.IsAppUpdated && !shown)
-                        {
-                            shown = true;
-                            var dialog = new ChangelogDialog();
-                            await dialog.ShowAsync();
-                        }
-                    });
+                if (SystemInformation.Instance.IsAppUpdated && !shown)
+                {
+                    shown = true;
+                    var dialog = new ChangelogDialog();
+                    _ = dialog.ShowAsync();
+                }
             }
         }
 
@@ -93,53 +89,62 @@ namespace FluentScreenRecorder
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected async override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             bool canEnablePrelaunch = Windows.Foundation.Metadata.ApiInformation.IsMethodPresent("Windows.ApplicationModel.Core.CoreApplication", "EnablePrelaunch");
-            Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active 
-            if (rootFrame == null)
+            if (Window.Current.Content is not Frame rootFrame)
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
+                rootFrame.SizeChanged += RootFrame_SizeChanged;
+
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: Load state from previously suspended application
                 }
 
-                await StartupAsync();
+                InitApp();
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
             }
 
-            if (e.PrelaunchActivated == false)
+            if (!e.PrelaunchActivated)
             {
                 // On Windows 10 version 1607 or later, this code signals that this app wants to participate in prelaunch
                 if (canEnablePrelaunch)
-                {
-                    TryEnablePrelaunch();
-                }
+                    CoreApplication.EnablePrelaunch(true);
 
                 if (rootFrame.Content == null)
-                {
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
-                }
+
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
         }
 
+        private void RootFrame_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (RecViewModel.IsRecording)
+                return;
+
+            Settings.Size = e.NewSize;
+        }
+
         private void SetupSpecs()
         {
+            if (RecViewModel.Initialized)
+                return;
+
             RecViewModel.Device = Direct3D11Helpers.CreateDevice();
 
             RecViewModel.Resolutions = new List<ResolutionItem>();
@@ -177,11 +182,8 @@ namespace FluentScreenRecorder
                     FrameRate = frameRate,
                 });
             }
-        }
 
-        private void TryEnablePrelaunch()
-        {
-            CoreApplication.EnablePrelaunch(true);
+            RecViewModel.Initialized = true;
         }
 
         /// <summary>

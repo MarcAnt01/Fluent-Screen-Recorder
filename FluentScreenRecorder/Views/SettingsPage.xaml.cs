@@ -11,6 +11,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Automation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using System.Linq;
 
 namespace FluentScreenRecorder.Views
 {
@@ -24,18 +25,14 @@ namespace FluentScreenRecorder.Views
             ApplicationViewTitleBar formattableTitleBar = ApplicationView.GetForCurrentView().TitleBar;
             formattableTitleBar.ButtonBackgroundColor = Colors.Transparent;
 
-            BitrateComboBox.SelectedItem = App.RecViewModel.Bitrates[App.RecViewModel.GetBitrateIndex(App.Settings.Bitrate)];
+            BitrateComboBox.SelectedItem = App.RecViewModel.Bitrates.FirstOrDefault(b => b.Bitrate == App.Settings.Bitrate);
 
             if (App.Settings.IntAudio)
-            {
                 AudioModeComboBox.SelectedIndex = 1;
-            } else if (App.Settings.ExtAudio)
-            {
+            else if (App.Settings.ExtAudio)
                 AudioModeComboBox.SelectedIndex = 2;
-            } else
-            {
+            else
                 AudioModeComboBox.SelectedIndex = 0;
-            }
         }
 
         private void SetupTitleBar(CoreApplicationViewTitleBar coreAppTitleBar = null)
