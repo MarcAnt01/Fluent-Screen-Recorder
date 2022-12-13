@@ -192,11 +192,6 @@ namespace FluentScreenRecorder
                     NoVideosContainer.Visibility = Visibility.Visible;
                     BasicGridView.Visibility = Visibility.Collapsed;
                 }
-
-                Size size = new(550, 500);
-
-                if (size.Width > App.Settings.Size.Width || size.Height > App.Settings.Size.Height)
-                    App.RecViewModel.SetAppSize(size);
             }
         }
 
@@ -307,8 +302,7 @@ namespace FluentScreenRecorder
                     {
                         await mediaCapture.StartRecordToStorageFileAsync(MediaEncodingProfile.CreateMp3(AudioEncodingQuality.High), micFile);
                     }
-                    var encodesuccess = await App.RecViewModel.Encoder.EncodeAsync(stream, width, height, bitrate, frameRate, loopbackAudioCapture, App.Settings.ShowCursor);
-                    if (!encodesuccess)
+                    if (!await App.RecViewModel.Encoder.EncodeAsync(stream, width, height, bitrate, frameRate, loopbackAudioCapture, App.Settings.ShowCursor))
                     {
                         ContentDialog errorDialog = new()
                         {
