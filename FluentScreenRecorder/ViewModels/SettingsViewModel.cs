@@ -75,7 +75,7 @@ namespace FluentScreenRecorder.ViewModels
 
         public Size Size
         {
-            get => Get(default(Size));
+            get => Get<Size>(new(464, 200));
             set => Set(value);
         }
 
