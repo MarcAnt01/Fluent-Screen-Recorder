@@ -161,7 +161,7 @@
                             <ComboBox
                                 x:Name="BitrateComboBox"
                                 HorizontalAlignment="Center"
-                                ItemsSource="{x:Bind local1:App.RecViewModel.Bitrates}"
+                                ItemsSource="{x:Bind local1:App.RecorderHelper.Bitrates}"
                                 SelectionChanged="BitrateComboBox_SelectionChanged">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate x:DataType="models:BitrateItem">
