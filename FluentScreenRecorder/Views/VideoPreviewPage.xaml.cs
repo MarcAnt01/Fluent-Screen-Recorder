@@ -36,7 +36,6 @@ namespace FluentScreenRecorder.Views
             PreviewPlayer.Source = MediaSource.CreateFromStorageFile(file);
             Source = (MediaSource)PreviewPlayer.Source;
 
-            App.RecorderHelper.SetAppSize(App.Settings.Size);
             ShowSaved();                       
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
             dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(DataRequested);            
