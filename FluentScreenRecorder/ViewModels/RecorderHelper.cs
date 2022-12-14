@@ -6,10 +6,11 @@ using System.ComponentModel;
 using Windows.Foundation;
 using Windows.Graphics.DirectX.Direct3D11;
 using Windows.UI.ViewManagement;
+using Windows.UI.Xaml;
 
 namespace FluentScreenRecorder.ViewModels
 {
-    public class RecorderViewModel : INotifyPropertyChanged
+    public class RecorderHelper : INotifyPropertyChanged
     {
         public IDirect3DDevice Device;
         public CaptureEncoder.Encoder Encoder;
@@ -21,7 +22,16 @@ namespace FluentScreenRecorder.ViewModels
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public Size Size => _size;
+        public Size Size
+        {
+            get
+            {
+                if (_size != null)
+                    _size = new(Window.Current.Bounds.Width, Window.Current.Bounds.Height);
+
+                return _size;
+            }
+        }
 
         public bool Initialized { get; set; }
 
@@ -37,9 +47,9 @@ namespace FluentScreenRecorder.ViewModels
 
                 if (save)
                     App.Settings.Size = size;
-            }
 
-            PropertyChanged?.Invoke(this, new(nameof(Size)));
+                PropertyChanged?.Invoke(this, new(nameof(Size)));
+            }
         }
 
         public static T ParseEnumValue<T>(string input)
