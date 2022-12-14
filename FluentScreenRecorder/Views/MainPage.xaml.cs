@@ -286,7 +286,7 @@ namespace FluentScreenRecorder
             _userSize = App.RecorderHelper.Size;
 
             // Tell the user we've started recording
-            App.RecorderHelper.SetAppSize(new(412, 300), false);
+            App.RecorderHelper.SetAppSize(new(412, 88), false);
             NotifyRecordingStatusChanges(true);
 
             // Kick off the encoding
@@ -331,7 +331,6 @@ namespace FluentScreenRecorder
             
                 RecordButton.Visibility = Visibility.Collapsed;
                 RecordingContainer.Visibility = Visibility.Collapsed;
-                App.RecorderHelper.SetAppSize(new(550, 500), false);
 
                 await recordingErrorDialog.ShowAsync();
                 App.RecorderHelper.IsRecording = false;
@@ -659,7 +658,6 @@ namespace FluentScreenRecorder
         {
             if (isRecording)
             {
-                App.RecorderHelper.SetAppSize(new(Window.Current.Bounds.Width, 88), false);
                 RecordingMiniOptions.Visibility = Visibility.Collapsed;
                 RecordName.Text = Strings.Resources.Stop;
                 RecordButton.SetValue(AutomationProperties.NameProperty, Strings.Resources.Stop);
