@@ -46,8 +46,6 @@ namespace FluentScreenRecorder.Views
             InitializeComponent();
 
             Current = this;
-
-            App.RecorderHelper.SetAppSize(App.Settings.Size);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
