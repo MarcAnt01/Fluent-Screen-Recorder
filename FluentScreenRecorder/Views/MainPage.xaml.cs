@@ -668,7 +668,7 @@ namespace FluentScreenRecorder
                 lockAdaptiveUI = true;
             } else
             {
-                App.RecorderHelper.SetAppSize(_userSize, false);
+                App.RecorderHelper.SetAppSize(_userSize);
                 RecordingMiniOptions.Visibility = Visibility.Visible;
                 RecordName.Text = Strings.Resources.Record;
                 RecordButton.SetValue(AutomationProperties.NameProperty, Strings.Resources.Record);
