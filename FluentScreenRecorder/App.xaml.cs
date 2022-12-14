@@ -9,9 +9,6 @@ using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.AppCenter;
-using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
 using Windows.ApplicationModel.ExtendedExecution.Foreground;
 using FluentScreenRecorder.ViewModels;
 using CaptureEncoder;
@@ -25,7 +22,7 @@ namespace FluentScreenRecorder
     /// </summary>
     sealed partial class App : Application
     {
-        public static RecorderViewModel RecViewModel { get; private set; }
+        public static RecorderHelper RecorderHelper { get; private set; }
         public static SettingsViewModel Settings { get; private set; }
 
         /// <summary>
@@ -41,7 +38,7 @@ namespace FluentScreenRecorder
 #endif
             ExtendExecution();
 
-            RecViewModel = new();
+            RecorderHelper = new();
             Settings = new();
         }
 
@@ -49,17 +46,11 @@ namespace FluentScreenRecorder
 
         private async Task ExtendExecution()
         {
-            var session = new ExtendedExecutionForegroundSession { Reason = ExtendedExecutionForegroundReason.Unspecified };
+            using var session = new ExtendedExecutionForegroundSession { Reason = ExtendedExecutionForegroundReason.Unspecified };
             var result = await session.RequestExtensionAsync();
 
             if (result == ExtendedExecutionForegroundResult.Allowed)
-            {
-                _extendedSession = session;                
-            }
-            else
-            {
-                session.Dispose();                
-            }
+                _extendedSession = session;
         }
 
         private void InitApp()
@@ -134,7 +125,7 @@ namespace FluentScreenRecorder
 
         private void RootFrame_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if (RecViewModel.IsRecording)
+            if (RecorderHelper.IsRecording)
                 return;
 
             Settings.Size = e.NewSize;
@@ -142,48 +133,48 @@ namespace FluentScreenRecorder
 
         private void SetupSpecs()
         {
-            if (RecViewModel.Initialized)
+            if (RecorderHelper.Initialized)
                 return;
 
-            RecViewModel.Device = Direct3D11Helpers.CreateDevice();
+            RecorderHelper.Device = Direct3D11Helpers.CreateDevice();
 
-            RecViewModel.Resolutions = new List<ResolutionItem>();
+            RecorderHelper.Resolutions = new List<ResolutionItem>();
             foreach (var resolution in EncoderPresets.Resolutions)
             {
-                RecViewModel.Resolutions.Add(new ResolutionItem()
+                RecorderHelper.Resolutions.Add(new ResolutionItem()
                 {
                     DisplayName = $"{resolution.Width} x {resolution.Height}",
                     Resolution = resolution,
                 });
             }
-            RecViewModel.Resolutions.Add(new ResolutionItem()
+            RecorderHelper.Resolutions.Add(new ResolutionItem()
             {
                 DisplayName = Strings.Resources.SourceSizeToggle,
                 Resolution = new SizeUInt32() { Width = 0, Height = 0 },
             });
 
-            RecViewModel.Bitrates = new();
+            RecorderHelper.Bitrates = new();
             foreach (var bitrate in EncoderPresets.Bitrates)
             {
                 var mbps = (float)bitrate / 1000000;
-                RecViewModel.Bitrates.Add(new BitrateItem()
+                RecorderHelper.Bitrates.Add(new BitrateItem()
                 {
                     DisplayName = $"{mbps:0.##} Mbps",
                     Bitrate = bitrate,
                 });
             }
 
-            RecViewModel.Framerates = new List<FrameRateItem>();
+            RecorderHelper.Framerates = new List<FrameRateItem>();
             foreach (var frameRate in EncoderPresets.FrameRates)
             {
-                RecViewModel.Framerates.Add(new FrameRateItem()
+                RecorderHelper.Framerates.Add(new FrameRateItem()
                 {
                     DisplayName = $"{frameRate}fps",
                     FrameRate = frameRate,
                 });
             }
 
-            RecViewModel.Initialized = true;
+            RecorderHelper.Initialized = true;
         }
 
         /// <summary>
