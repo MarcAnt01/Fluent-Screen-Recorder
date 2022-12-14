@@ -46,17 +46,11 @@ namespace FluentScreenRecorder
 
         private async Task ExtendExecution()
         {
-            var session = new ExtendedExecutionForegroundSession { Reason = ExtendedExecutionForegroundReason.Unspecified };
+            using var session = new ExtendedExecutionForegroundSession { Reason = ExtendedExecutionForegroundReason.Unspecified };
             var result = await session.RequestExtensionAsync();
 
             if (result == ExtendedExecutionForegroundResult.Allowed)
-            {
-                _extendedSession = session;                
-            }
-            else
-            {
-                session.Dispose();                
-            }
+                _extendedSession = session;
         }
 
         private void InitApp()
