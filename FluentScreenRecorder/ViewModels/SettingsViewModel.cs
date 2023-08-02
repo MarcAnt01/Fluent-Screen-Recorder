@@ -33,7 +33,7 @@ namespace FluentScreenRecorder.ViewModels
 
         public bool IntAudio
         {
-            get => Get(true);
+            get => Get(false);
             set => Set(value);
         }
 
