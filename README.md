@@ -52,7 +52,7 @@ You can translate Fluent Screen Recorder for your language or improve the curren
 - [Robert Mikhayelyan](https://github.com/robmikh) for the core of the app and the encoder
 - [Ryken100](https://github.com/Ryken100) for internal audio library
 - [Ahmed Walid](https://github.com/ahmed605) for help in implementing internal and external audio recording
-- [Mark Ivan Basto](https://github.com/MarkIvanDev), [Yair Aichenbaum]([https://github.com/yaichenbaum](https://github.com/yaira2)), [Sebastian Kassai](https://github.com/xezrunner), [FireCubeStudios](https://github.com/FireCubeStudios) for [direct code contributions](https://github.com/MarcAnt01/Fluent-Screen-Recorder/graphs/contributors)
+- [Mark Ivan Basto](https://github.com/MarkIvanDev), [Yair Aichenbaum](https://github.com/yaira2), [Sebastian Kassai](https://github.com/xezrunner), [FireCubeStudios](https://github.com/FireCubeStudios) for [direct code contributions](https://github.com/MarcAnt01/Fluent-Screen-Recorder/graphs/contributors)
 - [UWP Community Discord Server](https://aka.ms/winui/discord) for helping me during the making of the app
 - [Arlo Godfrey](https://github.com/Arlodotexe), Lucifer Press and Luis Ramirez for donations
 
