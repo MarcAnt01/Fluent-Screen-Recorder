@@ -15,12 +15,14 @@
         <StackPanel>
             <TextBlock Text="{x:Bind strings:Resources.Whatsnew}" FontWeight="Bold" Margin="0,0,0,5"/>
             <RichTextBlock>
-                <Paragraph>- Added context menus for gallery view</Paragraph>
-                <Paragraph>- Modernized video player design</Paragraph>
-                <Paragraph>- Share integration in the video player and in gallery view</Paragraph>
-                <Paragraph>- Fixed gallery view not displaying newly-recorded videos</Paragraph>
-                <Paragraph>- Fixed recording crash on some devices with internal audio enabled</Paragraph>
-                <Paragraph>- Several minor bug fixes and improvements</Paragraph>
+                <Paragraph>- Totally redesigned the ui taking inspiration from the Snipping Tool</Paragraph>
+                <Paragraph>- Automatically save video recordings</Paragraph>
+                <Paragraph>- "Saved" banner</Paragraph>
+                <Paragraph>- Option to hide/show mouse cursor during recording</Paragraph>
+                <Paragraph>- Option to show files in folder</Paragraph>                
+                <Paragraph>- Option to delay the beginning of the recording</Paragraph>
+                <Paragraph>- "Esc" to go back</Paragraph>
+                <Paragraph>- Tones of bug fixes and improvements</Paragraph>
                 <Paragraph>- We now have a Discord server if you want to join us :)</Paragraph>                
             </RichTextBlock>
             <HyperlinkButton Content="{x:Bind strings:Resources.Discord}" NavigateUri="https://discord.com/invite/v4EXAwXPHw"/>
