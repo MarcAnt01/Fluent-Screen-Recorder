@@ -39,9 +39,6 @@
   <data name="ExitOverlay" xml:space="preserve">
     <value>Vissza a teljes nézethez</value>
   </data>
-  <data name="ExternalAudio" xml:space="preserve">
-    <value>Mikrofon felvétel</value>
-  </data>
   <data name="Failure" xml:space="preserve">
     <value>Hiba</value>
   </data>
@@ -60,20 +57,11 @@
   <data name="Info" xml:space="preserve">
     <value>Fájl infó</value>
   </data>
-  <data name="InternalAudio" xml:space="preserve">
-    <value>Hang rögzítés</value>
-  </data>
   <data name="MicSettings" xml:space="preserve">
     <value>A rendszer mikrofon beállításai</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
-  </data>
-  <data name="OpenFolder" xml:space="preserve">
-    <value>Nyissa meg a videó mentési mappáját</value>
-  </data>
-  <data name="Options" xml:space="preserve">
-    <value>Az alábbi lehetőségek közül választhat</value>
   </data>
   <data name="OverlayMode" xml:space="preserve">
     <value>Alapesetben megnyitás átfedés módban</value>
@@ -84,23 +72,14 @@
   <data name="Recording" xml:space="preserve">
     <value>Felvétel</value>
   </data>
-  <data name="RecordingStart" xml:space="preserve">
-    <value>Felvétel indítás</value>
-  </data>
   <data name="RecordingStop" xml:space="preserve">
     <value>Felvétel leállítás</value>
   </data>
   <data name="Resolution" xml:space="preserve">
     <value>Felbontás</value>
   </data>
-  <data name="Save" xml:space="preserve">
-    <value>Ment</value>
-  </data>
   <data name="SaveAs" xml:space="preserve">
     <value>Ment, mint</value>
-  </data>
-  <data name="SaveConfirm" xml:space="preserve">
-    <value>Szeretné menteni a fájlt?</value>
   </data>
   <data name="Saving" xml:space="preserve">
     <value>Mentés...</value>
