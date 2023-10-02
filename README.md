@@ -2,7 +2,7 @@
 
 Record your screen or an app in a simple UWP app featuring Fluent Design
 
-![](https://i.postimg.cc/D0tRCCKZ/1.png)
+![](https://store-images.s-microsoft.com/image/apps.61622.13832332238879742.2743167f-c59d-4550-8bbf-1fc1170406ff.7bcf120c-ba1d-4316-b8a5-66e43bd8a2aa?h=2160)
 
 
 <a href='https://www.microsoft.com/en-us/p/fluent-screen-recorder/9mwv79xlfqh7'><img src='https://developer.microsoft.com/en-us/store/badges/images/English_get-it-from-MS.png' alt='Store Link' height="50px"/></a> <a href='https://discord.gg/UZgbJP2'><img src='https://media.moddb.com/images/members/1/454/453186/profile/news-discord-join.jpg' alt='Discord Link' height="50px"/></a>
@@ -44,6 +44,7 @@ You can translate Fluent Screen Recorder for you language or improve the current
 
 ### Credits
 - [SimpleBear](https://github.com/itsWindows11) for the redesign in the 3.0 update and tones of other contributions
+- [Binamra Lamsal](https://github.com/binamralamsal) for help in the design of the new update
 - [Robert Mikhayelyan](https://github.com/robmikh) for the core of the app and the encoder
 - [Ryken100](https://github.com/Ryken100) for internal audio library
 - [Ahmed Walid](https://github.com/ahmed605) for help in implementing internal and external audio recording
